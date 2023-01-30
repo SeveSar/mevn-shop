@@ -1,5 +1,5 @@
 import type { AxiosInstance } from "axios";
-import type { AuthResponse } from "@/models/response/AuthResponse";
+import type { UserResponse } from "@/user/models/response/UserResponse";
 
 class AuthService {
   private readonly $http: AxiosInstance;
@@ -9,7 +9,7 @@ class AuthService {
     this.$axios = axios;
   }
   async register(email: string, password: string) {
-    const res = await this.$http.post<AuthResponse>("/auth/register", {
+    const res = await this.$http.post<UserResponse>("/auth/register", {
       email,
       password,
     });
@@ -17,7 +17,7 @@ class AuthService {
   }
 
   async login(email: string, password: string) {
-    const res = await this.$http.post<AuthResponse>("/auth/login", {
+    const res = await this.$http.post<UserResponse>("/auth/login", {
       email,
       password,
     });
@@ -25,7 +25,7 @@ class AuthService {
     return res.data;
   }
   async refresh() {
-    return this.$axios.get<AuthResponse>("/auth/refresh", {
+    return this.$axios.get<UserResponse>("/auth/refresh", {
       baseURL: import.meta.env.VITE_BASE_URL,
       withCredentials: true,
     });

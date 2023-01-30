@@ -1,25 +1,41 @@
-import {
-  createRouter,
-  createWebHashHistory,
-  createWebHistory,
-} from "vue-router";
-import ErrorPage from "@/views/ErrorPage.vue";
+import { createRouter, createWebHistory } from "vue-router";
+import ErrorPage from "@/views/PageError/PageError.vue";
 import { loadLayoutMiddleware } from "./middleware/loadLayout.middleware";
-import { checkIsAuth } from "./middleware/chekIsAuth.middleware";
+import { authMiddleware } from "./middleware/auth.middleware";
 import { AppLayoutsEnum } from "@/layouts/layouts.types";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  linkActiveClass: "active",
+  linkExactActiveClass: "exact-active",
   routes: [
     {
       path: "/",
       name: "Home",
-      component: () => import("../views/IndexPage.vue"),
+      component: () => import("@/product/views/PageProducts/PageIndex.vue"),
       alias: ["/products"],
+    },
+    {
+      path: "/admin",
+      name: "Admin",
+      component: () => import("../admin/views/PageAdmin/PageAdmin.vue"),
+      children: [
+        {
+          name: "Pizza",
+          path: "",
+          component: () => import("../admin/views/CreatePizza/CreatePizza.vue"),
+        },
+        {
+          name: "Goods",
+          path: "goods",
+          component: () => import("@/admin/views/CreateGoods/CreateGoods.vue"),
+        },
+      ],
     },
     {
       path: "/cart",
       name: "Cart",
-      component: () => import("../views/CartPage.vue"),
+      component: () => import("@/cart/views/PageCart/PageCart.vue"),
       meta: {
         isAuth: true,
       },
@@ -27,7 +43,7 @@ const router = createRouter({
     {
       path: "/order-done",
       name: "Order",
-      component: () => import("../views/OrderPage.vue"),
+      component: () => import("@/order/views/PageOrder/PageOrder.vue"),
       meta: {
         isAuth: true,
       },
@@ -35,7 +51,7 @@ const router = createRouter({
     {
       path: "/profile",
       name: "Profile",
-      component: () => import("../views/ProfilePage.vue"),
+      component: () => import("@/profile/views/PageProfile/PageProfile.vue"),
       meta: {
         isAuth: true,
       },
@@ -43,7 +59,7 @@ const router = createRouter({
     {
       name: "Product",
       path: "/products/:id",
-      component: () => import("../views/ProductPage.vue"),
+      component: () => import("@/product/views/_PageProduct/_PageProduct.vue"),
     },
     {
       path: "/:pathMatch(.*)*",
@@ -56,5 +72,5 @@ const router = createRouter({
 });
 
 router.beforeEach(loadLayoutMiddleware);
-router.beforeEach(checkIsAuth);
+router.beforeEach(authMiddleware);
 export default router;

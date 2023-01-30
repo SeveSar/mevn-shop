@@ -3,6 +3,7 @@
     <div class="toast-container" id="toast-container">
       <transition-group name="toast">
         <div
+          @click="hideToast(item.id || 0)"
           class="toast"
           v-for="item in toasts"
           :class="[item.type]"
@@ -35,12 +36,16 @@ export default defineComponent({
 
   setup() {
     const toasts = inject<IToast[]>("toasts", []);
+    const hideToast = inject<(id: number) => void>("hideToast") as (
+      id: number
+    ) => void;
     const getCurrentIcon = (type: "error" | "info") => {
       return ICONS_TYPES[type];
     };
     return {
       toasts,
       getCurrentIcon,
+      hideToast,
     };
   },
 });
@@ -52,8 +57,6 @@ export default defineComponent({
   top: 30px;
   right: 12px;
   z-index: 1500;
-  // display: flex;
-  // flex-direction: column;
 }
 .toast {
   padding: 20px;
@@ -62,7 +65,7 @@ export default defineComponent({
   width: max-content;
   border-radius: 4px;
   padding: 12px;
-
+  cursor: pointer;
   margin-left: auto;
   &__text {
     font-size: 17px;

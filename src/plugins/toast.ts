@@ -16,7 +16,7 @@ export default {
 
       setTimeout(() => {
         removeToast(newToast.id || 0);
-      }, 2000);
+      }, 3000);
     };
     watch(toasts, (val) => console.log(val));
     const removeToast = (id: number) => {
@@ -24,6 +24,7 @@ export default {
       id--;
     };
     app.provide("showToast", showToast);
+    app.provide("hideToast", removeToast);
     app.provide("toasts", toasts);
   },
 };

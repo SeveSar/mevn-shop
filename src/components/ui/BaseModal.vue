@@ -1,33 +1,42 @@
 <template>
-  <transition name="fade">
-    <div
-      class="modal-overlay"
-      v-if="loginModal"
-      @mousedown.self="storeModal.closeLoginModal"
-    >
-      <div class="modal">
-        <button class="modal-close" @click="storeModal.closeLoginModal">
-          <img src="@/assets/images/icons/close.svg" alt="" />
-        </button>
-        <slot></slot>
+  <Teleport to="body">
+    <transition name="fade">
+      <div class="modal-overlay" v-if="isOpen" @mousedown.self="close">
+        <div class="modal">
+          <button class="modal-close" @click="close">
+            <img src="@/assets/images/icons/close.svg" alt="" />
+          </button>
+          <div class="modal__header" v-if="$slots.header">
+            <slot name="header"></slot>
+          </div>
+          <div class="modal__content">
+            <slot></slot>
+          </div>
+        </div>
       </div>
-    </div>
-  </transition>
+    </transition>
+  </Teleport>
 </template>
 
 <script lang="ts">
-import { useModalStore } from "@/stores/modal";
-import { storeToRefs } from "pinia";
+import { ref } from "vue";
 
 import { defineComponent, onMounted, onUnmounted, watch } from "vue";
 export default defineComponent({
-  setup() {
-    const storeModal = useModalStore();
+  emits: ["onClose"],
+  setup(_, { emit }) {
+    const isOpen = ref(false);
 
-    const { loginModal } = storeToRefs(storeModal);
+    const close = () => {
+      isOpen.value = false;
+      emit("onClose");
+    };
+    const show = () => {
+      isOpen.value = true;
+    };
     const onKeyHandler = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        storeModal.closeLoginModal();
+        close();
       }
     };
     onMounted(() => {
@@ -36,14 +45,14 @@ export default defineComponent({
     onUnmounted(() => {
       document.body.removeEventListener("keydown", onKeyHandler);
     });
-    watch(loginModal, (val) => {
+    watch(isOpen, (val) => {
       if (val) document.body.classList.add("no-scroll");
       else document.body.classList.remove("no-scroll");
     });
-
     return {
-      loginModal,
-      storeModal,
+      isOpen,
+      close,
+      show,
     };
   },
 });

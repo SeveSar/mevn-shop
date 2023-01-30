@@ -10,17 +10,17 @@
             <div class="header__top-col">
               <div class="user-auth">
                 <button
-                  v-if="!userStore.isAuth"
+                  v-if="!userStore.isLoggedIn"
                   class="user-auth__btn"
                   @click="modalStore.openLoginModal"
                 >
-                  <AppIcon name="UserIcon"></AppIcon>
+                  <AppIcon name="IconUser"></AppIcon>
                   Войти в аккаунт
                 </button>
-                <div v-if="userStore.isAuth" class="user-drop">
+                <div v-if="userStore.isLoggedIn" class="user-drop">
                   <div class="current">
                     <BaseButton>
-                      <AppIcon name="UserIcon"></AppIcon>
+                      <AppIcon name="IconUser"></AppIcon>
                       Вы
                     </BaseButton>
                   </div>
@@ -43,7 +43,7 @@
                 <img src="@/assets/images/logo.svg" alt="" />
               </router-link>
             </div>
-            <nav class="nav" v-if="userStore.isAuth">
+            <nav class="nav" v-if="userStore.isLoggedIn">
               <ul class="nav-list">
                 <li
                   class="nav-list__item"
@@ -58,7 +58,7 @@
             </nav>
             <div class="header__bottom-user">
               <router-link class="user-cart" :to="{ name: 'Cart' }">
-                <AppIcon name="BasketIcon"></AppIcon>
+                <AppIcon name="IconBasket"></AppIcon>
                 <div class="user-cart__price">{{ cartStore.totalPrice }} ₽</div>
               </router-link>
               <div
@@ -77,17 +77,17 @@
   <div class="mobile-menu" :class="{ active: isOpenedBurger }">
     <div class="user-auth">
       <BaseButton
-        v-if="!userStore.isAuth"
+        v-if="!userStore.isLoggedIn"
         class="user-auth__btn"
         @click="modalStore.openLoginModal"
       >
-        <AppIcon name="UserIcon"></AppIcon>
+        <AppIcon name="IconUser"></AppIcon>
         Войти в аккаунт
       </BaseButton>
-      <div v-if="userStore.isAuth" class="user-drop">
+      <div v-if="userStore.isLoggedIn" class="user-drop">
         <div class="current">
           <BaseButton>
-            <AppIcon name="UserIcon"></AppIcon>
+            <AppIcon name="IconUser"></AppIcon>
             Вы
           </BaseButton>
         </div>
@@ -98,7 +98,7 @@
         </div>
       </div>
     </div>
-    <nav class="nav" v-if="userStore.isAuth">
+    <nav class="nav" v-if="userStore.isLoggedIn">
       <ul class="nav-list">
         <li class="nav-list__item" v-for="link in menuLinks" :key="link.title">
           <router-link to="/" :class="{ active: link.active }">

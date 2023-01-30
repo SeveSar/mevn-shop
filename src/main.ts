@@ -3,7 +3,7 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
 import initFire from "@/plugins/firebase";
-import "ant-design-vue/dist/antd.css";
+
 import "./assets/less/main.less";
 
 import { getDatabase } from "firebase/database";
@@ -21,6 +21,10 @@ const productsStore = useProductsStore();
 productsStore
   .fetchProducts()
   .then(() => {
+    const spinnerAppElem = document.getElementById("app-spinner");
+    if (spinnerAppElem) {
+      spinnerAppElem.style.display = "none";
+    }
     app.mount("#app");
   })
   .catch((e) => {

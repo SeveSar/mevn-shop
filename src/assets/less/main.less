@@ -1,6 +1,9 @@
 @import "reset";
 @import "fonts";
 
+html {
+  height: 100%;
+}
 body {
   font-family: "Inter";
   font-weight: 400;
@@ -9,9 +12,16 @@ body {
     overflow: hidden;
   }
 }
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
 .main {
   background-color: #f9f9f9;
+  flex-grow: 1;
+  padding-top: 70px;
   @media screen and (max-width: 991px) {
     padding-top: 71px;
   }

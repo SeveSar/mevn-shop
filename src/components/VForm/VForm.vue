@@ -30,7 +30,7 @@
       />
     </div>
 
-    <BaseButton type="submit" color="standart">{{ buttonText }}</BaseButton>
+    <BaseButton role="submit" type="standart">{{ buttonText }}</BaseButton>
   </form>
 </template>
 
@@ -67,7 +67,6 @@ const rules = {
 };
 
 const v$ = useVuelidate(rules, state, { $rewardEarly: true, $lazy: true });
-watch(v$, (val) => console.log(val));
 
 const onSubmit = async () => {
   const isFormCorrect = await v$.value.$validate();

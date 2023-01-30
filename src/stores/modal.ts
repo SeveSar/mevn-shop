@@ -17,5 +17,4 @@ export const useModalStore = defineStore({
       this.loginModal = false;
     },
   },
-  getters: {},
 });

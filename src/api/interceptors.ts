@@ -5,8 +5,8 @@ import type {
   AxiosError,
 } from "axios";
 import axios from "axios";
-import type { AuthResponse } from "@/models/response/AuthResponse";
-import { useAuthStore } from "@/store/auth";
+import type { UserResponse } from "@/user/models/response/UserResponse";
+import { useUserStore } from "@/stores/user";
 import router from "@/router/index";
 import { api } from "./api";
 import { getAccessToken, setToken } from "@/utils/tokenHelper";
@@ -19,9 +19,9 @@ enum StatusCode {
 interface ConfigImplements extends AxiosRequestConfig {
   _isRetry?: boolean;
 }
-let refreshTokenRequest: Promise<AxiosResponse<AuthResponse>> | null = null;
+let refreshTokenRequest: Promise<AxiosResponse<UserResponse>> | null = null;
 const errorHandler = async (error: AxiosError) => {
-  const authStore = useAuthStore();
+  const userStore = useUserStore();
   const response = error.response;
   const config = error.config as ConfigImplements;
 
@@ -43,12 +43,12 @@ const errorHandler = async (error: AxiosError) => {
 
           return axios(setTokenHeaders(config));
         } catch (e) {
-          authStore.logOut().then(() => {
+          userStore.logOut().then(() => {
             router.push("/login");
           });
         }
       }
-      authStore.logOut().then(() => {
+      userStore.logOut().then(() => {
         router.push("/login");
       });
     }

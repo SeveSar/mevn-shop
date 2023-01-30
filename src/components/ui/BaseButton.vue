@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="`button ${color}`"
+    :class="`button ${color} ${type}`"
     :type="role"
     @click="$emit('click')"
     :disabled="disabled"
@@ -19,9 +19,13 @@ export default defineComponent({
     },
   },
   props: {
+    type: {
+      type: String,
+      default: "standart",
+    },
     color: {
       type: String,
-      default: "",
+      default: "orange",
     },
     role: {
       type: String as PropType<ButtonHTMLAttributes["type"]>,
@@ -47,15 +51,17 @@ export default defineComponent({
   font-size: 16px;
   line-height: 22px;
   border-radius: 6px;
-  &.standart {
-    background: #ff7010;
-    padding: 13px 25px;
+  &.orange {
+    background: @main-color;
     &:hover {
-      background-color: darken(#ff7010, 15%);
+      background-color: darken(@main-color, 15%);
     }
   }
   &.red {
     background-color: #ff0000;
+  }
+  &.standart {
+    padding: 13px 25px;
   }
   &.small {
     padding: 10px;

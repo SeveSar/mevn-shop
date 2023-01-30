@@ -1,9 +1,6 @@
 <template>
   <TheHeader></TheHeader>
   <Teleport to="body">
-    <BaseModal>
-      <AppModalAuth></AppModalAuth>
-    </BaseModal>
     <router-link :to="{ name: 'Cart' }" class="cart-mobile">
       <img src="@/assets/images/icons/cart.svg" alt="" />
       <span>{{ totalItems }}</span>
@@ -18,10 +15,9 @@
 
 <script lang="ts">
 import TheHeader from "@/components/layouts/TheHeader.vue";
-import BaseModal from "@/components/ui/BaseModal.vue";
-import AppModalAuth from "@/components/modal/auth/ModalAuth.vue";
+
 import { useRouter, useRoute } from "vue-router";
-import { callNotification } from "@/utils/notice";
+
 import { useCartStore } from "@/stores/cart";
 import { mapState } from "pinia";
 import { watch, defineComponent, onMounted } from "vue";
@@ -34,10 +30,10 @@ export default defineComponent({
       if (route.query.msg) {
         switch (route.query.msg) {
           case "NOT_AUTH":
-            callNotification("error", {
-              title: "Error",
-              text: "Вы не авторизованы",
-            });
+            // callNotification("error", {
+            //   title: "Error",
+            //   text: "Вы не авторизованы",
+            // });
             break;
         }
         router.push({ query: {} });
@@ -55,8 +51,6 @@ export default defineComponent({
   },
   components: {
     TheHeader,
-    BaseModal,
-    AppModalAuth,
   },
   computed: {
     ...mapState(useCartStore, ["totalItems"]),

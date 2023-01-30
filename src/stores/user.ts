@@ -2,7 +2,7 @@ import { computed, toRefs, reactive } from "vue";
 import { defineStore } from "pinia";
 import { api } from "@/api/api";
 import { setToken, cleanTokensData } from "@/utils/tokenHelper";
-import type { IUser } from "@/models/IUser";
+import type { IUser } from "@/user/models/IUser";
 
 interface StateUser {
   token: string | null;

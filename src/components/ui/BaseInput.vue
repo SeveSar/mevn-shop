@@ -1,6 +1,6 @@
 <template>
   <div class="form-group">
-    <label :for="id"> {{ labelText }} </label>
+    <label v-if="labelText" :for="id"> {{ labelText }} </label>
     <input
       class="form-control"
       :id="id"
@@ -24,8 +24,10 @@ export default defineComponent({
   emits: ["update:modelValue", "onBlur", "onFocus"],
   props: {
     modelValue: {
-      type: [String, Number],
-      default: "",
+      type: null as unknown as PropType<string | number | null>,
+      default: null,
+      validator: (v: any) =>
+        typeof v === "string" || typeof v === "number" || v === null,
     },
     id: {
       type: String,
@@ -36,12 +38,13 @@ export default defineComponent({
       default: null,
     },
     errors: {
-      type: null as unknown as PropType<string | null>,
+      type: null as unknown as PropType<string | number | null>,
       default: null,
-      validator: (v: any) => typeof v === "string" || v === null,
+      validator: (v: any) =>
+        typeof v === "string" || typeof v === "number" || v === null,
     },
   },
-  setup(props, { emit }) {
+  setup(props, { emit, attrs }) {
     const updateValue = (e: Event) => {
       emit("update:modelValue", (e.target as HTMLInputElement).value);
     };
@@ -74,6 +77,7 @@ export default defineComponent({
   padding: 0 16px;
   line-height: 22px;
   width: 100%;
+  background-color: #ffffff;
   color: #000;
   transition: all 0.2s linear;
 

@@ -7,7 +7,7 @@
       "@/*": ["./src/*"]
     },
     "isolatedModules": false,
-    "target": "ES2020"
+    "lib": ["es5","es2017", "es6", "dom", "dom.iterable"]
   },
   "rules": {
     "@typescript-eslint/no-explicit-any": ["off"]

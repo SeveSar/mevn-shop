@@ -10,4 +10,4 @@
 <script lang="ts" setup>
 import TheHeader from "@/components/layouts/TheHeader.vue";
 </script>
-<style lang="scss" scoped></style>
+<style lang="less" scoped></style>
