@@ -5,11 +5,12 @@ import type {
   AxiosError,
 } from "axios";
 import axios from "axios";
-import type { UserResponse } from "@/user/models/response/UserResponse";
+import type { UserResponse } from "@/modules/user/models/response/UserResponse";
 import { useUserStore } from "@/stores/user";
 import router from "@/router/index";
 import { api } from "./api";
 import { getAccessToken, setToken } from "@/utils/tokenHelper";
+
 enum StatusCode {
   Unauthorized = 401,
   Forbidden = 403,

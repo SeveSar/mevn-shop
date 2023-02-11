@@ -19,20 +19,24 @@
 </template>
 
 <script lang="ts">
-import { ref } from "vue";
-
-import { defineComponent, onMounted, onUnmounted, watch } from "vue";
+import { defineComponent, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
-  emits: ["onClose"],
-  setup(_, { emit }) {
-    const isOpen = ref(false);
-
+  emits: ["close", "show"],
+  props: {
+    isOpen: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup(props, { emit }) {
+    //state
+    const { isOpen } = toRefs(props);
+    //methods
     const close = () => {
-      isOpen.value = false;
-      emit("onClose");
+      emit("close");
     };
     const show = () => {
-      isOpen.value = true;
+      emit("show");
     };
     const onKeyHandler = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -50,7 +54,6 @@ export default defineComponent({
       else document.body.classList.remove("no-scroll");
     });
     return {
-      isOpen,
       close,
       show,
     };

@@ -18,13 +18,13 @@ export const useCartStore = defineStore({
       inProccess: [],
     } as cartStore),
   getters: {
-    index:
+    getIndex:
       (state) =>
       (id: number): number =>
         state.cart.findIndex((item) => item.id === id),
     inCart(state) {
       return (id: number) => {
-        return this.index(id) !== -1;
+        return this.getIndex(id) !== -1;
       };
     },
     inProccessing() {
@@ -52,7 +52,7 @@ export const useCartStore = defineStore({
   },
   actions: {
     async addToCart(id: number) {
-      if (!useUserStore().isAuth) {
+      if (!useUserStore().isLoggedIn) {
         useModalStore().openLoginModal();
         return false;
       }

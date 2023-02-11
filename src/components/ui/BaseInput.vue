@@ -1,26 +1,24 @@
 <template>
-  <div class="form-group">
-    <label v-if="labelText" :for="id"> {{ labelText }} </label>
+  <label class="base-input">
+    <span class="base-input__label" v-if="labelText"> {{ labelText }} </span>
     <input
-      class="form-control"
-      :id="id"
+      class="base-input__control"
       :class="{ error: errors }"
       :value="modelValue"
       @input="updateValue"
       @blur="onBlur"
       @focus="onFocus"
-      v-bind="$attrs"
+      :placeholder="placeholder"
     />
     <transition name="fade">
-      <small v-if="errors">{{ errors }}</small>
+      <small class="base-input__error" v-if="errors">{{ errors }}</small>
     </transition>
-  </div>
+  </label>
 </template>
 
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
 export default defineComponent({
-  inheritAttrs: false,
   emits: ["update:modelValue", "onBlur", "onFocus"],
   props: {
     modelValue: {
@@ -29,10 +27,7 @@ export default defineComponent({
       validator: (v: any) =>
         typeof v === "string" || typeof v === "number" || v === null,
     },
-    id: {
-      type: String,
-      default: "",
-    },
+
     labelText: {
       type: String,
       default: null,
@@ -42,6 +37,10 @@ export default defineComponent({
       default: null,
       validator: (v: any) =>
         typeof v === "string" || typeof v === "number" || v === null,
+    },
+    placeholder: {
+      type: String,
+      default: "",
     },
   },
   setup(props, { emit, attrs }) {
@@ -64,48 +63,51 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-.form-group {
+.base-input {
   position: relative;
-}
-.form-control {
-  border: 1px solid #f0f0f0;
-  box-sizing: border-box;
-  border-radius: 6px;
-  height: 48px;
-  font-weight: 400;
-  font-size: 16px;
-  padding: 0 16px;
-  line-height: 22px;
-  width: 100%;
-  background-color: #ffffff;
-  color: #000;
-  transition: all 0.2s linear;
+  display: inline-block;
+  cursor: pointer;
+  &__control {
+    border: 1px solid #f0f0f0;
+    box-sizing: border-box;
+    border-radius: 6px;
+    height: 48px;
+    font-weight: 400;
+    font-size: 16px;
+    padding: 0 16px;
+    line-height: 22px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #000;
+    transition: all 0.2s linear;
 
-  &::placeholder {
+    &::placeholder {
+      color: #a5a5a5;
+    }
+    &:focus {
+      border-color: #ff7010;
+      outline: none;
+    }
+    &.error {
+      border-color: red;
+    }
+  }
+  &__label {
+    text-align: left;
+    font-size: 14px;
+    line-height: 18px;
+    display: inline-block;
     color: #a5a5a5;
+    margin-bottom: 8px;
   }
-  &:focus {
-    border-color: #ff7010;
-    outline: none;
+  &__error {
+    color: red;
+    display: inline-block;
+    margin-top: 5px;
+    position: absolute;
+    bottom: -19px;
+    left: 0;
   }
-  &.error {
-    border-color: red;
-  }
-}
-label {
-  text-align: left;
-  font-size: 14px;
-  line-height: 18px;
-  display: inline-block;
-  color: #a5a5a5;
-  margin-bottom: 8px;
-}
-small {
-  color: red;
-  display: inline-block;
-  margin-top: 5px;
-  position: absolute;
-  bottom: -19px;
 }
 .fade-enter-active,
 .fade-leave-active {

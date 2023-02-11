@@ -7,7 +7,8 @@
       "@/*": ["./src/*"]
     },
     "isolatedModules": false,
-    "lib": ["es5","es2017", "es6", "dom", "dom.iterable"]
+    "lib": ["es5","es2017", "es6", "dom", "dom.iterable"],
+    "types": ["node", "jest"],
   },
   "rules": {
     "@typescript-eslint/no-explicit-any": ["off"]

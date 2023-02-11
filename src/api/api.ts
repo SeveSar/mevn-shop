@@ -1,6 +1,6 @@
 import instance from "./instances";
-import AuthService from "./services/auth";
-import ProductServices from "./services/products";
+import AuthService from "@/modules/user/services/auth";
+import ProductServices from "@/modules/product/services/products";
 import axios from "axios";
 
 interface Api {

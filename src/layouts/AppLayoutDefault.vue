@@ -15,13 +15,15 @@
 
 <script lang="ts">
 import TheHeader from "@/components/layouts/TheHeader.vue";
-
 import { useRouter, useRoute } from "vue-router";
 
 import { useCartStore } from "@/stores/cart";
 import { mapState } from "pinia";
 import { watch, defineComponent, onMounted } from "vue";
 export default defineComponent({
+  components: {
+    TheHeader,
+  },
   setup() {
     const route = useRoute();
     const router = useRouter();
@@ -49,9 +51,7 @@ export default defineComponent({
       }
     );
   },
-  components: {
-    TheHeader,
-  },
+
   computed: {
     ...mapState(useCartStore, ["totalItems"]),
   },

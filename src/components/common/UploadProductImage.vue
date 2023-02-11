@@ -30,6 +30,7 @@ export default defineComponent({
       default: null,
     },
   },
+
   setup(props, { emit }) {
     const { modelValue } = toRefs(props);
     const getFile = (event: Event) => {

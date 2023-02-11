@@ -1,8 +1,8 @@
 <template>
   <AppToast />
-  <AppModalAuth></AppModalAuth>
+  <ModalAuth></ModalAuth>
   <AppLayout>
-    <RouterView />
+    <router-view />
   </AppLayout>
 </template>
 
@@ -11,13 +11,13 @@ import { defineComponent } from "vue";
 
 import AppLayout from "@/layouts/AppLayout.vue";
 import AppToast from "./components/ui/AppToast.vue";
-import AppModalAuth from "@/components/modals/auth/ModalAuth.vue";
+import ModalAuth from "./modules/user/components/modals/ModalAuth/ModalAuth.vue";
 
 export default defineComponent({
   components: {
     AppLayout,
     AppToast,
-    AppModalAuth,
+    ModalAuth,
   },
 });
 </script>

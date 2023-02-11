@@ -12,30 +12,34 @@ const router = createRouter({
     {
       path: "/",
       name: "Home",
-      component: () => import("@/product/views/PageProducts/PageIndex.vue"),
       alias: ["/products"],
+      component: () =>
+        import("@/modules/product/views/PageProducts/PageProducts.vue"),
     },
     {
       path: "/admin",
       name: "Admin",
-      component: () => import("../admin/views/PageAdmin/PageAdmin.vue"),
+      component: () => import("@/modules/admin/views/PageAdmin/PageAdmin.vue"),
       children: [
         {
           name: "Pizza",
           path: "",
-          component: () => import("../admin/views/CreatePizza/CreatePizza.vue"),
+          component: import(
+            "@/modules/admin/views/CreatePizza/CreatePizza.vue"
+          ),
         },
         {
           name: "Goods",
           path: "goods",
-          component: () => import("@/admin/views/CreateGoods/CreateGoods.vue"),
+          component: () =>
+            import("@/modules/admin/views/CreateGoods/CreateGoods.vue"),
         },
       ],
     },
     {
       path: "/cart",
       name: "Cart",
-      component: () => import("@/cart/views/PageCart/PageCart.vue"),
+      component: () => import("@/modules/cart/views/PageCart/PageCart.vue"),
       meta: {
         isAuth: true,
       },
@@ -43,7 +47,7 @@ const router = createRouter({
     {
       path: "/order-done",
       name: "Order",
-      component: () => import("@/order/views/PageOrder/PageOrder.vue"),
+      component: () => import("@/modules/order/views/PageOrder/PageOrder.vue"),
       meta: {
         isAuth: true,
       },
@@ -51,7 +55,8 @@ const router = createRouter({
     {
       path: "/profile",
       name: "Profile",
-      component: () => import("@/profile/views/PageProfile/PageProfile.vue"),
+      component: () =>
+        import("@/modules/profile/views/PageProfile/PageProfile.vue"),
       meta: {
         isAuth: true,
       },
@@ -59,7 +64,8 @@ const router = createRouter({
     {
       name: "Product",
       path: "/products/:id",
-      component: () => import("@/product/views/_PageProduct/_PageProduct.vue"),
+      component: () =>
+        import("@/modules/product/views/PageProduct/PageProduct.vue"),
     },
     {
       path: "/:pathMatch(.*)*",

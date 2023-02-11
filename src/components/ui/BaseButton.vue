@@ -51,6 +51,7 @@ export default defineComponent({
   font-size: 16px;
   line-height: 22px;
   border-radius: 6px;
+
   &.orange {
     background: @main-color;
     &:hover {
