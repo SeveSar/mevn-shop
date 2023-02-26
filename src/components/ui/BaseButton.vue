@@ -1,7 +1,8 @@
 <template>
   <button
-    :class="`button ${color} ${type}`"
-    :type="role"
+    :class="classes"
+    :type="type"
+    class="button"
     @click="$emit('click')"
     :disabled="disabled"
   >
@@ -10,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 import type { PropType, ButtonHTMLAttributes } from "vue";
 export default defineComponent({
   emits: {
@@ -19,15 +20,17 @@ export default defineComponent({
     },
   },
   props: {
+    variant: {
+      type: String as PropType<"primary" | "secondary" | "text" | "border">,
+      default: "primary",
+    },
+    size: {
+      type: String,
+    },
+    rounded: {
+      type: Boolean,
+    },
     type: {
-      type: String,
-      default: "standart",
-    },
-    color: {
-      type: String,
-      default: "orange",
-    },
-    role: {
       type: String as PropType<ButtonHTMLAttributes["type"]>,
       default: "button",
     },
@@ -35,6 +38,15 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+  },
+  setup(props) {
+    const classes = computed(() => ({
+      [`button-variant--${props.variant}`]: true,
+      [`button-size--${props.size}`]: true,
+    }));
+    return {
+      classes,
+    };
   },
 });
 </script>
@@ -51,49 +63,50 @@ export default defineComponent({
   font-size: 16px;
   line-height: 22px;
   border-radius: 6px;
+  min-height: 48px;
 
-  &.orange {
-    background: @main-color;
-    &:hover {
-      background-color: darken(@main-color, 15%);
+  &-variant {
+    &--primary {
+      min-height: 48px;
+      padding: 10px 25px;
+      background: @main-color;
+      &:hover {
+        background-color: darken(@main-color, 15%);
+      }
     }
-  }
-  &.red {
-    background-color: #ff0000;
-  }
-  &.standart {
-    padding: 13px 25px;
-  }
-  &.small {
-    padding: 10px;
-    color: #000;
-    border-radius: 25px;
-    background-color: #f0f0f0;
 
-    &:hover,
-    &.active {
-      background-color: #ff0000;
-      color: #fff;
+    &--secondary {
+      background-color: @gray-color;
+      line-height: 1;
+      color: @black-color;
+      &:hover,
+      &.active {
+        background-color: @red-color;
+        color: #fff;
+      }
+    }
+
+    &--border {
+      background-color: @gray-color;
+      line-height: 1;
+      background-color: transparent;
+      color: @black-color;
+      border: 1px solid @main-color;
+      border-radius: 6px;
+      padding: 10px 25px;
+      color: @main-color;
+    }
+
+    &--text {
+      padding: 0;
+      background: none;
     }
   }
-  &.rounded {
-    padding: 13px 30px;
-    border-radius: 30px;
-    color: #000;
-    font-size: 15px;
-    font-weight: 700;
-    background-color: #f9f9f9;
-    &:hover {
-      background-color: #c6bfbf;
-    }
-    &.active {
-      background-color: #ff7010;
-      color: #fff;
-    }
-    @media screen and (max-width: 575px) {
-      padding: 7px 15px;
-      font-size: 12px;
-      line-height: 18px;
+
+  &-size {
+    &--small {
+      padding: 10px;
+      min-height: 35px;
     }
   }
 }

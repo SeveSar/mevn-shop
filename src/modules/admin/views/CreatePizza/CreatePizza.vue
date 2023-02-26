@@ -24,14 +24,21 @@ export default defineComponent({
   setup() {
     //state
     const isModalCreateProduct = ref(false);
+    const isModalCreateCategories = ref(false);
     const creatingButtons = [
       { title: "Создать товар", id: 1, modal: "product" },
       { title: "Создать категории", id: 2, modal: "category" },
     ];
+
+    //methods
     const openModal = (modalType: string) => {
       switch (modalType) {
         case "product":
           isModalCreateProduct.value = true;
+          return;
+        case "category":
+          isModalCreateCategories.value = true;
+          return;
       }
     };
     return {

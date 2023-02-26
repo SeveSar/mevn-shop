@@ -10,25 +10,32 @@
 
     <div class="modal-content">
       <form class="form" @submit.prevent="createPizza">
-        <BaseInput placeholder="Имя" v-model="productFields.title" />
         <BaseInput
+          class="form__control"
+          placeholder="Имя"
+          v-model="productFields.title"
+        />
+        <BaseInput
+          class="form__control"
           placeholder="Цена"
           type="number"
           v-model="productFields.price"
         />
         <BaseInput
+          class="form__control"
           type="number"
           placeholder="Количество"
           v-model="productFields.amount"
+          tpye="number"
         />
-        <div class="form-group">
+        <div class="form__group">
           <BaseTextArea
             height="150px"
             placeholder="Описание"
             v-model="productFields.description"
           ></BaseTextArea>
         </div>
-        <div class="form-group form-upload">
+        <div class="form__group form-upload">
           <UploadProductImage v-model="file" />
           <div v-if="!file">
             <span class="form-upload__or">Или</span>
@@ -39,10 +46,10 @@
             />
           </div>
         </div>
-        <div class="form-group form-checkbox">
-          <div class="form-checkbox__title">Добавить размеры:</div>
+        <div class="form__group form__checkbox">
+          <div class="form__checkbox-title">Добавить размеры:</div>
           <BaseCheckBox
-            :id="check.id"
+            class="form__checkbox-control"
             :value="check.value"
             v-model="productFields.sizes"
             v-for="check in sizesValues"
@@ -50,10 +57,10 @@
             :label="check.label"
           ></BaseCheckBox>
         </div>
-        <div class="form-group form-checkbox">
-          <div class="form-checkbox__title">Добавить типы теста:</div>
+        <div class="form-group form__checkbox">
+          <div class="form__checkbox-title">Добавить типы теста:</div>
           <BaseCheckBox
-            :id="check.id"
+            class="form__checkbox-control"
             :value="check.value"
             v-model="productFields.dough"
             v-for="check in doughValues"
@@ -61,8 +68,9 @@
             :label="check.label"
           ></BaseCheckBox>
         </div>
+
         <div class="form__footer">
-          <BaseButton role="submit" type="standart"> Создать </BaseButton>
+          <BaseButton type="submit"> Создать </BaseButton>
         </div>
       </form>
     </div>
@@ -70,14 +78,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, type Ref } from "vue";
+import { defineComponent, ref, type Ref } from "vue";
 import BaseModal from "@/components/ui/BaseModal.vue";
 import BaseInput from "@/components/ui/BaseInput.vue";
-import UploadProductImage from "@/components/common/UploadProductImage.vue";
+import UploadProductImage from "@/modules/admin/components/UploadProductImage/UploadProductImage.vue";
 import BaseCheckBox from "@/components/ui/BaseCheckBox.vue";
 import BaseTextArea from "@/components/ui/BaseTextArea.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import type { IProduct } from "@/modules/product/models/IProduct";
+
 import { api } from "@/api/api";
 
 export default defineComponent({
@@ -106,6 +115,7 @@ export default defineComponent({
       { label: "Традиционное", value: 1, id: "dough-1" },
       { label: "Тонкое", value: 2, id: "dough-2" },
     ];
+
     const urlInput = ref("");
     const file = ref(null) as Ref<File | null>;
     const productFields = ref<IProduct>({
@@ -122,31 +132,25 @@ export default defineComponent({
 
     //methods
     const createPizza = async () => {
-      const isNotValid = Object.values(productFields).some((value) => !value);
-      // if (isNotValid) {
-      //   return alert("Заполните поля");
-      // }
       try {
+        const bodyRequest = {};
+        if (file.value) {
+          const fileRes = await api.files.uploadFile(file.value);
+          productFields.value.imageUrl = fileRes.filename;
+        }
+
         const data = await api.product.createProduct(productFields.value);
+        console.log(data, "data");
       } catch (e) {
         console.log(e);
       }
     };
-    const setFile = (image: File | null) => {
-      productFields.value.imageUrl = image;
-    };
-    watch(urlInput, (value: string) => {
-      productFields.value.imageUrl = value;
-    });
-    watch(file, () => {
-      productFields.value.imageUrl = file.value;
-    });
+
     return {
       modalRef,
       sizesValues,
       doughValues,
       createPizza,
-      setFile,
       productFields,
       file,
       urlInput,
@@ -169,21 +173,24 @@ export default defineComponent({
     display: flex;
     justify-content: center;
   }
-}
-.modal-content {
-  .form-group {
-    margin-bottom: 15px;
-    &.form-checkbox {
-      .form-group {
-        margin-bottom: 0;
+  &__checkbox {
+    &-control {
+      &:not(:last-child) {
+        margin-right: 20px;
       }
     }
-  }
-  .form-checkbox {
-    &__title {
+    &-title {
       margin-bottom: 10px;
     }
   }
+  &__group {
+    margin-bottom: 25px;
+  }
+  &__control {
+    margin-bottom: 25px;
+  }
+}
+.modal-content {
   .form-upload {
     .form-group {
       margin-bottom: 0;

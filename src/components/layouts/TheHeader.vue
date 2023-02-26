@@ -19,7 +19,7 @@
                 </button>
                 <div v-if="userStore.isLoggedIn" class="user-drop">
                   <div class="current">
-                    <BaseButton>
+                    <BaseButton variant="text">
                       <AppIcon name="IconUser"></AppIcon>
                       Вы
                     </BaseButton>
@@ -86,7 +86,7 @@
       </BaseButton>
       <div v-if="userStore.isLoggedIn" class="user-drop">
         <div class="current">
-          <BaseButton>
+          <BaseButton variant="text">
             <AppIcon name="IconUser"></AppIcon>
             Вы
           </BaseButton>

@@ -1,11 +1,7 @@
 <template>
   <div class="form-switcher">
     <keep-alive>
-      <component
-        :is="`form-${currentFormType.toLowerCase()}`"
-        v-model="userCredentials"
-        @submitSuccess="onSubmit"
-      ></component>
+      <component :is="`form-${currentFormType.toLowerCase()}`"></component>
     </keep-alive>
   </div>
   <div class="form-switcher__notify">
@@ -29,11 +25,7 @@ export default defineComponent({
   },
   setup(props) {
     let currentFormType = ref<FormType>("login");
-    const userCredentials = ref({
-      name: "",
-      password: "",
-      email: "",
-    });
+
     const switchTab = () => {
       switch (currentFormType.value) {
         case "login":
@@ -50,29 +42,11 @@ export default defineComponent({
         ? "Нет аккаунта?"
         : "Уже есть аккаунт?";
     });
-    watch(
-      userCredentials,
-      (value) => {
-        console.log(value);
-      },
-      { deep: true }
-    );
-    const onSubmit = () => {
-      switch (currentFormType.value) {
-        case "login":
-          console.log("submit-sucess-login");
-          return;
-        case "register":
-          console.log("submit-sucess-register");
-          return;
-      }
-    };
+
     return {
       currentFormType,
       switchTab,
       currentNotifyText,
-      userCredentials,
-      onSubmit,
     };
   },
 });
@@ -92,30 +66,4 @@ export default defineComponent({
     }
   }
 }
-// .form-auth {
-//   &__title {
-//     font-weight: 500;
-//     font-size: 32px;
-//     line-height: 40px;
-//     margin-bottom: 15px;
-//   }
-//   &__text {
-//     font-size: 16px;
-//     line-height: 22px;
-//   }
-//   &__body {
-//     margin-top: 20px;
-//   }
-
-//   .button {
-//     width: 100%;
-//     margin-top: 20px;
-//   }
-// }
-// .form-group {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: flex-start;
-//   margin-bottom: 25px;
-// }
 </style>

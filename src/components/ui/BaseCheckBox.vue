@@ -1,17 +1,16 @@
 <template>
-  <div class="form-group">
+  <label class="base-checkbox" :class="{ 'base-checkbox--active': isChecked }">
     <input
-      :id="id"
       type="checkbox"
+      class="base-checkbox__control"
       :value="value"
       :disabled="disabled"
       @change="onChange"
       :checked="isChecked"
     />
-    <label :for="id">
-      {{ label }}
-    </label>
-  </div>
+
+    {{ label }}
+  </label>
 </template>
 
 <script lang="ts">
@@ -29,14 +28,6 @@ export default defineComponent({
       required: true,
     },
     label: {
-      type: String,
-      default: "",
-    },
-    checked: {
-      type: Boolean,
-      default: false,
-    },
-    id: {
       type: String,
       default: "",
     },
@@ -62,8 +53,8 @@ export default defineComponent({
       }
     };
     const isChecked = computed(() => {
-      if (props instanceof Array) {
-        return props.includes(props.value);
+      if (props.modelValue instanceof Array) {
+        return props.modelValue.includes(props.value);
       }
       return props.modelValue === true;
     });
@@ -76,37 +67,34 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-.form-group {
-  input {
-    display: none;
-    &:checked ~ label {
-      &::before {
-        border-color: @main-color;
-        background-color: @main-color;
-        background-image: url("@/assets/images/icons/tick.svg");
-        background-repeat: no-repeat;
-        background-position: center;
-      }
+.base-checkbox {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1;
+  position: relative;
+  cursor: pointer;
+  padding-left: 24px;
+  &:before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border: 1px solid @gray2-color;
+    border-radius: 2px;
+    position: absolute;
+    left: 0;
+    top: 1px;
+  }
+  &--active {
+    &::before {
+      border-color: @main-color;
+      background-color: @main-color;
+      background-image: url("@/assets/images/icons/tick.svg");
+      background-repeat: no-repeat;
+      background-position: center;
     }
   }
-  label {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 22px;
-    position: relative;
-    cursor: pointer;
-    padding-left: 24px;
-    &:before {
-      content: "";
-      width: 16px;
-      height: 16px;
-      border: 1px solid @gray-color;
-      border-radius: 2px;
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-    }
+  &__control {
+    display: none;
   }
 }
 </style>

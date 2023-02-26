@@ -1,13 +1,13 @@
 <template>
   <div class="uploader">
-    <label class="upload-button">
+    <label class="uploader__button">
       <input
-        class="upload-button__input"
+        class="uploader__button-input"
         type="file"
         accept="image/*"
         @change="getFile"
       />
-      <span class="upload-button__text"> Загрузить картинку </span>
+      <span class="ploader__button-text"> Загрузить картинку </span>
     </label>
     <div class="uploader__preview" v-if="modelValue" @click="deleteFile">
       <img class="uploader__img" :src="getSrc()" alt="" />
@@ -68,11 +68,17 @@ export default defineComponent({
     display: flex;
     align-items: center;
     cursor: pointer;
+    flex-grow: 1;
+    transition: all 0.2s linear;
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   &__img {
-    width: 100px;
-    height: auto;
+    width: 100%;
+    max-width: 200px;
+    height: 100%;
     max-height: 70px;
     margin-right: 10px;
     object-fit: cover;
@@ -85,16 +91,16 @@ export default defineComponent({
   &__size {
     color: rgb(42, 42, 207);
   }
-}
-.upload-button {
-  padding: 15px 20px;
-  background-color: @main-color;
-  color: #fff;
-  border-radius: 12px;
-  cursor: pointer;
-  display: inline-block;
-  &__input {
-    display: none;
+  &__button {
+    padding: 15px 20px;
+    background-color: @main-color;
+    color: #fff;
+    border-radius: 12px;
+    cursor: pointer;
+    display: inline-block;
+    &-input {
+      display: none;
+    }
   }
 }
 </style>

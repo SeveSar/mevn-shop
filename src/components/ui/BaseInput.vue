@@ -9,6 +9,7 @@
       @blur="onBlur"
       @focus="onFocus"
       :placeholder="placeholder"
+      :type="type"
     />
     <transition name="fade">
       <small class="base-input__error" v-if="errors">{{ errors }}</small>
@@ -42,6 +43,10 @@ export default defineComponent({
       type: String,
       default: "",
     },
+    type: {
+      type: String,
+      default: "text",
+    },
   },
   setup(props, { emit, attrs }) {
     const updateValue = (e: Event) => {
@@ -65,8 +70,9 @@ export default defineComponent({
 <style scoped lang="less">
 .base-input {
   position: relative;
-  display: inline-block;
+  display: block;
   cursor: pointer;
+
   &__control {
     border: 1px solid #f0f0f0;
     box-sizing: border-box;

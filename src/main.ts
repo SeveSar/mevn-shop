@@ -16,10 +16,11 @@ const app = createApp(App);
 app.use(createPinia());
 app.use(router);
 app.use(toastPlugin);
+
 const productsStore = useProductsStore();
 
 productsStore
-  .fetchProducts()
+  .getAllProducts()
   .then(() => {
     const spinnerAppElem = document.getElementById("app-spinner");
     if (spinnerAppElem) {

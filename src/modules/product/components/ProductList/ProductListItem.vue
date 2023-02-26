@@ -18,8 +18,8 @@
     <div class="product__actions" v-if="!userCartStore.inCart(product.id)">
       <BaseButton
         :class="{ active: size.active }"
-        color="red"
-        type="small"
+        size="small"
+        variant="secondary"
         v-for="size in product.sizes"
         :key="size.id"
         @click="productsStore.changeSizeProduct(product.id, size.id)"
@@ -31,13 +31,11 @@
       <BaseButton
         v-if="!userCartStore.inCart(product.id)"
         @click="userCartStore.addToCart(product.id)"
-        type="standart"
       >
         Добавить
       </BaseButton>
       <BaseButton
         color="red"
-        type="standart"
         v-else
         @click="userCartStore.delFromCart(product.id)"
       >

@@ -3,6 +3,7 @@ import ErrorPage from "@/views/PageError/PageError.vue";
 import { loadLayoutMiddleware } from "./middleware/loadLayout.middleware";
 import { authMiddleware } from "./middleware/auth.middleware";
 import { AppLayoutsEnum } from "@/layouts/layouts.types";
+import { RouteNamesEnum } from "./router.types";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,22 +12,21 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "Home",
+      name: RouteNamesEnum.home,
       alias: ["/products"],
       component: () =>
         import("@/modules/product/views/PageProducts/PageProducts.vue"),
     },
     {
       path: "/admin",
-      name: "Admin",
+      name: RouteNamesEnum.admin,
       component: () => import("@/modules/admin/views/PageAdmin/PageAdmin.vue"),
       children: [
         {
           name: "Pizza",
           path: "",
-          component: import(
-            "@/modules/admin/views/CreatePizza/CreatePizza.vue"
-          ),
+          component: () =>
+            import("@/modules/admin/views/CreatePizza/CreatePizza.vue"),
         },
         {
           name: "Goods",
@@ -38,7 +38,7 @@ const router = createRouter({
     },
     {
       path: "/cart",
-      name: "Cart",
+      name: RouteNamesEnum.cart,
       component: () => import("@/modules/cart/views/PageCart/PageCart.vue"),
       meta: {
         isAuth: true,
@@ -72,6 +72,7 @@ const router = createRouter({
       component: ErrorPage,
       meta: {
         layout: AppLayoutsEnum.error,
+        isAuth: false,
       },
     },
   ],

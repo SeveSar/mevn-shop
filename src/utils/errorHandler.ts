@@ -1,11 +1,12 @@
-import { type AxiosError, isAxiosError } from "axios";
+import type { AxiosError } from "axios";
+import axios from "axios";
 
 interface ServerError {
   message: string;
 }
 
-const errorHandler = (error: unknown) => {
-  if (isAxiosError(error)) {
+const getErrorMessage = (error: unknown) => {
+  if (axios.isAxiosError(error)) {
     const serverError = error as AxiosError<ServerError>;
     if (serverError && serverError.response) {
       return serverError.response.data.message;
@@ -14,4 +15,4 @@ const errorHandler = (error: unknown) => {
   }
 };
 
-export { errorHandler };
+export { getErrorMessage };

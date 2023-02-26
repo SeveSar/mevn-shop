@@ -8,4 +8,5 @@ export interface IProduct {
   sizes: number[];
   category: string;
   dough: number[];
+  filters: string[];
 }

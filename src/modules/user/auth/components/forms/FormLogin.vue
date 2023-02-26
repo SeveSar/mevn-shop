@@ -9,7 +9,7 @@
     <div class="form-auth__body">
       <BaseInput
         class="form-auth__control"
-        v-model="v$.email.$model"
+        v-model="userCredentials.email"
         labelText="Ваш E-mail"
         id="auth-1"
         name="email"
@@ -28,23 +28,26 @@
         :errors="
           v$.password.$errors.length ? v$.password.$errors[0].$message as string : null
         "
-        v-model="v$.password.$model"
+        v-model="userCredentials.password"
       />
     </div>
 
-    <BaseButton class="form-auth__submit" role="submit" type="standart">
+    <BaseButton class="form-auth__submit" type="submit">
       Авторизоваться
     </BaseButton>
   </form>
 </template>
 
 <script lang="ts">
-import { reactive, toRefs, defineComponent, type PropType } from "vue";
+import { reactive, defineComponent, type PropType, inject } from "vue";
 
 import useVuelidate from "@vuelidate/core";
 import { getValidationRule } from "@/utils/validations";
 import BaseInput from "@/components/ui/BaseInput.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
+import { useUserStore } from "@/stores/user";
+import type { IToast } from "@/plugins/plugins.types";
+import { getErrorMessage } from "@/utils/errorHandler";
 
 interface IUserCredentials {
   email: string;
@@ -62,27 +65,26 @@ export default defineComponent({
     BaseButton,
   },
   setup(props, { emit }) {
-    // const showToast = inject("showToast") as (message: IToast) => void;
-    // const userStore = useUserStore();
-    const state = reactive({
+    const showToast = inject("showToast") as (message: IToast) => void;
+    const userStore = useUserStore();
+    const userCredentials = reactive({
       email: "",
       password: "",
     });
 
     const onSubmit = async () => {
-      // try {
-      //   await userStore.login(data.email, data.password);
-      // } catch (e) {
-      //   const message = errorHandler(e) || "Unknown";
-      //   showToast({ type: "error", text: message });
-      // }
       const isFormCorrect = await v$.value.$validate();
-      const { email, password } = toRefs(state);
+
       if (isFormCorrect) {
-        emit("submit-form", {
-          email: email.value,
-          password: password.value,
-        });
+        try {
+          await userStore.login(
+            userCredentials.email,
+            userCredentials.password
+          );
+        } catch (e) {
+          const message = getErrorMessage(e) || "Unknown";
+          showToast({ type: "error", text: message });
+        }
       }
     };
 
@@ -91,9 +93,13 @@ export default defineComponent({
       password: getValidationRule("password"),
     };
 
-    const v$ = useVuelidate(rules, state, { $rewardEarly: true, $lazy: true });
+    const v$ = useVuelidate(rules, userCredentials, {
+      $rewardEarly: true,
+      $lazy: true,
+    });
     return {
       onSubmit,
+      userCredentials,
       v$,
     };
   },

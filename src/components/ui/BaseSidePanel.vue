@@ -1,16 +1,21 @@
 <template>
   <Teleport to="body">
-    <transition name="fade">
-      <div class="modal-overlay" v-if="isOpen" @mousedown.self="close">
-        <div class="modal">
-          <button class="modal-close" @click="close">
+    <transition name="side">
+      <div class="side-panel-overlay" v-if="isOpen" @mousedown.self="close">
+        <div class="side-panel">
+          <button class="side-panel__close" @click="close">
             <img src="@/assets/images/icons/close.svg" alt="" />
           </button>
-          <div class="modal__header" v-if="$slots.header">
-            <slot name="header"></slot>
+          <div class="side-panel__header">
+            <h3 class="side-panel__title">
+              {{ title }}
+            </h3>
           </div>
-          <div class="modal__content">
+          <div class="side-panel__content">
             <slot></slot>
+          </div>
+          <div class="side-panel__footer">
+            <slot name="footer"></slot>
           </div>
         </div>
       </div>
@@ -33,6 +38,10 @@ export default defineComponent({
     isOpen: {
       type: Boolean,
       default: false,
+    },
+    title: {
+      type: String,
+      default: null,
     },
   },
   setup(props, { emit }) {
@@ -69,36 +78,47 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-.modal {
+.side-panel {
   background: #f9f9f9;
-  border-radius: 24px;
-  max-width: 850px;
-  margin: auto;
-  width: 100%;
-  padding: 60px 20px;
-  color: #191919;
-  position: relative;
-}
 
-.modal-close {
+  max-width: 520px;
   position: absolute;
-  right: -62px;
-  top: 0;
-  transition: all 0.3s ease;
+  right: 0;
+  width: 100%;
+  color: #191919;
+  padding-top: 35px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
-  &:hover {
-    transform: translateY(-3px);
+  &__close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+    }
+  }
+
+  &__content {
+    padding: 0 20px;
+  }
+  &__footer {
+    padding: 12px 20px 12px;
+    border-top: 1px solid @gray-color;
+    margin-top: auto;
   }
 }
 
-.modal-overlay {
-  display: flex;
+.side-panel-overlay {
   background: rgba(25, 25, 25, 0.4);
   backdrop-filter: blur(32px);
   z-index: 1001;
   position: relative;
   overflow: auto;
-  padding: 50px;
+
   position: fixed;
   top: 0;
   left: 0;
