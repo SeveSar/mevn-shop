@@ -1,5 +1,5 @@
 import type { AxiosInstance } from "axios";
-import type { IProduct } from "../models/IProduct";
+import type { IProduct, TFilterItem } from "../../../models/IProduct";
 
 export default class ProductServices {
   private readonly $axios: AxiosInstance;
@@ -9,10 +9,19 @@ export default class ProductServices {
     this.$axios = $axios;
     this.$http = $http;
   }
-  async fetchProducts() {
-    const res = await this.$http.get<IProduct>("/products");
+
+  async fetchProducts(filters: string[]) {
+    let res;
+    if (filters && filters.length) {
+      res = await this.$http.get<IProduct>("/products", {
+        params: { filters },
+      });
+    } else {
+      res = await this.$http.get<IProduct>("/products");
+    }
     return res.data;
   }
+
   async fetchProductFilters() {
     const res = await this.$http.get("/filter");
     return res.data;

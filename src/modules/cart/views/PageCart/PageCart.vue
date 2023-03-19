@@ -27,7 +27,7 @@
           <span>Итого: </span> ₽{{ totalPrice }}
         </div>
       </div>
-      <BaseButton class="button_order" variant="standart" @click="order">
+      <BaseButton class="button_order" @click="order">
         Оформить заказ
       </BaseButton>
     </div>

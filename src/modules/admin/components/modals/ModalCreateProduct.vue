@@ -85,7 +85,7 @@ import UploadProductImage from "@/modules/admin/components/UploadProductImage/Up
 import BaseCheckBox from "@/components/ui/BaseCheckBox.vue";
 import BaseTextArea from "@/components/ui/BaseTextArea.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
-import type { IProduct } from "@/modules/product/models/IProduct";
+import type { IProduct } from "@/models/IProduct";
 
 import { api } from "@/api/api";
 
@@ -119,14 +119,16 @@ export default defineComponent({
     const urlInput = ref("");
     const file = ref(null) as Ref<File | null>;
     const productFields = ref<IProduct>({
+      id: "",
       title: "",
-      price: null,
+      price: 0,
       description: "",
       imageUrl: "",
-      amount: null,
+      amount: 0,
       sizes: [],
+      category: "",
       dough: [],
-      category: "df",
+      filters: [],
     });
     const modalRef = ref<InstanceType<typeof BaseModal> | null>(null);
 

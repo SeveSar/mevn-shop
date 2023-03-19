@@ -3,11 +3,12 @@ import { defineStore } from "pinia";
 import { useUserStore } from "@/stores/user";
 
 import { useModalStore } from "@/stores/modal";
-import type { Cartitem } from "@/types/CartItem";
-import { useProductsStore } from "./products";
+import type { ICart } from "@/models/ICart";
+import { useProductsStore } from "../modules/product/stores/products";
+
 interface cartStore {
-  cart: Cartitem[];
-  inProccess: number[];
+  cart: ICart[];
+  inProccess: string[];
 }
 
 export const useCartStore = defineStore({
@@ -19,34 +20,34 @@ export const useCartStore = defineStore({
     } as cartStore),
   getters: {
     getIndex() {
-      return (id: number): number =>
+      return (id: string): number =>
         this.cart.findIndex((item) => item.id === id);
     },
 
     inCart() {
-      return (id: number) => {
+      return (id: string) => {
         return this.getIndex(id) !== -1;
       };
     },
 
     inProccessing() {
-      return (id: number): boolean => this.inProccess.includes(id);
+      return (id: string): boolean => this.inProccess.includes(id);
     },
 
     getItem() {
-      return (id: number) => this.cart.find((item) => item.id === id);
+      return (id: string) => this.cart.find((item) => item.id === id);
     },
 
     canAdd() {
-      return (id: number) => !this.inProccessing(id) && !this.inCart(id);
+      return (id: string) => !this.inProccessing(id) && !this.inCart(id);
     },
 
     canDel() {
-      return (id: number) => !this.inProccessing(id) && this.inCart(id);
+      return (id: string) => !this.inProccessing(id) && this.inCart(id);
     },
 
     canUpdate() {
-      return (id: number) => !this.inProccessing(id) && this.inCart(id);
+      return (id: string) => !this.inProccessing(id) && this.inCart(id);
     },
 
     totalPrice(): number {
@@ -62,7 +63,7 @@ export const useCartStore = defineStore({
     },
   },
   actions: {
-    async addToCart(id: number) {
+    async addToCart(id: string) {
       if (!useUserStore().isLoggedIn) {
         useModalStore().openLoginModal();
         return false;
@@ -76,14 +77,15 @@ export const useCartStore = defineStore({
         const newItem = {
           ...cartItem,
           cnt: 1,
-        } as Cartitem;
+        } as ICart;
         this.cart.push(newItem);
+
         // await addtoCart(newItem, useUserStore().user.id ?? "");
         this.inProccess = this.inProccess.filter((id) => id !== id);
       }
     },
 
-    async updateCnt(id: number, newCnt: number) {
+    async updateCnt(id: string, newCnt: number) {
       if (this.canUpdate(id)) {
         this.inProccess.push(id);
         const itemCart = this.getItem(id);
@@ -98,7 +100,7 @@ export const useCartStore = defineStore({
       }
     },
 
-    async delFromCart(id: number) {
+    async delFromCart(id: string) {
       if (this.canDel(id)) {
         this.inProccess.push(id);
         this.cart = this.cart.filter((pr) => pr.id !== id);
@@ -107,7 +109,7 @@ export const useCartStore = defineStore({
       }
     },
 
-    saveCart(cart: Cartitem[]) {
+    saveCart(cart: ICart[]) {
       this.cart = cart;
     },
 

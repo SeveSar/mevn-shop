@@ -53,7 +53,7 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .button {
-  font-family: "Inter";
+  font-family: "SF-Pro";
   font-weight: 400;
   color: #ffffff;
   transition: all 0.2s linear;

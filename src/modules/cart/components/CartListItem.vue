@@ -3,9 +3,13 @@
     <div class="product__inner">
       <div class="product__col">
         <div class="product__content">
-          <img :src="itemCart.imageUrl" alt="" class="product__img" />
+          <img
+            :src="(itemCart.imageUrl as string)"
+            alt=""
+            class="product__img"
+          />
           <div class="product__info">
-            <h4 class="product__name">{{ itemCart.name }}</h4>
+            <h4 class="product__name">{{ itemCart.title }}</h4>
             <div class="product__rating">Рейтинг: {{ itemCart.rating }}</div>
           </div>
         </div>
@@ -55,7 +59,7 @@
 </template>
 
 <script lang="ts">
-import type { Cartitem } from "@/types/CartItem";
+import type { ICart } from "@/models/ICart";
 import { useCartStore } from "@/stores/cart";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import { defineComponent } from "vue";
@@ -67,7 +71,7 @@ export default defineComponent({
   },
   props: {
     itemCart: {
-      type: Object as PropType<Cartitem>,
+      type: Object as PropType<ICart>,
       required: true,
     },
   },

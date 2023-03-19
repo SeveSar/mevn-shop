@@ -8,7 +8,7 @@ import "./assets/less/main.less";
 
 import { getDatabase } from "firebase/database";
 import { getFirestore } from "firebase/firestore";
-import { useProductsStore } from "@/stores/products";
+import { useProductsStore } from "@/modules/product/stores/products";
 import toastPlugin from "@/plugins/toast";
 export const db = getDatabase();
 export const dbFireStore = getFirestore(initFire);
@@ -20,7 +20,7 @@ app.use(toastPlugin);
 const productsStore = useProductsStore();
 
 productsStore
-  .getAllProducts()
+  .getProducts()
   .then(() => {
     const spinnerAppElem = document.getElementById("app-spinner");
     if (spinnerAppElem) {

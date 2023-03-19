@@ -1,7 +1,7 @@
 <template>
   <div class="products">
     <ProductBlock @click-filter="isProductFilterPanel = true">
-      <ProductList :products="filteredProducts" />
+      <ProductList :products="productsStore.products" />
     </ProductBlock>
   </div>
   <PanelProductFilter
@@ -14,8 +14,8 @@
 import ProductList from "../../components/ProductList/ProductList.vue";
 
 import ProductBlock from "../../components/ProductBlock/ProductBlock.vue";
-import PanelProductFilter from "@/components/modals/PanelProductFilter/PanelProductFilter.vue";
-import { useProductsStore } from "@/stores/products";
+import PanelProductFilter from "@/modules/product/components/modals/PanelProductFilter/PanelProductFilter.vue";
+import { useProductsStore } from "@/modules/product/stores/products";
 import { computed } from "vue";
 import { ref, defineComponent } from "vue";
 import { api } from "@/api/api";
@@ -33,10 +33,6 @@ export default defineComponent({
     let isProductFilterPanel = ref(false);
     const productsStore = useProductsStore();
 
-    const filteredProducts = computed(() => {
-      return productsStore.products;
-    });
-
     const onClick = (category: number) => {
       currentCategory.value = category;
     };
@@ -45,7 +41,7 @@ export default defineComponent({
     };
     getProductFilters();
     return {
-      filteredProducts,
+      productsStore,
       onClick,
       currentCategory,
       productFilters,

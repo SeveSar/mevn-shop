@@ -4,30 +4,20 @@
       :to="{ name: 'Product', params: { id: product.id } }"
       class="product__img"
     >
-      <img :src="product.imageUrl" alt="" />
+      <img :src="(product.imageUrl as string)" />
     </router-link>
     <div class="product__body">
-      <router-link :to="{ name: 'Product', params: { id: product.id } }">
-        <h4 class="product__name">
-          {{ product.name }}
-        </h4>
-      </router-link>
+      <h4 class="product__name">
+        {{ product.title }}
+      </h4>
 
-      <div class="product__text">Рейтинг: {{ product.rating }}</div>
+      <div class="product__descr">
+        {{ product.description }}
+      </div>
+
+      <!-- <div class="product__text">Рейтинг: {{ product.rating }}</div> -->
     </div>
-    <div class="product__actions" v-if="!userCartStore.inCart(product.id)">
-      <BaseButton
-        :class="{ active: size.active }"
-        size="small"
-        variant="secondary"
-        v-for="size in product.sizes"
-        :key="size.id"
-        @click="productsStore.changeSizeProduct(product.id, size.id)"
-      >
-        {{ size.size }}см
-      </BaseButton>
-    </div>
-    <div class="product__footer">
+    <div class="product__actions">
       <BaseButton
         v-if="!userCartStore.inCart(product.id)"
         @click="userCartStore.addToCart(product.id)"
@@ -49,10 +39,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import type { PropType } from "vue";
-import type { ProductItem } from "@/types/ProductItem";
-import { useProductsStore } from "@/stores/products";
+
+import { useProductsStore } from "@/modules/product/stores/products";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import { useCartStore } from "@/stores/cart";
+import type { IProduct } from "../../../../models/IProduct";
 
 export default defineComponent({
   components: {
@@ -60,7 +51,7 @@ export default defineComponent({
   },
   props: {
     product: {
-      type: Object as PropType<ProductItem>,
+      type: Object as PropType<IProduct>,
       required: true,
     },
   },
@@ -84,11 +75,13 @@ export default defineComponent({
   border: 1px solid #f0f0f0;
   border-radius: 12px;
   padding: 20px;
+
   &__img {
     position: relative;
     padding-bottom: 91.7%;
     margin: 0 auto;
     width: 100%;
+
     img {
       position: absolute;
       top: 0;
@@ -98,12 +91,14 @@ export default defineComponent({
       object-fit: contain;
     }
   }
+
   &__body {
     margin-top: 15px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
   }
+
   &__price {
     font-weight: 600;
     font-size: 18px;
@@ -113,36 +108,37 @@ export default defineComponent({
     text-align: right;
     color: #ff7010;
   }
-  &__actions {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px -3px 0;
-    flex-wrap: wrap;
-    .button {
-      width: calc((100% / 3) - 6px);
-      margin: 0 3px;
-      flex-grow: 1;
-    }
-  }
+
   &__name {
     font-weight: 600;
     font-size: 18px;
     line-height: 24px;
-    color: #191919;
+    color: @black-color;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
-  &__text {
+
+  &__descr {
     font-weight: 400;
     font-size: 16px;
     line-height: 22px;
-    color: #191919;
+    color: @black-color;
+    margin-top: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
-  &__footer {
+  &__actions {
     margin-top: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     .button {
-      width: 131px;
+      min-width: 131px;
     }
   }
 }

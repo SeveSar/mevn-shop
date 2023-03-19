@@ -8,9 +8,9 @@
 
 <script setup lang="ts">
 import CartListItem from "./CartListItem.vue";
-import type { Cartitem } from "@/types/CartItem";
+import type { ICart } from "@/models/ICart";
 defineProps<{
-  cart: Cartitem[];
+  cart: ICart[];
 }>();
 </script>
 

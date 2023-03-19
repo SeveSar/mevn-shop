@@ -1,4 +1,5 @@
-import type { ProductItem } from "@/types/ProductItem";
-export interface Cartitem extends ProductItem {
+export interface Cartitem {
   cnt: number;
+  id: string;
+  title: string;
 }

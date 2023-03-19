@@ -18,7 +18,7 @@
 import { useRoute } from "vue-router";
 import { computed, defineComponent } from "vue";
 import AppError from "@/components/common/AppError.vue";
-import { useProductsStore } from "@/stores/products";
+import { useProductsStore } from "@/modules/product/stores/products";
 export default defineComponent({
   setup() {
     const route = useRoute();

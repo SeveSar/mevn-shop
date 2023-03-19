@@ -1,26 +1,24 @@
 <template>
-  <Teleport to="body">
-    <transition name="side">
-      <div class="side-panel-overlay" v-if="isOpen" @mousedown.self="close">
-        <div class="side-panel">
+  <transition name="slide-panel">
+    <div class="side-panel-overlay" v-show="isOpen" @mousedown.self="close">
+      <transition name="slide-panel-inner">
+        <div class="side-panel" v-show="isOpen">
           <button class="side-panel__close" @click="close">
-            <img src="@/assets/images/icons/close.svg" alt="" />
+            <AppIcon name="IconCrossBig" />
           </button>
           <div class="side-panel__header">
-            <h3 class="side-panel__title">
-              {{ title }}
-            </h3>
+            <slot name="header" />
           </div>
           <div class="side-panel__content">
-            <slot></slot>
+            <slot />
           </div>
           <div class="side-panel__footer">
-            <slot name="footer"></slot>
+            <slot name="footer" />
           </div>
         </div>
-      </div>
-    </transition>
-  </Teleport>
+      </transition>
+    </div>
+  </transition>
 </template>
 
 <script lang="ts">
@@ -32,8 +30,13 @@ import {
   toRefs,
   watch,
 } from "vue";
+import AppIcon from "./AppIcon/AppIcon.vue";
+
 export default defineComponent({
   emits: ["close", "show"],
+  components: {
+    AppIcon,
+  },
   props: {
     isOpen: {
       type: Boolean,
@@ -80,7 +83,6 @@ export default defineComponent({
 <style scoped lang="less">
 .side-panel {
   background: #f9f9f9;
-
   max-width: 520px;
   position: absolute;
   right: 0;
@@ -90,21 +92,34 @@ export default defineComponent({
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: auto;
 
   &__close {
     position: absolute;
     right: 0;
     top: 0;
+    color: @gray2-color;
     transition: all 0.3s ease;
-
+    top: 40px;
+    right: 20px;
     &:hover {
       transform: translateY(-3px);
     }
   }
 
-  &__content {
+  &__content,
+  &__header {
     padding: 0 20px;
   }
+
+  &__header {
+    margin-bottom: 20px;
+  }
+
+  &__content {
+    margin-bottom: 28px;
+  }
+
   &__footer {
     padding: 12px 20px 12px;
     border-top: 1px solid @gray-color;
@@ -117,7 +132,6 @@ export default defineComponent({
   backdrop-filter: blur(32px);
   z-index: 1001;
   position: relative;
-  overflow: auto;
 
   position: fixed;
   top: 0;
@@ -128,5 +142,30 @@ export default defineComponent({
   @media screen and (max-width: 600px) {
     padding: 20px;
   }
+}
+
+.slide-panel-enter-active {
+  transition: opacity 0.3s ease;
+}
+.slide-panel-leave-active {
+  transition: opacity 0.3s ease 0.3s;
+}
+
+.slide-panel-enter-from,
+.slide-panel-leave-to {
+  opacity: 0;
+}
+
+.slide-panel-inner-enter-active {
+  transition: all 0.3s ease 0.3s;
+}
+.slide-panel-inner-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-panel-inner-enter-from,
+.slide-panel-inner-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
 }
 </style>

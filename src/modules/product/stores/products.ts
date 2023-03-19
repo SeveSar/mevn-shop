@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { api } from "@/api/api";
 import type { ProductItem } from "@/types/ProductItem";
-import type { IProduct } from "@/modules/product/models/IProduct";
+import type { IProduct } from "@/models/IProduct";
 
 interface ProductsState {
   products: Array<IProduct>;
@@ -14,15 +14,15 @@ export const useProductsStore = defineStore({
       products: [],
     } as ProductsState),
   getters: {
-    getItemById(state) {
+    getProductById(state) {
       return function (id: number | string): IProduct | undefined {
         return state.products.find((item) => item.id === id);
       };
     },
   },
   actions: {
-    async getAllProducts() {
-      const dataProducts = await api.product.fetchProducts();
+    async getProducts(filters: string[]) {
+      const dataProducts = await api.product.fetchProducts(filters);
 
       if (dataProducts) {
         this.products = dataProducts;
