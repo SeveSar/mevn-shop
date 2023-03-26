@@ -1,21 +1,19 @@
 <template>
-  <Teleport to="body">
-    <transition name="fade">
-      <div class="modal-overlay" v-if="isOpen" @mousedown.self="close">
-        <div class="modal">
-          <button class="modal-close" @click="close">
-            <img src="@/assets/images/icons/close.svg" alt="" />
-          </button>
-          <div class="modal__header" v-if="$slots.header">
-            <slot name="header"></slot>
-          </div>
-          <div class="modal__content">
-            <slot></slot>
-          </div>
+  <transition name="fade">
+    <div class="modal-overlay" v-if="isOpen" @mousedown.self="close">
+      <div class="modal">
+        <button class="modal-close" @click="close">
+          <img src="@/assets/images/icons/close.svg" alt="" />
+        </button>
+        <div class="modal__header" v-if="$slots.header">
+          <slot name="header"></slot>
+        </div>
+        <div class="modal__content">
+          <slot></slot>
         </div>
       </div>
-    </transition>
-  </Teleport>
+    </div>
+  </transition>
 </template>
 
 <script lang="ts">
@@ -70,7 +68,7 @@ export default defineComponent({
 
 <style scoped lang="less">
 .modal {
-  background: #f9f9f9;
+  background: @white-color;
   border-radius: 24px;
   max-width: 850px;
   margin: auto;

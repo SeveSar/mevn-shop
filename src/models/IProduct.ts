@@ -1,3 +1,5 @@
+import type { TFilterItem } from "./IFilter";
+
 export interface IProduct {
   id: string;
   title: string;
@@ -5,13 +7,20 @@ export interface IProduct {
   description: string;
   imageUrl: string;
   amount: number;
-  sizes: number[];
+  sizes: [
+    {
+      title: string;
+      price: number;
+      _id: string;
+    }
+  ];
   category: string;
-  dough: number[];
+  dough: [
+    {
+      _id: string;
+      title: string;
+      price: number;
+    }
+  ];
   filters: TFilterItem[];
 }
-
-export type TFilterItem = {
-  name: string;
-  _id: string;
-};

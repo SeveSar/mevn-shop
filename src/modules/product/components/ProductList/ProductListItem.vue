@@ -20,9 +20,9 @@
     <div class="product__actions">
       <BaseButton
         v-if="!userCartStore.inCart(product.id)"
-        @click="userCartStore.addToCart(product.id)"
+        @click="openProductModal(product)"
       >
-        Добавить
+        Выбрать
       </BaseButton>
       <BaseButton
         color="red"
@@ -44,6 +44,7 @@ import { useProductsStore } from "@/modules/product/stores/products";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import { useCartStore } from "@/stores/cart";
 import type { IProduct } from "../../../../models/IProduct";
+import { useModalStore } from "@/stores/modal";
 
 export default defineComponent({
   components: {
@@ -58,9 +59,16 @@ export default defineComponent({
   setup() {
     const productsStore = useProductsStore();
     const userCartStore = useCartStore();
+    const modalStore = useModalStore();
+
+    const openProductModal = (product: IProduct) => {
+      productsStore.setActiveProduct(product);
+      modalStore.openProductModal();
+    };
     return {
       productsStore,
       userCartStore,
+      openProductModal,
     };
   },
 });

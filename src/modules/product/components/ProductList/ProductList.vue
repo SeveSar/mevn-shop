@@ -12,16 +12,19 @@
 
 <script lang="ts">
 import ProductListItem from "../../components/ProductList/ProductListItem.vue";
-
-import type { ProductItem } from "@/types/ProductItem";
+import type { IProduct } from "@/models/IProduct";
 import { defineComponent } from "vue";
 import type { PropType } from "vue";
+
 export default defineComponent({
   components: {
     ProductListItem,
   },
   props: {
-    products: Array as PropType<ProductItem[]>,
+    products: {
+      type: Array as PropType<IProduct[]>,
+      default: () => [],
+    },
   },
 });
 </script>

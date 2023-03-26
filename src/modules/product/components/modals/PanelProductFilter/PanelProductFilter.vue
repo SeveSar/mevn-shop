@@ -13,7 +13,7 @@
         <div
           class="panel-product-filter__block"
           v-for="filter in filters"
-          :key="filter.id"
+          :key="filter._id"
         >
           <div class="panel-product-filter__block-title">
             {{ filter.title }}
@@ -25,7 +25,7 @@
                 'panel-product-filter__item--active': isActiveFilter(value._id),
               }"
               v-for="value in filter.items"
-              :key="value.id"
+              :key="value._id"
             >
               {{ value.title }}
               <input
@@ -52,10 +52,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
+import { computed, defineComponent, type PropType, ref, watch } from "vue";
 import BaseSidePanel from "@/components/ui/BaseSidePanel.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import { useProductsStore } from "../../../stores/products";
+import type { IFilter } from "@/models/IFilter";
 
 export default defineComponent({
   props: {
@@ -64,7 +65,7 @@ export default defineComponent({
       default: false,
     },
     filters: {
-      type: Array,
+      type: Array as PropType<IFilter[]>,
     },
   },
   components: {

@@ -1,43 +1,38 @@
+import { ref } from "vue";
 import { defineStore } from "pinia";
 import { api } from "@/api/api";
-import type { ProductItem } from "@/types/ProductItem";
+
 import type { IProduct } from "@/models/IProduct";
 
-interface ProductsState {
-  products: Array<IProduct>;
-}
+export const useProductsStore = defineStore("products", () => {
+  const products = ref<IProduct[]>([]);
+  const activeProduct = ref<IProduct | null>(null);
 
-export const useProductsStore = defineStore({
-  id: "products",
-  state: () =>
-    ({
-      products: [],
-    } as ProductsState),
-  getters: {
-    getProductById(state) {
-      return function (id: number | string): IProduct | undefined {
-        return state.products.find((item) => item.id === id);
-      };
-    },
-  },
-  actions: {
-    async getProducts(filters: string[]) {
-      const dataProducts = await api.product.fetchProducts(filters);
+  const getProductById = () => {
+    return function (id: number | string): IProduct | undefined {
+      return products.value.find((item) => item.id === id);
+    };
+  };
 
-      if (dataProducts) {
-        this.products = dataProducts;
-      }
-    },
+  const getProducts = async (filters: string[]) => {
+    const dataProducts = await api.product.fetchProducts(filters);
+    products.value = dataProducts;
+  };
 
-    // changeSizeProduct(idProduct: number | string, idSize: number | string) {
-    //   const product = this.getItemById(idProduct);
-    //   if (!product) return;
-    //   const productSize = product.sizes?.find((item) => item.id === idSize);
-    //   product.sizes?.forEach((item) => (item.active = false));
-    //   if (productSize) {
-    //     productSize.active = true;
-    //     product.price = productSize.price;
-    //   }
-    // },
-  },
+  const setActiveProduct = (product: IProduct) => {
+    activeProduct.value = product;
+  };
+
+  const resetActiveProduct = () => {
+    activeProduct.value = null;
+  };
+
+  return {
+    getProductById,
+    getProducts,
+    products,
+    activeProduct,
+    setActiveProduct,
+    resetActiveProduct,
+  };
 });

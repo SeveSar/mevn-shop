@@ -13,12 +13,13 @@ export default class ProductServices {
   async fetchProducts(filters: string[]) {
     let res;
     if (filters && filters.length) {
-      res = await this.$http.get<IProduct>("/products", {
+      res = await this.$http.get<IProduct[]>("/products", {
         params: { filters },
       });
     } else {
-      res = await this.$http.get<IProduct>("/products");
+      res = await this.$http.get<IProduct[]>("/products");
     }
+    console.log(res, "res");
     return res.data;
   }
 

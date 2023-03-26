@@ -9,7 +9,7 @@
           :class="[item.type]"
           :key="item.id"
         >
-          <AppIcon :name="getCurrentIcon(item.type)"> </AppIcon>
+          <AppIcon name="IconError"> </AppIcon>
           <div class="toast__text">
             {{ item.text }}
           </div>

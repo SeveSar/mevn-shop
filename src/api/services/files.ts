@@ -1,5 +1,6 @@
 import type { AxiosInstance } from "axios";
 import type { IFile } from "../../models/IFile";
+
 export class FilesServices {
   private readonly $http: AxiosInstance;
   constructor($http: AxiosInstance) {

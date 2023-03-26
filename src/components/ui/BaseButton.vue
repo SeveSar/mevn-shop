@@ -14,11 +14,6 @@
 import { computed, defineComponent } from "vue";
 import type { PropType, ButtonHTMLAttributes } from "vue";
 export default defineComponent({
-  emits: {
-    click(): boolean {
-      return true;
-    },
-  },
   props: {
     variant: {
       type: String as PropType<"primary" | "secondary" | "text" | "border">,
@@ -39,6 +34,12 @@ export default defineComponent({
       default: false,
     },
   },
+  emits: {
+    click(): boolean {
+      return true;
+    },
+  },
+
   setup(props) {
     const classes = computed(() => ({
       [`button-variant--${props.variant}`]: true,

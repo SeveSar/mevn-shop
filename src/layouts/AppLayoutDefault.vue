@@ -1,16 +1,17 @@
 <template>
   <TheHeader></TheHeader>
+  <main class="main">
+    <div class="container">
+      <slot></slot>
+    </div>
+  </main>
+
   <Teleport to="body">
     <router-link :to="{ name: 'Cart' }" class="cart-mobile">
       <img src="@/assets/images/icons/cart.svg" alt="" />
       <span>{{ totalItems }}</span>
     </router-link>
   </Teleport>
-  <main class="main">
-    <div class="container">
-      <slot></slot>
-    </div>
-  </main>
 </template>
 
 <script lang="ts">
