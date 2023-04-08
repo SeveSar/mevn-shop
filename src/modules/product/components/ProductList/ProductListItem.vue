@@ -1,11 +1,8 @@
 <template>
   <article class="product">
-    <router-link
-      :to="{ name: 'Product', params: { id: product.id } }"
-      class="product__img"
-    >
+    <div class="product__img">
       <img :src="(product.imageUrl as string)" />
-    </router-link>
+    </div>
     <div class="product__body">
       <h4 class="product__name">
         {{ product.title }}
@@ -18,20 +15,15 @@
       <!-- <div class="product__text">Рейтинг: {{ product.rating }}</div> -->
     </div>
     <div class="product__actions">
-      <BaseButton
-        v-if="!userCartStore.inCart(product.id)"
-        @click="openProductModal(product)"
-      >
-        Выбрать
-      </BaseButton>
-      <BaseButton
+      <BaseButton @click="openProductModal(product)"> Выбрать </BaseButton>
+      <!-- <BaseButton
         color="red"
         v-else
         @click="userCartStore.delFromCart(product.id)"
       >
         Удалить
-      </BaseButton>
-      <div class="product__price">{{ product.price }} ₽</div>
+      </BaseButton> -->
+      <div class="product__price">от {{ product.price }} ₽</div>
     </div>
   </article>
 </template>
@@ -58,16 +50,13 @@ export default defineComponent({
   },
   setup() {
     const productsStore = useProductsStore();
-    const userCartStore = useCartStore();
     const modalStore = useModalStore();
-
     const openProductModal = (product: IProduct) => {
-      productsStore.setActiveProduct(product);
+      productsStore.setActiveProductId(product.id);
       modalStore.openProductModal();
     };
     return {
       productsStore,
-      userCartStore,
       openProductModal,
     };
   },

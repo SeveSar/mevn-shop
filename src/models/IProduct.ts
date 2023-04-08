@@ -1,6 +1,6 @@
 import type { TFilterItem } from "./IFilter";
 
-export interface IProduct {
+export interface IProductDTO {
   id: string;
   title: string;
   price: number;
@@ -23,4 +23,41 @@ export interface IProduct {
     }
   ];
   filters: TFilterItem[];
+  ingredients: [
+    {
+      img: string;
+      title: string;
+      price: number;
+      _id: string;
+    }
+  ];
+}
+
+export interface IProduct extends IProductDTO {
+  ingredients: [
+    {
+      img: string;
+      title: string;
+      price: number;
+      _id: string;
+      id: string;
+      isActive: boolean;
+    }
+  ];
+  dough: [
+    {
+      _id: string;
+      id: string;
+      title: string;
+      price: number;
+    }
+  ];
+  sizes: [
+    {
+      title: string;
+      price: number;
+      _id: string;
+      id: string;
+    }
+  ];
 }
