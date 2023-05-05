@@ -85,17 +85,11 @@ import UploadProductImage from "@/modules/admin/components/UploadProductImage/Up
 import BaseCheckBox from "@/components/ui/BaseCheckBox.vue";
 import BaseTextArea from "@/components/ui/BaseTextArea.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
-import type { IProduct } from "@/models/IProduct";
+import type { IProductDTO } from "@/models/IProduct";
 
 import { api } from "@/api/api";
 
 export default defineComponent({
-  props: {
-    modelValue: {
-      type: Boolean,
-      default: false,
-    },
-  },
   components: {
     BaseModal,
     BaseInput,
@@ -104,6 +98,13 @@ export default defineComponent({
     BaseButton,
     UploadProductImage,
   },
+  props: {
+    modelValue: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
   setup() {
     //state
     const sizesValues = [
@@ -118,7 +119,7 @@ export default defineComponent({
 
     const urlInput = ref("");
     const file = ref(null) as Ref<File | null>;
-    const productFields = ref<IProduct>({
+    const productFields = ref<IProductDTO>({
       id: "",
       title: "",
       price: 0,

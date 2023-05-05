@@ -9,7 +9,7 @@
   <Teleport to="body">
     <router-link :to="{ name: 'Cart' }" class="cart-mobile">
       <img src="@/assets/images/icons/cart.svg" alt="" />
-      <span>{{ totalItems }}</span>
+      <!-- <span>{{ totalItems }}</span> -->
     </router-link>
   </Teleport>
 </template>
@@ -18,7 +18,6 @@
 import TheHeader from "@/components/layouts/TheHeader.vue";
 import { useRouter, useRoute } from "vue-router";
 
-import { useCartStore } from "@/stores/cart";
 import { mapState } from "pinia";
 import { watch, defineComponent, onMounted } from "vue";
 export default defineComponent({
@@ -53,9 +52,9 @@ export default defineComponent({
     );
   },
 
-  computed: {
-    ...mapState(useCartStore, ["totalItems"]),
-  },
+  // computed: {
+  //   ...mapState(useCartStore, ["totalItems"]),
+  // },
 });
 </script>
 <style scoped lang="less">

@@ -59,7 +59,7 @@
             <div class="header__bottom-user">
               <router-link class="user-cart" :to="{ name: 'Cart' }">
                 <AppIcon name="IconBasket"></AppIcon>
-                <div class="user-cart__price">{{ cartStore.totalPrice }} ₽</div>
+                <!-- <div class="user-cart__price">{{ cartStore.totalPrice }} ₽</div> -->
               </router-link>
               <div
                 class="burger"
@@ -114,7 +114,7 @@
 import { useRouter, useRoute } from "vue-router";
 import { useModalStore } from "@/stores/modal";
 import { useUserStore } from "@/stores/user";
-import { useCartStore } from "@/stores/cart";
+
 import AppIcon from "@/components/ui/AppIcon/AppIcon.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import { ref, watch, defineComponent } from "vue";
@@ -127,7 +127,7 @@ export default defineComponent({
   setup() {
     const modalStore = useModalStore();
     const userStore = useUserStore();
-    const cartStore = useCartStore();
+    // const cartStore = useCartStore();
     const route = useRoute();
     const isOpenedBurger = ref<boolean>(false);
     const menuLinks = [
@@ -141,7 +141,7 @@ export default defineComponent({
     ];
     const router = useRouter();
     const logOut = () => {
-      userStore.logout();
+      userStore.logOut();
       router.push({ name: "Home" });
     };
     watch(
@@ -153,7 +153,6 @@ export default defineComponent({
     return {
       logOut,
       menuLinks,
-      cartStore,
       modalStore,
       userStore,
       isOpenedBurger,

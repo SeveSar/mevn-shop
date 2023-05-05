@@ -16,7 +16,7 @@ import ProductList from "../../components/ProductList/ProductList.vue";
 import ProductBlock from "../../components/ProductBlock/ProductBlock.vue";
 import PanelProductFilter from "@/modules/product/components/modals/PanelProductFilter/PanelProductFilter.vue";
 import { useProductsStore } from "@/modules/product/stores/products";
-import { computed } from "vue";
+
 import { ref, defineComponent } from "vue";
 import { api } from "@/api/api";
 

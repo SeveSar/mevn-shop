@@ -23,13 +23,13 @@
 import { defineComponent, toRefs, type PropType } from "vue";
 
 export default defineComponent({
-  emits: ["update:modelValue"],
   props: {
     modelValue: {
       type: null as unknown as PropType<File | null>,
       default: null,
     },
   },
+  emits: ["update:modelValue"],
 
   setup(props, { emit }) {
     const { modelValue } = toRefs(props);

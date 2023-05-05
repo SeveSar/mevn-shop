@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="cart">
     <div class="cart__inner" v-if="cart.length">
       <div class="cart__header">
@@ -136,4 +136,4 @@ const order = () => {
     margin: 25px auto 0;
   }
 }
-</style>
+</style> -->

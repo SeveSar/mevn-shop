@@ -167,9 +167,9 @@ export default defineComponent({
         }, 0);
 
       const price =
-        productsStore.getActiveProduct?.price +
-        selectedTabDough.value?.price +
-        selectedTabSize.value?.price +
+        productsStore.getActiveProduct.price +
+        selectedTabDough.value.price +
+        selectedTabSize.value.price +
         ingredientsPrice;
 
       return price;
@@ -223,9 +223,12 @@ export default defineComponent({
 
   &__photo {
     width: 50%;
+    display: flex;
+    align-items: center;
 
     &-img {
       width: 100%;
+      flex-shrink: 0;
     }
   }
 

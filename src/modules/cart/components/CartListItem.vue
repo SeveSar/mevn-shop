@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="product">
     <div class="product__inner">
       <div class="product__col">
@@ -56,11 +56,11 @@
       </svg>
     </button>
   </div>
-</template>
+</template> -->
 
 <script lang="ts">
 import type { ICart } from "@/models/ICart";
-import { useCartStore } from "@/stores/cart";
+// import { useCartStore } from "@/stores/cart";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import { defineComponent } from "vue";
 import type { PropType } from "vue";
@@ -76,20 +76,20 @@ export default defineComponent({
     },
   },
   setup() {
-    const cartStore = useCartStore();
+    // const cartStore = useCartStore();
 
     const onChange = (id: number, event: Event): void => {
       const element = event.currentTarget as HTMLInputElement;
-      cartStore.updateCnt(id, +element.value);
+      // cartStore.updateCnt(id, +element.value);
     };
     const changeCnt = (id: number, newCnt: number) => {
-      cartStore.updateCnt(id, newCnt);
+      // cartStore.updateCnt(id, newCnt);
     };
     const changeCntDebounce = debounce(changeCnt);
 
     return {
       onChange,
-      cartStore,
+      // cartStore,
       changeCntDebounce,
     };
   },

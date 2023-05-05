@@ -12,6 +12,6 @@ interface Api {
 
 export const api: Api = {
   auth: new AuthService(instance, axios),
-  product: new ProductServices(instance, axios),
+  product: new ProductServices(instance),
   files: new FilesServices(instance),
 };

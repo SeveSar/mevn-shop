@@ -1,5 +1,4 @@
 <template>
-  <div></div>
   <div class="admin">
     <h1 class="admin__title">Админ панель</h1>
     <div class="admin__links">
