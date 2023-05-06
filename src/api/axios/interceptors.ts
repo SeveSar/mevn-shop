@@ -8,7 +8,7 @@ import axios from "axios";
 import type { UserResponse } from "@/modules/user/models/response/UserResponse";
 import { useUserStore } from "@/stores/user";
 import router from "@/router/index";
-import { api } from "./api";
+import { api } from "../api";
 import { getAccessToken, setToken } from "@/utils/tokenHelper";
 
 enum StatusCode {

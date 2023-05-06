@@ -1,8 +1,11 @@
-import instance from "./instances";
+import { instance } from "./axios/instances";
+import { AxiosHttpClient } from "./axios";
 import AuthService from "@/modules/user/services/auth";
 import ProductServices from "@/modules/product/services/products";
 import axios from "axios";
 import { FilesServices } from "./services/files";
+
+const axiosHttpClient = new AxiosHttpClient(instance);
 
 interface Api {
   auth: AuthService;
@@ -11,7 +14,7 @@ interface Api {
 }
 
 export const api: Api = {
-  auth: new AuthService(instance, axios),
-  product: new ProductServices(instance),
-  files: new FilesServices(instance),
+  auth: new AuthService(axiosHttpClient, axios),
+  product: new ProductServices(axiosHttpClient),
+  files: new FilesServices(axiosHttpClient),
 };

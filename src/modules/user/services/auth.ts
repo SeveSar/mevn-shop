@@ -1,25 +1,34 @@
 import type { AxiosInstance } from "axios";
 import type { UserResponse } from "../../user/models/response/UserResponse";
+import type { IHttpClient } from "@/api/types";
 
 class AuthService {
-  private readonly $http: AxiosInstance;
+  private readonly $http: IHttpClient;
   private readonly $axios: AxiosInstance;
-  constructor(axiosInstance: AxiosInstance, axios: AxiosInstance) {
-    this.$http = axiosInstance;
+  constructor(httpClient: IHttpClient, axios: AxiosInstance) {
+    this.$http = httpClient;
     this.$axios = axios;
   }
   async register(email: string, password: string) {
-    const res = await this.$http.post<UserResponse>("/auth/register", {
-      email,
-      password,
+    const res = await this.$http.makeRequest<UserResponse>({
+      url: "/auth/register",
+      method: "POST",
+      data: {
+        email,
+        password,
+      },
     });
     return res.data;
   }
 
   async login(email: string, password: string) {
-    const res = await this.$http.post<UserResponse>("/auth/login", {
-      email,
-      password,
+    const res = await this.$http.makeRequest<UserResponse>({
+      url: "/auth/login",
+      method: "POST",
+      data: {
+        email,
+        password,
+      },
     });
 
     return res.data;
@@ -32,7 +41,10 @@ class AuthService {
   }
 
   async getUsers() {
-    const res = await this.$http.get<any>("/users");
+    const res = await this.$http.makeRequest<any>({
+      url: "/users",
+      method: "GET",
+    });
     return res.data;
   }
   async logOut() {

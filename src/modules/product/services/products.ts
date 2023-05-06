@@ -1,22 +1,32 @@
-import type { AxiosInstance } from "axios";
 import type { IProduct } from "../../../models/IProduct";
 import { ProductDTO } from "../models/product.dto";
+import type { IHttpClient } from "@/api/types";
 
 export default class ProductServices {
-  private readonly $http: AxiosInstance;
+  private readonly $http: IHttpClient;
 
-  constructor($http: AxiosInstance) {
-    this.$http = $http;
+  constructor(httpClient: IHttpClient) {
+    this.$http = httpClient;
   }
 
   async fetchProducts(filters: string[]) {
     let res;
     if (filters && filters.length) {
-      res = await this.$http.get<IProduct[]>("/products", {
-        params: { filters },
+      res = await this.$http.makeRequest<IProduct[]>({
+        url: "/products",
+        method: "GET",
+        config: {
+          params: { filters },
+        },
       });
     } else {
-      res = await this.$http.get<IProduct[]>("/products");
+      res = await this.$http.makeRequest<IProduct[]>({
+        url: "/products",
+        method: "GET",
+        headers: {
+          authorization: true,
+        },
+      });
     }
 
     return res.data.map((product) => {
@@ -25,12 +35,22 @@ export default class ProductServices {
   }
 
   async fetchProductFilters() {
-    const res = await this.$http.get("/filter");
+    const res = await this.$http.makeRequest({
+      url: "/filter",
+      method: "GET",
+      headers: {
+        authorization: true,
+      },
+    });
     return res.data;
   }
 
   async createProduct(productData: IProduct) {
-    const res = await this.$http.post<IProduct>("/products", productData);
+    const res = await this.$http.makeRequest<IProduct>({
+      url: "/products",
+      data: productData,
+      method: "POST",
+    });
     return res.data;
   }
 }

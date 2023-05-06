@@ -1,10 +1,10 @@
-import type { AxiosInstance } from "axios";
 import type { IFile } from "../../models/IFile";
+import type { IHttpClient } from "../types";
 
 export class FilesServices {
-  private readonly $http: AxiosInstance;
-  constructor($http: AxiosInstance) {
-    this.$http = $http;
+  private readonly $http: IHttpClient;
+  constructor(httpClient: IHttpClient) {
+    this.$http = httpClient;
   }
 
   async uploadFile(files: File | File[]) {
@@ -20,11 +20,15 @@ export class FilesServices {
       formData.append("filedata", file);
     });
 
-    const res = await this.$http.post<IFile>("/files", formData, {
+    const res = await this.$http.makeRequest<IFile>({
+      url: "/files",
+      method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
       },
+      data: formData,
     });
+
     return res.data;
   }
 }

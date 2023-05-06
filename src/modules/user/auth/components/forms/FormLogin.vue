@@ -13,7 +13,7 @@
         labelText="Ваш E-mail"
         id="auth-1"
         name="email"
-        @onFocus="v$.email.$reset"
+        @on-focus="v$.email.$reset"
         :errors="
           v$.email.$errors.length ? v$.email.$errors[0].$message as string : null
         "
@@ -24,11 +24,11 @@
         id="auth-2"
         type="password"
         name="password"
-        @onFocus="v$.password.$reset"
         :errors="
           v$.password.$errors.length ? v$.password.$errors[0].$message as string : null
         "
         v-model="userCredentials.password"
+        @on-focus="v$.password.$reset"
       />
     </div>
 
@@ -54,16 +54,17 @@ interface IUserCredentials {
   password: string;
 }
 export default defineComponent({
+  components: {
+    BaseInput,
+    BaseButton,
+  },
   props: {
     modelValue: {
       type: Object as PropType<IUserCredentials>,
       default: null,
     },
   },
-  components: {
-    BaseInput,
-    BaseButton,
-  },
+
   setup(props, { emit }) {
     const showToast = inject("showToast") as (message: IToast) => void;
     const userStore = useUserStore();
