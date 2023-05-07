@@ -1,3 +1,4 @@
+import type { TFilterItemDTO } from "@/models/IFilter";
 import type {
   IProduct,
   IIngredientItemDTO,
@@ -15,6 +16,8 @@ export class ProductDTO {
   sizes: ISizeItemDTO[];
   ingredients: IIngredientItemDTO[];
   dough: IDoughItemDTO[];
+  category: string;
+  filters: TFilterItemDTO[];
 
   constructor(model: IProduct) {
     this.id = model.id;
@@ -23,6 +26,8 @@ export class ProductDTO {
     this.description = model.description;
     this.imageUrl = model.imageUrl;
     this.amount = model.amount;
+    this.category = model.category;
+
     this.sizes = model.sizes.map((size) => {
       return {
         ...size,
@@ -33,6 +38,7 @@ export class ProductDTO {
     this.ingredients = model.ingredients.map((item) => {
       return {
         ...item,
+        id: item.id,
         img: import.meta.env.VITE_BASE_URL + "/" + item.img,
         isActive: false,
       };
@@ -42,6 +48,13 @@ export class ProductDTO {
       return {
         ...dough,
         id: dough._id,
+      };
+    });
+
+    this.filters = model.filters.map((item) => {
+      return {
+        id: item._id,
+        ...item,
       };
     });
   }

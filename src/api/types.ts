@@ -6,7 +6,7 @@ export interface IHttpClient {
 
 export interface IOptions {
   url: string;
-  method: Method;
+  method: "POST" | "GET" | "PUT" | "DELETE";
   headers?: Record<string, string | number | boolean> & {
     authorization?: boolean | string;
   };

@@ -18,7 +18,7 @@ export interface IIngredientItem {
   img: string;
   title: string;
   price: number;
-  _id: string;
+  id: string;
 }
 export interface IDoughItem {
   _id: string;
@@ -32,9 +32,16 @@ export interface ISizeItem {
   _id: string;
 }
 
+export interface IProductDTO extends IProduct {
+  ingredients: IIngredientItemDTO[];
+  dough: IDoughItemDTO[];
+  sizes: ISizeItemDTO[];
+}
+
 export interface IIngredientItemDTO extends IIngredientItem {
   isActive: boolean;
   img: string;
+  id: string;
 }
 
 export interface IDoughItemDTO extends IDoughItem {
@@ -43,10 +50,4 @@ export interface IDoughItemDTO extends IDoughItem {
 
 export interface ISizeItemDTO extends ISizeItem {
   id: string;
-}
-
-export interface IProductDTO extends IProduct {
-  ingredients: IIngredientItemDTO[];
-  dough: IDoughItemDTO[];
-  sizes: ISizeItemDTO[];
 }

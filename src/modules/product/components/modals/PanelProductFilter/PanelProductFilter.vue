@@ -25,7 +25,7 @@
                 'panel-product-filter__item--active': isActiveFilter(value._id),
               }"
               v-for="value in filter.items"
-              :key="value._id"
+              :key="value.id"
             >
               {{ value.title }}
               <input
@@ -59,6 +59,10 @@ import { useProductsStore } from "../../../stores/products";
 import type { IFilter } from "@/models/IFilter";
 
 export default defineComponent({
+  components: {
+    BaseSidePanel,
+    BaseButton,
+  },
   props: {
     modelValue: {
       type: Boolean,
@@ -66,12 +70,11 @@ export default defineComponent({
     },
     filters: {
       type: Array as PropType<IFilter[]>,
+      required: true,
     },
   },
-  components: {
-    BaseSidePanel,
-    BaseButton,
-  },
+  emits: ["update:modelValue"],
+
   setup() {
     const productsStore = useProductsStore();
 

@@ -1,3 +1,4 @@
+import type { IFilter } from "@/models/IFilter";
 import type { IProduct } from "../../../models/IProduct";
 import { ProductDTO } from "../models/product.dto";
 import type { IHttpClient } from "@/api/types";
@@ -9,7 +10,7 @@ export default class ProductServices {
     this.$http = httpClient;
   }
 
-  async fetchProducts(filters: string[]) {
+  async fetchProducts(filters?: string[]) {
     let res;
     if (filters && filters.length) {
       res = await this.$http.makeRequest<IProduct[]>({
@@ -35,13 +36,14 @@ export default class ProductServices {
   }
 
   async fetchProductFilters() {
-    const res = await this.$http.makeRequest({
+    const res = await this.$http.makeRequest<IFilter[]>({
       url: "/filter",
       method: "GET",
       headers: {
         authorization: true,
       },
     });
+
     return res.data;
   }
 

@@ -9,3 +9,7 @@ export interface IFilter {
   items: TFilterItem[];
   _id: string;
 }
+
+export type TFilterItemDTO = TFilterItem & {
+  id: string;
+};
