@@ -23,7 +23,8 @@ import { computed, defineComponent, type PropType } from "vue";
 interface ITab {
   title: string;
   id: string;
-  [key: string]: string | number;
+
+  [key: string]: string | number | boolean;
 }
 
 export default defineComponent({
@@ -32,6 +33,7 @@ export default defineComponent({
       type: Object as PropType<ITab | null>,
       required: true,
     },
+
     items: {
       type: Array as PropType<ITab[]>,
       required: true,

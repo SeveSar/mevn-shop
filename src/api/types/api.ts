@@ -1,4 +1,4 @@
-import type { Method, AxiosRequestConfig, ResponseType } from "axios";
+import type { AxiosRequestConfig, ResponseType } from "axios";
 
 export interface IHttpClient {
   makeRequest: <T>(options: IOptions) => Promise<ApiResponse<T>>;

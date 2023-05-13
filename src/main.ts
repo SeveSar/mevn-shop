@@ -9,25 +9,37 @@ import "./assets/less/main.less";
 import { getDatabase } from "firebase/database";
 import { getFirestore } from "firebase/firestore";
 import { useProductsStore } from "@/modules/product/stores/products";
-import toastPlugin from "@/plugins/toast";
+import { useUserStore } from "./modules/user/stores/user";
+
+import { useCartStore } from "./modules/cart/stores/cart";
 export const db = getDatabase();
 export const dbFireStore = getFirestore(initFire);
 const app = createApp(App);
 app.use(createPinia());
 app.use(router);
-app.use(toastPlugin);
 
 const productsStore = useProductsStore();
+const cartStore = useCartStore();
+const userStore = useUserStore();
 
-productsStore
-  .getProducts()
-  .then(() => {
-    const spinnerAppElem = document.getElementById("app-spinner");
-    if (spinnerAppElem) {
-      spinnerAppElem.style.display = "none";
+const start = async () => {
+  try {
+    await userStore.auth();
+    await cartStore.getCart();
+  } catch (e) {
+    console.log(e);
+  } finally {
+    try {
+      await productsStore.getProducts();
+    } catch (e) {
+      console.log(e);
+    } finally {
+      const spinnerAppElem = document.getElementById("app-spinner");
+      if (spinnerAppElem) {
+        spinnerAppElem.style.display = "none";
+      }
+      app.mount("#app");
     }
-    app.mount("#app");
-  })
-  .catch((e) => {
-    console.dir(e);
-  });
+  }
+};
+start();

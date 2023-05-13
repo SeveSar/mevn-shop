@@ -12,7 +12,7 @@
                 <button
                   v-if="!userStore.isLoggedIn"
                   class="user-auth__btn"
-                  @click="modalStore.openLoginModal"
+                  @click="modalStore.openAuthModal"
                 >
                   <AppIcon name="IconUser"></AppIcon>
                   Войти в аккаунт
@@ -79,7 +79,7 @@
       <BaseButton
         v-if="!userStore.isLoggedIn"
         class="user-auth__btn"
-        @click="modalStore.openLoginModal"
+        @click="modalStore.openAuthModal"
       >
         <AppIcon name="IconUser"></AppIcon>
         Войти в аккаунт
@@ -113,7 +113,7 @@
 <script lang="ts">
 import { useRouter, useRoute } from "vue-router";
 import { useModalStore } from "@/stores/modal";
-import { useUserStore } from "@/stores/user";
+import { useUserStore } from "@/modules/user/stores/user";
 
 import AppIcon from "@/components/ui/AppIcon/AppIcon.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";

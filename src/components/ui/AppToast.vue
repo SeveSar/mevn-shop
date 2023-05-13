@@ -3,13 +3,13 @@
     <div class="toast-container" id="toast-container">
       <transition-group name="toast">
         <div
-          @click="hideToast(item.id || 0)"
           class="toast"
-          v-for="item in toasts"
-          :class="[item.type]"
+          v-for="item in toastStore.toasts"
+          :class="item.type"
           :key="item.id"
+          @click="toastStore.removeToast(item.id)"
         >
-          <AppIcon name="IconError"> </AppIcon>
+          <!-- <AppIcon class="toast__icon" :name="getCurrentIcon(item.type)" /> -->
           <div class="toast__text">
             {{ item.text }}
           </div>
@@ -20,9 +20,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from "vue";
+import { defineComponent, watch } from "vue";
 import type { IToast } from "@/plugins/plugins.types";
-import AppIcon from "./AppIcon/AppIcon.vue";
+
+import { useToastStore } from "@/stores/toast";
 
 const ICONS_TYPES = {
   error: "IconError",
@@ -31,21 +32,26 @@ const ICONS_TYPES = {
 
 export default defineComponent({
   components: {
-    AppIcon,
+    // AppIcon,
   },
 
   setup() {
-    const toasts = inject<IToast[]>("toasts", []);
-    const hideToast = inject<(id: number) => void>("hideToast") as (
-      id: number
-    ) => void;
+    const toastStore = useToastStore();
+    let timer: any;
     const getCurrentIcon = (type: "error" | "info") => {
       return ICONS_TYPES[type];
     };
+
+    watch(toastStore.toasts, () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        toastStore.toasts.shift();
+      }, 4000);
+    });
+
     return {
-      toasts,
+      toastStore,
       getCurrentIcon,
-      hideToast,
     };
   },
 });
@@ -54,8 +60,8 @@ export default defineComponent({
 <style scoped lang="less">
 .toast-container {
   position: fixed;
-  top: 30px;
-  right: 12px;
+  bottom: 30px;
+  right: 20px;
   z-index: 1500;
 }
 .toast {
@@ -67,17 +73,21 @@ export default defineComponent({
   padding: 12px;
   cursor: pointer;
   margin-left: auto;
+
   &__text {
     font-size: 17px;
     white-space: pre-wrap;
     flex-shrink: 0;
   }
-  svg {
+
+  &__icon {
     width: 30px;
     height: 30px;
     margin-right: 10px;
     flex-shrink: 0;
+    color: red;
   }
+
   &:not(:last-child) {
     margin-bottom: 5px;
   }

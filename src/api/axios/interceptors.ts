@@ -6,7 +6,7 @@ import type {
 } from "axios";
 import axios from "axios";
 import type { UserResponse } from "@/modules/user/models/response/UserResponse";
-import { useUserStore } from "@/stores/user";
+import { useUserStore } from "@/modules/user/stores/user";
 import router from "@/router/index";
 import { api } from "../api";
 import { getAccessToken, setToken } from "@/utils/tokenHelper";
@@ -36,7 +36,7 @@ const errorHandler = async (error: AxiosError) => {
         config._isRetry = true;
         try {
           if (refreshTokenRequest === null) {
-            refreshTokenRequest = api.auth.refresh();
+            refreshTokenRequest = api.user.refresh();
           }
           const res = await refreshTokenRequest;
           refreshTokenRequest = null;

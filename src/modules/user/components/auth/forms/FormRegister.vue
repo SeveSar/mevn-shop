@@ -58,7 +58,8 @@ import BaseInput from "@/components/ui/BaseInput.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import { getErrorMessage } from "@/utils/errorHandler";
 import type { IToast } from "@/plugins/plugins.types";
-import { useUserStore } from "@/stores/user";
+import { useUserStore } from "@/modules/user/stores/user";
+import { useToastStore } from "@/stores/toast";
 
 interface IUserCredentials {
   name: string;
@@ -77,8 +78,8 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const showToast = inject("showToast") as (message: IToast) => void;
     const userStore = useUserStore();
+    const toastStore = useToastStore();
 
     const userCredentials = reactive({
       email: "",
@@ -106,8 +107,8 @@ export default defineComponent({
             userCredentials.password
           );
         } catch (e) {
-          const message = getErrorMessage(e) || "Unknown";
-          showToast({ type: "error", text: message });
+          const message = getErrorMessage(e);
+          toastStore.showToast({ type: "error", text: message });
         }
       }
     };

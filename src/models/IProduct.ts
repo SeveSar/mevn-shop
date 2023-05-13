@@ -1,53 +1,26 @@
-import type { TFilterItem } from "./IFilter";
+import type {
+  IProductResponse,
+  IIngredientItemRersponse,
+  IDoughItemResponse,
+  ISizeItemResponse,
+} from "@/api/types/responses/IProductResponse";
 
-export interface IProduct {
-  id: string;
-  title: string;
-  price: number;
-  description: string;
-  imageUrl: string;
-  amount: number;
-  category: string;
-  sizes: ISizeItem[];
-  dough: IDoughItem[];
-  filters: TFilterItem[];
+export interface IProduct extends IProductResponse {
   ingredients: IIngredientItem[];
+  dough: IDoughItem[];
+  sizes: ISizeItem[];
 }
 
-export interface IIngredientItem {
-  img: string;
-  title: string;
-  price: number;
-  id: string;
-}
-export interface IDoughItem {
-  _id: string;
-  title: string;
-  price: number;
-}
-
-export interface ISizeItem {
-  title: string;
-  price: number;
-  _id: string;
-}
-
-export interface IProductDTO extends IProduct {
-  ingredients: IIngredientItemDTO[];
-  dough: IDoughItemDTO[];
-  sizes: ISizeItemDTO[];
-}
-
-export interface IIngredientItemDTO extends IIngredientItem {
+export interface IIngredientItem extends IIngredientItemRersponse {
   isActive: boolean;
   img: string;
   id: string;
 }
 
-export interface IDoughItemDTO extends IDoughItem {
+export interface IDoughItem extends IDoughItemResponse {
   id: string;
 }
 
-export interface ISizeItemDTO extends ISizeItem {
+export interface ISizeItem extends ISizeItemResponse {
   id: string;
 }

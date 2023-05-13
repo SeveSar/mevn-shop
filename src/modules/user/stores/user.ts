@@ -1,8 +1,8 @@
 import { computed, toRefs, reactive } from "vue";
 import { defineStore } from "pinia";
 import { api } from "@/api/api";
-import { setToken, cleanTokensData } from "@/utils/tokenHelper";
-import type { IUser } from "@/modules/user/models/IUser";
+import { setToken, cleanTokensData, getItemFromLocalstorage } from "@/utils/tokenHelper";
+import type { IUser } from "@/models/IUser";
 
 interface StateUser {
   token: string | null;
@@ -18,21 +18,22 @@ export const useUserStore = defineStore("user", () => {
   const isLoggedIn = computed(() => !!token.value);
 
   async function login(email: string, password: string) {
-    const data = await api.auth.login(email, password);
+    const data = await api.user.login(email, password, getItemFromLocalstorage("CART") ?? []);
     state.user = data.user;
     state.token = data.accessToken;
     setToken(data.accessToken);
   }
   async function signUp(email: string, password: string) {
-    const data = await api.auth.register(email, password);
+    const data = await api.user.register(email, password);
     state.user = data.user;
     state.token = data.accessToken;
     setToken(data.accessToken);
     return data;
   }
+
   async function auth() {
     try {
-      const res = await api.auth.refresh();
+      const res = await api.user.refresh();
       if (res) {
         state.user = res.data.user;
         state.token = res.data.accessToken;
@@ -43,12 +44,11 @@ export const useUserStore = defineStore("user", () => {
       console.log(e);
     }
   }
-  function setUser(user: IUser) {
-    state.user = user;
-  }
+
   async function logOut() {
-    await api.auth.logOut();
+    await api.user.logOut();
     cleanTokensData();
+
     state.user = null;
     state.token = null;
   }
@@ -61,6 +61,5 @@ export const useUserStore = defineStore("user", () => {
     logOut,
     auth,
     token,
-    setUser,
   };
 });

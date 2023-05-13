@@ -2,14 +2,14 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 
 export const useModalStore = defineStore("modal", () => {
-  const loginModal = ref(false);
+  const isAuthModal = ref(false);
   const isModalProduct = ref(false);
 
-  const openLoginModal = () => {
-    loginModal.value = true;
+  const openAuthModal = () => {
+    isAuthModal.value = true;
   };
-  const closeLoginModal = () => {
-    loginModal.value = false;
+  const closeAuthModal = () => {
+    isAuthModal.value = false;
   };
 
   const openProductModal = () => {
@@ -20,11 +20,11 @@ export const useModalStore = defineStore("modal", () => {
   };
 
   return {
-    openLoginModal,
-    closeLoginModal,
+    openAuthModal,
+    closeAuthModal,
     openProductModal,
     closeProductModal,
-    loginModal,
+    isAuthModal,
     isModalProduct,
   };
 });

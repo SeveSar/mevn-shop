@@ -14,8 +14,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from "vue";
-import FormLogin from "../components/forms/FormLogin.vue";
-import FormRegister from "../components/forms/FormRegister.vue";
+import FormLogin from "../forms/FormLogin.vue";
+import FormRegister from "../forms/FormRegister.vue";
 type FormType = "login" | "register";
 
 export default defineComponent({

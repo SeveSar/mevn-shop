@@ -1,19 +1,20 @@
-import type { IFilter } from "@/models/IFilter";
-import type { IProduct } from "../../../models/IProduct";
+import type { IFilterResponse } from "@/api/types/responses/IFilterResponse";
+import type { IProductResponse } from "@/api/types/responses/IProductResponse";
 import { ProductDTO } from "../models/product.dto";
-import type { IHttpClient } from "@/api/types";
+import type { IHttpClient } from "@/api/types/api";
+import type { IProduct } from "@/models/IProduct";
 
-export default class ProductServices {
+export class ProductServices {
   private readonly $http: IHttpClient;
 
   constructor(httpClient: IHttpClient) {
     this.$http = httpClient;
   }
 
-  async fetchProducts(filters?: string[]) {
+  async fetchProducts(filters?: string[]): Promise<IProduct[]> {
     let res;
     if (filters && filters.length) {
-      res = await this.$http.makeRequest<IProduct[]>({
+      res = await this.$http.makeRequest<IProductResponse[]>({
         url: "/products",
         method: "GET",
         config: {
@@ -21,7 +22,7 @@ export default class ProductServices {
         },
       });
     } else {
-      res = await this.$http.makeRequest<IProduct[]>({
+      res = await this.$http.makeRequest<IProductResponse[]>({
         url: "/products",
         method: "GET",
         headers: {
@@ -36,7 +37,7 @@ export default class ProductServices {
   }
 
   async fetchProductFilters() {
-    const res = await this.$http.makeRequest<IFilter[]>({
+    const res = await this.$http.makeRequest<IFilterResponse[]>({
       url: "/filter",
       method: "GET",
       headers: {
@@ -47,8 +48,8 @@ export default class ProductServices {
     return res.data;
   }
 
-  async createProduct(productData: IProduct) {
-    const res = await this.$http.makeRequest<IProduct>({
+  async createProduct(productData: IProductResponse) {
+    const res = await this.$http.makeRequest<IFilterResponse>({
       url: "/products",
       data: productData,
       method: "POST",

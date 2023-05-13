@@ -1,11 +1,11 @@
 import type { AxiosInstance } from "axios";
-import type { ApiResponse, IHttpClient, IOptions } from "../types";
+import type { ApiResponse, IHttpClient, IOptions } from "../types/api";
 import { getAccessToken } from "@/utils/tokenHelper";
 
 export class AxiosHttpClient implements IHttpClient {
-  private http: AxiosInstance;
+  private $http: AxiosInstance;
   constructor(axiosInstance: AxiosInstance) {
-    this.http = axiosInstance;
+    this.$http = axiosInstance;
   }
 
   makeRequest<T>({
@@ -30,6 +30,6 @@ export class AxiosHttpClient implements IHttpClient {
       options.data = data;
     }
 
-    return this.http.request({ ...options, headers });
+    return this.$http.request({ ...options, headers });
   }
 }

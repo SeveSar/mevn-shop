@@ -35,7 +35,7 @@ import type { PropType } from "vue";
 import { useProductsStore } from "@/modules/product/stores/products";
 import BaseButton from "@/components/ui/BaseButton.vue";
 // import { useCartStore } from "@/stores/cart";
-import type { IProductDTO } from "@/models/IProduct";
+import type { IProduct } from "@/models/IProduct";
 import { useModalStore } from "@/stores/modal";
 
 export default defineComponent({
@@ -44,14 +44,14 @@ export default defineComponent({
   },
   props: {
     product: {
-      type: Object as PropType<IProductDTO>,
+      type: Object as PropType<IProduct>,
       required: true,
     },
   },
   setup() {
     const productsStore = useProductsStore();
     const modalStore = useModalStore();
-    const openProductModal = (product: IProductDTO) => {
+    const openProductModal = (product: IProduct) => {
       productsStore.setActiveProductId(product.id);
       modalStore.openProductModal();
     };

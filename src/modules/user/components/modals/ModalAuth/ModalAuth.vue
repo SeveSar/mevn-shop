@@ -1,5 +1,5 @@
 <template>
-  <BaseModal :isOpen="loginModal" @close="closeModal">
+  <BaseModal :isOpen="isAuthModal" @close="storeModal.closeAuthModal">
     <div class="modal-content">
       <div class="modal-content__inner">
         <AuthForm></AuthForm>
@@ -14,7 +14,7 @@ import { defineComponent, ref, computed, type Ref } from "vue";
 import BaseModal from "@/components/ui/BaseModal.vue";
 import { useModalStore } from "@/stores/modal";
 import { storeToRefs } from "pinia";
-import AuthForm from "../../../auth/components/AuthForm.vue";
+import AuthForm from "../../auth/AuthForm/AuthForm.vue";
 
 interface IUserCredentials {
   email: string;
@@ -28,8 +28,8 @@ export default defineComponent({
   setup() {
     const storeModal = useModalStore();
     const userCredentials = ref({}) as Ref<IUserCredentials>;
-    const { loginModal } = storeToRefs(storeModal);
-    const typeForm = ref<string>("FormLogin");
+    const { isAuthModal } = storeToRefs(storeModal);
+    const typeForm = ref<"FormLogin" | "FormRegister">("FormLogin");
     const currentTextButton = computed(() => {
       return typeForm.value === "FormLogin"
         ? { text: "Не зарегестрированы ?", buttonText: "Создать аккаунт" }
@@ -44,15 +44,13 @@ export default defineComponent({
           typeForm.value = "FormLogin";
       }
     };
-    const closeModal = () => {
-      storeModal.closeLoginModal();
-    };
+
     return {
       typeForm,
       currentTextButton,
       changeForm,
-      closeModal,
-      loginModal,
+      storeModal,
+      isAuthModal,
       userCredentials,
     };
   },

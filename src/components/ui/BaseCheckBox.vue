@@ -1,13 +1,6 @@
 <template>
   <label class="base-checkbox" :class="{ 'base-checkbox--active': isChecked }">
-    <input
-      type="checkbox"
-      class="base-checkbox__control"
-      :value="value"
-      :disabled="disabled"
-      @change="onChange"
-      :checked="isChecked"
-    />
+    <input type="checkbox" class="base-checkbox__control" :value="value" :disabled="disabled" @change="onChange" :checked="isChecked" />
 
     {{ label }}
   </label>
@@ -52,6 +45,7 @@ export default defineComponent({
         emit("update:modelValue", isChecked ? true : false);
       }
     };
+
     const isChecked = computed(() => {
       if (props.modelValue instanceof Array) {
         return props.modelValue.includes(props.value);

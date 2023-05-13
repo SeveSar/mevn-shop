@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized, NavigationGuardNext } from "vue-router";
-import { useUserStore } from "@/stores/user";
+import { useUserStore } from "@/modules/user/stores/user";
 
 export function authMiddleware(
   to: RouteLocationNormalized,

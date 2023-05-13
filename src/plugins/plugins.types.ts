@@ -1,5 +1,5 @@
 export interface IToast {
-  id?: number;
+  id: number;
   text: string;
   type: TypeToast;
 }

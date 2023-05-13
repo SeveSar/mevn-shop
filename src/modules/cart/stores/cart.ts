@@ -1,120 +1,114 @@
 import { defineStore } from "pinia";
-
-import { useUserStore } from "@/stores/user";
-
+import { computed, ref } from "vue";
+import { useUserStore } from "@/modules/user/stores/user";
+import { api } from "@/api/api";
 import { useModalStore } from "@/stores/modal";
-import type { ICart } from "@/models/ICart";
+import type { TCart } from "@/models/ICart";
 import { useProductsStore } from "../../product/stores/products";
+import { getItemFromLocalstorage, setItemInLocalstorage } from "@/utils/tokenHelper";
 
-interface cartStore {
-  cart: ICart[];
-  inProccess: string[];
-}
+export const useCartStore = defineStore("cart", () => {
+  const cart = ref<TCart>(getItemFromLocalstorage("CART") ?? []);
+  const totalPrice = ref<number>(0);
+  const inProccess = ref<string[]>([]);
 
-export const useCartStore = defineStore({
-  id: "cart",
-  state: () =>
-    ({
-      cart: [],
-      inProccess: [],
-    } as cartStore),
-  getters: {
-    getIndex() {
-      return (id: string): number =>
-        this.cart.findIndex((item) => item.id === id);
-    },
+  const userStore = useUserStore();
 
-    inCart() {
-      return (id: string) => {
-        return this.getIndex(id) !== -1;
+  const getCart = async () => {
+    const res = await api.cart.getCart();
+  };
+
+  const getIndex = (id: string) => {
+    return cart.value.findIndex((item) => item.id === id);
+  };
+
+  const inCart = (id: string) => {
+    return getIndex(id) !== -1;
+  };
+
+  const inProccessing = (id: string) => {
+    return inProccess.value.includes(id);
+  };
+
+  const getItem = (id: string) => cart.value.find((item) => item.id === id);
+
+  const canAdd = (id: string) => {
+    return !inProccessing(id) && !inCart(id);
+  };
+
+  const canDel = (id: string) => {
+    return !inProccessing(id) && inCart(id);
+  };
+
+  const canUpdate = (id: string) => {
+    return !inProccessing(id) && inCart(id);
+  };
+
+  // const totalPrice = computed(() => {
+  //   return cart.value.reduce((acc, item) => {
+  //     return (acc += item.price);
+  //   }, 0);
+  // });
+
+  const totalItems = computed(() => {
+    return cart.value.reduce((acc, item) => {
+      return (acc += item.quantity);
+    }, 0);
+  });
+
+  const addToCart = async ({
+    productId,
+    dough,
+    size,
+    ingredientsIds,
+    productPrice,
+  }: {
+    productId: string;
+    dough: string;
+    size: string;
+    ingredientsIds: string[];
+    productPrice: number;
+  }) => {
+    console.log(dough, "doguh");
+    const userStore = useUserStore();
+    const productsStore = useProductsStore();
+    const currentSize = productsStore.getActiveProduct?.sizes.find((sizePr) => sizePr.id === size);
+    const currentDough = productsStore.getActiveProduct?.dough.find((doughPr) => doughPr.id === dough);
+    if (!inCart(productId)) {
+      const cartItem = {
+        quantity: 1,
+        id: productId,
+        price: productPrice,
+        size: currentSize,
+        dough: currentDough,
+        ingredients: ingredientsIds,
       };
-    },
 
-    inProccessing() {
-      return (id: string): boolean => this.inProccess.includes(id);
-    },
+      cart.value.push(cartItem);
+      setItemInLocalstorage("CART", cart.value);
+    } else {
+      const product = cart.value.find((pr) => pr.id === productId);
+      if (!product) return false;
 
-    getItem() {
-      return (id: string) => this.cart.find((item) => item.id === id);
-    },
+      product.quantity += 1;
+      product.price = productPrice * product.quantity;
+      product.size = currentSize;
+      product.dough = currentDough;
+      product.ingredients = ingredientsIds;
+      setItemInLocalstorage("CART", cart.value);
+    }
 
-    canAdd() {
-      return (id: string) => !this.inProccessing(id) && !this.inCart(id);
-    },
+    if (userStore.isLoggedIn) {
+      const res = await api.cart.addToCart(productId, dough, size, ingredientsIds);
+      console.log(res, "res");
+    }
+  };
 
-    canDel() {
-      return (id: string) => !this.inProccessing(id) && this.inCart(id);
-    },
-
-    canUpdate() {
-      return (id: string) => !this.inProccessing(id) && this.inCart(id);
-    },
-
-    totalPrice(): number {
-      return this.cart.reduce((acc, item) => {
-        return (acc += item.price);
-      }, 0);
-    },
-
-    totalItems(): number {
-      return this.cart.reduce((acc, item) => {
-        return (acc += item.cnt);
-      }, 0);
-    },
-  },
-  actions: {
-    async addToCart(id: string) {
-      if (!useUserStore().isLoggedIn) {
-        useModalStore().openLoginModal();
-        return false;
-      }
-
-      const productsStore = useProductsStore();
-      const cartItem = productsStore.getProductById(id);
-      if (this.canAdd(id) && cartItem) {
-        this.inProccess.push(id);
-        const newItem = {
-          ...cartItem,
-          cnt: 1,
-        } as ICart;
-        this.cart.push(newItem);
-
-        // await addtoCart(newItem, useUserStore().user.id ?? "");
-        this.inProccess = this.inProccess.filter((id) => id !== id);
-      }
-    },
-
-    async updateCnt(id: string, newCnt: number) {
-      if (this.canUpdate(id)) {
-        this.inProccess.push(id);
-        const itemCart = this.getItem(id);
-        if (!itemCart) return false;
-        itemCart.cnt = Math.max(1, newCnt);
-        const standartSize = itemCart.sizes?.find((item) => item.active);
-        if (standartSize) {
-          itemCart.price = itemCart.cnt * standartSize?.price;
-        }
-        // await saveCart(this.cart, useUserStore().user.id ?? "");
-        this.inProccess = this.inProccess.filter((itemId) => itemId !== id);
-      }
-    },
-
-    async delFromCart(id: string) {
-      if (this.canDel(id)) {
-        this.inProccess.push(id);
-        this.cart = this.cart.filter((pr) => pr.id !== id);
-        // await saveCart(this.cart, useUserStore().user.id ?? "");
-        this.inProccess = this.inProccess.filter((itemId) => itemId !== id);
-      }
-    },
-
-    saveCart(cart: ICart[]) {
-      this.cart = cart;
-    },
-
-    async clearCart() {
-      this.cart = [];
-      // await saveCart(this.cart, useUserStore().user.id ?? "");
-    },
-  },
+  return {
+    cart,
+    getCart,
+    totalItems,
+    addToCart,
+    totalPrice,
+  };
 });

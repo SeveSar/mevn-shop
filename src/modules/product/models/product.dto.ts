@@ -1,10 +1,6 @@
-import type { TFilterItemDTO } from "@/models/IFilter";
-import type {
-  IProduct,
-  IIngredientItemDTO,
-  ISizeItemDTO,
-  IDoughItemDTO,
-} from "@/models/IProduct";
+import type { IProductResponse } from "@/api/types/responses/IProductResponse";
+import type { TFilterItem } from "@/models/IFilter";
+import type { IIngredientItem, ISizeItem, IDoughItem } from "@/models/IProduct";
 
 export class ProductDTO {
   id: string;
@@ -13,13 +9,13 @@ export class ProductDTO {
   description: string;
   imageUrl: string;
   amount: number;
-  sizes: ISizeItemDTO[];
-  ingredients: IIngredientItemDTO[];
-  dough: IDoughItemDTO[];
   category: string;
-  filters: TFilterItemDTO[];
+  sizes: ISizeItem[];
+  ingredients: IIngredientItem[];
+  dough: IDoughItem[];
+  filters: TFilterItem[];
 
-  constructor(model: IProduct) {
+  constructor(model: IProductResponse) {
     this.id = model.id;
     this.title = model.title;
     this.price = model.price;
@@ -31,6 +27,7 @@ export class ProductDTO {
     this.sizes = model.sizes.map((size) => {
       return {
         ...size,
+        price: size.price,
         id: size._id,
       };
     });

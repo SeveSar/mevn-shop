@@ -45,9 +45,11 @@ import useVuelidate from "@vuelidate/core";
 import { getValidationRule } from "@/utils/validations";
 import BaseInput from "@/components/ui/BaseInput.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
-import { useUserStore } from "@/stores/user";
+import { useUserStore } from "@/modules/user/stores/user";
 import type { IToast } from "@/plugins/plugins.types";
 import { getErrorMessage } from "@/utils/errorHandler";
+import { useModalStore } from "@/stores/modal";
+import { useToastStore } from "@/stores/toast";
 
 interface IUserCredentials {
   email: string;
@@ -66,12 +68,14 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const showToast = inject("showToast") as (message: IToast) => void;
     const userStore = useUserStore();
     const userCredentials = reactive({
       email: "",
       password: "",
     });
+
+    const modalStore = useModalStore();
+    const toastStore = useToastStore();
 
     const onSubmit = async () => {
       const isFormCorrect = await v$.value.$validate();
@@ -82,9 +86,11 @@ export default defineComponent({
             userCredentials.email,
             userCredentials.password
           );
+          modalStore.closeAuthModal();
+          toastStore.showToast({ type: "info", text: "Вы авторизовались" });
         } catch (e) {
-          const message = getErrorMessage(e) || "Unknown";
-          showToast({ type: "error", text: message });
+          const message = getErrorMessage(e);
+          toastStore.showToast({ type: "error", text: message });
         }
       }
     };

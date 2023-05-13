@@ -26,13 +26,14 @@ import {
   watch,
 } from "vue";
 export default defineComponent({
-  emits: ["close", "show"],
   props: {
     isOpen: {
       type: Boolean,
       default: false,
     },
   },
+  emits: ["close", "show"],
+
   setup(props, { emit }) {
     //state
     const { isOpen } = toRefs(props);

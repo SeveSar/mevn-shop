@@ -1,24 +1,15 @@
 <template>
-  <BaseModal
-    :isOpen="modalStore.isModalProduct"
-    @close="close"
-    class="modal-product"
-  >
+  <BaseModal :isOpen="isOpen" @close="close" class="modal-product">
     <template #default>
       <div class="modal-product__body">
         <div class="modal-product__photo">
-          <img
-            class="modal-product__photo-img"
-            :src="productsStore.getActiveProduct?.imageUrl"
-            alt=""
-          />
+          <img class="modal-product__photo-img" :src="productsStore.getActiveProduct?.imageUrl" alt="" />
         </div>
-        <div class="modal-product__info modal-product-info">
+        <form class="modal-product__info modal-product-info" @submit.prevent="addToCart">
           <div class="modal-product-info__header">
             <h3 class="modal-product-info__title">
               {{ productsStore.getActiveProduct?.title }}
             </h3>
-            <button>info</button>
           </div>
           <div class="modal-product-info__ingredients">
             <div
@@ -26,26 +17,21 @@
               :class="{
                 'modal-product-info__ingredient--active': item.isActive,
               }"
-              v-for="item in productsStore.getActiveProduct?.ingredients.slice(
-                0,
-                4
-              )"
+              v-for="item in ingredients.slice(0, 4)"
               :key="item.id"
               @click="toggleActiveIngredient(item.id)"
             >
               <div class="modal-product-info__ingredient-icon">
                 <img :src="item.img" alt="" />
-                <AppIcon
-                  class="modal-product-info__ingredient-checkmark"
-                  name="IconTickCircle"
-                />
+                <AppIcon class="modal-product-info__ingredient-checkmark" name="IconTickCircle" />
               </div>
               <div class="modal-product-info__ingredient-info">
                 <div class="modal-product-info__ingredient-title">
                   {{ item.title }}
                 </div>
                 <div class="modal-product-info__ingredient-price">
-                  {{ item.price }} ₽
+                  {{ item.price }}
+                  ₽
                 </div>
               </div>
             </div>
@@ -75,26 +61,21 @@
               :class="{
                 'modal-product-info__ingredient--active': item.isActive,
               }"
-              v-for="item in productsStore.getActiveProduct?.ingredients.slice(
-                4,
-                productsStore.getActiveProduct?.ingredients.length
-              )"
+              v-for="item in ingredients.slice(4, ingredients.length)"
               :key="item.id"
               @click="toggleActiveIngredient(item.id)"
             >
               <div class="modal-product-info__ingredient-icon">
                 <img :src="item.img" alt="" />
-                <AppIcon
-                  class="modal-product-info__ingredient-checkmark"
-                  name="IconTickCircle"
-                />
+                <AppIcon class="modal-product-info__ingredient-checkmark" name="IconTickCircle" />
               </div>
               <div class="modal-product-info__ingredient-info">
                 <div class="modal-product-info__ingredient-title">
                   {{ item.title }}
                 </div>
                 <div class="modal-product-info__ingredient-price">
-                  {{ item.price }} ₽
+                  {{ item.price }}
+                  ₽
                 </div>
               </div>
             </div>
@@ -104,13 +85,14 @@
               <div class="modal-product-info__price-price">
                 Итого:
                 <span class="modal-product-info__price-value">
-                  {{ totalPrice }} ₽
+                  {{ totalPrice }}
+                  ₽
                 </span>
               </div>
             </div>
-            <BaseButton> Добавить </BaseButton>
+            <BaseButton type="submit"> Добавить </BaseButton>
           </div>
-        </div>
+        </form>
       </div>
     </template>
   </BaseModal>
@@ -118,13 +100,27 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from "vue";
-import BaseModal from "../ui/BaseModal.vue";
-import { useModalStore } from "../../stores/modal";
-import { useProductsStore } from "../../modules/product/stores/products";
-import AppIcon from "../ui/AppIcon/AppIcon.vue";
+import BaseModal from "../../ui/BaseModal.vue";
+import { useModalStore } from "../../../stores/modal";
+import { useProductsStore } from "@/modules/product/stores/products";
+import { useCartStore } from "@/modules/cart/stores/cart";
+import AppIcon from "../../ui/AppIcon/AppIcon.vue";
 
-import BaseTab from "../ui/BaseTab.vue";
-import BaseButton from "../ui/BaseButton.vue";
+import BaseTab from "../../ui/BaseTab.vue";
+import BaseButton from "../../ui/BaseButton.vue";
+import type { IIngredientItem } from "@/models/IProduct";
+
+interface ISelectedTabSize {
+  title: string;
+  id: string;
+  price: number;
+}
+
+interface ISelectedTabDough {
+  title: string;
+  id: string;
+  price: number;
+}
 
 export default defineComponent({
   components: {
@@ -133,70 +129,76 @@ export default defineComponent({
     BaseButton,
     AppIcon,
   },
+  props: {
+    isOpen: {
+      type: Boolean,
+      required: true,
+    },
+  },
 
   setup() {
     const modalStore = useModalStore();
     const productsStore = useProductsStore();
+    const cartStore = useCartStore();
 
-    const selectedTabDough = ref<null | {
-      title: string;
-      id: string;
-      price: number;
-    }>(null);
-
-    const selectedTabSize = ref<null | {
-      title: string;
-      id: string;
-      price: number;
-    }>(null);
+    const selectedTabDough = ref<ISelectedTabDough | null>(null);
+    const selectedTabSize = ref<null | ISelectedTabSize>(null);
+    const ingredients = ref<IIngredientItem[]>([]);
 
     const totalPrice = computed(() => {
-      if (
-        !productsStore.getActiveProduct ||
-        !selectedTabDough.value ||
-        !selectedTabSize.value
-      ) {
+      if (!productsStore.getActiveProduct || !selectedTabDough.value || !selectedTabSize.value) {
         return 0;
       }
-      const ingredientsPrice =
-        productsStore.getActiveProduct.ingredients.reduce((sum, item) => {
-          if (item.isActive) {
-            return (sum += item.price);
-          }
-          return sum;
-        }, 0);
+      const ingredientsPrice = ingredients.value.reduce((sum, item) => {
+        if (item.isActive) {
+          return (sum += item.price);
+        }
+        return sum;
+      }, 0);
 
-      const price =
-        productsStore.getActiveProduct.price +
-        selectedTabDough.value.price +
-        selectedTabSize.value.price +
-        ingredientsPrice;
+      const price = productsStore.getActiveProduct.price + selectedTabDough.value.price + selectedTabSize.value.price + ingredientsPrice;
 
       return price;
     });
 
     const toggleActiveIngredient = (itemId: string) => {
-      productsStore.updateIngredientsById(itemId);
+      const ingredientItem = ingredients.value.find((item) => item.id === itemId);
+
+      if (!ingredientItem) return;
+
+      ingredientItem.isActive = !ingredientItem.isActive;
     };
 
     const close = () => {
       modalStore.closeProductModal();
-      productsStore.resetProductIngredients();
       selectedTabDough.value = null;
       selectedTabSize.value = null;
+    };
+
+    const addToCart = () => {
+      const ingredientsIds = ingredients.value.filter((item) => item.isActive).map((item) => item.id);
+      cartStore.addToCart({
+        productId: productsStore.activeProductId,
+        dough: selectedTabDough.value?.id || "",
+        size: selectedTabSize.value?.id || "",
+        ingredientsIds,
+        productPrice: totalPrice.value,
+      });
     };
 
     watch(
       () => productsStore.getActiveProduct,
       () => {
-        selectedTabDough.value = productsStore.getActiveProduct
-          ? productsStore.getActiveProduct.dough[0]
-          : null;
-        selectedTabSize.value = productsStore.getActiveProduct
-          ? productsStore.getActiveProduct.sizes[0]
-          : null;
+        selectedTabDough.value = productsStore.getActiveProduct ? { ...productsStore.getActiveProduct.dough[0] } : null;
+        selectedTabSize.value = productsStore.getActiveProduct ? { ...productsStore.getActiveProduct.sizes[0] } : null;
+        ingredients.value = productsStore.getActiveProduct ? JSON.parse(JSON.stringify(productsStore.getActiveProduct.ingredients)) : [];
+        console.log(selectedTabDough);
+        console.log(selectedTabSize);
       }
     );
+    watch(selectedTabDough, (val) => {
+      console.log(val, "val");
+    });
 
     return {
       modalStore,
@@ -206,6 +208,8 @@ export default defineComponent({
       productsStore,
       totalPrice,
       toggleActiveIngredient,
+      ingredients,
+      addToCart,
     };
   },
 });
@@ -257,6 +261,7 @@ export default defineComponent({
 
     &__ingredient {
       width: calc((100% / 4) - 20px);
+
       &:hover {
         .modal-product-info__ingredient-icon {
           border-color: @main-color;
@@ -267,6 +272,7 @@ export default defineComponent({
         .modal-product-info__ingredient-icon {
           border-color: @main-color;
         }
+
         .modal-product-info__ingredient-checkmark {
           opacity: 1;
         }
@@ -322,6 +328,7 @@ export default defineComponent({
       border: 1px solid @gray-color;
       border-radius: 6px;
     }
+
     &__tab-size {
       &:deep(.base-tab__tab) {
         width: calc(100% / 3);
@@ -331,6 +338,7 @@ export default defineComponent({
 
     &__tab-dough {
       margin-bottom: 16px;
+
       &:deep(.base-tab__tab) {
         width: calc(100% / 2);
         flex-grow: 1;

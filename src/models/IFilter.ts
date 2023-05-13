@@ -1,15 +1,5 @@
-export type TFilterItem = {
-  title: string;
-  parent: string;
-  _id: string;
-};
+import type { TFilterItemResponse } from "@/api/types/responses/IFilterResponse";
 
-export interface IFilter {
-  title: string;
-  items: TFilterItem[];
-  _id: string;
-}
-
-export type TFilterItemDTO = TFilterItem & {
+export type TFilterItem = TFilterItemResponse & {
   id: string;
 };
