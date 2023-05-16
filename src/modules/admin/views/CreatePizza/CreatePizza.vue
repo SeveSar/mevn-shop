@@ -1,12 +1,7 @@
 <template>
   <div class="create-pizza">
     <div class="admin-buttons">
-      <button
-        class="admin-buttons__btn"
-        v-for="button in creatingButtons"
-        :key="button.id"
-        @click="openModal(button.modal)"
-      >
+      <button class="admin-buttons__btn" v-for="button in creatingButtons" :key="button.id" @click="openModal(button.modal)">
         {{ button.title }}
       </button>
     </div>
