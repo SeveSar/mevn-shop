@@ -1,6 +1,6 @@
 <template>
   <label class="base-checkbox" :class="{ 'base-checkbox--active': isChecked }">
-    <input type="checkbox" class="base-checkbox__control" :value="value" :disabled="disabled" @change="onChange" :checked="isChecked" />
+    <input type="checkbox" class="base-checkbox__control" :value="value" v-model="model" :disabled="disabled" />
 
     {{ label }}
   </label>
@@ -11,15 +11,8 @@ import { defineComponent, type PropType, computed } from "vue";
 
 export default defineComponent({
   props: {
-    modelValue: {
-      type: null as unknown as PropType<number[] | boolean>,
-      default: null,
-      validator: (v: any) => typeof v === "boolean" || Array.isArray(v),
-    },
-    value: {
-      type: Number,
-      required: true,
-    },
+    modelValue: { type: [Array, Boolean] },
+    value: { type: [Boolean, Object, Number] },
     label: {
       type: String,
       default: "",
@@ -30,31 +23,25 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const onChange = (event: Event) => {
-      const elem = event.target as HTMLInputElement;
-      let isChecked = elem.checked;
-      if (props.modelValue instanceof Array) {
-        let newValue = [...props.modelValue];
-        if (isChecked) {
-          newValue.push(props.value);
-        } else {
-          newValue.splice(newValue.indexOf(props.value), 1);
-        }
-        emit("update:modelValue", newValue);
-      } else {
-        emit("update:modelValue", isChecked ? true : false);
-      }
-    };
+    const model = computed({
+      get() {
+        return props.modelValue;
+      },
+      set(value) {
+        emit("update:modelValue", value);
+      },
+    });
 
     const isChecked = computed(() => {
-      if (props.modelValue instanceof Array) {
+      if (typeof props.modelValue === "boolean") {
+        return model.value;
+      } else if (Array.isArray(props.modelValue)) {
         return props.modelValue.includes(props.value);
       }
-      return props.modelValue === true;
     });
     return {
-      onChange,
       isChecked,
+      model,
     };
   },
 });

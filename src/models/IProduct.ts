@@ -1,9 +1,4 @@
-import type {
-  IProductResponse,
-  IIngredientItemRersponse,
-  IDoughItemResponse,
-  ISizeItemResponse,
-} from "@/api/types/responses/IProductResponse";
+import type { IProductResponse, IIngredientItemResponse, IDoughItemResponse, ISizeItemResponse } from "@/api/types/responses/IProductResponse";
 
 export interface IProduct extends IProductResponse {
   ingredients: IIngredientItem[];
@@ -11,7 +6,7 @@ export interface IProduct extends IProductResponse {
   sizes: ISizeItem[];
 }
 
-export interface IIngredientItem extends IIngredientItemRersponse {
+export interface IIngredientItem extends IIngredientItemResponse {
   isActive: boolean;
   img: string;
   id: string;

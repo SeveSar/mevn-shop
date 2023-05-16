@@ -11,10 +11,10 @@ export interface IProductResponse {
   sizes: ISizeItemResponse[];
   dough: IDoughItemResponse[];
   filters: TFilterItemResponse[];
-  ingredients: IIngredientItemRersponse[];
+  ingredients: IIngredientItemResponse[];
 }
 
-export interface IIngredientItemRersponse {
+export interface IIngredientItemResponse {
   img: string;
   title: string;
   price: number;

@@ -1,49 +1,22 @@
 <template>
-  <BaseModal
-    :isOpen="modelValue"
-    @close="$emit('update:modelValue', false)"
-    @show="$emit('update:modelValue', true)"
-  >
+  <BaseModal :isOpen="modelValue" @close="$emit('update:modelValue', false)" @show="$emit('update:modelValue', true)">
     <template #header>
       <h2 class="modal-title">Добавить пиццу</h2>
     </template>
 
     <div class="modal-content">
       <form class="form" @submit.prevent="createPizza">
-        <BaseInput
-          class="form__control"
-          placeholder="Имя"
-          v-model="productFields.title"
-        />
-        <BaseInput
-          class="form__control"
-          placeholder="Цена"
-          type="number"
-          v-model="productFields.price"
-        />
-        <BaseInput
-          class="form__control"
-          type="number"
-          placeholder="Количество"
-          v-model="productFields.amount"
-          tpye="number"
-        />
+        <BaseInput class="form__control" placeholder="Имя" v-model="productFields.title" />
+        <BaseInput class="form__control" placeholder="Цена" type="number" v-model="productFields.price" />
+        <BaseInput class="form__control" type="number" placeholder="Количество" v-model="productFields.amount" tpye="number" />
         <div class="form__group">
-          <BaseTextArea
-            height="150px"
-            placeholder="Описание"
-            v-model="productFields.description"
-          ></BaseTextArea>
+          <BaseTextArea height="150px" placeholder="Описание" v-model="productFields.description"></BaseTextArea>
         </div>
         <div class="form__group form-upload">
           <UploadProductImage v-model="file" />
           <div v-if="!file">
             <span class="form-upload__or">Или</span>
-            <BaseInput
-              type="text"
-              placeholder="URL картинки"
-              v-model="urlInput"
-            />
+            <BaseInput type="text" placeholder="URL картинки" v-model="urlInput" />
           </div>
         </div>
         <div class="form__group form__checkbox">

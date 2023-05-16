@@ -11,7 +11,5 @@ interface IProductCart {
 
 export interface ICartResponse {
   _id: string;
-  quantity: number;
-  totalPrice: number;
   products: IProductCart[];
 }

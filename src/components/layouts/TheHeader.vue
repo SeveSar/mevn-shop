@@ -9,11 +9,7 @@
             </div>
             <div class="header__top-col">
               <div class="user-auth">
-                <button
-                  v-if="!userStore.isLoggedIn"
-                  class="user-auth__btn"
-                  @click="modalStore.openAuthModal"
-                >
+                <button v-if="!userStore.isLoggedIn" class="user-auth__btn" @click="modalStore.openAuthModal">
                   <AppIcon name="IconUser"></AppIcon>
                   Войти в аккаунт
                 </button>
@@ -45,11 +41,7 @@
             </div>
             <nav class="nav" v-if="userStore.isLoggedIn">
               <ul class="nav-list">
-                <li
-                  class="nav-list__item"
-                  v-for="link in menuLinks"
-                  :key="link.title"
-                >
+                <li class="nav-list__item" v-for="link in menuLinks" :key="link.title">
                   <router-link to="/" :class="{ active: link.active }">
                     {{ link.title }}
                   </router-link>
@@ -61,11 +53,7 @@
                 <AppIcon name="IconBasket"></AppIcon>
                 <!-- <div class="user-cart__price">{{ cartStore.totalPrice }} ₽</div> -->
               </router-link>
-              <div
-                class="burger"
-                @click="isOpenedBurger = !isOpenedBurger"
-                :class="{ active: isOpenedBurger }"
-              >
+              <div class="burger" @click="isOpenedBurger = !isOpenedBurger" :class="{ active: isOpenedBurger }">
                 <span></span>
               </div>
             </div>
@@ -76,11 +64,7 @@
   </header>
   <div class="mobile-menu" :class="{ active: isOpenedBurger }">
     <div class="user-auth">
-      <BaseButton
-        v-if="!userStore.isLoggedIn"
-        class="user-auth__btn"
-        @click="modalStore.openAuthModal"
-      >
+      <BaseButton v-if="!userStore.isLoggedIn" class="user-auth__btn" @click="modalStore.openAuthModal">
         <AppIcon name="IconUser"></AppIcon>
         Войти в аккаунт
       </BaseButton>

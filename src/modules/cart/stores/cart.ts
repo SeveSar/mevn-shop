@@ -16,10 +16,11 @@ export const useCartStore = defineStore("cart", () => {
 
   const getCart = async () => {
     const res = await api.cart.getCart();
+    cart.value = res.products;
   };
 
   const getIndex = (id: string) => {
-    return cart.value.findIndex((item) => item.id === id);
+    return cart.value.findIndex((item) => item._id === id);
   };
 
   const inCart = (id: string) => {
@@ -69,11 +70,11 @@ export const useCartStore = defineStore("cart", () => {
     ingredientsIds: string[];
     productPrice: number;
   }) => {
-    console.log(dough, "doguh");
     const userStore = useUserStore();
     const productsStore = useProductsStore();
     const currentSize = productsStore.getActiveProduct?.sizes.find((sizePr) => sizePr.id === size);
     const currentDough = productsStore.getActiveProduct?.dough.find((doughPr) => doughPr.id === dough);
+
     if (!inCart(productId)) {
       const cartItem = {
         quantity: 1,

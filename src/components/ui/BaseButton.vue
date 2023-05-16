@@ -1,11 +1,5 @@
 <template>
-  <button
-    :class="classes"
-    :type="type"
-    class="button"
-    @click="$emit('click')"
-    :disabled="disabled"
-  >
+  <button :class="classes" :type="type" class="button" @click="$emit('click')" :disabled="disabled">
     <slot></slot>
   </button>
 </template>
@@ -21,6 +15,7 @@ export default defineComponent({
     },
     size: {
       type: String,
+      default: "medium",
     },
     rounded: {
       type: Boolean,
