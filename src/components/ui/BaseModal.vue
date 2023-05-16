@@ -17,14 +17,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted,
-  onUnmounted,
-  type PropType,
-  toRefs,
-  watch,
-} from "vue";
+import { defineComponent, onMounted, onUnmounted, type PropType, toRefs, watch } from "vue";
 export default defineComponent({
   props: {
     isOpen: {
@@ -49,9 +42,11 @@ export default defineComponent({
         close();
       }
     };
+
     onMounted(() => {
       document.body.addEventListener("keydown", onKeyHandler);
     });
+
     onUnmounted(() => {
       document.body.removeEventListener("keydown", onKeyHandler);
     });
