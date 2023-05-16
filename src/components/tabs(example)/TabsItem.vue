@@ -14,6 +14,7 @@ export default defineComponent({
       required: true,
     },
   },
+
   setup() {
     const selectedTab = inject("selectedTab");
     return {

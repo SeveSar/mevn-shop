@@ -23,7 +23,6 @@ import { computed, defineComponent, type PropType } from "vue";
 interface ITab {
   title: string;
   id: string;
-
   [key: string]: string | number | boolean;
 }
 
