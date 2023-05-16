@@ -6,6 +6,7 @@ import BaseButton from "./BaseButton.vue";
 // в нём описывается  сам тест
 test("renders base button", () => {
   //3 состовляющие теста
+
   // given
   const options = {
     slots: {
