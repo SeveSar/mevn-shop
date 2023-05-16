@@ -1,6 +1,7 @@
 <template>
   <label class="base-input">
     <span class="base-input__label" v-if="labelText"> {{ labelText }} </span>
+
     <input
       class="base-input__control"
       :class="{ error: errors }"
@@ -11,6 +12,7 @@
       :placeholder="placeholder"
       :type="type"
     />
+
     <transition name="fade">
       <small class="base-input__error" v-if="errors">{{ errors }}</small>
     </transition>
@@ -25,8 +27,7 @@ export default defineComponent({
     modelValue: {
       type: null as unknown as PropType<string | number | null>,
       default: null,
-      validator: (v: any) =>
-        typeof v === "string" || typeof v === "number" || v === null,
+      validator: (v: any) => typeof v === "string" || typeof v === "number" || v === null,
     },
 
     labelText: {
@@ -36,8 +37,7 @@ export default defineComponent({
     errors: {
       type: null as unknown as PropType<string | number | null>,
       default: null,
-      validator: (v: any) =>
-        typeof v === "string" || typeof v === "number" || v === null,
+      validator: (v: any) => typeof v === "string" || typeof v === "number" || v === null,
     },
     placeholder: {
       type: String,
