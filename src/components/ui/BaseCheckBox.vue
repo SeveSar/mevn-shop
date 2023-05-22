@@ -11,8 +11,8 @@ import { defineComponent, type PropType, computed } from "vue";
 
 export default defineComponent({
   props: {
-    modelValue: { type: [Array, Boolean] },
-    value: { type: [Boolean, Object, Number] },
+    modelValue: { type: [Array, Boolean], required: true },
+    value: { type: [Boolean, Number] },
     label: {
       type: String,
       default: "",

@@ -2,25 +2,30 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { useUserStore } from "@/modules/user/stores/user";
 import { api } from "@/api/api";
-import { useModalStore } from "@/stores/modal";
 import type { TCart } from "@/models/ICart";
 import { useProductsStore } from "../../product/stores/products";
 import { getItemFromLocalstorage, setItemInLocalstorage } from "@/utils/tokenHelper";
+import type { IDoughItem, IIngredientItem, ISizeItem } from "@/models/IProduct";
 
 export const useCartStore = defineStore("cart", () => {
-  const cart = ref<TCart>(getItemFromLocalstorage("CART") ?? []);
-  const totalPrice = ref<number>(0);
+  const cart = ref<TCart>([]);
+
   const inProccess = ref<string[]>([]);
 
   const userStore = useUserStore();
 
   const getCart = async () => {
-    const res = await api.cart.getCart();
-    cart.value = res.products;
+    if (userStore.isLoggedIn) {
+      const res = await api.cart.getCart();
+      cart.value = res.products;
+      setItemInLocalstorage("CART", cart.value);
+    } else {
+      cart.value = getItemFromLocalstorage("CART") ?? [];
+    }
   };
 
   const getIndex = (id: string) => {
-    return cart.value.findIndex((item) => item._id === id);
+    return cart.value.findIndex((item) => item.id === id);
   };
 
   const inCart = (id: string) => {
@@ -45,11 +50,11 @@ export const useCartStore = defineStore("cart", () => {
     return !inProccessing(id) && inCart(id);
   };
 
-  // const totalPrice = computed(() => {
-  //   return cart.value.reduce((acc, item) => {
-  //     return (acc += item.price);
-  //   }, 0);
-  // });
+  const totalPrice = computed(() => {
+    return cart.value.reduce((acc, item) => {
+      return (acc += item.totalPrice);
+    }, 0);
+  });
 
   const totalItems = computed(() => {
     return cart.value.reduce((acc, item) => {
@@ -61,47 +66,45 @@ export const useCartStore = defineStore("cart", () => {
     productId,
     dough,
     size,
-    ingredientsIds,
+    ingredients,
     productPrice,
   }: {
     productId: string;
     dough: string;
     size: string;
-    ingredientsIds: string[];
+    ingredients: IIngredientItem[];
     productPrice: number;
   }) => {
     const userStore = useUserStore();
     const productsStore = useProductsStore();
-    const currentSize = productsStore.getActiveProduct?.sizes.find((sizePr) => sizePr.id === size);
-    const currentDough = productsStore.getActiveProduct?.dough.find((doughPr) => doughPr.id === dough);
+    const currentSize = productsStore.getActiveProduct?.sizes.find((sizePr) => sizePr.id === size) as ISizeItem;
+    const currentDough = productsStore.getActiveProduct?.dough.find((doughPr) => doughPr.id === dough) as IDoughItem;
 
     if (!inCart(productId)) {
-      const cartItem = {
+      cart.value.push({
         quantity: 1,
         id: productId,
-        price: productPrice,
+        totalPrice: productPrice,
         size: currentSize,
         dough: currentDough,
-        ingredients: ingredientsIds,
-      };
-
-      cart.value.push(cartItem);
+        ingredients,
+      });
       setItemInLocalstorage("CART", cart.value);
     } else {
       const product = cart.value.find((pr) => pr.id === productId);
       if (!product) return false;
 
       product.quantity += 1;
-      product.price = productPrice * product.quantity;
+      product.totalPrice = productPrice * product.quantity;
       product.size = currentSize;
       product.dough = currentDough;
-      product.ingredients = ingredientsIds;
+      product.ingredients = ingredients;
       setItemInLocalstorage("CART", cart.value);
     }
 
     if (userStore.isLoggedIn) {
+      const ingredientsIds = ingredients.map((item) => item.id);
       const res = await api.cart.addToCart(productId, dough, size, ingredientsIds);
-      console.log(res, "res");
     }
   };
 

@@ -36,7 +36,11 @@ test("renders checked base checkbox. Prop modelValue: boolean", () => {
 });
 
 test("renders unchecked base checkbox", () => {
-  render(BaseCheckBox);
+  render(BaseCheckBox, {
+    props: {
+      modelValue: false,
+    },
+  });
   const checkbox = screen.getByRole("checkbox");
 
   expect(checkbox.checked).toBe(false);

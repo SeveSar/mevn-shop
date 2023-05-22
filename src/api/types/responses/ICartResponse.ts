@@ -1,15 +1,17 @@
+import type { IDoughItem, IIngredientItem, ISizeItem } from "@/models/IProduct";
 import type { IDoughItemResponse, ISizeItemResponse } from "./IProductResponse";
 
-interface IProductCart {
+export interface IProductCart {
   product: string;
-  _id: string;
+  id: string;
   quantity: number;
-  size: ISizeItemResponse;
-  dough: IDoughItemResponse;
-  ingredients: string[];
+  size: ISizeItem;
+  dough: IDoughItem;
+  ingredients: IIngredientItem[];
+  totalPrice: number;
 }
 
 export interface ICartResponse {
-  _id: string;
+  id: string;
   products: IProductCart[];
 }

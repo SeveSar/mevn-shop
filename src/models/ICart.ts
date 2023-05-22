@@ -1,11 +1,11 @@
-import type { IDoughItem, ISizeItem } from "./IProduct";
+import type { IDoughItem, IIngredientItem, ISizeItem } from "./IProduct";
 interface ICartItem {
   totalPrice: number;
-  _id?: string;
+  id: string;
   quantity: number;
-  size: ISizeItem | undefined;
-  dough: IDoughItem | undefined;
-  ingredients: string[];
+  size: ISizeItem;
+  dough: IDoughItem;
+  ingredients: IIngredientItem[];
 }
 
 export type TCart = ICartItem[];

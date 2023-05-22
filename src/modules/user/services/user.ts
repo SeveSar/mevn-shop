@@ -23,15 +23,19 @@ export class AuthService {
     return res.data;
   }
 
-  async login(email: string, password: string, cart: TCart) {
+  async login(email: string, password: string, cart: TCart | null) {
+    const body = {
+      email,
+      password,
+    } as { email: string; password: string; cart?: null | TCart };
+
+    if (cart) {
+      body.cart = cart;
+    }
     const res = await this.$http.makeRequest<UserResponse>({
       url: "/auth/login",
       method: "POST",
-      data: {
-        email,
-        password,
-        cart,
-      },
+      data: body,
     });
 
     return res.data;

@@ -16,7 +16,6 @@ export const db = getDatabase();
 export const dbFireStore = getFirestore(initFire);
 const app = createApp(App);
 app.use(createPinia());
-app.use(router);
 
 const productsStore = useProductsStore();
 const cartStore = useCartStore();
@@ -38,6 +37,7 @@ const start = async () => {
       if (spinnerAppElem) {
         spinnerAppElem.style.display = "none";
       }
+      app.use(router);
       app.mount("#app");
     }
   }

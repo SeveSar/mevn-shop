@@ -18,7 +18,7 @@ export const useUserStore = defineStore("user", () => {
   const isLoggedIn = computed(() => !!token.value);
 
   async function login(email: string, password: string) {
-    const data = await api.user.login(email, password, getItemFromLocalstorage("CART") ?? []);
+    const data = await api.user.login(email, password, getItemFromLocalstorage("CART"));
     state.user = data.user;
     state.token = data.accessToken;
     setToken(data.accessToken);

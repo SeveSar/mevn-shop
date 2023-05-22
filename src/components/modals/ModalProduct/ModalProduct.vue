@@ -109,6 +109,7 @@ import AppIcon from "../../ui/AppIcon/AppIcon.vue";
 import BaseTab from "../../ui/BaseTab.vue";
 import BaseButton from "../../ui/BaseButton.vue";
 import type { IIngredientItem } from "@/models/IProduct";
+import { cloneDeep } from "lodash";
 
 interface ISelectedTabSize {
   title: string;
@@ -173,15 +174,15 @@ export default defineComponent({
       modalStore.closeProductModal();
       selectedTabDough.value = null;
       selectedTabSize.value = null;
+      productsStore.activeProductId = "";
     };
 
     const addToCart = () => {
-      const ingredientsIds = ingredients.value.filter((item) => item.isActive).map((item) => item.id);
       cartStore.addToCart({
         productId: productsStore.activeProductId,
         dough: selectedTabDough.value?.id || "",
         size: selectedTabSize.value?.id || "",
-        ingredientsIds,
+        ingredients: ingredients.value,
         productPrice: totalPrice.value,
       });
     };
@@ -189,16 +190,11 @@ export default defineComponent({
     watch(
       () => productsStore.getActiveProduct,
       () => {
-        selectedTabDough.value = productsStore.getActiveProduct ? { ...productsStore.getActiveProduct.dough[0] } : null;
-        selectedTabSize.value = productsStore.getActiveProduct ? { ...productsStore.getActiveProduct.sizes[0] } : null;
-        ingredients.value = productsStore.getActiveProduct ? JSON.parse(JSON.stringify(productsStore.getActiveProduct.ingredients)) : [];
-        console.log(selectedTabDough);
-        console.log(selectedTabSize);
+        selectedTabDough.value = productsStore.getActiveProduct ? cloneDeep(productsStore.getActiveProduct.dough[0]) : null;
+        selectedTabSize.value = productsStore.getActiveProduct ? cloneDeep(productsStore.getActiveProduct.sizes[0]) : null;
+        ingredients.value = productsStore.getActiveProduct ? cloneDeep(productsStore.getActiveProduct.ingredients) : [];
       }
     );
-    watch(selectedTabDough, (val) => {
-      console.log(val, "val");
-    });
 
     return {
       modalStore,

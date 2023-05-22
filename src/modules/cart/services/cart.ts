@@ -1,5 +1,6 @@
 import type { IHttpClient } from "@/api/types/api";
 import type { ICartResponse } from "@/api/types/responses/ICartResponse";
+import { CartDTO } from "../models/cart.dto";
 
 export class CartService {
   private readonly $http: IHttpClient;
@@ -32,6 +33,9 @@ export class CartService {
       headers: { authorization: true },
     });
 
-    return res.data;
+    return {
+      ...res.data,
+      products: res.data.products.map((item) => new CartDTO(item)),
+    };
   }
 }

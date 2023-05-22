@@ -18,11 +18,6 @@ export const useProductsStore = defineStore("products", () => {
 
   const getProducts = async (filters?: string[]) => {
     products.value = await api.product.fetchProducts(filters);
-    console.log(products.value);
-  };
-
-  const setActiveProductId = (id: string) => {
-    activeProductId.value = id;
   };
 
   return {
@@ -31,6 +26,5 @@ export const useProductsStore = defineStore("products", () => {
     getProducts,
     products,
     activeProductId,
-    setActiveProductId,
   };
 });

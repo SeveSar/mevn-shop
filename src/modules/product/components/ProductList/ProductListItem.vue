@@ -52,7 +52,7 @@ export default defineComponent({
     const productsStore = useProductsStore();
     const modalStore = useModalStore();
     const openProductModal = (product: IProduct) => {
-      productsStore.setActiveProductId(product.id);
+      productsStore.activeProductId = product.id;
       modalStore.openProductModal();
     };
     return {
