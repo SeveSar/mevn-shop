@@ -4,10 +4,7 @@
       <ProductList :products="productsStore.products" />
     </ProductBlock>
   </div>
-  <PanelProductFilter
-    v-model="isProductFilterPanel"
-    :filters="productFilters"
-  />
+  <PanelProductFilter v-model="isProductFilterPanel" :filters="productFilters" />
 </template>
 
 <script lang="ts">
@@ -29,17 +26,20 @@ export default defineComponent({
   setup() {
     //state
     let currentCategory = ref<number>(0);
-    let productFilters = ref([]);
+    let productFilters = ref<any>([]);
     let isProductFilterPanel = ref(false);
     const productsStore = useProductsStore();
 
     const onClick = (category: number) => {
       currentCategory.value = category;
     };
-    const getProductFilters = async () => {
-      productFilters.value = await api.product.fetchProductFilters();
+
+    const fetchData = async () => {
+      const res = await Promise.all([api.product.fetchProductFilters(), productsStore.getProducts()]);
+      productFilters.value = res[0];
     };
-    getProductFilters();
+
+    fetchData();
     return {
       productsStore,
       onClick,

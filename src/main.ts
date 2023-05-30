@@ -8,7 +8,7 @@ import "./assets/less/main.less";
 
 import { getDatabase } from "firebase/database";
 import { getFirestore } from "firebase/firestore";
-import { useProductsStore } from "@/modules/product/stores/products";
+
 import { useUserStore } from "./modules/user/stores/user";
 
 import { useCartStore } from "./modules/cart/stores/cart";
@@ -17,29 +17,24 @@ export const dbFireStore = getFirestore(initFire);
 const app = createApp(App);
 app.use(createPinia());
 
-const productsStore = useProductsStore();
 const cartStore = useCartStore();
 const userStore = useUserStore();
 
 const start = async () => {
   try {
     await userStore.auth();
-    await cartStore.getCart();
+    if (userStore.isLoggedIn) {
+      await cartStore.getCart();
+    }
   } catch (e) {
     console.log(e);
   } finally {
-    try {
-      await productsStore.getProducts();
-    } catch (e) {
-      console.log(e);
-    } finally {
-      const spinnerAppElem = document.getElementById("app-spinner");
-      if (spinnerAppElem) {
-        spinnerAppElem.style.display = "none";
-      }
-      app.use(router);
-      app.mount("#app");
+    const spinnerAppElem = document.getElementById("app-spinner");
+    if (spinnerAppElem) {
+      spinnerAppElem.style.display = "none";
     }
+    app.use(router);
+    app.mount("#app");
   }
 };
 start();

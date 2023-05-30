@@ -2,9 +2,7 @@
   <form @submit.prevent="onSubmit" class="form-auth">
     <div class="form-auth__header">
       <h3 class="form-auth__title">Авторизация</h3>
-      <div class="form-auth__text">
-        Сможете быстро оформлять заказы, использовать бонусы
-      </div>
+      <div class="form-auth__text">Сможете быстро оформлять заказы, использовать бонусы</div>
     </div>
     <div class="form-auth__body">
       <BaseInput
@@ -19,7 +17,6 @@
         "
       />
       <BaseInput
-        class="f"
         labelText="Ваш пароль"
         id="auth-2"
         type="password"
@@ -32,9 +29,7 @@
       />
     </div>
 
-    <BaseButton class="form-auth__submit" type="submit">
-      Авторизоваться
-    </BaseButton>
+    <BaseButton class="form-auth__submit" type="submit"> Авторизоваться </BaseButton>
   </form>
 </template>
 
@@ -82,10 +77,7 @@ export default defineComponent({
 
       if (isFormCorrect) {
         try {
-          await userStore.login(
-            userCredentials.email,
-            userCredentials.password
-          );
+          await userStore.login(userCredentials.email, userCredentials.password);
           modalStore.closeAuthModal();
           toastStore.showToast({ type: "info", text: "Вы авторизовались" });
         } catch (e) {

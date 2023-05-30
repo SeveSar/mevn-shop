@@ -11,6 +11,7 @@
       @focus="onFocus"
       :placeholder="placeholder"
       :type="type"
+      test-id="base-input"
     />
 
     <transition name="fade">
@@ -44,7 +45,7 @@ export default defineComponent({
       default: "",
     },
     type: {
-      type: String,
+      type: String as PropType<"text" | "number" | "password">,
       default: "text",
     },
   },
