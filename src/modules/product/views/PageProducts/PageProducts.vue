@@ -4,49 +4,33 @@
       <ProductList :products="productsStore.products" />
     </ProductBlock>
   </div>
-  <PanelProductFilter v-model="isProductFilterPanel" :filters="productFilters" />
+  <teleport to="body">
+    <SidePanelProductFilter v-model="isProductFilterPanel" :filters="productFilters" />
+    <SidePanelCart />
+  </teleport>
 </template>
 
-<script lang="ts">
-import ProductList from "../../components/ProductList/ProductList.vue";
+<script lang="ts" setup>
+import ProductList from '../../components/ProductList/ProductList.vue';
 
-import ProductBlock from "../../components/ProductBlock/ProductBlock.vue";
-import PanelProductFilter from "@/modules/product/components/modals/PanelProductFilter/PanelProductFilter.vue";
-import { useProductsStore } from "@/modules/product/stores/products";
+import ProductBlock from '../../components/ProductBlock/ProductBlock.vue';
+import SidePanelProductFilter from '@/modules/product/components/sidePanels/SidePanelProductFilter/SidePanelProductFilter.vue';
+import SidePanelCart from '@/components/sidePanels/SidePanelCart.vue';
+import { useProductsStore } from '@/modules/product/stores/products';
 
-import { ref, defineComponent } from "vue";
-import { api } from "@/api/api";
+import { ref } from 'vue';
+import { api } from '@/api/api';
 
-export default defineComponent({
-  components: {
-    ProductBlock,
-    ProductList,
-    PanelProductFilter,
-  },
-  setup() {
-    //state
-    let currentCategory = ref<number>(0);
-    let productFilters = ref<any>([]);
-    let isProductFilterPanel = ref(false);
-    const productsStore = useProductsStore();
+//state
 
-    const onClick = (category: number) => {
-      currentCategory.value = category;
-    };
+let productFilters = ref<any>([]);
+let isProductFilterPanel = ref(false);
+const productsStore = useProductsStore();
 
-    const fetchData = async () => {
-      const res = await Promise.all([api.product.fetchProductFilters(), productsStore.getProducts()]);
-      productFilters.value = res[0];
-    };
+const fetchData = async () => {
+  const res = await Promise.all([api.product.fetchProductFilters(), productsStore.getProducts()]);
+  productFilters.value = res[0];
+};
 
-    fetchData();
-    return {
-      productsStore,
-      onClick,
-      currentCategory,
-      productFilters,
-      isProductFilterPanel,
-    };
-  },
-});
+fetchData();
 </script>

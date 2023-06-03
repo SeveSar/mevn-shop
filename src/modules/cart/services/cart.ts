@@ -1,6 +1,6 @@
-import type { IHttpClient } from "@/api/types/api";
-import type { ICartResponse } from "@/api/types/responses/ICartResponse";
-import { CartDTO } from "../models/cart.dto";
+import type { IHttpClient } from '@/api/types/api';
+import type { ICartResponse } from '@/api/types/responses/cart';
+import { CartDTO } from '../models/cart.dto';
 
 export class CartService {
   private readonly $http: IHttpClient;
@@ -11,8 +11,8 @@ export class CartService {
 
   async addToCart(id: string, dough: string, size: string, ingredients: string[]) {
     const res = await this.$http.makeRequest<ICartResponse>({
-      url: "/basket",
-      method: "POST",
+      url: '/basket',
+      method: 'POST',
 
       data: {
         productId: id,
@@ -28,8 +28,8 @@ export class CartService {
 
   async getCart() {
     const res = await this.$http.makeRequest<ICartResponse>({
-      url: "/basket",
-      method: "GET",
+      url: '/basket',
+      method: 'GET',
       headers: { authorization: true },
     });
 

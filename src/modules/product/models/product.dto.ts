@@ -1,6 +1,6 @@
-import type { IProductResponse } from "@/api/types/responses/IProductResponse";
-import type { TFilterItem } from "@/models/IFilter";
-import type { IIngredientItem, ISizeItem, IDoughItem } from "@/models/IProduct";
+import type { IProductResponse } from '@/api/types/responses/product';
+import type { TFilterItem } from '@/models/IFilter';
+import type { IIngredientItem, ISizeItem, IDoughItem } from '@/models/IProduct';
 
 export class ProductDTO {
   id: string;
@@ -24,34 +24,24 @@ export class ProductDTO {
     this.amount = model.amount;
     this.category = model.category;
 
-    this.sizes = model.sizes.map((size) => {
-      return {
-        ...size,
-        price: size.price,
-        id: size._id,
-      };
-    });
+    this.sizes = model.sizes;
 
     this.ingredients = model.ingredients.map((item) => {
       return {
         ...item,
         id: item.id,
-        img: import.meta.env.VITE_BASE_URL + "/" + item.img,
+        img: import.meta.env.VITE_BASE_URL + '/' + item.img,
         isActive: false,
       };
     });
 
-    this.dough = model.dough.map((dough) => {
-      return {
-        ...dough,
-        id: dough._id,
-      };
-    });
+    this.dough = model.dough;
 
     this.filters = model.filters.map((item) => {
       return {
         id: item._id,
-        ...item,
+        parent: item.parent,
+        title: item.title,
       };
     });
   }

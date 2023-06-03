@@ -1,15 +1,15 @@
-import { defineStore } from "pinia";
-import { computed, ref } from "vue";
-import { useUserStore } from "@/modules/user/stores/user";
-import { api } from "@/api/api";
-import type { TCart } from "@/models/ICart";
-import { useProductsStore } from "../../product/stores/products";
-import { getItemFromLocalstorage, setItemInLocalstorage } from "@/utils/tokenHelper";
-import type { IDoughItem, IIngredientItem, ISizeItem } from "@/models/IProduct";
+import { defineStore } from 'pinia';
+import { computed, ref } from 'vue';
+import { useUserStore } from '@/modules/user/stores/user';
+import { api } from '@/api/api';
+import type { TCart } from '@/models/ICart';
+import { useProductsStore } from '../../product/stores/products';
+import { getItemFromLocalstorage, setItemInLocalstorage } from '@/utils/tokenHelper';
+import type { IDoughItem, IIngredientItem, ISizeItem } from '@/models/IProduct';
 
-export const useCartStore = defineStore("cart", () => {
+export const useCartStore = defineStore('cart', () => {
   const cart = ref<TCart>([]);
-
+  const isSidePanelCart = ref(false);
   const inProccess = ref<string[]>([]);
 
   const userStore = useUserStore();
@@ -18,9 +18,9 @@ export const useCartStore = defineStore("cart", () => {
     if (userStore.isLoggedIn) {
       const res = await api.cart.getCart();
       cart.value = res.products;
-      setItemInLocalstorage("CART", cart.value);
+      setItemInLocalstorage('CART', cart.value);
     } else {
-      cart.value = getItemFromLocalstorage("CART") ?? [];
+      cart.value = getItemFromLocalstorage('CART') ?? [];
     }
   };
 
@@ -62,18 +62,48 @@ export const useCartStore = defineStore("cart", () => {
     }, 0);
   });
 
+  const calculateTotalPriceProduct = ({
+    idProduct,
+    ingredients,
+    dough,
+    size,
+    quantity = 1,
+  }: {
+    idProduct: string;
+    ingredients: IIngredientItem[];
+    dough: IDoughItem;
+    size: ISizeItem;
+    quantity?: number;
+  }) => {
+    const productsStore = useProductsStore();
+    const product = productsStore.products.find((pr) => pr.id === idProduct);
+    if (!product) return 0;
+    const ingredientsPrice = ingredients.reduce((sum, item) => {
+      if (item.isActive) {
+        return (sum += item.price);
+      }
+      return sum;
+    }, 0);
+
+    const price = product.price + dough.price + size.price + ingredientsPrice;
+    return price * quantity;
+  };
+
   const addToCart = async ({
+    title,
     productId,
     dough,
     size,
     ingredients,
-    productPrice,
+
+    imageUrl,
   }: {
+    title: string;
     productId: string;
     dough: string;
     size: string;
     ingredients: IIngredientItem[];
-    productPrice: number;
+    imageUrl: string;
   }) => {
     const userStore = useUserStore();
     const productsStore = useProductsStore();
@@ -82,24 +112,32 @@ export const useCartStore = defineStore("cart", () => {
 
     if (!inCart(productId)) {
       cart.value.push({
+        title,
+        imageUrl,
         quantity: 1,
         id: productId,
-        totalPrice: productPrice,
+        totalPrice: calculateTotalPriceProduct({ size: currentSize, dough: currentDough, idProduct: productId, ingredients }),
         size: currentSize,
         dough: currentDough,
         ingredients,
       });
-      setItemInLocalstorage("CART", cart.value);
+      setItemInLocalstorage('CART', cart.value);
     } else {
-      const product = cart.value.find((pr) => pr.id === productId);
-      if (!product) return false;
+      const productCart = cart.value.find((pr) => pr.id === productId);
+      if (!productCart) return;
 
-      product.quantity += 1;
-      product.totalPrice = productPrice * product.quantity;
-      product.size = currentSize;
-      product.dough = currentDough;
-      product.ingredients = ingredients;
-      setItemInLocalstorage("CART", cart.value);
+      productCart.quantity += 1;
+      productCart.totalPrice = calculateTotalPriceProduct({
+        size: currentSize,
+        dough: currentDough,
+        idProduct: productId,
+        ingredients,
+        quantity: productCart.quantity,
+      });
+      productCart.size = currentSize;
+      productCart.dough = currentDough;
+      productCart.ingredients = ingredients;
+      setItemInLocalstorage('CART', cart.value);
     }
 
     if (userStore.isLoggedIn) {
@@ -108,11 +146,28 @@ export const useCartStore = defineStore("cart", () => {
     }
   };
 
+  const updateCnt = ({ newQuantity, idProduct }: { newQuantity: number; idProduct: string }) => {
+    const productCart = cart.value.find((item) => item.id === idProduct);
+    if (!productCart) return;
+    productCart.quantity = newQuantity;
+    productCart.totalPrice = calculateTotalPriceProduct({
+      quantity: newQuantity,
+      idProduct,
+      size: productCart.size,
+      dough: productCart.size,
+      ingredients: productCart.ingredients,
+    });
+  };
+
   return {
+    calculateTotalPriceProduct,
     cart,
     getCart,
     totalItems,
     addToCart,
+    useProductsStore,
     totalPrice,
+    updateCnt,
+    isSidePanelCart,
   };
 });

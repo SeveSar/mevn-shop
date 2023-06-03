@@ -49,10 +49,10 @@
               </ul>
             </nav>
             <div class="header__bottom-user">
-              <router-link class="user-cart" :to="{ name: 'Cart' }">
+              <button class="user-cart" @click="cartStore.isSidePanelCart = true">
                 <AppIcon name="IconBasket"></AppIcon>
                 <div class="user-cart__price">{{ cartStore.totalPrice }} ₽</div>
-              </router-link>
+              </button>
               <div class="burger" @click="isOpenedBurger = !isOpenedBurger" :class="{ active: isOpenedBurger }">
                 <span></span>
               </div>
@@ -95,14 +95,14 @@
 </template>
 
 <script lang="ts">
-import { useRouter, useRoute } from "vue-router";
-import { useModalStore } from "@/stores/modal";
-import { useUserStore } from "@/modules/user/stores/user";
+import { useRouter, useRoute } from 'vue-router';
+import { useModalStore } from '@/stores/modal';
+import { useUserStore } from '@/modules/user/stores/user';
 
-import AppIcon from "@/components/ui/AppIcon/AppIcon.vue";
-import BaseButton from "@/components/ui/BaseButton.vue";
-import { ref, watch, defineComponent } from "vue";
-import { useCartStore } from "@/modules/cart/stores/cart";
+import AppIcon from '@/components/ui/AppIcon/AppIcon.vue';
+import BaseButton from '@/components/ui/BaseButton.vue';
+import { ref, watch, defineComponent } from 'vue';
+import { useCartStore } from '@/modules/cart/stores/cart';
 
 export default defineComponent({
   components: {
@@ -114,20 +114,21 @@ export default defineComponent({
     const userStore = useUserStore();
     const cartStore = useCartStore();
     const route = useRoute();
+
     const isOpenedBurger = ref<boolean>(false);
     const menuLinks = [
-      { title: "Пицца", active: true },
-      { title: "Суши", active: false },
-      { title: "Напитки", active: false },
-      { title: "Закуски", active: false },
-      { title: "Комбо", active: false },
-      { title: "Десерты", active: false },
-      { title: "Соусы", active: false },
+      { title: 'Пицца', active: true },
+      { title: 'Суши', active: false },
+      { title: 'Напитки', active: false },
+      { title: 'Закуски', active: false },
+      { title: 'Комбо', active: false },
+      { title: 'Десерты', active: false },
+      { title: 'Соусы', active: false },
     ];
     const router = useRouter();
     const logOut = () => {
       userStore.logOut();
-      router.push({ name: "Home" });
+      router.push({ name: 'Home' });
     };
     watch(
       () => route.query,

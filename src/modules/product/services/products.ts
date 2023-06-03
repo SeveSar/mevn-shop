@@ -1,8 +1,9 @@
-import type { IFilterResponse } from "@/api/types/responses/IFilterResponse";
-import type { IProductResponse } from "@/api/types/responses/IProductResponse";
-import { ProductDTO } from "../models/product.dto";
-import type { IHttpClient } from "@/api/types/api";
-import type { IProduct } from "@/models/IProduct";
+import type { IProductResponse } from '@/api/types/responses/product';
+import { ProductDTO } from '../models/product.dto';
+import type { IHttpClient } from '@/api/types/api';
+import type { IProduct } from '@/models/IProduct';
+import { IFilterResponse } from '@/api/types/responses/filter';
+import { FilterDTO } from '@/models/dtos/filter.dto';
 
 export class ProductServices {
   private readonly $http: IHttpClient;
@@ -15,16 +16,16 @@ export class ProductServices {
     let res;
     if (filters && filters.length) {
       res = await this.$http.makeRequest<IProductResponse[]>({
-        url: "/products",
-        method: "GET",
+        url: '/products',
+        method: 'GET',
         config: {
           params: { filters },
         },
       });
     } else {
       res = await this.$http.makeRequest<IProductResponse[]>({
-        url: "/products",
-        method: "GET",
+        url: '/products',
+        method: 'GET',
         headers: {
           authorization: true,
         },
@@ -38,21 +39,21 @@ export class ProductServices {
 
   async fetchProductFilters() {
     const res = await this.$http.makeRequest<IFilterResponse[]>({
-      url: "/filter",
-      method: "GET",
+      url: '/filter',
+      method: 'GET',
       headers: {
         authorization: true,
       },
     });
 
-    return res.data;
+    return res.data.map((item) => new FilterDTO(item));
   }
 
   async createProduct(productData: IProductResponse) {
-    const res = await this.$http.makeRequest<IFilterResponse>({
-      url: "/products",
+    const res = await this.$http.makeRequest<any>({
+      url: '/products',
       data: productData,
-      method: "POST",
+      method: 'POST',
     });
     return res.data;
   }

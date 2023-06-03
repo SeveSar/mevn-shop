@@ -150,14 +150,13 @@ export default defineComponent({
       if (!productsStore.getActiveProduct || !selectedTabDough.value || !selectedTabSize.value) {
         return 0;
       }
-      const ingredientsPrice = ingredients.value.reduce((sum, item) => {
-        if (item.isActive) {
-          return (sum += item.price);
-        }
-        return sum;
-      }, 0);
 
-      const price = productsStore.getActiveProduct.price + selectedTabDough.value.price + selectedTabSize.value.price + ingredientsPrice;
+      const price = cartStore.calculateTotalPriceProduct({
+        idProduct: productsStore.activeProductId,
+        ingredients: ingredients.value,
+        size: selectedTabSize.value,
+        dough: selectedTabDough.value,
+      });
 
       return price;
     });
@@ -179,12 +178,10 @@ export default defineComponent({
 
     const addToCart = () => {
       cartStore.addToCart({
-        imageUrl: productsStore.getActiveProduct?.imageUrl ?? '',
-        title: productsStore.getActiveProduct?.title ?? '',
         productId: productsStore.activeProductId,
         dough: selectedTabDough.value?.id || '',
         size: selectedTabSize.value?.id || '',
-        ingredients: ingredients.value.filter((ing) => ing.isActive),
+        ingredients: ingredients.value,
       });
     };
 

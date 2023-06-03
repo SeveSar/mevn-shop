@@ -4,17 +4,11 @@
     @close="$emit('update:modelValue', false)"
     @show="$emit('update:modelValue', true)"
     class="panel-product-filter"
+    title="Фильтры"
   >
-    <template #header>
-      <h3 class="panel-product-filter__title">Фильтры</h3>
-    </template>
     <template #default>
       <div class="panel-product-filter__list">
-        <div
-          class="panel-product-filter__block"
-          v-for="filter in filters"
-          :key="filter._id"
-        >
+        <div class="panel-product-filter__block" v-for="filter in filters" :key="filter.id">
           <div class="panel-product-filter__block-title">
             {{ filter.title }}
           </div>
@@ -22,19 +16,14 @@
             <label
               class="panel-product-filter__item"
               :class="{
-                'panel-product-filter__item--active': isActiveFilter(value._id),
+                'panel-product-filter__item--active': isActiveFilter(value.id),
               }"
               v-for="value in filter.items"
               :key="value.id"
             >
               {{ value.title }}
-              <input
-                type="checkbox"
-                v-model="selectedFilters"
-                :value="value._id"
-                name="filter"
-                class="panel-product-filter__control"
-              />
+
+              <input type="checkbox" v-model="selectedFilters" :value="value.id" name="filter" class="panel-product-filter__control" />
             </label>
           </div>
         </div>
@@ -42,9 +31,7 @@
     </template>
     <template #footer>
       <div class="panel-product-filter__actions">
-        <BaseButton variant="border" @click="resetFilterProducts"
-          >Сбросить</BaseButton
-        >
+        <BaseButton variant="border" @click="resetFilterProducts">Сбросить</BaseButton>
         <BaseButton @click="filterProducts">Применить</BaseButton>
       </div>
     </template>
@@ -52,11 +39,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, type PropType, ref, watch } from "vue";
-import BaseSidePanel from "@/components/ui/BaseSidePanel.vue";
-import BaseButton from "@/components/ui/BaseButton.vue";
-import { useProductsStore } from "../../../stores/products";
-import type { IFilter } from "@/models/IFilter";
+import { computed, defineComponent, type PropType, ref, watch } from 'vue';
+import BaseSidePanel from '@/components/ui/BaseSidePanel.vue';
+import BaseButton from '@/components/ui/BaseButton.vue';
+import { useProductsStore } from '../../../stores/products';
+import type { IFilter, TFilterItem } from '@/models/IFilter';
 
 export default defineComponent({
   components: {
@@ -73,7 +60,7 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ["update:modelValue"],
+  emits: ['update:modelValue'],
 
   setup() {
     const productsStore = useProductsStore();
@@ -104,12 +91,6 @@ export default defineComponent({
 
 <style scoped lang="less">
 .panel-product-filter {
-  &__title {
-    font-weight: 600;
-    font-size: 32px;
-    line-height: 40px;
-    color: @black-color;
-  }
   &__block {
     &:not(:last-child) {
       margin-bottom: 24px;

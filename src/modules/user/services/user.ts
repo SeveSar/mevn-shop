@@ -1,7 +1,7 @@
-import type { AxiosInstance } from "axios";
-import type { UserResponse } from "@/api/types/responses/IUserResponse";
-import type { IHttpClient } from "@/api/types/api";
-import type { TCart } from "@/models/ICart";
+import type { AxiosInstance } from 'axios';
+import type { UserResponse } from '@/api/types/responses/user';
+import type { IHttpClient } from '@/api/types/api';
+import type { TCart } from '@/models/ICart';
 
 export class AuthService {
   private readonly $http: IHttpClient;
@@ -13,8 +13,8 @@ export class AuthService {
   }
   async register(email: string, password: string) {
     const res = await this.$http.makeRequest<UserResponse>({
-      url: "/auth/register",
-      method: "POST",
+      url: '/auth/register',
+      method: 'POST',
       data: {
         email,
         password,
@@ -33,8 +33,8 @@ export class AuthService {
       body.cart = cart;
     }
     const res = await this.$http.makeRequest<UserResponse>({
-      url: "/auth/login",
-      method: "POST",
+      url: '/auth/login',
+      method: 'POST',
       data: body,
     });
 
@@ -42,7 +42,7 @@ export class AuthService {
   }
 
   async refresh() {
-    return this.$axios.get<UserResponse>("api/auth/refresh", {
+    return this.$axios.get<UserResponse>('api/auth/refresh', {
       baseURL: import.meta.env.VITE_BASE_URL,
       withCredentials: true,
     });
@@ -50,13 +50,13 @@ export class AuthService {
 
   async getUsers() {
     const res = await this.$http.makeRequest<any>({
-      url: "/users",
-      method: "GET",
+      url: '/users',
+      method: 'GET',
     });
     return res.data;
   }
   async logOut() {
-    const res = await this.$axios.get("api/auth/logout", {
+    const res = await this.$axios.get('api/auth/logout', {
       baseURL: import.meta.env.VITE_BASE_URL,
       withCredentials: true,
     });

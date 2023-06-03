@@ -1,8 +1,8 @@
-import type { IDoughItem, IIngredientItem, ISizeItem } from "@/models/IProduct";
-import type { IDoughItemResponse, ISizeItemResponse } from "./IProductResponse";
+import type { IDoughItem, IIngredientItem, IProduct, ISizeItem } from '@/models/IProduct';
+import type { IProductResponse } from './product';
 
 export interface IProductCart {
-  product: string;
+  product: Omit<IProductResponse, 'id'> & { _id: string };
   id: string;
   quantity: number;
   size: ISizeItem;

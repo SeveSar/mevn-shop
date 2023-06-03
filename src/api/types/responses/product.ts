@@ -1,4 +1,5 @@
-import type { TFilterItemResponse } from "./IFilterResponse";
+import { IDoughItem, ISizeItem } from '@/models/IProduct';
+import type { TFilterItemResponse } from './filter';
 
 export interface IProductResponse {
   id: string;
@@ -8,8 +9,8 @@ export interface IProductResponse {
   imageUrl: string;
   amount: number;
   category: string;
-  sizes: ISizeItemResponse[];
-  dough: IDoughItemResponse[];
+  sizes: ISizeItem[];
+  dough: IDoughItem[];
   filters: TFilterItemResponse[];
   ingredients: IIngredientItemResponse[];
 }
@@ -19,15 +20,4 @@ export interface IIngredientItemResponse {
   title: string;
   price: number;
   id: string;
-}
-export interface IDoughItemResponse {
-  _id: string;
-  title: string;
-  price: number;
-}
-
-export interface ISizeItemResponse {
-  _id: string;
-  title: string;
-  price: number;
 }

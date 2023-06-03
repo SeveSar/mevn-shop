@@ -1,10 +1,10 @@
-import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from "axios";
-import axios from "axios";
-import type { UserResponse } from "../types/responses/IUserResponse";
-import { useUserStore } from "@/modules/user/stores/user";
-import router from "@/router/index";
-import { api } from "../api";
-import { getAccessToken, setToken } from "@/utils/tokenHelper";
+import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from 'axios';
+import axios from 'axios';
+import type { UserResponse } from '../types/responses/user';
+import { useUserStore } from '@/modules/user/stores/user';
+import router from '@/router/index';
+import { api } from '../api';
+import { getAccessToken, setToken } from '@/utils/tokenHelper';
 
 enum StatusCode {
   Unauthorized = 401,
@@ -22,7 +22,7 @@ const errorHandler = async (error: AxiosError) => {
   const config = error.config as ConfigImplements;
 
   if (!response) {
-    return Promise.reject("Unknown Error");
+    return Promise.reject('Unknown Error');
   }
   const { status } = response;
   switch (status) {
@@ -40,12 +40,12 @@ const errorHandler = async (error: AxiosError) => {
           return axios(setTokenHeaders(config));
         } catch (e) {
           userStore.logOut().then(() => {
-            router.push("/login");
+            router.push('/login');
           });
         }
       }
       userStore.logOut().then(() => {
-        router.push("/login");
+        router.push('/login');
       });
     }
   }
@@ -60,7 +60,7 @@ const onResponseSuccess = (successRes: AxiosResponse): AxiosResponse => {
   return successRes;
 };
 
-const urlsSkipAuth = ["/api/auth/login", "/api/auth/logout"];
+const urlsSkipAuth = ['/api/auth/login', '/api/auth/logout'];
 
 const setTokenHeaders = (config: AxiosRequestConfig) => {
   if (config.url && urlsSkipAuth.includes(config.url)) {

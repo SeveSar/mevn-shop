@@ -7,7 +7,9 @@
             <AppIcon name="IconCrossBig" />
           </button>
           <div class="side-panel__header">
-            <slot name="header" />
+            <h3 class="side-panel__title">
+              {{ title }}
+            </h3>
           </div>
           <div class="side-panel__content">
             <slot />
@@ -22,18 +24,11 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted,
-  onUnmounted,
-  type PropType,
-  toRefs,
-  watch,
-} from "vue";
-import AppIcon from "./AppIcon/AppIcon.vue";
+import { defineComponent, onMounted, onUnmounted, type PropType, toRefs, watch } from 'vue';
+import AppIcon from './AppIcon/AppIcon.vue';
 
 export default defineComponent({
-  emits: ["close", "show"],
+  emits: ['close', 'show'],
   components: {
     AppIcon,
   },
@@ -52,25 +47,25 @@ export default defineComponent({
     const { isOpen } = toRefs(props);
     //methods
     const close = () => {
-      emit("close");
+      emit('close');
     };
     const show = () => {
-      emit("show");
+      emit('show');
     };
     const onKeyHandler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         close();
       }
     };
     onMounted(() => {
-      document.body.addEventListener("keydown", onKeyHandler);
+      document.body.addEventListener('keydown', onKeyHandler);
     });
     onUnmounted(() => {
-      document.body.removeEventListener("keydown", onKeyHandler);
+      document.body.removeEventListener('keydown', onKeyHandler);
     });
     watch(isOpen, (val) => {
-      if (val) document.body.classList.add("no-scroll");
-      else document.body.classList.remove("no-scroll");
+      if (val) document.body.classList.add('no-scroll');
+      else document.body.classList.remove('no-scroll');
     });
     return {
       close,
@@ -82,7 +77,7 @@ export default defineComponent({
 
 <style scoped lang="less">
 .side-panel {
-  background: #f9f9f9;
+  background: #ffffff;
   max-width: 520px;
   position: absolute;
   right: 0;
@@ -93,6 +88,13 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   overflow: auto;
+
+  &__title {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 40px;
+    color: @black-color;
+  }
 
   &__close {
     position: absolute;
@@ -148,7 +150,7 @@ export default defineComponent({
   transition: opacity 0.3s ease;
 }
 .slide-panel-leave-active {
-  transition: opacity 0.3s ease 0.3s;
+  transition: opacity 0.3s ease 0.1s;
 }
 
 .slide-panel-enter-from,
@@ -157,7 +159,7 @@ export default defineComponent({
 }
 
 .slide-panel-inner-enter-active {
-  transition: all 0.3s ease 0.3s;
+  transition: all 0.3s ease 0.1s;
 }
 .slide-panel-inner-leave-active {
   transition: all 0.3s ease;

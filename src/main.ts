@@ -23,9 +23,8 @@ const userStore = useUserStore();
 const start = async () => {
   try {
     await userStore.auth();
-    if (userStore.isLoggedIn) {
-      await cartStore.getCart();
-    }
+
+    await cartStore.getCart();
   } catch (e) {
     console.log(e);
   } finally {
