@@ -43,7 +43,7 @@ import { computed, defineComponent, type PropType, ref, watch } from 'vue';
 import BaseSidePanel from '@/components/ui/BaseSidePanel.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
 import { useProductsStore } from '../../../stores/products';
-import type { IFilter, TFilterItem } from '@/models/IFilter';
+import type { IFilter, TFilterItem } from '@/types/IFilter';
 
 export default defineComponent({
   components: {

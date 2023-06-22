@@ -51,16 +51,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, type Ref } from "vue";
-import BaseModal from "@/components/ui/BaseModal.vue";
-import BaseInput from "@/components/ui/BaseInput.vue";
-import UploadProductImage from "@/modules/admin/components/UploadProductImage/UploadProductImage.vue";
-import BaseCheckBox from "@/components/ui/BaseCheckBox.vue";
-import BaseTextArea from "@/components/ui/BaseTextArea.vue";
-import BaseButton from "@/components/ui/BaseButton.vue";
-import type { IProduct } from "@/models/IProduct";
+import { defineComponent, ref, type Ref } from 'vue';
+import BaseModal from '@/components/ui/BaseModal.vue';
+import BaseInput from '@/components/ui/BaseInput.vue';
+import UploadProductImage from '@/modules/admin/components/UploadProductImage/UploadProductImage.vue';
+import BaseCheckBox from '@/components/ui/BaseCheckBox.vue';
+import BaseTextArea from '@/components/ui/BaseTextArea.vue';
+import BaseButton from '@/components/ui/BaseButton.vue';
+import type { IProduct } from '@/types/IProduct';
 
-import { api } from "@/api/api";
+import { api } from '@/api/api';
 
 export default defineComponent({
   components: {
@@ -81,26 +81,26 @@ export default defineComponent({
   setup() {
     //state
     const sizesValues = [
-      { label: "20 см", value: 20, id: "size-1" },
-      { label: "28 см", value: 28, id: "size-2" },
-      { label: "33 см", value: 33, id: "size-3" },
+      { label: '20 см', value: 20, id: 'size-1' },
+      { label: '28 см', value: 28, id: 'size-2' },
+      { label: '33 см', value: 33, id: 'size-3' },
     ];
     const doughValues = [
-      { label: "Традиционное", value: 1, id: "dough-1" },
-      { label: "Тонкое", value: 2, id: "dough-2" },
+      { label: 'Традиционное', value: 1, id: 'dough-1' },
+      { label: 'Тонкое', value: 2, id: 'dough-2' },
     ];
 
-    const urlInput = ref("");
+    const urlInput = ref('');
     const file = ref(null) as Ref<File | null>;
     const productFields = ref<IProduct>({
-      id: "",
-      title: "",
+      id: '',
+      title: '',
       price: 0,
-      description: "",
-      imageUrl: "",
+      description: '',
+      imageUrl: '',
       amount: 0,
       sizes: [],
-      category: "",
+      category: '',
       dough: [],
       filters: [],
     });
@@ -116,7 +116,7 @@ export default defineComponent({
         }
 
         const data = await api.product.createProduct(productFields.value);
-        console.log(data, "data");
+        console.log(data, 'data');
       } catch (e) {
         console.log(e);
       }

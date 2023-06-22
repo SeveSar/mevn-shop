@@ -1,5 +1,5 @@
-import type { IFile } from "../../models/IFile";
-import type { IHttpClient } from "../types/api";
+import type { IFile } from '@/types/IFile';
+import type { IHttpClient } from '../types/api';
 
 export class FilesServices {
   private readonly $http: IHttpClient;
@@ -17,14 +17,14 @@ export class FilesServices {
       filesArray = [files];
     }
     filesArray.forEach((file) => {
-      formData.append("filedata", file);
+      formData.append('filedata', file);
     });
 
     const res = await this.$http.makeRequest<IFile>({
-      url: "/files",
-      method: "POST",
+      url: '/files',
+      method: 'POST',
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
       data: formData,
     });

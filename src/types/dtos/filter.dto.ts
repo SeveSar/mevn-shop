@@ -1,4 +1,4 @@
-import { IFilterResponse } from '@/api/types/responses/filter';
+import { IFilterResponse } from '@/types/responses/filter';
 import { TFilterItem } from '../IFilter';
 
 export class FilterDTO {

@@ -3,12 +3,12 @@
     <template #default>
       <div class="modal-product__body">
         <div class="modal-product__photo">
-          <img class="modal-product__photo-img" :src="productsStore.getActiveProduct?.imageUrl" alt="" />
+          <img class="modal-product__photo-img" :src="productData?.imageUrl" alt="" />
         </div>
         <form class="modal-product__info modal-product-info" @submit.prevent="addToCart">
           <div class="modal-product-info__header">
             <h3 class="modal-product-info__title">
-              {{ productsStore.getActiveProduct?.title }}
+              {{ productData?.title }}
             </h3>
           </div>
           <div class="modal-product-info__ingredients">
@@ -17,7 +17,7 @@
               :class="{
                 'modal-product-info__ingredient--active': item.isActive,
               }"
-              v-for="item in ingredients.slice(0, 4)"
+              v-for="item in productData?.ingredients.slice(0, 4)"
               :key="item.id"
               @click="toggleActiveIngredient(item.id)"
             >
@@ -41,16 +41,18 @@
               <div class="modal-product-info__tabs-dough">
                 <BaseTab
                   class="modal-product-info__tab-dough"
+                  v-if="selectedTabDough"
                   v-model="selectedTabDough"
-                  :items="productsStore.getActiveProduct?.dough || []"
+                  :items="productData?.dough || []"
                 ></BaseTab>
               </div>
               <div class="modal-product-info__tabs-sizes">
                 <BaseTab
                   class="modal-product-info__tab-size"
+                  v-if="selectedTabSize"
                   v-model="selectedTabSize"
                   size="small"
-                  :items="productsStore.getActiveProduct?.sizes || []"
+                  :items="productData?.sizes || []"
                 ></BaseTab>
               </div>
             </div>
@@ -61,7 +63,7 @@
               :class="{
                 'modal-product-info__ingredient--active': item.isActive,
               }"
-              v-for="item in ingredients.slice(4, ingredients.length)"
+              v-for="item in productData?.ingredients.slice(4, productData.ingredients.length)"
               :key="item.id"
               @click="toggleActiveIngredient(item.id)"
             >
@@ -98,7 +100,7 @@
   </BaseModal>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed, defineComponent, ref, watch } from 'vue';
 import BaseModal from '../../ui/BaseModal.vue';
 import { useModalStore } from '../../../stores/modal';
@@ -108,13 +110,15 @@ import AppIcon from '../../ui/AppIcon/AppIcon.vue';
 
 import BaseTab from '../../ui/BaseTab.vue';
 import BaseButton from '../../ui/BaseButton.vue';
-import type { IIngredientItem } from '@/models/IProduct';
+import type { IIngredientItem, IProduct } from '@/types/IProduct';
 import { cloneDeep } from 'lodash';
+import { api } from '@/api/api';
 
 interface ISelectedTabSize {
   title: string;
   id: string;
   price: number;
+  size: number;
 }
 
 interface ISelectedTabDough {
@@ -123,93 +127,78 @@ interface ISelectedTabDough {
   price: number;
 }
 
-export default defineComponent({
-  components: {
-    BaseModal,
-    BaseTab,
-    BaseButton,
-    AppIcon,
-  },
-  props: {
-    isOpen: {
-      type: Boolean,
-      required: true,
-    },
-  },
+interface Props {
+  isOpen: boolean;
+}
+const props = defineProps<Props>();
 
-  setup() {
-    const modalStore = useModalStore();
-    const productsStore = useProductsStore();
-    const cartStore = useCartStore();
+const modalStore = useModalStore();
+const productsStore = useProductsStore();
+const cartStore = useCartStore();
+const selectedTabDough = ref<ISelectedTabDough | null>(null);
+const selectedTabSize = ref<null | ISelectedTabSize>(null);
+const productData = ref<null | IProduct>(null);
 
-    const selectedTabDough = ref<ISelectedTabDough | null>(null);
-    const selectedTabSize = ref<null | ISelectedTabSize>(null);
-    const ingredients = ref<IIngredientItem[]>([]);
+const totalPrice = computed(() => {
+  if (!productData.value || !selectedTabDough.value || !selectedTabSize.value) {
+    return 0;
+  }
+  const ingredientsPrice = productData.value?.ingredients.reduce((sum, item) => {
+    if (item.isActive) {
+      return (sum += item.price);
+    }
+    return sum;
+  }, 0);
 
-    const totalPrice = computed(() => {
-      if (!productsStore.getActiveProduct || !selectedTabDough.value || !selectedTabSize.value) {
-        return 0;
-      }
-      const ingredientsPrice = ingredients.value.reduce((sum, item) => {
-        if (item.isActive) {
-          return (sum += item.price);
-        }
-        return sum;
-      }, 0);
+  const price = productData.value.price + selectedTabDough.value.price + selectedTabSize.value.price + ingredientsPrice;
 
-      const price = productsStore.getActiveProduct.price + selectedTabDough.value.price + selectedTabSize.value.price + ingredientsPrice;
-
-      return price;
-    });
-
-    const toggleActiveIngredient = (itemId: string) => {
-      const ingredientItem = ingredients.value.find((item) => item.id === itemId);
-
-      if (!ingredientItem) return;
-
-      ingredientItem.isActive = !ingredientItem.isActive;
-    };
-
-    const close = () => {
-      modalStore.closeProductModal();
-      selectedTabDough.value = null;
-      selectedTabSize.value = null;
-      productsStore.activeProductId = '';
-    };
-
-    const addToCart = () => {
-      cartStore.addToCart({
-        imageUrl: productsStore.getActiveProduct?.imageUrl ?? '',
-        title: productsStore.getActiveProduct?.title ?? '',
-        productId: productsStore.activeProductId,
-        dough: selectedTabDough.value?.id || '',
-        size: selectedTabSize.value?.id || '',
-        ingredients: ingredients.value.filter((ing) => ing.isActive),
-      });
-    };
-
-    watch(
-      () => productsStore.getActiveProduct,
-      () => {
-        selectedTabDough.value = productsStore.getActiveProduct ? cloneDeep(productsStore.getActiveProduct.dough[0]) : null;
-        selectedTabSize.value = productsStore.getActiveProduct ? cloneDeep(productsStore.getActiveProduct.sizes[0]) : null;
-        ingredients.value = productsStore.getActiveProduct ? cloneDeep(productsStore.getActiveProduct.ingredients) : [];
-      }
-    );
-
-    return {
-      modalStore,
-      close,
-      selectedTabDough,
-      selectedTabSize,
-      productsStore,
-      totalPrice,
-      toggleActiveIngredient,
-      ingredients,
-      addToCart,
-    };
-  },
+  return price;
 });
+
+const toggleActiveIngredient = (itemId: string) => {
+  const ingredientItem = productData.value?.ingredients.find((item) => item.id === itemId);
+
+  if (!ingredientItem) return;
+
+  ingredientItem.isActive = !ingredientItem.isActive;
+};
+
+const close = () => {
+  modalStore.closeProductModal();
+  selectedTabDough.value = null;
+  selectedTabSize.value = null;
+  productsStore.activeProductId = '';
+};
+
+const addToCart = () => {
+  if (!selectedTabDough.value || !selectedTabSize.value) return;
+
+  cartStore.addToCart({
+    dough: selectedTabDough.value,
+    size: selectedTabSize.value,
+    ingredients: productData.value?.ingredients.filter((ing) => ing.isActive) ?? [],
+  });
+};
+
+const fetchProductById = async () => {
+  try {
+    productData.value = await api.product.fetchProduct(productsStore.activeProductId);
+    selectedTabDough.value = productData.value.dough[0];
+    selectedTabSize.value = productData.value.sizes[0];
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+watch(
+  () => productsStore.activeProductId,
+  (val) => {
+    console.log('val', val);
+    if (val) {
+      fetchProductById();
+    }
+  }
+);
 </script>
 
 <style scoped lang="less">

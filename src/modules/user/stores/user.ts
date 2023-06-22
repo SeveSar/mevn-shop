@@ -1,32 +1,22 @@
-import { computed, toRefs, reactive } from "vue";
-import { defineStore } from "pinia";
-import { api } from "@/api/api";
-import { setToken, cleanTokensData, getItemFromLocalstorage } from "@/utils/tokenHelper";
-import type { IUser } from "@/models/IUser";
+import { computed, toRefs, reactive, ref } from 'vue';
+import { defineStore } from 'pinia';
+import { api } from '@/api/api';
+import { setToken, cleanTokensData, getItemFromLocalstorage } from '@/utils/tokenHelper';
+import type { IUser } from '@/types/IUser';
 
-interface StateUser {
-  token: string | null;
-  user: IUser | null;
-}
+export const useUserStore = defineStore('user', () => {
+  const user = ref<IUser | null>(null);
 
-export const useUserStore = defineStore("user", () => {
-  const state = reactive<StateUser>({
-    token: null,
-    user: null,
-  });
-  const { token, user } = toRefs(state);
-  const isLoggedIn = computed(() => !!token.value);
+  const isLoggedIn = computed(() => !!user.value);
 
   async function login(email: string, password: string) {
-    const data = await api.user.login(email, password, getItemFromLocalstorage("CART"));
-    state.user = data.user;
-    state.token = data.accessToken;
+    const data = await api.user.login(email, password, getItemFromLocalstorage('CART'));
+    user.value = data.user;
     setToken(data.accessToken);
   }
   async function signUp(email: string, password: string) {
     const data = await api.user.register(email, password);
-    state.user = data.user;
-    state.token = data.accessToken;
+    user.value = data.user;
     setToken(data.accessToken);
     return data;
   }
@@ -35,8 +25,7 @@ export const useUserStore = defineStore("user", () => {
     try {
       const res = await api.user.refresh();
       if (res) {
-        state.user = res.data.user;
-        state.token = res.data.accessToken;
+        user.value = res.data.user;
         setToken(res.data.accessToken);
       }
     } catch (e) {
@@ -48,9 +37,7 @@ export const useUserStore = defineStore("user", () => {
   async function logOut() {
     await api.user.logOut();
     cleanTokensData();
-
-    state.user = null;
-    state.token = null;
+    user.value = null;
   }
 
   return {
@@ -60,6 +47,5 @@ export const useUserStore = defineStore("user", () => {
     user,
     logOut,
     auth,
-    token,
   };
 });

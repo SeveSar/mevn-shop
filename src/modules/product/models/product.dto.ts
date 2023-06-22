@@ -1,8 +1,26 @@
-import type { IProductResponse } from '@/api/types/responses/product';
-import type { TFilterItem } from '@/models/IFilter';
-import type { IIngredientItem, ISizeItem, IDoughItem } from '@/models/IProduct';
+import type { IProductResponse } from '@/types/responses/product';
+import type { TFilterItem } from '@/types/IFilter';
+import type { IIngredientItem, ISizeItem, IDoughItem, IProductMainPage } from '@/types/IProduct';
 
 export class ProductDTO {
+  id: string;
+  title: string;
+  price: number;
+  description: string;
+  imageUrl: string;
+  amount: number;
+
+  constructor(model: IProductMainPage) {
+    this.id = model.id;
+    this.title = model.title;
+    this.price = model.price;
+    this.description = model.description;
+    this.imageUrl = model.imageUrl;
+    this.amount = model.amount;
+  }
+}
+
+export class ProductOneDTO {
   id: string;
   title: string;
   price: number;

@@ -1,5 +1,5 @@
-import type { ICartResponse, IProductCart } from '@/api/types/responses/cart';
-import type { IDoughItem, IIngredientItem, ISizeItem } from '@/models/IProduct';
+import type { ICartResponse, IProductCart } from '@/types/responses/cart';
+import type { IDoughItem, IIngredientItem, ISizeItem } from '@/types/IProduct';
 
 export class CartDTO {
   title: string;

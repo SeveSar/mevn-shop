@@ -1,7 +1,7 @@
 import type { AxiosInstance } from 'axios';
-import type { UserResponse } from '@/api/types/responses/user';
+import type { UserResponse } from '@/types/responses/user';
 import type { IHttpClient } from '@/api/types/api';
-import type { TCart } from '@/models/ICart';
+import type { TCart } from '@/types/ICart';
 
 export class AuthService {
   private readonly $http: IHttpClient;

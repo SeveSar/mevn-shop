@@ -1,9 +1,9 @@
-import type { IProductResponse } from '@/api/types/responses/product';
-import { ProductDTO } from '../models/product.dto';
+import type { IProductResponse } from '@/types/responses/product';
+import { ProductDTO, ProductOneDTO } from '../models/product.dto';
 import type { IHttpClient } from '@/api/types/api';
-import type { IProduct } from '@/models/IProduct';
-import { IFilterResponse } from '@/api/types/responses/filter';
-import { FilterDTO } from '@/models/dtos/filter.dto';
+import type { IProduct, IProductMainPage } from '@/types/IProduct';
+import { IFilterResponse } from '@/types/responses/filter';
+import { FilterDTO } from '@/types/dtos/filter.dto';
 
 export class ProductServices {
   private readonly $http: IHttpClient;
@@ -12,10 +12,10 @@ export class ProductServices {
     this.$http = httpClient;
   }
 
-  async fetchProducts(filters?: string[]): Promise<IProduct[]> {
+  async fetchProducts(filters?: string[]): Promise<IProductMainPage[]> {
     let res;
     if (filters && filters.length) {
-      res = await this.$http.makeRequest<IProductResponse[]>({
+      res = await this.$http.makeRequest<IProductMainPage[]>({
         url: '/products',
         method: 'GET',
         config: {
@@ -23,7 +23,7 @@ export class ProductServices {
         },
       });
     } else {
-      res = await this.$http.makeRequest<IProductResponse[]>({
+      res = await this.$http.makeRequest<IProductMainPage[]>({
         url: '/products',
         method: 'GET',
         headers: {
@@ -35,6 +35,19 @@ export class ProductServices {
     return res.data.map((product) => {
       return new ProductDTO(product);
     });
+  }
+
+  async fetchProduct(id: string): Promise<IProduct> {
+    console.log(id, 'id');
+    const res = await this.$http.makeRequest<IProductResponse>({
+      url: `/products/${id}`,
+      method: 'GET',
+      headers: {
+        authorization: true,
+      },
+    });
+
+    return new ProductOneDTO(res.data);
   }
 
   async fetchProductFilters() {

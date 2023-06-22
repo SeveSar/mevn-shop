@@ -29,14 +29,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import type { PropType } from "vue";
+import { defineComponent } from 'vue';
+import type { PropType } from 'vue';
 
-import { useProductsStore } from "@/modules/product/stores/products";
-import BaseButton from "@/components/ui/BaseButton.vue";
+import { useProductsStore } from '@/modules/product/stores/products';
+import BaseButton from '@/components/ui/BaseButton.vue';
 // import { useCartStore } from "@/stores/cart";
-import type { IProduct } from "@/models/IProduct";
-import { useModalStore } from "@/stores/modal";
+import type { IProduct } from '@/types/IProduct';
+import { useModalStore } from '@/stores/modal';
 
 export default defineComponent({
   components: {

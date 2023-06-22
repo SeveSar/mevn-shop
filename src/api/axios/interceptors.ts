@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 import axios from 'axios';
-import type { UserResponse } from '../types/responses/user';
+import type { UserResponse } from '../../types/responses/user';
 import { useUserStore } from '@/modules/user/stores/user';
 import router from '@/router/index';
 import { api } from '../api';

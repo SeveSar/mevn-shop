@@ -1,12 +1,12 @@
-import { computed, ref } from "vue";
-import { defineStore } from "pinia";
-import { api } from "@/api/api";
+import { computed, ref } from 'vue';
+import { defineStore } from 'pinia';
+import { api } from '@/api/api';
 
-import type { IProduct } from "@/models/IProduct";
+import type { IProduct, IProductMainPage } from '@/types/IProduct';
 
-export const useProductsStore = defineStore("products", () => {
-  const products = ref<IProduct[]>([]);
-  const activeProductId = ref<string>("");
+export const useProductsStore = defineStore('products', () => {
+  const products = ref<IProductMainPage[]>([]);
+  const activeProductId = ref<string>('');
 
   const getActiveProduct = computed(() => {
     return getProductById(activeProductId.value) ?? null;

@@ -1,4 +1,4 @@
-import type { IUser } from "@/models/IUser";
+import type { IUser } from "@/types/IUser";
 export interface UserResponse {
   success: boolean;
   accessToken: string;

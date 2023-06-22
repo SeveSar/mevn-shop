@@ -2,10 +2,10 @@ import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import { useUserStore } from '@/modules/user/stores/user';
 import { api } from '@/api/api';
-import type { TCart } from '@/models/ICart';
+import type { TCart } from '@/types/ICart';
 import { useProductsStore } from '../../product/stores/products';
 import { getItemFromLocalstorage, setItemInLocalstorage } from '@/utils/tokenHelper';
-import type { IDoughItem, IIngredientItem, ISizeItem } from '@/models/IProduct';
+import type { IDoughItem, IIngredientItem, ISizeItem } from '@/types/IProduct';
 
 export const useCartStore = defineStore('cart', () => {
   const cart = ref<TCart>([]);
@@ -89,60 +89,43 @@ export const useCartStore = defineStore('cart', () => {
     return price * quantity;
   };
 
-  const addToCart = async ({
-    title,
-    productId,
-    dough,
-    size,
-    ingredients,
-
-    imageUrl,
-  }: {
-    title: string;
-    productId: string;
-    dough: string;
-    size: string;
-    ingredients: IIngredientItem[];
-    imageUrl: string;
-  }) => {
+  const addToCart = async ({ dough, size, ingredients }: { dough: IDoughItem; size: ISizeItem; ingredients: IIngredientItem[] }) => {
     const userStore = useUserStore();
     const productsStore = useProductsStore();
-    const currentSize = productsStore.getActiveProduct?.sizes.find((sizePr) => sizePr.id === size) as ISizeItem;
-    const currentDough = productsStore.getActiveProduct?.dough.find((doughPr) => doughPr.id === dough) as IDoughItem;
 
-    if (!inCart(productId)) {
+    if (!inCart(productsStore.activeProductId)) {
       cart.value.push({
-        title,
-        imageUrl,
+        title: productsStore.getActiveProduct?.title ?? '',
+        imageUrl: productsStore.getActiveProduct?.imageUrl ?? '',
         quantity: 1,
-        id: productId,
-        totalPrice: calculateTotalPriceProduct({ size: currentSize, dough: currentDough, idProduct: productId, ingredients }),
-        size: currentSize,
-        dough: currentDough,
+        id: productsStore.activeProductId,
+        totalPrice: calculateTotalPriceProduct({ size, dough, idProduct: productsStore.activeProductId, ingredients }),
+        size,
+        dough,
         ingredients,
       });
       setItemInLocalstorage('CART', cart.value);
     } else {
-      const productCart = cart.value.find((pr) => pr.id === productId);
+      const productCart = cart.value.find((pr) => pr.id === productsStore.activeProductId);
       if (!productCart) return;
 
       productCart.quantity += 1;
       productCart.totalPrice = calculateTotalPriceProduct({
-        size: currentSize,
-        dough: currentDough,
-        idProduct: productId,
+        size,
+        dough,
+        idProduct: productsStore.activeProductId,
         ingredients,
         quantity: productCart.quantity,
       });
-      productCart.size = currentSize;
-      productCart.dough = currentDough;
+      productCart.size = size;
+      productCart.dough = dough;
       productCart.ingredients = ingredients;
       setItemInLocalstorage('CART', cart.value);
     }
 
     if (userStore.isLoggedIn) {
       const ingredientsIds = ingredients.map((item) => item.id);
-      const res = await api.cart.addToCart(productId, dough, size, ingredientsIds);
+      const res = await api.cart.addToCart(productsStore.activeProductId, dough.id, size.id, ingredientsIds);
     }
   };
 

@@ -1,5 +1,5 @@
 import type { IHttpClient } from '@/api/types/api';
-import type { ICartResponse } from '@/api/types/responses/cart';
+import type { ICartResponse } from '@/types/responses/cart';
 import { CartDTO } from '../models/cart.dto';
 
 export class CartService {

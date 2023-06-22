@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { ICartItem } from '@/models/ICart';
+import type { ICartItem } from '@/types/ICart';
 
 import AppIcon from '@/components/ui/AppIcon/AppIcon.vue';
 import { useCartStore } from '@/modules/cart/stores/cart';

@@ -1,6 +1,6 @@
 <template>
   <div class="product-page">
-    <div class="big-product" v-if="hasProduct">
+    <!-- <div class="big-product" v-if="hasProduct">
       <img :src="product?.imageUrl" alt="" />
       <h1 class="big-product__name">{{ product?.name }}</h1>
       <div class="big-product__rating">Рейтинг: {{ product?.rating }}</div>
@@ -8,7 +8,7 @@
         <div v-for="size in product?.sizes" :key="size.id">{{ size.size }} см</div>
       </div>
     </div>
-    <AppError title="Ошибка 404. Продукт не найден" v-else />
+    <AppError title="Ошибка 404. Продукт не найден" v-else /> -->
   </div>
 </template>
 
@@ -17,18 +17,31 @@ import { useRoute } from 'vue-router';
 import { computed, defineComponent } from 'vue';
 import AppError from '@/components/common/AppError.vue';
 import { useProductsStore } from '@/modules/product/stores/products';
+import { api } from '@/api/api';
 
 export default defineComponent({
   setup() {
     const route = useRoute();
     const productsStore = useProductsStore();
-    const productId = computed(() => route.params.id);
+    const productId = computed(() => route.params.id as string);
     const product = computed(() => {
-      return productsStore.getItemById(+productId.value);
+      return productsStore.getProductById(productId.value);
     });
+    console.log(productId.value);
     const hasProduct = computed(() => {
       return typeof product.value !== 'undefined';
     });
+
+    const fetchProductById = async () => {
+      try {
+        const res = await api.product.fetchProduct(productId.value);
+        console.log(res, 'res');
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchProductById();
     return {
       product,
       hasProduct,

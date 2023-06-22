@@ -14,7 +14,7 @@
 import ProductList from '../../components/ProductList/ProductList.vue';
 
 import ProductBlock from '../../components/ProductBlock/ProductBlock.vue';
-import SidePanelProductFilter from '@/modules/product/components/sidePanels/SidePanelProductFilter/SidePanelProductFilter.vue';
+import SidePanelProductFilter from '../../components/sidePanels/SidePanelProductFilter/SidePanelProductFilter.vue';
 import SidePanelCart from '@/components/sidePanels/SidePanelCart.vue';
 import { useProductsStore } from '@/modules/product/stores/products';
 

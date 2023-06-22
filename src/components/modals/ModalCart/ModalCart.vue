@@ -108,13 +108,14 @@ import AppIcon from '../../ui/AppIcon/AppIcon.vue';
 
 import BaseTab from '../../ui/BaseTab.vue';
 import BaseButton from '../../ui/BaseButton.vue';
-import type { IIngredientItem } from '@/models/IProduct';
+import type { IIngredientItem } from '@/types/IProduct';
 import { cloneDeep } from 'lodash';
 
 interface ISelectedTabSize {
   title: string;
   id: string;
   price: number;
+  size: number;
 }
 
 interface ISelectedTabDough {
@@ -178,7 +179,6 @@ export default defineComponent({
 
     const addToCart = () => {
       cartStore.addToCart({
-        productId: productsStore.activeProductId,
         dough: selectedTabDough.value?.id || '',
         size: selectedTabSize.value?.id || '',
         ingredients: ingredients.value,
