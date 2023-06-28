@@ -6,7 +6,7 @@ import type { TCart } from '@/types/ICart';
 import { useProductsStore } from '../../product/stores/products';
 import { getItemFromLocalstorage, setItemInLocalstorage } from '@/utils/tokenHelper';
 import type { IDoughItem, IIngredientItem, ISizeItem } from '@/types/IProduct';
-import debounce from '@/utils/debounce';
+import { debounce } from 'lodash';
 
 export const useCartStore = defineStore('cart', () => {
   const cart = ref<TCart>([]);
@@ -131,7 +131,7 @@ export const useCartStore = defineStore('cart', () => {
     }
   };
 
-  const debouncedFetchUpdateCnt = debounce(api.cart.updateProduct.bind(api.cart));
+  const debouncedFetchUpdateCnt = debounce(api.cart.updateProduct.bind(api.cart), 300);
   return {
     calculateTotalPriceProduct,
     cart,
