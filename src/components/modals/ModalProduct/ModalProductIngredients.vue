@@ -1,0 +1,125 @@
+<template>
+  <div class="modal-ingredients">
+    <template v-if="!isLoading">
+      <div
+        class="modal-ingredients__ingredient"
+        :class="{
+          'modal-ingredients__ingredient--active': item.isActive,
+        }"
+        v-for="item in ingredients"
+        :key="item.id"
+        @click="emit('toggleActiveIngredient', item.id)"
+      >
+        <div class="modal-ingredients__ingredient-icon">
+          <img :src="item.img" alt="" />
+          <AppIcon name="IconTickCircle" class="modal-ingredients__ingredient-checkmark" />
+        </div>
+        <div class="modal-ingredients__ingredient-info">
+          <div class="modal-ingredients__ingredient-title">
+            {{ item.title }}
+          </div>
+          <div class="modal-ingredients__ingredient-price">
+            {{ item.price }}
+            ₽
+          </div>
+        </div>
+      </div>
+    </template>
+    <template v-else>
+      <div class="modal-ingredients__skeleton-item" v-for="i in 4" :key="i">
+        <UiSkeleton width="105" height="105" corner="6" />
+        <UiSkeleton width="95" height="15" corner="6" :style="{ margin: '8px auto 0' }" />
+      </div>
+    </template>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { IIngredientItem } from '@/types/IProduct';
+import AppIcon from '@/components/ui/AppIcon/AppIcon.vue';
+import UiSkeleton from '@/components/ui/UiSkeleton.vue';
+import { watch } from 'vue';
+
+interface Props {
+  ingredients: IIngredientItem[];
+  isLoading: boolean;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits(['toggleActiveIngredient']);
+console.log(props.isLoading, 'loading');
+
+watch(
+  () => props.isLoading,
+  (val) => {
+    console.log(val);
+  }
+);
+</script>
+
+<style scoped lang="less">
+.modal-ingredients {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+
+  &__ingredient {
+    width: calc((100% / 4) - 20px);
+
+    &:hover {
+      .modal-ingredients__ingredient-icon {
+        border-color: @main-color;
+      }
+    }
+
+    &--active {
+      .modal-ingredients__ingredient-icon {
+        border-color: @main-color;
+      }
+
+      .modal-ingredients__ingredient-checkmark {
+        opacity: 1;
+      }
+    }
+
+    &-icon {
+      width: 100%;
+      height: 105px;
+      border-radius: 12px;
+      border: 1px solid #f0f0f0;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.2s linear;
+      display: inline-flex;
+      position: relative;
+
+      img {
+        margin: auto;
+      }
+    }
+
+    &-checkmark {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      color: @main-color;
+      opacity: 0;
+      transition: all 0.2s linear;
+    }
+
+    &-info {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 18px;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    &-price {
+      color: @main-color;
+    }
+  }
+}
+</style>

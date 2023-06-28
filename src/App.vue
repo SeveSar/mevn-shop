@@ -5,7 +5,7 @@
     <ModalProduct :is-open="modalStore.isModalProduct" />
   </Teleport>
 
-  <AppLayout v-if="!loading">
+  <AppLayout>
     <router-view />
   </AppLayout>
 </template>
@@ -18,10 +18,7 @@ import ModalAuth from './modules/user/components/modals/ModalAuth/ModalAuth.vue'
 
 import { useModalStore } from './stores/modal';
 
-import { ref } from 'vue';
 const modalStore = useModalStore();
-
-const loading = ref(false);
 </script>
 
 <style lang="less"></style>

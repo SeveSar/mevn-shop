@@ -1,5 +1,5 @@
 <template>
-  <TheHeader></TheHeader>
+  <TheHeader />
   <main class="main">
     <div class="container">
       <slot></slot>
@@ -15,12 +15,12 @@
 </template>
 
 <script lang="ts">
-import TheHeader from "@/components/layouts/TheHeader.vue";
-import { useRouter, useRoute } from "vue-router";
+import TheHeader from '@/components/layouts/TheHeader.vue';
+import { useRouter, useRoute } from 'vue-router';
 
-import { mapState } from "pinia";
-import { watch, defineComponent, onMounted } from "vue";
-import { useCartStore } from "@/modules/cart/stores/cart";
+import { mapState } from 'pinia';
+import { watch, defineComponent, onMounted } from 'vue';
+import { useCartStore } from '@/modules/cart/stores/cart';
 export default defineComponent({
   components: {
     TheHeader,
@@ -33,11 +33,7 @@ export default defineComponent({
     const checkRouteErrors = () => {
       if (route.query.msg) {
         switch (route.query.msg) {
-          case "NOT_AUTH":
-            // callNotification("error", {
-            //   title: "Error",
-            //   text: "Вы не авторизованы",
-            // });
+          case 'NOT_AUTH':
             break;
         }
         router.push({ query: {} });
@@ -56,10 +52,6 @@ export default defineComponent({
       cartStore,
     };
   },
-
-  // computed: {
-  //   ...mapState(useCartStore, ["totalItems"]),
-  // },
 });
 </script>
 <style scoped lang="less">

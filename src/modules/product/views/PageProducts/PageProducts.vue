@@ -1,7 +1,8 @@
 <template>
   <div class="products">
     <ProductBlock @click-filter="isProductFilterPanel = true">
-      <ProductList :products="productsStore.products" />
+      <ProductList :products="productsStore.products" v-if="productsStore.products.length && !isLoading" />
+      <ProductSkeleton v-else :count="8" />
     </ProductBlock>
   </div>
   <teleport to="body">
@@ -17,6 +18,7 @@ import ProductBlock from '../../components/ProductBlock/ProductBlock.vue';
 import SidePanelProductFilter from '../../components/sidePanels/SidePanelProductFilter/SidePanelProductFilter.vue';
 import SidePanelCart from '@/components/sidePanels/SidePanelCart.vue';
 import { useProductsStore } from '@/modules/product/stores/products';
+import ProductSkeleton from '../../components/ProductList/ProductSkeleton.vue';
 
 import { ref } from 'vue';
 import { api } from '@/api/api';
@@ -26,10 +28,18 @@ import { api } from '@/api/api';
 let productFilters = ref<any>([]);
 let isProductFilterPanel = ref(false);
 const productsStore = useProductsStore();
+const isLoading = ref(false);
 
 const fetchData = async () => {
-  const res = await Promise.all([api.product.fetchProductFilters(), productsStore.getProducts()]);
-  productFilters.value = res[0];
+  try {
+    isLoading.value = true;
+    const res = await productsStore.getProducts();
+    productFilters.value = res;
+  } catch (e) {
+    console.error(e);
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 fetchData();

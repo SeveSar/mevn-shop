@@ -1,4 +1,4 @@
-import type { AxiosRequestConfig, ResponseType } from "axios";
+import type { AxiosRequestConfig, ResponseType } from 'axios';
 
 export interface IHttpClient {
   makeRequest: <T>(options: IOptions) => Promise<ApiResponse<T>>;
@@ -6,7 +6,7 @@ export interface IHttpClient {
 
 export interface IOptions {
   url: string;
-  method: "POST" | "GET" | "PUT" | "DELETE";
+  method: 'POST' | 'GET' | 'PATCH' | 'DELETE';
   headers?: Record<string, string | number | boolean> & {
     authorization?: boolean | string;
   };

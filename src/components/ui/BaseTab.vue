@@ -17,48 +17,26 @@
   </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, type PropType } from "vue";
+<script lang="ts" setup>
+import { computed, defineComponent, type PropType } from 'vue';
 
 interface ITab {
   title: string;
   id: string;
-  [key: string]: string | number | boolean;
+  [key: string]: any;
 }
-
-export default defineComponent({
-  props: {
-    modelValue: {
-      type: Object as PropType<ITab | null>,
-      required: true,
-    },
-
-    items: {
-      type: Array as PropType<ITab[]>,
-      required: true,
-    },
-
-    size: {
-      type: String as PropType<"small" | "medium">,
-      default: "medium",
-    },
-  },
-  emits: ["update:modelValue"],
-
-  setup(props) {
-    const classes = computed(() => {
-      return {
-        [`base-tab-size--${props.size}`]: true,
-      };
-    });
-    return {
-      classes,
-    };
-  },
-
-  mounted() {
-    console.log(this.$slots, "slots");
-  },
+interface Props {
+  modelValue: ITab;
+  items: ITab[];
+  size?: 'small' | 'medium';
+}
+const props = withDefaults(defineProps<Props>(), {
+  size: 'medium',
+});
+const classes = computed(() => {
+  return {
+    [`base-tab-size--${props.size}`]: true,
+  };
 });
 </script>
 

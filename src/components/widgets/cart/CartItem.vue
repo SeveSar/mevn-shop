@@ -19,10 +19,15 @@
               -
             </button>
             <input type="number" :value="item.quantity" min="1" />
-            <button class="product__actions-btn" @click="cartStore.updateCnt({ idProduct: item.id, newQuantity: item.quantity + 1 })">+</button>
+            <button
+              class="product__actions-btn"
+              @click="cartStore.updateCnt({ idProduct: item.id, newQuantity: item.quantity + 1 })"
+            >
+              +
+            </button>
           </div>
 
-          <div class="product__price">{{ item.totalPrice }} ₽</div>
+          <div class="product__price">{{ item.totalPrice * item.quantity }} ₽</div>
         </div>
       </div>
     </div>

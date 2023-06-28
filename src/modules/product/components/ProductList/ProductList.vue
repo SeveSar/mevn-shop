@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import ProductListItem from '../../components/ProductList/ProductListItem.vue';
-import type { IProduct } from '@/types/IProduct';
+import type { IProduct, IProductMainPage } from '@/types/IProduct';
 import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
 
@@ -18,7 +18,7 @@ export default defineComponent({
   },
   props: {
     products: {
-      type: Array as PropType<IProduct[]>,
+      type: Array as PropType<IProductMainPage[]>,
       default: () => [],
     },
   },
@@ -29,7 +29,7 @@ export default defineComponent({
 .list-product {
   display: flex;
   flex-wrap: wrap;
-  margin: 60px -15px 0;
+  margin: 0 -15px;
   @media screen and (max-width: 575px) {
     margin: 60px 0 0;
   }
@@ -39,7 +39,7 @@ export default defineComponent({
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
-    transition: all 0.3s ease-in;
+    transition: all 0.2s ease-in-out;
     @media screen and (max-width: 1200px) {
       width: calc(100% / 3);
     }

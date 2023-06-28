@@ -1,24 +1,24 @@
 <template>
   <transition name="slide-panel">
     <div class="side-panel-overlay" v-show="isOpen" @mousedown.self="close">
-      <transition name="slide-panel-inner">
-        <div class="side-panel" v-show="isOpen">
-          <button class="side-panel__close" @click="close">
-            <AppIcon name="IconCrossBig" />
-          </button>
-          <div class="side-panel__header">
-            <h3 class="side-panel__title">
-              {{ title }}
-            </h3>
-          </div>
-          <div class="side-panel__content">
-            <slot />
-          </div>
-          <div class="side-panel__footer">
-            <slot name="footer" />
-          </div>
+      <!-- <transition name="slide-panel-inner"> -->
+      <div class="side-panel" :class="{ 'side-panel--active': isOpen }">
+        <button class="side-panel__close" @click="close">
+          <AppIcon name="IconCrossBig" />
+        </button>
+        <div class="side-panel__header">
+          <h3 class="side-panel__title">
+            {{ title }}
+          </h3>
         </div>
-      </transition>
+        <div class="side-panel__content">
+          <slot />
+        </div>
+        <div class="side-panel__footer">
+          <slot name="footer" />
+        </div>
+      </div>
+      <!-- </transition> -->
     </div>
   </transition>
 </template>
@@ -88,6 +88,16 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   overflow: auto;
+  transform: translateX(100%);
+  transition: all 0.3s ease;
+  opacity: 0;
+  transition-delay: 1s;
+  &--active {
+    opacity: 1;
+    transition: all 0.3s ease;
+    transition-delay: 1s;
+    transform: translateX(0%);
+  }
 
   &__title {
     font-weight: 600;

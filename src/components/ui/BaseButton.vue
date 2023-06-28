@@ -1,30 +1,34 @@
 <template>
-  <button :class="classes" :type="type" class="button" @click="$emit('click')" :disabled="disabled">
+  <button :class="classes" :type="type" class="button" @click="$emit('click')">
     <slot></slot>
   </button>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
-import type { PropType, ButtonHTMLAttributes } from "vue";
+import { computed, defineComponent } from 'vue';
+import type { PropType, ButtonHTMLAttributes } from 'vue';
 export default defineComponent({
   props: {
     variant: {
-      type: String as PropType<"primary" | "secondary" | "text" | "border">,
-      default: "primary",
+      type: String as PropType<'primary' | 'secondary' | 'text' | 'border'>,
+      default: 'primary',
     },
     size: {
       type: String,
-      default: "medium",
+      default: 'medium',
     },
     rounded: {
       type: Boolean,
     },
     type: {
-      type: String as PropType<ButtonHTMLAttributes["type"]>,
-      default: "button",
+      type: String as PropType<ButtonHTMLAttributes['type']>,
+      default: 'button',
     },
     disabled: {
+      type: Boolean,
+      default: false,
+    },
+    isLoading: {
       type: Boolean,
       default: false,
     },
@@ -39,6 +43,8 @@ export default defineComponent({
     const classes = computed(() => ({
       [`button-variant--${props.variant}`]: true,
       [`button-size--${props.size}`]: true,
+      [`button--disabled`]: props.disabled,
+      [`button--loading`]: props.isLoading,
     }));
     return {
       classes,
@@ -49,7 +55,8 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .button {
-  font-family: "SF-Pro";
+  user-select: none;
+  font-family: 'SF-Pro';
   font-weight: 400;
   color: #ffffff;
   transition: all 0.2s linear;
@@ -104,6 +111,11 @@ export default defineComponent({
       padding: 10px;
       min-height: 35px;
     }
+  }
+
+  &--disabled {
+    opacity: 0.6;
+    pointer-events: none;
   }
 }
 </style>
