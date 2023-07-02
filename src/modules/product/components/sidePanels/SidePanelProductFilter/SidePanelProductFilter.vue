@@ -1,14 +1,14 @@
 <template>
   <BaseSidePanel
-    :isOpen="modelValue"
-    @close="$emit('update:modelValue', false)"
-    @show="$emit('update:modelValue', true)"
+    :isOpen="modal"
+    @close="onClose"
+    @show="emit('update:modal', true)"
     class="panel-product-filter"
     title="Фильтры"
   >
     <template #default>
-      <div class="panel-product-filter__list">
-        <div class="panel-product-filter__block" v-for="filter in filters" :key="filter.id">
+      <div class="panel-product-filter__list" v-if="!isLoading && filtersRes">
+        <div class="panel-product-filter__block" v-for="filter in filtersRes" :key="filter.id">
           <div class="panel-product-filter__block-title">
             {{ filter.title }}
           </div>
@@ -23,7 +23,13 @@
             >
               {{ value.title }}
 
-              <input type="checkbox" v-model="selectedFilters" :value="value.id" name="filter" class="panel-product-filter__control" />
+              <input
+                type="checkbox"
+                v-model="selectedFilters"
+                :value="value.id"
+                name="filter"
+                class="panel-product-filter__control"
+              />
             </label>
           </div>
         </div>
@@ -31,62 +37,67 @@
     </template>
     <template #footer>
       <div class="panel-product-filter__actions">
-        <BaseButton variant="border" @click="resetFilterProducts">Сбросить</BaseButton>
-        <BaseButton @click="filterProducts">Применить</BaseButton>
+        <BaseButton variant="border" @click="resetFilterProducts" :disabled="!lastAcceptedFilters.length"
+          >Сбросить</BaseButton
+        >
+        <BaseButton @click="filterProducts" :isLoading="productsStore.isLoading">Применить</BaseButton>
       </div>
     </template>
   </BaseSidePanel>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, type PropType, ref, watch } from 'vue';
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
 import BaseSidePanel from '@/components/ui/BaseSidePanel.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
 import { useProductsStore } from '../../../stores/products';
-import type { IFilter, TFilterItem } from '@/types/IFilter';
 
-export default defineComponent({
-  components: {
-    BaseSidePanel,
-    BaseButton,
-  },
-  props: {
-    modelValue: {
-      type: Boolean,
-      default: false,
-    },
-    filters: {
-      type: Array as PropType<IFilter[]>,
-      required: true,
-    },
-  },
-  emits: ['update:modelValue'],
+import type { IFilter } from '@/types/IFilter';
+import { api } from '@/api/api';
 
-  setup() {
-    const productsStore = useProductsStore();
+interface Props {
+  modal: boolean;
+}
+const props = defineProps<Props>();
+const emit = defineEmits(['update:modal']);
 
-    const selectedFilters = ref<string[]>([]);
+const productsStore = useProductsStore();
 
-    const isActiveFilter = (value: string) => {
-      return selectedFilters.value.includes(value);
-    };
+const selectedFilters = ref<string[]>([]);
+const lastAcceptedFilters = ref<string[]>([]);
+const filtersRes = ref<IFilter[] | null>(null);
+const isLoading = ref(false);
 
-    const filterProducts = () => {
-      productsStore.getProducts(selectedFilters.value);
-    };
+const isActiveFilter = (value: string) => {
+  return selectedFilters.value.includes(value);
+};
 
-    const resetFilterProducts = () => {
-      selectedFilters.value = [];
-      productsStore.getProducts();
-    };
-    return {
-      selectedFilters,
-      isActiveFilter,
-      filterProducts,
-      resetFilterProducts,
-    };
-  },
-});
+const filterProducts = () => {
+  lastAcceptedFilters.value = [...selectedFilters.value];
+  productsStore.getProducts(selectedFilters.value);
+};
+
+const resetFilterProducts = async () => {
+  selectedFilters.value = [];
+  lastAcceptedFilters.value = [];
+  await productsStore.getProducts();
+};
+
+const fetchFilters = async () => {
+  try {
+    isLoading.value = true;
+    filtersRes.value = await api.product.fetchProductFilters();
+  } catch (e) {
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const onClose = () => {
+  emit('update:modal', false);
+  selectedFilters.value = [...lastAcceptedFilters.value];
+};
+fetchFilters();
 </script>
 
 <style scoped lang="less">

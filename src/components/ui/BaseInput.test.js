@@ -1,15 +1,15 @@
-import { render, fireEvent } from "@testing-library/vue";
-import "@testing-library/jest-dom";
+import { render, fireEvent } from '@testing-library/vue';
+import '@testing-library/jest-dom';
 
-import BaseInput from "./BaseInput.vue";
+import BaseInput from './BaseInput.vue';
 
-test("properly handles v-model", async () => {
+test('properly handles v-model', async () => {
   const { emitted, getByRole, debug, getByDisplayValue } = render(BaseInput);
 
   // Asserts initial state.
-  const value = "Test Value";
+  const value = 'Test Value';
   // Get the input DOM node by querying the associated label.
-  const inputElement = getByRole("textbox");
+  const inputElement = getByRole('textbox');
 
   // Updates the <input> value and triggers an `input` event.
   await fireEvent.update(inputElement, value);
@@ -24,8 +24,8 @@ test("properly handles v-model", async () => {
   debug();
 });
 
-test("renders input element with placeholder", () => {
-  const placeholderText = "Placeholder Test";
+test('renders input element with placeholder', () => {
+  const placeholderText = 'Placeholder Test';
 
   const { getByPlaceholderText, debug } = render(BaseInput, {
     props: {
@@ -38,8 +38,8 @@ test("renders input element with placeholder", () => {
   debug();
 });
 
-test("renders error elem", () => {
-  const errorText = "Error Test";
+test('renders error elem', () => {
+  const errorText = 'Error Test';
   const { queryByText, debug } = render(BaseInput, {
     props: {
       errors: errorText,
@@ -51,8 +51,8 @@ test("renders error elem", () => {
   debug();
 });
 
-test("renders label elem", () => {
-  const labelText = "Label Test";
+test('renders label elem', () => {
+  const labelText = 'Label Test';
   const { queryByText, debug } = render(BaseInput, {
     props: {
       labelText: labelText,

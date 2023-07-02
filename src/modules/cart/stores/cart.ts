@@ -126,13 +126,27 @@ export const useCartStore = defineStore('cart', () => {
     const productCart = cart.value.find((item) => item.id === idProduct);
     if (!productCart) return;
     productCart.quantity = newQuantity;
+    setItemInLocalstorage('CART', cart.value);
     if (userStore.isLoggedIn) {
       debouncedFetchUpdateCnt({ idProduct, updatedProduct: { quantity: newQuantity } });
     }
   };
 
   const debouncedFetchUpdateCnt = debounce(api.cart.updateProduct.bind(api.cart), 300);
+
+  const removeItem = async (id: string) => {
+    if (!inCart(id)) return false;
+
+    cart.value = cart.value.filter((item) => item.id !== id);
+    setItemInLocalstorage('CART', cart.value);
+
+    if (userStore.isLoggedIn) {
+      const res = await api.cart.removeProduct(id);
+      console.log(res);
+    }
+  };
   return {
+    removeItem,
     calculateTotalPriceProduct,
     cart,
     getCart,

@@ -62,40 +62,9 @@
       </div>
     </div>
   </header>
-  <div class="mobile-menu" :class="{ active: isOpenedBurger }">
-    <div class="user-auth">
-      <BaseButton v-if="!userStore.isLoggedIn" class="user-auth__btn" @click="modalStore.openAuthModal">
-        <AppIcon name="IconUser"></AppIcon>
-        Войти в аккаунт
-      </BaseButton>
-      <div v-if="userStore.isLoggedIn" class="user-drop">
-        <div class="current">
-          <BaseButton variant="text">
-            <AppIcon name="IconUser"></AppIcon>
-            Вы
-          </BaseButton>
-        </div>
-        <div class="dropdown">
-          <div class="dropdown__inner">
-            <BaseButton @click="logOut">Выйти</BaseButton>
-          </div>
-        </div>
-      </div>
-    </div>
-    <nav class="nav" v-if="userStore.isLoggedIn">
-      <ul class="nav-list">
-        <li class="nav-list__item" v-for="link in menuLinks" :key="link.title">
-          <router-link to="/" :class="{ active: link.active }">
-            {{ link.title }}
-          </router-link>
-        </li>
-      </ul>
-    </nav>
-  </div>
 </template>
 
 <script lang="ts">
-import { useRouter, useRoute } from 'vue-router';
 import { useModalStore } from '@/stores/modal';
 import { useUserStore } from '@/modules/user/stores/user';
 
@@ -103,6 +72,7 @@ import AppIcon from '@/components/ui/AppIcon/AppIcon.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
 import { ref, watch, defineComponent } from 'vue';
 import { useCartStore } from '@/modules/cart/stores/cart';
+import { useMenu } from '@/composables/menu';
 
 export default defineComponent({
   components: {
@@ -113,29 +83,9 @@ export default defineComponent({
     const modalStore = useModalStore();
     const userStore = useUserStore();
     const cartStore = useCartStore();
-    const route = useRoute();
 
-    const isOpenedBurger = ref<boolean>(false);
-    const menuLinks = [
-      { title: 'Пицца', active: true },
-      { title: 'Суши', active: false },
-      { title: 'Напитки', active: false },
-      { title: 'Закуски', active: false },
-      { title: 'Комбо', active: false },
-      { title: 'Десерты', active: false },
-      { title: 'Соусы', active: false },
-    ];
-    const router = useRouter();
-    const logOut = () => {
-      userStore.logOut();
-      router.push({ name: 'Home' });
-    };
-    watch(
-      () => route.query,
-      () => {
-        isOpenedBurger.value = false;
-      }
-    );
+    const { logOut, isOpenedBurger, menuLinks } = useMenu();
+
     return {
       logOut,
       menuLinks,
@@ -308,43 +258,6 @@ export default defineComponent({
       &:hover {
         color: #ff7010;
       }
-    }
-  }
-}
-
-.mobile-menu {
-  position: fixed;
-  top: -100%;
-  overflow: auto;
-  z-index: 777;
-  height: 100%;
-  background-color: #fff;
-  width: 100%;
-  padding: 100px 20px 20px;
-  transition: all 0.3s ease;
-  &.active {
-    top: 0;
-  }
-  .nav {
-    margin-top: 25px;
-  }
-  .button {
-    svg {
-      margin-right: 6px;
-    }
-  }
-  .dropdown {
-    @media screen and (max-width: 991px) {
-      left: 0;
-      right: auto;
-    }
-  }
-  .user-auth__btn {
-    color: #ff7010;
-    display: flex;
-    align-items: center;
-    svg {
-      margin-right: 10px;
     }
   }
 }

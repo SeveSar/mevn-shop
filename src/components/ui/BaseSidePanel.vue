@@ -1,30 +1,30 @@
 <template>
   <transition name="slide-panel">
     <div class="side-panel-overlay" v-show="isOpen" @mousedown.self="close">
-      <!-- <transition name="slide-panel-inner"> -->
-      <div class="side-panel" :class="{ 'side-panel--active': isOpen }">
-        <button class="side-panel__close" @click="close">
-          <AppIcon name="IconCrossBig" />
-        </button>
-        <div class="side-panel__header">
-          <h3 class="side-panel__title">
-            {{ title }}
-          </h3>
+      <transition name="slide-panel-inner">
+        <div class="side-panel" v-show="isOpen">
+          <button class="side-panel__close" @click="close">
+            <AppIcon name="IconCrossBig" />
+          </button>
+          <div class="side-panel__header">
+            <h3 class="side-panel__title">
+              {{ title }}
+            </h3>
+          </div>
+          <div class="side-panel__content">
+            <slot />
+          </div>
+          <div class="side-panel__footer">
+            <slot name="footer" />
+          </div>
         </div>
-        <div class="side-panel__content">
-          <slot />
-        </div>
-        <div class="side-panel__footer">
-          <slot name="footer" />
-        </div>
-      </div>
-      <!-- </transition> -->
+      </transition>
     </div>
   </transition>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, type PropType, toRefs, watch } from 'vue';
+import { defineComponent, onMounted, onUnmounted, toRefs, watch } from 'vue';
 import AppIcon from './AppIcon/AppIcon.vue';
 
 export default defineComponent({
@@ -49,9 +49,11 @@ export default defineComponent({
     const close = () => {
       emit('close');
     };
+
     const show = () => {
       emit('show');
     };
+
     const onKeyHandler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         close();
@@ -88,10 +90,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   overflow: auto;
-  transform: translateX(100%);
-  transition: all 0.3s ease;
-  opacity: 0;
-  transition-delay: 1s;
+
   &--active {
     opacity: 1;
     transition: all 0.3s ease;

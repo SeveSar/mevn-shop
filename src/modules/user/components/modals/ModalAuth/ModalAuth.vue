@@ -2,19 +2,19 @@
   <BaseModal :isOpen="isAuthModal" @close="storeModal.closeAuthModal">
     <div class="modal-content">
       <div class="modal-content__inner">
-        <AuthForm></AuthForm>
+        <AuthForm />
       </div>
     </div>
   </BaseModal>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, type Ref } from "vue";
+import { defineComponent, ref, computed, type Ref } from 'vue';
 
-import BaseModal from "@/components/ui/BaseModal.vue";
-import { useModalStore } from "@/stores/modal";
-import { storeToRefs } from "pinia";
-import AuthForm from "../../auth/AuthForm/AuthForm.vue";
+import BaseModal from '@/components/ui/BaseModal.vue';
+import { useModalStore } from '@/stores/modal';
+import { storeToRefs } from 'pinia';
+import AuthForm from '../../auth/AuthForm/AuthForm.vue';
 
 interface IUserCredentials {
   email: string;
@@ -29,19 +29,19 @@ export default defineComponent({
     const storeModal = useModalStore();
     const userCredentials = ref({}) as Ref<IUserCredentials>;
     const { isAuthModal } = storeToRefs(storeModal);
-    const typeForm = ref<"FormLogin" | "FormRegister">("FormLogin");
+    const typeForm = ref<'FormLogin' | 'FormRegister'>('FormLogin');
     const currentTextButton = computed(() => {
-      return typeForm.value === "FormLogin"
-        ? { text: "Не зарегестрированы ?", buttonText: "Создать аккаунт" }
-        : { text: "Уже есть аккаунт ?", buttonText: "Войди в аккаунт" };
+      return typeForm.value === 'FormLogin'
+        ? { text: 'Не зарегестрированы ?', buttonText: 'Создать аккаунт' }
+        : { text: 'Уже есть аккаунт ?', buttonText: 'Войди в аккаунт' };
     });
     const changeForm = () => {
       switch (typeForm.value) {
-        case "FormLogin":
-          typeForm.value = "FormRegister";
+        case 'FormLogin':
+          typeForm.value = 'FormRegister';
           break;
-        case "FormRegister":
-          typeForm.value = "FormLogin";
+        case 'FormRegister':
+          typeForm.value = 'FormLogin';
       }
     };
 

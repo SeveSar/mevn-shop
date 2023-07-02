@@ -12,7 +12,7 @@
           Очистить корзину
         </BaseButton>
       </div>
-      <CartList :cart="cart" />
+
       <div class="cart__footer">
         <div class="cart__footer-cnt"><span>Всего в корзине: </span> {{ totalItems }} шт</div>
         <div class="cart__footer-price"><span>Итого: </span> ₽{{ totalPrice }}</div>
@@ -27,16 +27,15 @@
 </template>
 
 <script setup lang="ts">
-import CartList from "../../components/CartList.vue";
-import { useCartStore } from "../../stores/cart";
-import { storeToRefs } from "pinia";
-import { useRouter } from "vue-router";
-import BaseButton from "@/components/ui/BaseButton.vue";
+import { useCartStore } from '../../stores/cart';
+import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
+import BaseButton from '@/components/ui/BaseButton.vue';
 const cartStore = useCartStore();
 const { cart, totalPrice, totalItems } = storeToRefs(cartStore);
 const router = useRouter();
 const order = () => {
-  router.push({ name: "Order" });
+  router.push({ name: 'Order' });
 };
 </script>
 

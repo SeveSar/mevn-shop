@@ -18,7 +18,7 @@
             >
               -
             </button>
-            <input type="number" :value="item.quantity" min="1" />
+            <input type="number" readonly :value="item.quantity" min="1" />
             <button
               class="product__actions-btn"
               @click="cartStore.updateCnt({ idProduct: item.id, newQuantity: item.quantity + 1 })"
@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <button class="product__remove">
+    <button class="product__remove" @click="cartStore.removeItem(item.id)">
       <AppIcon name="IconCrossBig" />
     </button>
   </div>

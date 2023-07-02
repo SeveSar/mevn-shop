@@ -52,4 +52,17 @@ export class CartService {
       products: res.data.products.map((item) => new CartDTO(item)),
     };
   }
+
+  async removeProduct(id: string) {
+    const res = await this.$http.makeRequest<ICartResponse>({
+      url: `/basket/${id}`,
+      method: 'DELETE',
+      headers: { authorization: true },
+    });
+
+    return {
+      ...res.data,
+      products: res.data.products.map((item) => new CartDTO(item)),
+    };
+  }
 }

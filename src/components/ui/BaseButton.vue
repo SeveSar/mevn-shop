@@ -1,55 +1,55 @@
 <template>
-  <button :class="classes" :type="type" class="button" @click="$emit('click')">
-    <slot></slot>
-  </button>
+  <component
+    :is="currentComponent"
+    :class="classes"
+    :to="to ? to : null"
+    :type="to ? null : type"
+    class="button"
+    @click="emit('click')"
+  >
+    <slot v-if="!isLoading" />
+
+    <template v-else>
+      <AppIcon class="button__loading" name="IconSpinner" />
+      Загрузка
+    </template>
+  </component>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed, defineComponent } from 'vue';
-import type { PropType, ButtonHTMLAttributes } from 'vue';
-export default defineComponent({
-  props: {
-    variant: {
-      type: String as PropType<'primary' | 'secondary' | 'text' | 'border'>,
-      default: 'primary',
-    },
-    size: {
-      type: String,
-      default: 'medium',
-    },
-    rounded: {
-      type: Boolean,
-    },
-    type: {
-      type: String as PropType<ButtonHTMLAttributes['type']>,
-      default: 'button',
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    isLoading: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  emits: {
-    click(): boolean {
-      return true;
-    },
-  },
+import type { ButtonHTMLAttributes } from 'vue';
+import AppIcon from './AppIcon/AppIcon.vue';
 
-  setup(props) {
-    const classes = computed(() => ({
-      [`button-variant--${props.variant}`]: true,
-      [`button-size--${props.size}`]: true,
-      [`button--disabled`]: props.disabled,
-      [`button--loading`]: props.isLoading,
-    }));
-    return {
-      classes,
-    };
-  },
+interface Props {
+  variant?: 'primary' | 'secondary' | 'text' | 'border';
+  size?: 'medium' | 'small';
+  rounded?: boolean;
+  type?: ButtonHTMLAttributes['type'];
+  disabled?: boolean;
+  isLoading?: boolean;
+  to?: { name: string } | string | null;
+}
+const props = withDefaults(defineProps<Props>(), {
+  variant: 'primary',
+  size: 'medium',
+  rounded: false,
+  type: 'button',
+  disabled: false,
+  isLoading: false,
+  to: null,
+});
+const emit = defineEmits(['click']);
+
+const classes = computed(() => ({
+  [`button-variant--${props.variant}`]: true,
+  [`button-size--${props.size}`]: true,
+  [`button--disabled`]: props.disabled,
+  [`button--loading`]: props.isLoading,
+}));
+
+const currentComponent = computed(() => {
+  return props.to ? 'router-link' : 'button';
 });
 </script>
 
@@ -67,6 +67,12 @@ export default defineComponent({
   line-height: 22px;
   border-radius: 6px;
   min-height: 48px;
+
+  &__loading {
+    color: @white-color;
+    animation: spinner 1s infinite linear;
+    margin-right: 8px;
+  }
 
   &-variant {
     &--primary {
@@ -111,6 +117,10 @@ export default defineComponent({
       padding: 10px;
       min-height: 35px;
     }
+  }
+
+  &--loading {
+    pointer-events: none;
   }
 
   &--disabled {

@@ -1,12 +1,15 @@
 <template>
   <div class="products">
     <ProductBlock @click-filter="isProductFilterPanel = true">
-      <ProductList :products="productsStore.products" v-if="productsStore.products.length && !isLoading" />
+      <ProductList
+        :products="productsStore.products"
+        v-if="productsStore.products.length && !productsStore.isLoading"
+      />
       <ProductSkeleton v-else :count="8" />
     </ProductBlock>
   </div>
   <teleport to="body">
-    <SidePanelProductFilter v-model="isProductFilterPanel" :filters="productFilters" />
+    <SidePanelProductFilter v-model:modal="isProductFilterPanel" />
     <SidePanelCart />
   </teleport>
 </template>
@@ -20,26 +23,15 @@ import SidePanelCart from '@/components/sidePanels/SidePanelCart.vue';
 import { useProductsStore } from '@/modules/product/stores/products';
 import ProductSkeleton from '../../components/ProductList/ProductSkeleton.vue';
 
-import { ref } from 'vue';
-import { api } from '@/api/api';
+import { ref, watch } from 'vue';
 
 //state
 
-let productFilters = ref<any>([]);
 let isProductFilterPanel = ref(false);
 const productsStore = useProductsStore();
-const isLoading = ref(false);
 
 const fetchData = async () => {
-  try {
-    isLoading.value = true;
-    const res = await productsStore.getProducts();
-    productFilters.value = res;
-  } catch (e) {
-    console.error(e);
-  } finally {
-    isLoading.value = false;
-  }
+  await productsStore.getProducts();
 };
 
 fetchData();

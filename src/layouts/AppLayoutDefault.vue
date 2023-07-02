@@ -1,5 +1,6 @@
 <template>
   <TheHeader />
+  <MobileMenu />
   <main class="main">
     <div class="container">
       <slot></slot>
@@ -7,23 +8,24 @@
   </main>
 
   <Teleport to="body">
-    <router-link :to="{ name: 'Cart' }" class="cart-mobile">
-      <img src="@/assets/images/icons/cart.svg" alt="" />
-      <span>{{ cartStore.totalItems }}</span>
-    </router-link>
+    <button class="cart-button" @click="cartStore.isSidePanelCart = true">
+      <img class="cart-button__img" src="@/assets/images/icons/cart.svg" alt="" />
+      <span class="cart-button__text">{{ cartStore.totalItems }}</span>
+    </button>
   </Teleport>
 </template>
 
 <script lang="ts">
 import TheHeader from '@/components/layouts/TheHeader.vue';
+import MobileMenu from '@/components/layouts/components/MobileMenu.vue';
 import { useRouter, useRoute } from 'vue-router';
 
-import { mapState } from 'pinia';
 import { watch, defineComponent, onMounted } from 'vue';
 import { useCartStore } from '@/modules/cart/stores/cart';
 export default defineComponent({
   components: {
     TheHeader,
+    MobileMenu,
   },
   setup() {
     const route = useRoute();
@@ -55,7 +57,7 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="less">
-.cart-mobile {
+.cart-button {
   position: fixed;
   background: #ff7010;
   box-shadow: 0px 2px 8px rgba(25, 25, 25, 0.2);
@@ -66,11 +68,11 @@ export default defineComponent({
   right: 20px;
   z-index: 444;
   bottom: 20px;
-  img {
+  &__img {
     margin: auto;
     display: block;
   }
-  span {
+  &__text {
     position: absolute;
     top: -2px;
     right: -2px;

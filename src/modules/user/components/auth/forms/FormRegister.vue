@@ -2,9 +2,7 @@
   <form @submit.prevent="onSubmit" class="form-auth">
     <div class="form-auth__header">
       <h3 class="form-auth__title">Регистрация</h3>
-      <div class="form-auth__text">
-        Сможете быстро оформлять заказы, использовать бонусы
-      </div>
+      <div class="form-auth__text">Сможете быстро оформлять заказы, использовать бонусы</div>
     </div>
     <div class="form-auth__body">
       <BaseInput
@@ -43,23 +41,21 @@
         v-model="userCredentials.name"
       />
     </div>
-    <BaseButton class="form-auth__submit" type="submit"
-      >Зарегистрироваться</BaseButton
-    >
+    <BaseButton class="form-auth__submit" :isLoading="isLoading" type="submit">Зарегистрироваться</BaseButton>
   </form>
 </template>
 
 <script lang="ts">
-import { reactive, defineComponent, type PropType, inject } from "vue";
+import { reactive, defineComponent, type PropType, inject, ref } from 'vue';
 
-import useVuelidate from "@vuelidate/core";
-import { getValidationRule } from "@/utils/validations";
-import BaseInput from "@/components/ui/BaseInput.vue";
-import BaseButton from "@/components/ui/BaseButton.vue";
-import { getErrorMessage } from "@/utils/errorHandler";
-import type { IToast } from "@/plugins/plugins.types";
-import { useUserStore } from "@/modules/user/stores/user";
-import { useToastStore } from "@/stores/toast";
+import useVuelidate from '@vuelidate/core';
+import { getValidationRule } from '@/utils/validations';
+import BaseInput from '@/components/ui/BaseInput.vue';
+import BaseButton from '@/components/ui/BaseButton.vue';
+import { getErrorMessage } from '@/utils/errorHandler';
+
+import { useUserStore } from '@/modules/user/stores/user';
+import { useToastStore } from '@/stores/toast';
 
 interface IUserCredentials {
   name: string;
@@ -81,16 +77,17 @@ export default defineComponent({
     const userStore = useUserStore();
     const toastStore = useToastStore();
 
+    const isLoading = ref(false);
     const userCredentials = reactive({
-      email: "",
-      password: "",
-      name: "",
+      email: '',
+      password: '',
+      name: '',
     });
 
     const rules = {
-      email: getValidationRule("email"),
-      password: getValidationRule("password"),
-      name: getValidationRule("name"),
+      email: getValidationRule('email'),
+      password: getValidationRule('password'),
+      name: getValidationRule('name'),
     };
 
     const v$ = useVuelidate(rules, userCredentials, {
@@ -102,19 +99,20 @@ export default defineComponent({
       const isFormCorrect = await v$.value.$validate();
       if (isFormCorrect) {
         try {
-          await userStore.signUp(
-            userCredentials.email,
-            userCredentials.password
-          );
+          isLoading.value = true;
+          await userStore.signUp(userCredentials.email, userCredentials.password);
         } catch (e) {
           const message = getErrorMessage(e);
-          toastStore.showToast({ type: "error", text: message });
+          toastStore.showToast({ type: 'error', text: message });
+        } finally {
+          isLoading.value = false;
         }
       }
     };
 
     return {
       onSubmit,
+      isLoading,
       v$,
       userCredentials,
     };

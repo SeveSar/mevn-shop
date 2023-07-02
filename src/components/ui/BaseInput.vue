@@ -11,7 +11,7 @@
       @focus="onFocus"
       :placeholder="placeholder"
       :type="type"
-      test-id="base-input"
+      data-testid="base-input"
     />
 
     <transition name="fade">
@@ -21,14 +21,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType } from "vue";
+import { defineComponent, type PropType } from 'vue';
 export default defineComponent({
-  emits: ["update:modelValue", "onBlur", "onFocus"],
+  emits: ['update:modelValue', 'onBlur', 'onFocus'],
   props: {
     modelValue: {
       type: null as unknown as PropType<string | number | null>,
       default: null,
-      validator: (v: any) => typeof v === "string" || typeof v === "number" || v === null,
+      validator: (v: any) => typeof v === 'string' || typeof v === 'number' || v === null,
     },
 
     labelText: {
@@ -38,26 +38,26 @@ export default defineComponent({
     errors: {
       type: null as unknown as PropType<string | number | null>,
       default: null,
-      validator: (v: any) => typeof v === "string" || typeof v === "number" || v === null,
+      validator: (v: any) => typeof v === 'string' || typeof v === 'number' || v === null,
     },
     placeholder: {
       type: String,
-      default: "",
+      default: '',
     },
     type: {
-      type: String as PropType<"text" | "number" | "password">,
-      default: "text",
+      type: String as PropType<'text' | 'number' | 'password'>,
+      default: 'text',
     },
   },
   setup(props, { emit, attrs }) {
     const updateValue = (e: Event) => {
-      emit("update:modelValue", (e.target as HTMLInputElement).value);
+      emit('update:modelValue', (e.target as HTMLInputElement).value);
     };
     const onBlur = () => {
-      emit("onBlur");
+      emit('onBlur');
     };
     const onFocus = () => {
-      emit("onFocus");
+      emit('onFocus');
     };
     return {
       updateValue,

@@ -47,7 +47,7 @@
                 </span>
               </div>
             </div>
-            <BaseButton type="submit" :disabled="isLoadingAddingToCart"> Добавить </BaseButton>
+            <BaseButton type="submit" :isLoading="isLoadingAddingToCart"> Добавить </BaseButton>
           </template>
           <template v-else>
             <UiSkeleton width="130" height="28" corner="6" />
