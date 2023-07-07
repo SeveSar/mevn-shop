@@ -1,3 +1,4 @@
+import { RouteNamesEnum } from './../router/router.types';
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/modules/user/stores/user';
@@ -21,7 +22,7 @@ export function useMenu() {
 
   const logOut = () => {
     userStore.logOut();
-    router.push({ name: 'Home' });
+    router.push({ name: RouteNamesEnum.products });
   };
 
   watch(

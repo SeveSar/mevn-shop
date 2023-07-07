@@ -2,15 +2,15 @@
   <div class="order-done">
     <h1>
       Благодарим вас за покупку.
-      <router-link :to="{ name: 'Home' }" class="btn btn--main"
-        >Вернуться к покупкам</router-link
-      >
+      <router-link :to="{ name: RouteNamesEnum.products }" class="btn btn--main">Вернуться к покупкам</router-link>
     </h1>
     <img src="@/assets/images/order-image.png" alt="" />
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { RouteNamesEnum } from '@/router/router.types';
+</script>
 
 <style scoped lang="less">
 .order-done {

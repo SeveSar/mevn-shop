@@ -1,10 +1,6 @@
 import type { VueElement } from 'vue';
 import type { AppLayoutsEnum } from '@/layouts/layouts.types';
 
-export interface IRoutesNames {
-  home: string;
-}
-
 declare module 'vue-router' {
   interface RouteMeta {
     layout?: AppLayoutsEnum;
@@ -14,7 +10,10 @@ declare module 'vue-router' {
 }
 
 export enum RouteNamesEnum {
-  home = 'Home',
+  products = 'Products',
   cart = 'Cart',
   admin = 'Admin',
+  profile = 'Profile',
+  settings = 'Settings',
+  orders = 'Orders',
 }

@@ -3,25 +3,17 @@
     <div class="cart__inner" v-if="cart.length">
       <div class="cart__header">
         <h1 class="page-title">Ваш заказ</h1>
-        <BaseButton class="button_clear">
-          <svg fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
-            <path
-              d="M 10 2 L 9 3 L 4 3 L 4 5 L 5 5 L 5 20 C 5 20.522222 5.1913289 21.05461 5.5683594 21.431641 C 5.9453899 21.808671 6.4777778 22 7 22 L 17 22 C 17.522222 22 18.05461 21.808671 18.431641 21.431641 C 18.808671 21.05461 19 20.522222 19 20 L 19 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 7 5 L 17 5 L 17 20 L 7 20 L 7 5 z M 9 7 L 9 18 L 11 18 L 11 7 L 9 7 z M 13 7 L 13 18 L 15 18 L 15 7 L 13 7 z"
-            />
-          </svg>
-          Очистить корзину
-        </BaseButton>
       </div>
-
+      <CartItem v-for="item in cartStore.cart" :key="item.id" :item="item" />
       <div class="cart__footer">
         <div class="cart__footer-cnt"><span>Всего в корзине: </span> {{ totalItems }} шт</div>
-        <div class="cart__footer-price"><span>Итого: </span> ₽{{ totalPrice }}</div>
+        <div class="cart__footer-price"><span>Итого: </span>{{ totalPrice }} ₽</div>
       </div>
       <BaseButton class="button_order" @click="order"> Оформить заказ </BaseButton>
     </div>
     <div class="cart-empty" v-show="!cart.length">
       <img src="@/assets/images/empty-cart.png" alt="" />
-      <router-link :to="{ name: 'Home' }">Вернуться к покупкам</router-link>
+      <router-link :to="{ name: RouteNamesEnum.products }">Вернуться к покупкам</router-link>
     </div>
   </div>
 </template>
@@ -31,6 +23,8 @@ import { useCartStore } from '../../stores/cart';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import BaseButton from '@/components/ui/BaseButton.vue';
+import CartItem from '@/components/widgets/cart/CartItem.vue';
+import { RouteNamesEnum } from '@/router/router.types';
 const cartStore = useCartStore();
 const { cart, totalPrice, totalItems } = storeToRefs(cartStore);
 const router = useRouter();
@@ -95,6 +89,7 @@ const order = () => {
       }
     }
   }
+
   &__footer {
     display: flex;
     justify-content: space-between;

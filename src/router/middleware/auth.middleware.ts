@@ -9,6 +9,6 @@ export async function authMiddleware(to: RouteLocationNormalized, from: RouteLoc
   if (requiredAuth && !isLoggedIn) {
     return { name: 'Login' };
   } else if (!requiredAuth && isLoggedIn) {
-    return { name: 'Home' };
+    return { name: 'Products' };
   }
 }

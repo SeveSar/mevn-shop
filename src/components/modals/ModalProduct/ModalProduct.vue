@@ -1,5 +1,5 @@
 <template>
-  <BaseModal :isOpen="isOpen" @close="close" class="modal-product">
+  <BaseModal :isOpen="modalStore.isModalProduct" @close="close" class="modal-product">
     <div class="modal-product__body">
       <div class="modal-product__photo">
         <img v-if="!isLoading" :src="productData?.imageUrl" class="modal-product__photo-img" alt="" />
@@ -85,11 +85,6 @@ export interface ISelectedTabDough {
   price: number;
 }
 
-interface Props {
-  isOpen: boolean;
-}
-const props = defineProps<Props>();
-
 const modalStore = useModalStore();
 const productsStore = useProductsStore();
 const cartStore = useCartStore();
@@ -132,13 +127,21 @@ const close = () => {
 
 const addToCart = async () => {
   if (!selectedTabDough.value || !selectedTabSize.value) return;
-  isLoadingAddingToCart.value = true;
-  await cartStore.addToCart({
-    dough: selectedTabDough.value,
-    size: selectedTabSize.value,
-    ingredients: productData.value?.ingredients.filter((ing) => ing.isActive) ?? [],
-  });
-  isLoadingAddingToCart.value = false;
+
+  try {
+    isLoadingAddingToCart.value = true;
+    await cartStore.addToCart({
+      dough: selectedTabDough.value,
+      size: selectedTabSize.value,
+      ingredients: productData.value?.ingredients.filter((ing) => ing.isActive) ?? [],
+    });
+
+    modalStore.isModalProduct = false;
+  } catch (e) {
+    console.error(e);
+  } finally {
+    isLoadingAddingToCart.value = false;
+  }
 };
 
 const fetchProductById = async () => {

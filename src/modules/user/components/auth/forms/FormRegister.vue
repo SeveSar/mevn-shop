@@ -55,7 +55,7 @@ import BaseButton from '@/components/ui/BaseButton.vue';
 import { getErrorMessage } from '@/utils/errorHandler';
 
 import { useUserStore } from '@/modules/user/stores/user';
-import { useToastStore } from '@/stores/toast';
+import { toaster } from '@/main';
 
 interface IUserCredentials {
   name: string;
@@ -75,7 +75,6 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const userStore = useUserStore();
-    const toastStore = useToastStore();
 
     const isLoading = ref(false);
     const userCredentials = reactive({
@@ -101,9 +100,10 @@ export default defineComponent({
         try {
           isLoading.value = true;
           await userStore.signUp(userCredentials.email, userCredentials.password);
+          toaster.showToast({ type: 'info', text: 'Вы зарегистрировались' });
         } catch (e) {
           const message = getErrorMessage(e);
-          toastStore.showToast({ type: 'error', text: message });
+          toaster.showToast({ type: 'error', text: message });
         } finally {
           isLoading.value = false;
         }

@@ -8,7 +8,13 @@
       <form class="form" @submit.prevent="createPizza">
         <BaseInput class="form__control" placeholder="Имя" v-model="productFields.title" />
         <BaseInput class="form__control" placeholder="Цена" type="number" v-model="productFields.price" />
-        <BaseInput class="form__control" type="number" placeholder="Количество" v-model="productFields.amount" tpye="number" />
+        <BaseInput
+          class="form__control"
+          type="number"
+          placeholder="Количество"
+          v-model="productFields.amount"
+          tpye="number"
+        />
         <div class="form__group">
           <BaseTextArea height="150px" placeholder="Описание" v-model="productFields.description"></BaseTextArea>
         </div>

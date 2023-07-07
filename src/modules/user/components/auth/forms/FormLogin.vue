@@ -41,10 +41,11 @@ import { getValidationRule } from '@/utils/validations';
 import BaseInput from '@/components/ui/BaseInput.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
 import { useUserStore } from '@/modules/user/stores/user';
-import type { IToast } from '@/plugins/plugins.types';
+
 import { getErrorMessage } from '@/utils/errorHandler';
 import { useModalStore } from '@/stores/modal';
-import { useToastStore } from '@/stores/toast';
+
+import { toaster } from '@/main';
 
 interface IUserCredentials {
   email: string;
@@ -72,7 +73,6 @@ export default defineComponent({
     const isLoading = ref(false);
 
     const modalStore = useModalStore();
-    const toastStore = useToastStore();
 
     const onSubmit = async () => {
       const isFormCorrect = await v$.value.$validate();
@@ -82,10 +82,10 @@ export default defineComponent({
           isLoading.value = true;
           await userStore.login(userCredentials.email, userCredentials.password);
           modalStore.closeAuthModal();
-          toastStore.showToast({ type: 'info', text: 'Вы авторизовались' });
+          toaster.showToast({ type: 'info', text: 'Вы авторизовались' });
         } catch (e) {
           const message = getErrorMessage(e);
-          toastStore.showToast({ type: 'error', text: message });
+          toaster.showToast({ type: 'error', text: message });
         } finally {
           isLoading.value = false;
         }

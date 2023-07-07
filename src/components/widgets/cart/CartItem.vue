@@ -45,7 +45,7 @@ import AppIcon from '@/components/ui/AppIcon/AppIcon.vue';
 import { useCartStore } from '@/modules/cart/stores/cart';
 
 interface Props {
-  isMinni: boolean;
+  isMinni?: boolean;
   item: ICartItem;
 }
 

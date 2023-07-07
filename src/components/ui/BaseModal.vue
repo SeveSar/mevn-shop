@@ -17,7 +17,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, type PropType, toRefs, watch } from "vue";
+import { defineComponent, toRefs, watch } from 'vue';
+import { useModalFunctions } from '@/composables/modalFunctions';
 export default defineComponent({
   props: {
     isOpen: {
@@ -25,35 +26,22 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: ["close", "show"],
+  emits: ['close', 'show'],
 
   setup(props, { emit }) {
     //state
     const { isOpen } = toRefs(props);
+
+    useModalFunctions(isOpen, close);
+
     //methods
-    const close = () => {
-      emit("close");
-    };
+    function close() {
+      emit('close');
+    }
     const show = () => {
-      emit("show");
-    };
-    const onKeyHandler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        close();
-      }
+      emit('show');
     };
 
-    onMounted(() => {
-      document.body.addEventListener("keydown", onKeyHandler);
-    });
-
-    onUnmounted(() => {
-      document.body.removeEventListener("keydown", onKeyHandler);
-    });
-    watch(isOpen, (val) => {
-      if (val) document.body.classList.add("no-scroll");
-      else document.body.classList.remove("no-scroll");
-    });
     return {
       close,
       show,

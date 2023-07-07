@@ -1,33 +1,23 @@
 <template>
-  <teleport to="body">
-    <div class="toast-container" id="toast-container">
-      <transition-group name="toast">
-        <div
-          class="toast"
-          v-for="item in toastStore.toasts"
-          :class="item.type"
-          :key="item.id"
-          @click="toastStore.removeToast(item.id)"
-        >
-          <!-- <AppIcon class="toast__icon" :name="getCurrentIcon(item.type)" /> -->
-          <div class="toast__text">
-            {{ item.text }}
-          </div>
-        </div>
-      </transition-group>
+  <transition-group name="toast">
+    <div class="toast" v-for="item in toasts" :class="item.type" :key="item.id" @click="removeToast(item.id)">
+      <!-- <AppIcon class="toast__icon" :name="getCurrentIcon(item.type)" /> -->
+      <div class="toast__text">
+        {{ item.text }}
+      </div>
     </div>
-  </teleport>
+  </transition-group>
 </template>
 
 <script lang="ts">
-import { defineComponent, watch } from "vue";
-import type { IToast } from "@/plugins/plugins.types";
+import { defineComponent, ref, watch } from 'vue';
+import type { IToast, TypeToast } from '@/plugins/plugins.types';
 
-import { useToastStore } from "@/stores/toast";
+import { useToastStore } from '@/stores/toast';
 
 const ICONS_TYPES = {
-  error: "IconError",
-  info: "IconInfo",
+  error: 'IconError',
+  info: 'IconInfo',
 } as const;
 
 export default defineComponent({
@@ -36,29 +26,50 @@ export default defineComponent({
   },
 
   setup() {
-    const toastStore = useToastStore();
-    let timer: any;
-    const getCurrentIcon = (type: "error" | "info") => {
+    let id: number = 0;
+    let timer: number;
+    const getCurrentIcon = (type: 'error' | 'info') => {
       return ICONS_TYPES[type];
     };
+    const toasts = ref<IToast[]>([]);
 
-    watch(toastStore.toasts, () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        toastStore.toasts.shift();
-      }, 4000);
-    });
+    const showToast = (toast: { type: TypeToast; text: string }) => {
+      id++;
+      const newToast = {
+        ...toast,
+        id,
+      } as IToast;
+      toasts.value.push(newToast);
+    };
+
+    const removeToast = (id: number) => {
+      toasts.value = toasts.value.filter((toast) => toast.id !== id);
+      id--;
+    };
+
+    watch(
+      toasts,
+      () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          toasts.value.shift();
+        }, 2000);
+      },
+      { deep: true }
+    );
 
     return {
-      toastStore,
+      toasts,
       getCurrentIcon,
+      showToast,
+      removeToast,
     };
   },
 });
 </script>
 
-<style scoped lang="less">
-.toast-container {
+<style lang="less">
+#app-toast {
   position: fixed;
   bottom: 30px;
   right: 20px;

@@ -3,6 +3,7 @@ import { createPinia } from 'pinia';
 import App from './App.vue';
 import router from './router';
 import initFire from '@/plugins/firebase';
+import AppToast from './components/ui/AppToast.vue';
 
 import './assets/less/main.less';
 
@@ -36,3 +37,5 @@ const start = async () => {
   }
 };
 start();
+
+export const toaster = createApp(AppToast).mount('#app-toast') as InstanceType<typeof AppToast>;

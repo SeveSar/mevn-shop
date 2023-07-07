@@ -22,7 +22,8 @@ import type { ButtonHTMLAttributes } from 'vue';
 import AppIcon from './AppIcon/AppIcon.vue';
 
 interface Props {
-  variant?: 'primary' | 'secondary' | 'text' | 'border';
+  variant?: 'default' | 'text' | 'border';
+  color?: 'primary' | 'secondary';
   size?: 'medium' | 'small';
   rounded?: boolean;
   type?: ButtonHTMLAttributes['type'];
@@ -31,8 +32,9 @@ interface Props {
   to?: { name: string } | string | null;
 }
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'primary',
+  variant: 'default',
   size: 'medium',
+  color: 'primary',
   rounded: false,
   type: 'button',
   disabled: false,
@@ -46,6 +48,8 @@ const classes = computed(() => ({
   [`button-size--${props.size}`]: true,
   [`button--disabled`]: props.disabled,
   [`button--loading`]: props.isLoading,
+
+  [`button-color--${props.color}`]: true,
 }));
 
 const currentComponent = computed(() => {
@@ -74,25 +78,36 @@ const currentComponent = computed(() => {
     margin-right: 8px;
   }
 
-  &-variant {
+  &-color {
     &--primary {
-      min-height: 48px;
-      padding: 10px 25px;
-      background: @main-color;
-      &:hover {
-        background-color: darken(@main-color, 15%);
+      color: @main-color;
+      &.button-variant--default {
+        background: @main-color;
+        color: @white-color;
+        &:hover {
+          background-color: darken(@main-color, 15%);
+        }
       }
     }
 
     &--secondary {
-      background-color: @gray-color;
-      line-height: 1;
-      color: @black-color;
-      &:hover,
-      &.active {
-        background-color: @red-color;
-        color: #fff;
+      color: @gray-color;
+      &.button-variant--default {
+        background-color: @gray-color;
+        color: @black-color;
+        &:hover,
+        &.active {
+          background-color: @red-color;
+          color: #fff;
+        }
       }
+    }
+  }
+
+  &-variant {
+    &--default {
+      min-height: 48px;
+      padding: 10px 25px;
     }
 
     &--border {

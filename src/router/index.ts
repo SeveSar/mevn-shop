@@ -12,8 +12,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: RouteNamesEnum.home,
-      alias: ['/products'],
+      redirect: { name: RouteNamesEnum.products },
+    },
+    {
+      path: '/products',
+      name: RouteNamesEnum.products,
       component: () => import('@/modules/product/views/PageProducts/PageProducts.vue'),
       meta: {
         isAuth: true,
@@ -51,6 +54,35 @@ const router = createRouter({
       },
     },
     {
+      path: '/profile',
+      name: RouteNamesEnum.profile,
+      component: () => import('@/modules/profile/views/PageProfile/PageProfile.vue'),
+      meta: {
+        isAuth: true,
+      },
+      redirect: { name: RouteNamesEnum.settings },
+      children: [
+        {
+          path: 'settings',
+          name: RouteNamesEnum.settings,
+          component: () => import('@/modules/profile/views/PageSettings/PageSettings.vue'),
+        },
+        {
+          path: 'orders',
+          name: RouteNamesEnum.orders,
+          component: () => import('@/modules/profile/views/PageOrders/PageOrders.vue'),
+        },
+      ],
+    },
+    {
+      path: '/cart',
+      name: RouteNamesEnum.cart,
+      component: () => import('@/modules/cart/views/PageCart/PageCart.vue'),
+      meta: {
+        isAuth: true,
+      },
+    },
+    {
       path: '/order-done',
       name: 'Order',
       component: () => import('@/modules/order/views/PageOrder/PageOrder.vue'),
@@ -58,14 +90,7 @@ const router = createRouter({
         isAuth: true,
       },
     },
-    {
-      path: '/profile',
-      name: 'Profile',
-      component: () => import('@/modules/profile/views/PageProfile/PageProfile.vue'),
-      meta: {
-        isAuth: true,
-      },
-    },
+
     {
       name: 'Product',
       path: '/products/:id',

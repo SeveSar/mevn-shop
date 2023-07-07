@@ -12,12 +12,16 @@
       <img class="cart-button__img" src="@/assets/images/icons/cart.svg" alt="" />
       <span class="cart-button__text">{{ cartStore.totalItems }}</span>
     </button>
+    <SidePanelCart />
+    <ModalProduct />
   </Teleport>
 </template>
 
 <script lang="ts">
-import TheHeader from '@/components/layouts/TheHeader.vue';
-import MobileMenu from '@/components/layouts/components/MobileMenu.vue';
+import TheHeader from '@/components/layouts/TheHeader/TheHeader.vue';
+import MobileMenu from '@/components/layouts/MobileMenu.vue';
+import SidePanelCart from '@/components/sidePanels/SidePanelCart.vue';
+import ModalProduct from '@/components/modals/ModalProduct/ModalProduct.vue';
 import { useRouter, useRoute } from 'vue-router';
 
 import { watch, defineComponent, onMounted } from 'vue';
@@ -26,6 +30,8 @@ export default defineComponent({
   components: {
     TheHeader,
     MobileMenu,
+    SidePanelCart,
+    ModalProduct,
   },
   setup() {
     const route = useRoute();

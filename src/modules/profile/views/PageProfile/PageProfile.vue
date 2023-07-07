@@ -3,20 +3,18 @@
     <div class="profile__header">
       <h1 class="page-title">Мой аккаунт</h1>
       <div class="profile__tabs">
-        <button class="btn profile__tabs-tab active">История заказов</button>
-        <button class="btn profile__tabs-tab">Настройки</button>
+        <router-link class="btn profile__tabs-tab" :to="{ name: RouteNamesEnum.settings }">Настройки</router-link>
+        <router-link class="btn profile__tabs-tab" :to="{ name: RouteNamesEnum.orders }">История заказов</router-link>
       </div>
     </div>
-    <div class="profile__body">
-      <div class="profile__content">
-        <div class="profile"></div>
-      </div>
-      <div class="profile__content"></div>
-    </div>
+    <router-view />
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { RouteNamesEnum } from '@/router/router.types';
+import BaseButton from '@/components/ui/BaseButton.vue';
+</script>
 
 <style scoped lang="less">
 .profile {
@@ -41,7 +39,7 @@
       line-height: 22px;
       color: #191919;
       padding: 13px 20px;
-      &.active {
+      &.exact-active {
         background-color: #ff7010;
         color: #fff;
       }

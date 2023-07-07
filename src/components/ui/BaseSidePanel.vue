@@ -25,7 +25,9 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, onUnmounted, toRefs, watch } from 'vue';
+import { useModalFunctions } from '@/composables/modalFunctions';
 import AppIcon from './AppIcon/AppIcon.vue';
+import { useRoute } from 'vue-router';
 
 export default defineComponent({
   emits: ['close', 'show'],
@@ -43,32 +45,20 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const route = useRoute();
     //state
     const { isOpen } = toRefs(props);
+
+    useModalFunctions(isOpen, close);
     //methods
-    const close = () => {
+    function close() {
       emit('close');
-    };
+    }
 
     const show = () => {
       emit('show');
     };
 
-    const onKeyHandler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        close();
-      }
-    };
-    onMounted(() => {
-      document.body.addEventListener('keydown', onKeyHandler);
-    });
-    onUnmounted(() => {
-      document.body.removeEventListener('keydown', onKeyHandler);
-    });
-    watch(isOpen, (val) => {
-      if (val) document.body.classList.add('no-scroll');
-      else document.body.classList.remove('no-scroll');
-    });
     return {
       close,
       show,
