@@ -3,7 +3,7 @@
     <div class="modal-overlay" v-if="isOpen" @mousedown.self="close">
       <div class="modal">
         <button class="modal-close" @click="close">
-          <img src="@/assets/images/icons/close.svg" alt="" />
+          <!-- <img src="@/assets/images/icons/close.svg" alt="" /> -->
         </button>
         <div class="modal__header" v-if="$slots.header">
           <slot name="header"></slot>

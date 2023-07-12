@@ -1,15 +1,15 @@
 //для тестирования компонентов
-import { render, prettyDOM, screen } from "@testing-library/vue";
-import BaseButton from "./BaseButton.vue";
+import { render, prettyDOM, screen } from '@testing-library/vue';
+import BaseButton from './BaseButton.vue';
 
 // предосталвяется jest'ом
 // в нём описывается  сам тест
-test("renders base button", () => {
+test('renders base button', () => {
   //3 состовляющие теста
   // given
   const options = {
     slots: {
-      default: "Test button",
+      default: 'Test button',
     },
   };
 

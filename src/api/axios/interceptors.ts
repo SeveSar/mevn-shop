@@ -80,8 +80,3 @@ export default function (http: AxiosInstance) {
   http.interceptors.request.use(setTokenHeaders);
   http.interceptors.response.use(onResponseSuccess, onResponseError);
 }
-const unAuthorizedHandlers = new Set();
-
-const addUnAuthorized = (handler) => unAuthorizedHandlers.add(handler);
-
-const removeUnAuthorized = (handler) => unAuthorizedHandlers.delete(handler);

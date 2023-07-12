@@ -1,5 +1,5 @@
-import { Ref, onMounted, onUnmounted, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { type Ref, onMounted, onUnmounted, watch } from 'vue';
+import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
 
 export function useModalFunctions(isOpen: Ref<boolean>, close: () => void) {
   const route = useRoute();
@@ -29,6 +29,4 @@ export function useModalFunctions(isOpen: Ref<boolean>, close: () => void) {
       close();
     }
   );
-
-  return {};
 }

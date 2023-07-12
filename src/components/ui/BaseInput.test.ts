@@ -4,10 +4,14 @@ import '@testing-library/jest-dom';
 import BaseInput from './BaseInput.vue';
 
 test('properly handles v-model', async () => {
-  const { emitted, getByRole, debug, getByDisplayValue } = render(BaseInput);
-
   // Asserts initial state.
   const value = 'Test Value';
+  const { emitted, getByRole, debug, getByDisplayValue } = render(BaseInput, {
+    props: {
+      modelValue: value,
+    },
+  });
+
   // Get the input DOM node by querying the associated label.
   const inputElement = getByRole('textbox');
 
@@ -30,6 +34,7 @@ test('renders input element with placeholder', () => {
   const { getByPlaceholderText, debug } = render(BaseInput, {
     props: {
       placeholder: placeholderText,
+      modelValue: 'Test value',
     },
   });
 
@@ -43,6 +48,7 @@ test('renders error elem', () => {
   const { queryByText, debug } = render(BaseInput, {
     props: {
       errors: errorText,
+      modelValue: 'Test value',
     },
   });
 
@@ -56,6 +62,7 @@ test('renders label elem', () => {
   const { queryByText, debug } = render(BaseInput, {
     props: {
       labelText: labelText,
+      modelValue: 'Test value',
     },
   });
 

@@ -15,6 +15,7 @@
       <img src="@/assets/images/empty-cart.png" alt="" />
       <router-link :to="{ name: RouteNamesEnum.products }">Вернуться к покупкам</router-link>
     </div>
+    <OrderForm />
   </div>
 </template>
 
@@ -24,6 +25,7 @@ import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import BaseButton from '@/components/ui/BaseButton.vue';
 import CartItem from '@/components/widgets/cart/CartItem.vue';
+import OrderForm from '../../components/OrderForm/OrderForm.vue';
 import { RouteNamesEnum } from '@/router/router.types';
 const cartStore = useCartStore();
 const { cart, totalPrice, totalItems } = storeToRefs(cartStore);

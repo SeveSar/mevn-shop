@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType, computed } from "vue";
+import { defineComponent, computed } from 'vue';
 
 export default defineComponent({
   props: {
@@ -15,7 +15,7 @@ export default defineComponent({
     value: { type: [Boolean, Number] },
     label: {
       type: String,
-      default: "",
+      default: '',
     },
     disabled: {
       type: Boolean,
@@ -28,12 +28,12 @@ export default defineComponent({
         return props.modelValue;
       },
       set(value) {
-        emit("update:modelValue", value);
+        emit('update:modelValue', value);
       },
     });
 
     const isChecked = computed(() => {
-      if (typeof props.modelValue === "boolean") {
+      if (typeof props.modelValue === 'boolean') {
         return model.value;
       } else if (Array.isArray(props.modelValue)) {
         return props.modelValue.includes(props.value);
@@ -55,8 +55,9 @@ export default defineComponent({
   position: relative;
   cursor: pointer;
   padding-left: 24px;
+
   &:before {
-    content: "";
+    content: '';
     width: 16px;
     height: 16px;
     border: 1px solid @gray2-color;
@@ -65,11 +66,12 @@ export default defineComponent({
     left: 0;
     top: 1px;
   }
+
   &--active {
     &::before {
       border-color: @main-color;
       background-color: @main-color;
-      background-image: url("@/assets/images/icons/tick.svg");
+      background-image: url('@/assets/images/icons/tick.svg');
       background-repeat: no-repeat;
       background-position: center;
     }

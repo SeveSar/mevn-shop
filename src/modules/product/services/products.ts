@@ -1,8 +1,8 @@
 import type { IProductResponse } from '@/types/responses/product';
 import { ProductDTO, ProductOneDTO } from '../models/product.dto';
 import type { IHttpClient } from '@/api/types/api';
-import type { IProduct, IProductMainPage } from '@/types/IProduct';
-import { IFilterResponse } from '@/types/responses/filter';
+import type { IProduct, IProductBase } from '@/types/IProduct';
+import type { IFilterResponse } from '@/types/responses/filter';
 import { FilterDTO } from '@/types/dtos/filter.dto';
 
 export class ProductServices {
@@ -12,10 +12,10 @@ export class ProductServices {
     this.$http = httpClient;
   }
 
-  async fetchProducts(filters?: string[]): Promise<IProductMainPage[]> {
+  async fetchProducts(filters?: string[]): Promise<IProductBase[]> {
     let res;
     if (filters && filters.length) {
-      res = await this.$http.makeRequest<IProductMainPage[]>({
+      res = await this.$http.makeRequest<IProductBase[]>({
         url: '/products',
         method: 'GET',
         config: {
@@ -23,7 +23,7 @@ export class ProductServices {
         },
       });
     } else {
-      res = await this.$http.makeRequest<IProductMainPage[]>({
+      res = await this.$http.makeRequest<IProductBase[]>({
         url: '/products',
         method: 'GET',
         headers: {
@@ -37,7 +37,7 @@ export class ProductServices {
     });
   }
 
-  async fetchProduct(id: string): Promise<IProduct> {
+  async fetchProduct(id: string): Promise<IProductBase> {
     console.log(id, 'id');
     const res = await this.$http.makeRequest<IProductResponse>({
       url: `/products/${id}`,

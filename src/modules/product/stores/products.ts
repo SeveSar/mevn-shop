@@ -1,12 +1,11 @@
-import { IFilter } from '@/types/IFilter';
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { api } from '@/api/api';
 
-import type { IProduct, IProductMainPage } from '@/types/IProduct';
+import type { IProduct, IProductBase } from '@/types/IProduct';
 
 export const useProductsStore = defineStore('products', () => {
-  const products = ref<IProductMainPage[]>([]);
+  const products = ref<IProductBase[]>([]);
   const activeProductId = ref<string>('');
   const isLoading = ref(false);
 

@@ -1,6 +1,6 @@
 import type { IProductResponse } from '@/types/responses/product';
 import type { TFilterItem } from '@/types/IFilter';
-import type { IIngredientItem, ISizeItem, IDoughItem, IProductMainPage } from '@/types/IProduct';
+import type { IIngredientItem, ISizeItem, IDoughItem, IProductBase } from '@/types/IProduct';
 
 export class ProductDTO {
   id: string;
@@ -10,7 +10,7 @@ export class ProductDTO {
   imageUrl: string;
   amount: number;
 
-  constructor(model: IProductMainPage) {
+  constructor(model: IProductBase) {
     this.id = model.id;
     this.title = model.title;
     this.price = model.price;
@@ -27,7 +27,7 @@ export class ProductOneDTO {
   description: string;
   imageUrl: string;
   amount: number;
-  category: string;
+
   sizes: ISizeItem[];
   ingredients: IIngredientItem[];
   dough: IDoughItem[];
@@ -40,7 +40,6 @@ export class ProductOneDTO {
     this.description = model.description;
     this.imageUrl = model.imageUrl;
     this.amount = model.amount;
-    this.category = model.category;
 
     this.sizes = model.sizes;
 

@@ -12,22 +12,22 @@
       </button>
     </div>
     <div class="base-tab__content" v-if="$slots.default">
-      <slot name="content" />
+      <slot />
     </div>
   </div>
 </template>
 
-<script lang="ts" setup>
-import { computed, defineComponent, type PropType } from 'vue';
+<script lang="ts" setup generic="T extends ITab">
+import { computed } from 'vue';
 
-interface ITab {
+export interface ITab {
   title: string;
   id: string;
   [key: string]: any;
 }
 interface Props {
-  modelValue: ITab;
-  items: ITab[];
+  modelValue: T;
+  items: T[];
   size?: 'small' | 'medium';
 }
 const props = withDefaults(defineProps<Props>(), {

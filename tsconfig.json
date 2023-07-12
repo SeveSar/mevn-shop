@@ -1,26 +1,23 @@
 {
+  "files": [],
+  "include": ["src/**/*.ts", "env.dt.ts", "src/**/*.d.ts", "src/**/*.vue", "tests/**/*.ts"],
+  "exclude": ["src/**/__tests__/*", "node_modules"],
   "compilerOptions": {
+    "composite": true,
+    "esModuleInterop": true,
     "baseUrl": ".",
+    "module": "es2022",
+    "moduleResolution": "Node",
+
     "paths": {
       "@/*": ["./src/*"]
     },
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "target": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "lib": ["esnext", "dom"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "types": ["vite/client"]
+    "types": ["@types/jest", "vite/client"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "tests/**/*.ts"],
-  "exclude": ["node_modules"]
+
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }

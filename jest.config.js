@@ -1,11 +1,17 @@
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  testEnvironment: "jsdom",
+  preset: 'ts-jest',
+  testEnvironment: 'jsdom',
   testEnvironmentOptions: {
-    customExportConditions: ["node", "node-addons"],
+    customExportConditions: ['node', 'node-addons'],
   },
-  moduleFileExtensions: ["js", "jsx", "json", "vue", "ts", "tsx"],
+  moduleFileExtensions: ['js', 'jsx', 'json', 'vue', 'ts', 'tsx'],
   transform: {
-    "^.+\\.js$": "babel-jest",
-    "^.+\\.vue$": "@vue/vue3-jest",
+    '^.+\\.vue$': '@vue/vue3-jest',
+  },
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
+    '^.+\\.svg$': '<rootDir>/svgTransform.js',
   },
 };

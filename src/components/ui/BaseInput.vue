@@ -1,6 +1,8 @@
 <template>
   <label class="base-input">
-    <span class="base-input__label" v-if="labelText"> {{ labelText }} </span>
+    <span class="base-input__label" v-if="labelText">
+      {{ labelText }}<span class="base-input__label__required" v-if="required">*</span>
+    </span>
 
     <input
       class="base-input__control"
@@ -20,52 +22,34 @@
   </label>
 </template>
 
-<script lang="ts">
-import { defineComponent, type PropType } from 'vue';
-export default defineComponent({
-  emits: ['update:modelValue', 'onBlur', 'onFocus'],
-  props: {
-    modelValue: {
-      type: null as unknown as PropType<string | number | null>,
-      default: null,
-      validator: (v: any) => typeof v === 'string' || typeof v === 'number' || v === null,
-    },
-
-    labelText: {
-      type: String,
-      default: null,
-    },
-    errors: {
-      type: null as unknown as PropType<string | number | null>,
-      default: null,
-      validator: (v: any) => typeof v === 'string' || typeof v === 'number' || v === null,
-    },
-    placeholder: {
-      type: String,
-      default: '',
-    },
-    type: {
-      type: String as PropType<'text' | 'number' | 'password'>,
-      default: 'text',
-    },
-  },
-  setup(props, { emit, attrs }) {
-    const updateValue = (e: Event) => {
-      emit('update:modelValue', (e.target as HTMLInputElement).value);
-    };
-    const onBlur = () => {
-      emit('onBlur');
-    };
-    const onFocus = () => {
-      emit('onFocus');
-    };
-    return {
-      updateValue,
-      onBlur,
-      onFocus,
-    };
-  },
+<script lang="ts" setup>
+interface Props {
+  modelValue: string | number;
+  labelText?: string;
+  errors?: string;
+  placeholder?: string;
+  type?: 'text' | 'number' | 'password';
+  required?: boolean;
+}
+withDefaults(defineProps<Props>(), {
+  labelText: '',
+  errors: '',
+  placeholder: '',
+  type: 'text',
+  required: false,
 });
+
+const emit = defineEmits(['update:modelValue', 'onBlur', 'onFocus']);
+
+const updateValue = (e: Event) => {
+  emit('update:modelValue', (e.target as HTMLInputElement).value);
+};
+const onBlur = () => {
+  emit('onBlur');
+};
+const onFocus = () => {
+  emit('onFocus');
+};
 </script>
 
 <style scoped lang="less">

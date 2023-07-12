@@ -10,15 +10,19 @@
         {{ userStore.user?.email }}
       </div>
       <div class="user-menu-settings__dropdown">
-        <div class="user-menu-settings__dropdown-inner">
+        <UiCardShadow class="user-menu-settings__dropdown-inner">
           <div class="user-menu-settings__dropdown-links">
-            <router-link :to="{ name: RouteNamesEnum.orders }"> История заказов </router-link>
-            <router-link :to="{ name: RouteNamesEnum.settings }"> Настройки </router-link>
+            <router-link class="user-menu-settings__dropdown-link" :to="{ name: RouteNamesEnum.orders }">
+              История заказов
+            </router-link>
+            <router-link class="user-menu-settings__dropdown-link" :to="{ name: RouteNamesEnum.settings }">
+              Настройки
+            </router-link>
           </div>
           <div class="user-menu-settings__dropdown-footer">
             <BaseButton variant="text" @click="logOut">Выход из аккаунта</BaseButton>
           </div>
-        </div>
+        </UiCardShadow>
       </div>
     </div>
   </div>
@@ -31,6 +35,7 @@ import { useModalStore } from '@/stores/modal';
 import { useMenu } from '@/composables/menu';
 import AppIcon from '@/components/ui/AppIcon/AppIcon.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
+import UiCardShadow from '@/components/ui/UiCardShadow.vue';
 
 const userStore = useUserStore();
 const modalStore = useModalStore();
@@ -71,7 +76,6 @@ const { logOut } = useMenu();
     }
 
     &:hover {
-      color: darken(#ff7010, 15%);
       .user-menu-settings__dropdown {
         opacity: 1;
         visibility: visible;
@@ -88,6 +92,8 @@ const { logOut } = useMenu();
     transform: translateX(-50%);
     transition: all 0.2s linear;
     padding-top: 10px;
+    display: flex;
+    flex-direction: column;
     opacity: 0;
     right: 0;
     visibility: hidden;
@@ -99,16 +105,31 @@ const { logOut } = useMenu();
     }
 
     &-inner {
-      padding: 15px 20px;
-      background: #ffffff;
-      border: 1px solid #f0f0f0;
-      box-shadow: 0px 2px 8px rgba(25, 25, 25, 0.1);
-      border-radius: 12px;
+      padding: 16px 0 16px 0;
     }
 
     &-links {
       display: flex;
       flex-direction: column;
+      flex-grow: 1;
+      padding: 0 20px;
+    }
+
+    &-link {
+      transition: all 0.2s linear;
+      color: @black-color;
+      &:hover {
+        color: @main-color;
+      }
+      & + & {
+        margin-top: 16px;
+      }
+    }
+
+    &-footer {
+      border-top: 1px solid @gray-color;
+      padding: 16px 20px 0;
+      margin-top: 16px;
     }
 
     .button {

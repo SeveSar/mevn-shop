@@ -1,11 +1,11 @@
 //для тестирования компонентов
-import { render, prettyDOM, screen } from "@testing-library/vue";
-import BaseCheckBox from "./BaseCheckBox.vue";
+import { render, prettyDOM, screen } from '@testing-library/vue';
+import BaseCheckBox from './BaseCheckBox.vue';
 
 // предосталвяется jest'ом
 // в нём описывается  сам тест
-test("renders checked base checkbox. Prop modelValue: Array", () => {
-  const label = "Test checkbox";
+test('renders with label and checked with prop modelValue: Array', () => {
+  const label = 'Test checkbox';
   const options = {
     props: {
       label: label,
@@ -15,33 +15,31 @@ test("renders checked base checkbox. Prop modelValue: Array", () => {
   };
 
   render(BaseCheckBox, options);
-  const checkbox = screen.getByLabelText(label);
+  const checkbox = screen.getByLabelText(label) as HTMLInputElement;
   expect(checkbox.checked).toBe(true);
   screen.debug();
 });
 
-test("renders checked base checkbox. Prop modelValue: boolean", () => {
-  const label = "Test checkbox";
+it('renders checked with prop modelValue: boolean', () => {
   const options = {
     props: {
-      label: label,
       modelValue: true,
     },
   };
 
   render(BaseCheckBox, options);
-  const checkbox = screen.getByLabelText(label);
+  const checkbox = screen.getByRole('checkbox') as HTMLInputElement;
   expect(checkbox.checked).toBe(true);
   screen.debug();
 });
 
-test("renders unchecked base checkbox", () => {
+test('renders unchecked with prop modelValue: boolean', () => {
   render(BaseCheckBox, {
     props: {
       modelValue: false,
     },
   });
-  const checkbox = screen.getByRole("checkbox");
+  const checkbox = screen.getByRole('checkbox') as HTMLInputElement;
 
   expect(checkbox.checked).toBe(false);
   screen.debug();

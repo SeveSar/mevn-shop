@@ -70,7 +70,6 @@ const currentComponent = computed(() => {
   font-size: 16px;
   line-height: 22px;
   border-radius: 6px;
-  min-height: 48px;
 
   &__loading {
     color: @white-color;
@@ -81,6 +80,7 @@ const currentComponent = computed(() => {
   &-color {
     &--primary {
       color: @main-color;
+
       &.button-variant--default {
         background: @main-color;
         color: @white-color;
@@ -92,6 +92,7 @@ const currentComponent = computed(() => {
 
     &--secondary {
       color: @gray-color;
+
       &.button-variant--default {
         background-color: @gray-color;
         color: @black-color;
@@ -112,7 +113,6 @@ const currentComponent = computed(() => {
 
     &--border {
       background-color: @gray-color;
-      line-height: 1;
       background-color: transparent;
       color: @black-color;
       border: 1px solid @main-color;
@@ -124,6 +124,7 @@ const currentComponent = computed(() => {
     &--text {
       padding: 0;
       background: none;
+      min-height: auto;
     }
   }
 

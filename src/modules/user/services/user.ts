@@ -48,13 +48,6 @@ export class AuthService {
     });
   }
 
-  async getUsers() {
-    const res = await this.$http.makeRequest<any>({
-      url: '/users',
-      method: 'GET',
-    });
-    return res.data;
-  }
   async logOut() {
     const res = await this.$axios.get('api/auth/logout', {
       baseURL: import.meta.env.VITE_BASE_URL,

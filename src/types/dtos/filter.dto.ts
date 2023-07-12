@@ -1,5 +1,5 @@
-import { IFilterResponse } from '@/types/responses/filter';
-import { TFilterItem } from '../IFilter';
+import type { IFilterResponse } from '@/types/responses/filter';
+import type { TFilterItem } from '../IFilter';
 
 export class FilterDTO {
   title: string;
