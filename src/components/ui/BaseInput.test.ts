@@ -21,7 +21,6 @@ test('properly handles v-model', async () => {
   expect(emitted().input).toBeTruthy();
 
   // Проверяем, что значение 'Test Value' было передано в событие 'input'
-
   expect(getByDisplayValue(value)).toBeInTheDocument();
 
   debug();
