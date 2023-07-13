@@ -8,7 +8,6 @@
     @click="emit('click')"
   >
     <slot v-if="!isLoading" />
-
     <template v-else>
       <AppIcon class="button__loading" name="IconSpinner" />
       Загрузка
