@@ -20,7 +20,6 @@
 import { computed, defineComponent } from 'vue';
 import type { ButtonHTMLAttributes } from 'vue';
 import AppIcon from './AppIcon/AppIcon.vue';
-
 interface Props {
   variant?: 'default' | 'text' | 'border';
   color?: 'primary' | 'secondary';
