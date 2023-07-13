@@ -13,8 +13,6 @@
 import { defineComponent, ref, watch } from 'vue';
 import type { IToast, TypeToast } from '@/plugins/plugins.types';
 
-import { useToastStore } from '@/stores/toast';
-
 const ICONS_TYPES = {
   error: 'IconError',
   info: 'IconInfo',
@@ -22,7 +20,7 @@ const ICONS_TYPES = {
 
 export default defineComponent({
   components: {
-    // AppIcon,
+    AppIcon,
   },
 
   setup() {
