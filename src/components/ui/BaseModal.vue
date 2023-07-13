@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, watch } from 'vue';
+import { defineComponent, toRefs } from 'vue';
 import { useModalFunctions } from '@/composables/modalFunctions';
 export default defineComponent({
   props: {
