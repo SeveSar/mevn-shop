@@ -1,6 +1,5 @@
 import { render, fireEvent } from '@testing-library/vue';
 import '@testing-library/jest-dom';
-
 import BaseInput from './BaseInput.vue';
 
 test('properly handles v-model', async () => {
