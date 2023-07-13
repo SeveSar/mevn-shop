@@ -2,10 +2,21 @@
   <div class="modal-product-tabs">
     <template v-if="!isLoading">
       <div class="modal-product-tabs__dough">
-        <BaseTab class="modal-product-tabs__tab-dough" v-if="selectedTabDoughModel" v-model="selectedTabDoughModel" :items="doughs || []" />
+        <BaseTab
+          class="modal-product-tabs__tab-dough"
+          v-if="selectedTabDoughModel"
+          v-model="selectedTabDoughModel"
+          :items="doughs || []"
+        />
       </div>
       <div class="modal-product-tabs__sizes">
-        <BaseTab class="modal-product-tabs__tab-size" v-if="selectedTabSizeModel" v-model="selectedTabSizeModel" size="small" :items="sizes || []" />
+        <BaseTab
+          class="modal-product-tabs__tab-size"
+          v-if="selectedTabSizeModel"
+          v-model="selectedTabSizeModel"
+          size="small"
+          :items="sizes || []"
+        />
       </div>
     </template>
     <template v-else>

@@ -17,7 +17,7 @@
   </div>
 </template>
 
-<script lang="ts" setup generic="T extends ITab">
+<script lang="ts" setup>
 import { computed } from 'vue';
 
 export interface ITab {
@@ -26,8 +26,8 @@ export interface ITab {
   [key: string]: any;
 }
 interface Props {
-  modelValue: T;
-  items: T[];
+  modelValue: ITab;
+  items: ITab[];
   size?: 'small' | 'medium';
 }
 const props = withDefaults(defineProps<Props>(), {
