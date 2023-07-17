@@ -31,7 +31,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
-
 import { useProductsStore } from '@/modules/product/stores/products';
 import BaseButton from '@/components/ui/BaseButton.vue';
 // import { useCartStore } from "@/stores/cart";
