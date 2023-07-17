@@ -1,6 +1,6 @@
 <template>
   <transition name="slide-panel">
-    <div class="side-panel-overlay" v-show="isOpen" @mousedown.self="close">
+    <div class="side-panel-overlay" v-if="isOpen" @mousedown.self="close">
       <transition name="slide-panel-inner">
         <div class="side-panel" v-show="isOpen">
           <button class="side-panel__close" @click="close">

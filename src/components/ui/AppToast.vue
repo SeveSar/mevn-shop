@@ -11,7 +11,13 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
-import type { IToast, TypeToast } from '@/plugins/plugins.types';
+
+export type TypeToast = 'error' | 'info';
+export interface IToast {
+  type: TypeToast;
+  text: string;
+  id?: number;
+}
 
 const ICONS_TYPES = {
   error: 'IconError',
@@ -20,12 +26,12 @@ const ICONS_TYPES = {
 
 export default defineComponent({
   components: {
-    AppIcon,
+    // AppIcon,
   },
 
   setup() {
     let id: number = 0;
-    let timer: number;
+    let timer: NodeJS.Timeout;
     const getCurrentIcon = (type: 'error' | 'info') => {
       return ICONS_TYPES[type];
     };

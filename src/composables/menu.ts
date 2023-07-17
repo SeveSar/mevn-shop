@@ -11,7 +11,7 @@ const menuLinks = [
   { title: 'Комбо', active: false },
   { title: 'Десерты', active: false },
   { title: 'Соусы', active: false },
-];
+] as const;
 
 const isOpenedBurger = ref<boolean>(false);
 

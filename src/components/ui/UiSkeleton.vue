@@ -22,6 +22,7 @@ const _width = computed(() => (isNumeric(props.width) ? props.width + 'px' : pro
 const _height = computed(() => (isNumeric(props.height) ? props.height + 'px' : props.height));
 const _corner = computed(() => (isNumeric(props.corner) ? props.corner + 'px' : props.corner));
 const _background = computed(() => (props.theme === 'dark' ? 'rgba(255,255,255, 0.2)' : '#dddbdd'));
+
 const styles = computed(() => ({
   width: _width.value,
   height: _height.value,

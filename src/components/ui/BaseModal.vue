@@ -2,14 +2,14 @@
   <transition name="fade">
     <div class="modal-overlay" v-if="isOpen" @mousedown.self="close">
       <div class="modal">
-        <button class="modal-close" @click="close">
-          <!-- <img src="@/assets/images/icons/close.svg" alt="" /> -->
+        <button class="modal-close" @click="close" name="close">
+          <img src="@/assets/images/icons/close.svg" alt="" />
         </button>
         <div class="modal__header" v-if="$slots.header">
-          <slot name="header"></slot>
+          <slot name="header" />
         </div>
         <div class="modal__content">
-          <slot></slot>
+          <slot />
         </div>
       </div>
     </div>

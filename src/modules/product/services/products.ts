@@ -38,7 +38,6 @@ export class ProductServices {
   }
 
   async fetchProduct(id: string): Promise<IProductBase> {
-    console.log(id, 'id');
     const res = await this.$http.makeRequest<IProductResponse>({
       url: `/products/${id}`,
       method: 'GET',

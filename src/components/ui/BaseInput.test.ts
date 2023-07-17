@@ -17,8 +17,8 @@ test('properly handles v-model', async () => {
   // Updates the <input> value and triggers an `input` event.
   await fireEvent.update(inputElement, value);
 
-  // Проверяем, что событие 'input' было эмитировано
-  expect(emitted().input).toBeTruthy();
+  // Проверяем, что событие 'update:modelValue' было эмитировано
+  expect(emitted('update:modelValue')).toBeTruthy();
 
   // Проверяем, что значение 'Test Value' было передано в событие 'input'
   expect(getByDisplayValue(value)).toBeInTheDocument();

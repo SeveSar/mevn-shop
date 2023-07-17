@@ -1,5 +1,6 @@
 import { render, fireEvent, screen } from '@testing-library/vue';
 import '@testing-library/jest-dom';
+
 import BaseModal from './BaseModal.vue';
 
 jest.mock('vue-router', () => ({
@@ -20,5 +21,25 @@ it('renders with header and body', () => {
   });
   getByText(header);
   getByText(body);
+  debug();
+});
+
+it('close when click on close button', async () => {
+  const body = 'Body';
+  const { debug, emitted, rerender, getByText, getByRole, queryByText } = render(BaseModal, {
+    slots: {
+      default: body,
+    },
+    props: {
+      isOpen: true,
+    },
+  });
+  getByText(body);
+
+  fireEvent.click(getByRole('button'));
+  expect(emitted('close')).toBeTruthy();
+  await rerender({ isOpen: false });
+  expect(queryByText(body)).toBeNull();
+
   debug();
 });

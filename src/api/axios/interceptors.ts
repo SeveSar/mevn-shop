@@ -36,8 +36,9 @@ const errorHandler = async (error: AxiosError) => {
           const res = await refreshTokenRequest;
           refreshTokenRequest = null;
           setToken(res.data.accessToken);
-
-          return axios(setTokenHeaders(config));
+          console.log(res.data, 'data');
+          config.headers.authorization = `Bearer ${res.data.accessToken}`;
+          return axios(config);
         } catch (e) {
           userStore.logOut().then(() => {
             router.push('/login');
@@ -60,23 +61,23 @@ const onResponseSuccess = (successRes: AxiosResponse): AxiosResponse => {
   return successRes;
 };
 
-const urlsSkipAuth = ['/api/auth/login', '/api/auth/logout'];
+// const urlsSkipAuth = ['/api/auth/login', '/api/auth/logout'];
 
-const setTokenHeaders = (config: AxiosRequestConfig) => {
-  if (config.url && urlsSkipAuth.includes(config.url)) {
-    return config;
-  }
+// const setTokenHeaders = (config: AxiosRequestConfig) => {
+//   console.log()
+//   if (config.url && urlsSkipAuth.includes(config.url)) {
+//     return config;
+//   }
 
-  const token = getAccessToken();
+//   const token = getAccessToken();
 
-  if (token && config.headers) {
-    config.headers = config.headers as { Authorization: string };
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-};
+//   if (token && config.headers) {
+//     config.headers = config.headers as { Authorization: string };
+//     config.headers.Authorization = `Bearer ${token}`;
+//   }
+//   return config;
+// };
 
 export default function (http: AxiosInstance) {
-  http.interceptors.request.use(setTokenHeaders);
   http.interceptors.response.use(onResponseSuccess, onResponseError);
 }
