@@ -32,7 +32,7 @@
             </nav>
             <div class="header__bottom-user">
               <button class="user-cart" @click="cartStore.isSidePanelCart = true">
-                <AppIcon name="IconBasket" />
+                <BaseIcon name="IconBasket" />
                 <div class="user-cart__price">{{ cartStore.totalPrice }} ₽</div>
               </button>
               <div class="burger" @click="isOpenedBurger = !isOpenedBurger" :class="{ active: isOpenedBurger }">
@@ -49,7 +49,7 @@
 <script lang="ts">
 import { useUserStore } from '@/modules/user/stores/user';
 
-import AppIcon from '@/components/ui/AppIcon/AppIcon.vue';
+import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
 import UserMenuSettings from './components/UserMenuSettings.vue';
 import { defineComponent } from 'vue';
@@ -59,7 +59,7 @@ import { RouteNamesEnum } from '@/router/router.types';
 
 export default defineComponent({
   components: {
-    AppIcon,
+    BaseIcon,
     BaseButton,
     UserMenuSettings,
   },

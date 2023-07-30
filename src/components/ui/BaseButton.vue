@@ -10,7 +10,7 @@
     <slot v-if="!isLoading" />
 
     <template v-else>
-      <AppIcon class="button__loading" name="IconSpinner" />
+      <BaseIcon class="button__loading" name="IconSpinner" />
       Загрузка
     </template>
   </component>
@@ -19,7 +19,7 @@
 <script lang="ts" setup>
 import { computed, defineComponent } from 'vue';
 import type { ButtonHTMLAttributes } from 'vue';
-import AppIcon from './AppIcon/AppIcon.vue';
+import BaseIcon from './BaseIcon/BaseIcon.vue';
 
 interface Props {
   variant?: 'default' | 'text' | 'border';

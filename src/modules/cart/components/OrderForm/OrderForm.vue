@@ -20,17 +20,33 @@
       <div class="order-form__content">
         <component :is="TYPE_DELIVERIES_MAP[typeOrder.id]" v-model="orderInfo[typeOrder.id]"></component>
       </div>
+      <div class="order-form__make">
+        <span class="order-form__caption">Когда выполнить заказ?</span>
+        <div class="order-form__row order-form__make-controls">
+          <BaseRadio
+            v-for="radio in orderMakeTypes"
+            v-model="orderInfo.orderMakeType"
+            :key="radio.value"
+            :value="radio.value"
+            :label="radio.label"
+            name="order-time"
+          />
+          <div class="order-form__time-date" v-if="orderInfo.orderMakeType === 'date'">
+            <BaseDatePicker v-model="orderInfo.orderMakeDate" mode="dateTime" is24hr />
+          </div>
+        </div>
+      </div>
     </div>
   </form>
 </template>
 
 <script setup lang="ts">
-import BaseButton from '@/components/ui/BaseButton.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
 import BaseRadio from '@/components/ui/BaseRadio.vue';
 import BaseTab from '@/components/ui/BaseTab.vue';
 import TypeOrderDelivery from './typeOrders/TypeOrderDelivery.vue';
 import TypeOrderPickup from './typeOrders/TypeOrderPickup.vue';
+import BaseDatePicker from '@/components/ui/BaseDatePicker.vue';
 import { reactive, type Component, ref } from 'vue';
 
 interface ItypeOrder {
@@ -45,6 +61,16 @@ const TYPE_DELIVERIES_MAP: Record<ItypeOrder['id'], Component> = {
 
 const typeOrder = ref<ItypeOrder>({ title: 'Доставка', id: 'delivery' });
 
+const orderMakeTypes = ref([
+  { label: 'Как можно скорее', value: 'urgent' },
+  { label: 'По вемени', value: 'date' },
+]);
+
+const deliveryTabs: ItypeOrder[] = [
+  { title: 'Доставка', id: 'delivery' },
+  { title: 'Самовывоз', id: 'pickup' },
+];
+
 const orderInfo = reactive({
   name: '',
   phone: '',
@@ -58,12 +84,10 @@ const orderInfo = reactive({
     door_station: '',
   },
   pickup: '',
+  orderMakeType: orderMakeTypes.value[0].value,
+  orderMakeDate: new Date(),
+  orderMakeTime: '',
 });
-
-const deliveryTabs: ItypeOrder[] = [
-  { title: 'Доставка', id: 'delivery' },
-  { title: 'Самовывоз', id: 'pickup' },
-];
 </script>
 
 <style scoped lang="less">
@@ -90,6 +114,27 @@ const deliveryTabs: ItypeOrder[] = [
     display: flex;
     align-items: center;
     gap: 20px;
+  }
+
+  &__make {
+    margin-top: 16px;
+
+    &-controls {
+      margin-top: 8px;
+    }
+  }
+
+  &__flex {
+    display: flex;
+    align-items: center;
+  }
+
+  &__caption {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    color: @gray2-color;
   }
 
   &__tab {

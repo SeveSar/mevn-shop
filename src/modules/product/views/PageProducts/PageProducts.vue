@@ -5,6 +5,7 @@
         :products="productsStore.products"
         v-if="productsStore.products.length && !productsStore.isLoading"
       />
+      <span v-else-if="!productsStore.products.length && !productsStore.isLoading">not found...</span>
       <ProductSkeleton v-else :count="8" />
     </ProductBlock>
   </div>
@@ -19,10 +20,10 @@ import ProductList from '../../components/ProductList/ProductList.vue';
 import ProductBlock from '../../components/ProductBlock/ProductBlock.vue';
 import SidePanelProductFilter from '../../components/sidePanels/SidePanelProductFilter/SidePanelProductFilter.vue';
 
-import { useProductsStore } from '@/modules/product/stores/products';
+import { useProductsStore } from '../../stores/products';
 import ProductSkeleton from '../../components/ProductList/ProductSkeleton.vue';
 
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 
 //state
 

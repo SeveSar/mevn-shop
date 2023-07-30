@@ -16,13 +16,7 @@
     </div>
     <div class="product__actions">
       <BaseButton @click="openProductModal(product)"> Выбрать </BaseButton>
-      <!-- <BaseButton
-        color="red"
-        v-else
-        @click="userCartStore.delFromCart(product.id)"
-      >
-        Удалить
-      </BaseButton> -->
+
       <div class="product__price">от {{ product.price }} ₽</div>
     </div>
   </article>
@@ -37,6 +31,7 @@ import BaseButton from '@/components/ui/BaseButton.vue';
 // import { useCartStore } from "@/stores/cart";
 import type { IProductBase } from '@/types/IProduct';
 import { useModalStore } from '@/stores/modal';
+import { ProductDTO } from '../../models/product.dto';
 
 export default defineComponent({
   components: {
@@ -44,7 +39,7 @@ export default defineComponent({
   },
   props: {
     product: {
-      type: Object as PropType<IProductBase>,
+      type: Object as PropType<ProductDTO>,
       required: true,
     },
   },

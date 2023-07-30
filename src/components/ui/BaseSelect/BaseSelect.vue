@@ -1,25 +1,11 @@
 <template>
-  <div
-    class="select"
-    :class="{ open: open }"
-    :tabindex="tabindex"
-    @blur="open = false"
-  >
-    <div
-      class="select__selected"
-      :class="[{ chosen: modelValue?.value }]"
-      @click="open = !open"
-    >
+  <div class="select" :class="{ open: open }" :tabindex="tabindex" @blur="open = false">
+    <div class="select__selected" :class="[{ chosen: modelValue?.value }]" @click="open = !open">
       {{ modelValue?.text }}
-      <AppIcon name="IconArrowDown"></AppIcon>
+      <BaseIcon name="IconArrowDown"></BaseIcon>
     </div>
     <div class="select__items" :class="{ hide: !open }">
-      <div
-        v-for="(option, i) of options"
-        :key="i"
-        @click="setSelectValue(option)"
-        class="select__item"
-      >
+      <div v-for="(option, i) of options" :key="i" @click="setSelectValue(option)" class="select__item">
         {{ option.text }}
       </div>
     </div>
@@ -27,13 +13,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import type { PropType } from "vue";
-import type { SelectItem } from "./select.types";
-import AppIcon from "../AppIcon/AppIcon.vue";
+import { defineComponent, ref } from 'vue';
+import type { PropType } from 'vue';
+import type { SelectItem } from './select.types';
+import BaseIcon from '../BaseIcon/BaseIcon.vue';
 export default defineComponent({
   components: {
-    AppIcon,
+    BaseIcon,
   },
   props: {
     options: {
@@ -52,7 +38,7 @@ export default defineComponent({
   setup(_, { emit }) {
     const open = ref(false);
     const setSelectValue = (option: SelectItem) => {
-      emit("update:modelValue", option);
+      emit('update:modelValue', option);
       open.value = false;
     };
     return {

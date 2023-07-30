@@ -1,16 +1,16 @@
 <template>
   <div class="user-menu-settings">
     <button v-if="!userStore.isLoggedIn" class="user-menu-settings__login" @click="modalStore.openAuthModal">
-      <AppIcon class="user-menu-settings__login-icon" name="IconUser" />
+      <BaseIcon class="user-menu-settings__login-icon" name="IconUser" />
       Войти в аккаунт
     </button>
     <div v-else class="user-menu-settings__logged">
       <div class="user-menu-settings__logged-current">
-        <AppIcon class="user-menu-settings__logged-icon" name="IconUser" />
+        <BaseIcon class="user-menu-settings__logged-icon" name="IconUser" />
         {{ userStore.user?.email }}
       </div>
       <div class="user-menu-settings__dropdown">
-        <UiCardShadow class="user-menu-settings__dropdown-inner">
+        <BaseCardShadow class="user-menu-settings__dropdown-inner">
           <div class="user-menu-settings__dropdown-links">
             <router-link class="user-menu-settings__dropdown-link" :to="{ name: RouteNamesEnum.orders }">
               История заказов
@@ -22,7 +22,7 @@
           <div class="user-menu-settings__dropdown-footer">
             <BaseButton variant="text" @click="logOut">Выход из аккаунта</BaseButton>
           </div>
-        </UiCardShadow>
+        </BaseCardShadow>
       </div>
     </div>
   </div>
@@ -33,9 +33,9 @@ import { useUserStore } from '@/modules/user/stores/user';
 import { RouteNamesEnum } from '@/router/router.types';
 import { useModalStore } from '@/stores/modal';
 import { useMenu } from '@/composables/menu';
-import AppIcon from '@/components/ui/AppIcon/AppIcon.vue';
+import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
-import UiCardShadow from '@/components/ui/UiCardShadow.vue';
+import BaseCardShadow from '@/components/ui/BaseCardShadow.vue';
 
 const userStore = useUserStore();
 const modalStore = useModalStore();

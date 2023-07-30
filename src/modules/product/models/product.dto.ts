@@ -20,7 +20,7 @@ export class ProductDTO {
   }
 }
 
-export class ProductOneDTO {
+export class ProductFullDTO {
   id: string;
   title: string;
   price: number;
@@ -40,9 +40,7 @@ export class ProductOneDTO {
     this.description = model.description;
     this.imageUrl = model.imageUrl;
     this.amount = model.amount;
-
     this.sizes = model.sizes;
-
     this.ingredients = model.ingredients.map((item) => {
       return {
         ...item,

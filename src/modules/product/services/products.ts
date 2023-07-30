@@ -1,5 +1,5 @@
 import type { IProductResponse } from '@/types/responses/product';
-import { ProductDTO, ProductOneDTO } from '../models/product.dto';
+import { ProductDTO, ProductFullDTO } from '../models/product.dto';
 import type { IHttpClient } from '@/api/types/api';
 import type { IProduct, IProductBase } from '@/types/IProduct';
 import type { IFilterResponse } from '@/types/responses/filter';
@@ -37,8 +37,7 @@ export class ProductServices {
     });
   }
 
-  async fetchProduct(id: string): Promise<IProductBase> {
-    console.log(id, 'id');
+  async fetchProductById(id: string): Promise<ProductFullDTO> {
     const res = await this.$http.makeRequest<IProductResponse>({
       url: `/products/${id}`,
       method: 'GET',
@@ -47,7 +46,7 @@ export class ProductServices {
       },
     });
 
-    return new ProductOneDTO(res.data);
+    return new ProductFullDTO(res.data);
   }
 
   async fetchProductFilters() {

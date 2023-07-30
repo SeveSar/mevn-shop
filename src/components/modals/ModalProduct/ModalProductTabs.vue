@@ -2,18 +2,29 @@
   <div class="modal-product-tabs">
     <template v-if="!isLoading">
       <div class="modal-product-tabs__dough">
-        <BaseTab class="modal-product-tabs__tab-dough" v-if="selectedTabDoughModel" v-model="selectedTabDoughModel" :items="doughs || []" />
+        <BaseTab
+          class="modal-product-tabs__tab-dough"
+          v-if="selectedTabDoughModel"
+          v-model="selectedTabDoughModel"
+          :items="doughs || []"
+        />
       </div>
       <div class="modal-product-tabs__sizes">
-        <BaseTab class="modal-product-tabs__tab-size" v-if="selectedTabSizeModel" v-model="selectedTabSizeModel" size="small" :items="sizes || []" />
+        <BaseTab
+          class="modal-product-tabs__tab-size"
+          v-if="selectedTabSizeModel"
+          v-model="selectedTabSizeModel"
+          size="small"
+          :items="sizes || []"
+        />
       </div>
     </template>
     <template v-else>
       <div class="modal-product-tabs__skeletons">
-        <UiSkeleton width="100%" height="48px" corner="6" />
+        <BaseSkeleton width="100%" height="48px" corner="6" />
       </div>
       <div class="modal-product-tabs__skeletons">
-        <UiSkeleton width="100%" height="48px" corner="6" />
+        <BaseSkeleton width="100%" height="48px" corner="6" />
       </div>
     </template>
   </div>
@@ -24,7 +35,7 @@ import { IDoughItem, ISizeItem } from '@/types/IProduct';
 
 import BaseTab from '@/components/ui/BaseTab.vue';
 import { ISelectedTabDough, ISelectedTabSize } from './ModalProduct.vue';
-import UiSkeleton from '@/components/ui/UiSkeleton.vue';
+import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
 import { computed } from 'vue';
 
 interface Props {

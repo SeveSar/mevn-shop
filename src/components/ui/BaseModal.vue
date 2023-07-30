@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="modal-overlay" v-if="isOpen" @mousedown.self="close">
+    <div class="modal-overlay" v-if="isOpen" @mousedown.self="close" data-testid="base-modal-overlay">
       <div class="modal">
         <button class="modal-close" @click="close">
           <!-- <img src="@/assets/images/icons/close.svg" alt="" /> -->

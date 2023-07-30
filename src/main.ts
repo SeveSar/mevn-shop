@@ -2,19 +2,16 @@ import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import App from './App.vue';
 import router from './router';
-import initFire from '@/plugins/firebase';
+
 import AppToast from './components/ui/AppToast.vue';
 
 import './assets/less/main.less';
-
-import { getDatabase } from 'firebase/database';
-import { getFirestore } from 'firebase/firestore';
+import 'v-calendar/style.css';
 
 import { useUserStore } from './modules/user/stores/user';
 
 import { useCartStore } from './modules/cart/stores/cart';
-export const db = getDatabase();
-export const dbFireStore = getFirestore(initFire);
+
 const app = createApp(App);
 app.use(createPinia());
 

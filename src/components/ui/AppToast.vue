@@ -1,7 +1,7 @@
 <template>
   <transition-group name="toast">
     <div class="toast" v-for="item in toasts" :class="item.type" :key="item.id" @click="removeToast(item.id)">
-      <!-- <AppIcon class="toast__icon" :name="getCurrentIcon(item.type)" /> -->
+      <!-- <BaseIcon class="toast__icon" :name="getCurrentIcon(item.type)" /> -->
       <div class="toast__text">
         {{ item.text }}
       </div>
@@ -11,9 +11,14 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
-import type { IToast, TypeToast } from '@/plugins/plugins.types';
 
-import { useToastStore } from '@/stores/toast';
+type TypeToast = 'error' | 'info';
+
+interface IToast {
+  id: number;
+  text: string;
+  type: TypeToast;
+}
 
 const ICONS_TYPES = {
   error: 'IconError',
@@ -22,7 +27,7 @@ const ICONS_TYPES = {
 
 export default defineComponent({
   components: {
-    // AppIcon,
+    // BaseIcon,
   },
 
   setup() {

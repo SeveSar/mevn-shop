@@ -2,10 +2,10 @@ import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { api } from '@/api/api';
 
-import type { IProduct, IProductBase } from '@/types/IProduct';
+import { ProductDTO } from '../models/product.dto';
 
 export const useProductsStore = defineStore('products', () => {
-  const products = ref<IProductBase[]>([]);
+  const products = ref<ProductDTO[]>([]);
   const activeProductId = ref<string>('');
   const isLoading = ref(false);
 

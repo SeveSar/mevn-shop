@@ -2,22 +2,22 @@
   <div class="product-skeleton-list">
     <div class="product-skeleton" v-for="n in count" :key="n">
       <div class="product-skeleton__img">
-        <UiSkeleton class="product-skeleton__img-img" width="170" height="170" corner="50%" />
+        <BaseSkeleton class="product-skeleton__img-img" width="170" height="170" corner="50%" />
       </div>
       <div class="product-skeleton__body">
-        <UiSkeleton class="product-skeleton__title" width="55%" height="23" corner="6" />
-        <UiSkeleton width="100%" height="50" corner="6" />
+        <BaseSkeleton class="product-skeleton__title" width="55%" height="23" corner="6" />
+        <BaseSkeleton width="100%" height="50" corner="6" />
       </div>
       <div class="product-skeleton__footer">
-        <UiSkeleton width="131" height="48" corner="6" />
-        <UiSkeleton width="78" height="24" corner="6" />
+        <BaseSkeleton width="131" height="48" corner="6" />
+        <BaseSkeleton width="78" height="24" corner="6" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import UiSkeleton from '@/components/ui/UiSkeleton.vue';
+import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
 
 interface Props {
   count?: number;

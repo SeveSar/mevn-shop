@@ -30,6 +30,7 @@ import { RouteNamesEnum } from '@/router/router.types';
 const cartStore = useCartStore();
 const { cart, totalPrice, totalItems } = storeToRefs(cartStore);
 const router = useRouter();
+
 const order = () => {
   router.push({ name: 'Order' });
 };

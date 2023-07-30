@@ -3,14 +3,14 @@
     <div class="modal-product__body">
       <div class="modal-product__photo">
         <img v-if="!isLoading" :src="productData?.imageUrl" class="modal-product__photo-img" alt="" />
-        <UiSkeleton v-else width="400" height="400" corner="50%" :style="{ margin: 'auto' }" />
+        <BaseSkeleton v-else width="400" height="400" corner="50%" :style="{ margin: 'auto' }" />
       </div>
       <form class="modal-product__info modal-product-info" @submit.prevent="addToCart">
         <div class="modal-product-info__header">
           <h3 class="modal-product-info__title" v-if="!isLoading">
             {{ productData?.title }}
           </h3>
-          <UiSkeleton v-else width="70%" height="18" corner="6" />
+          <BaseSkeleton v-else width="70%" height="18" corner="6" />
         </div>
 
         <ModalProductIngredients
@@ -50,8 +50,8 @@
             <BaseButton type="submit" :isLoading="isLoadingAddingToCart"> Добавить </BaseButton>
           </template>
           <template v-else>
-            <UiSkeleton width="130" height="28" corner="6" />
-            <UiSkeleton width="125" height="48" corner="6" />
+            <BaseSkeleton width="130" height="28" corner="6" />
+            <BaseSkeleton width="125" height="48" corner="6" />
           </template>
         </div>
       </form>
@@ -68,9 +68,10 @@ import { useCartStore } from '@/modules/cart/stores/cart';
 import ModalProductIngredients from './ModalProductIngredients.vue';
 import ModalProductTabs from './ModalProductTabs.vue';
 import BaseButton from '../../ui/BaseButton.vue';
-import UiSkeleton from '@/components/ui/UiSkeleton.vue';
-import { IProduct } from '@/types/IProduct';
+import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
+
 import { api } from '@/api/api';
+import { ProductFullDTO } from '@/modules/product/models/product.dto';
 
 export interface ISelectedTabSize {
   title: string;
@@ -90,7 +91,7 @@ const productsStore = useProductsStore();
 const cartStore = useCartStore();
 const selectedTabDough = ref<ISelectedTabDough | null>(null);
 const selectedTabSize = ref<null | ISelectedTabSize>(null);
-const productData = ref<null | IProduct>(null);
+const productData = ref<null | ProductFullDTO>(null);
 const isLoading = ref(false);
 const isLoadingAddingToCart = ref(false);
 
@@ -147,7 +148,7 @@ const addToCart = async () => {
 const fetchProductById = async () => {
   try {
     isLoading.value = true;
-    productData.value = await api.product.fetchProduct(productsStore.activeProductId);
+    productData.value = await api.product.fetchProductById(productsStore.activeProductId);
     selectedTabDough.value = productData.value.dough[0];
     selectedTabSize.value = productData.value.sizes[0];
   } catch (e) {

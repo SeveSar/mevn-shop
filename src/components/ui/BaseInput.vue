@@ -1,19 +1,21 @@
 <template>
   <label class="base-input">
     <span class="base-input__label" v-if="labelText">
-      {{ labelText }}<span class="base-input__label__required" v-if="required">*</span>
+      {{ labelText }}
+      <span class="base-input__label-required" v-if="required">*</span>
     </span>
 
     <input
+      v-model="model"
       class="base-input__control"
       :class="{ error: errors }"
-      :value="modelValue"
-      @input="updateValue"
-      @blur="onBlur"
-      @focus="onFocus"
+      :value="value ? value : model"
       :placeholder="placeholder"
       :type="type"
       data-testid="base-input"
+      :disabled="disabled"
+      @blur="onBlur"
+      @focus="onFocus"
     />
 
     <transition name="fade">
@@ -23,27 +25,39 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue';
+
 interface Props {
-  modelValue: string | number;
+  modelValue?: string | number;
   labelText?: string;
   errors?: string;
   placeholder?: string;
   type?: 'text' | 'number' | 'password';
   required?: boolean;
+  disabled?: boolean;
+  value?: string | number;
 }
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   labelText: '',
   errors: '',
   placeholder: '',
   type: 'text',
   required: false,
+  disabled: false,
+  value: '',
 });
 
 const emit = defineEmits(['update:modelValue', 'onBlur', 'onFocus']);
 
-const updateValue = (e: Event) => {
-  emit('update:modelValue', (e.target as HTMLInputElement).value);
-};
+const model = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit('update:modelValue', value);
+  },
+});
+
 const onBlur = () => {
   emit('onBlur');
 };
@@ -80,7 +94,7 @@ const onFocus = () => {
       outline: none;
     }
     &.error {
-      border-color: red;
+      border-color: @red-color;
     }
   }
   &__label {
@@ -90,9 +104,13 @@ const onFocus = () => {
     display: inline-block;
     color: #a5a5a5;
     margin-bottom: 8px;
+
+    &-required {
+      color: @red-color;
+    }
   }
   &__error {
-    color: red;
+    color: @red-color;
     display: inline-block;
     margin-top: 5px;
     position: absolute;

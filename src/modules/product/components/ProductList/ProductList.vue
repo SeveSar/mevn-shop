@@ -8,9 +8,10 @@
 
 <script lang="ts">
 import ProductListItem from '../../components/ProductList/ProductListItem.vue';
-import type { IProduct, IProductBase } from '@/types/IProduct';
+
 import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
+import type { ProductDTO } from '../../models/product.dto';
 
 export default defineComponent({
   components: {
@@ -18,7 +19,7 @@ export default defineComponent({
   },
   props: {
     products: {
-      type: Array as PropType<IProductBase[]>,
+      type: Array as PropType<ProductDTO[]>,
       default: () => [],
     },
   },

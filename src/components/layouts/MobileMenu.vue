@@ -2,13 +2,13 @@
   <div class="mobile-menu" :class="{ active: isOpenedBurger }">
     <div class="user-auth">
       <BaseButton v-if="!userStore.isLoggedIn" class="user-auth__btn" @click="modalStore.openAuthModal">
-        <AppIcon name="IconUser"></AppIcon>
+        <BaseIcon name="IconUser"></BaseIcon>
         Войти в аккаунт
       </BaseButton>
       <div v-if="userStore.isLoggedIn" class="user-drop">
         <div class="current">
           <BaseButton variant="text">
-            <AppIcon name="IconUser"></AppIcon>
+            <BaseIcon name="IconUser"></BaseIcon>
             Вы
           </BaseButton>
         </div>
@@ -35,7 +35,7 @@
 import { useModalStore } from '@/stores/modal';
 import { useUserStore } from '@/modules/user/stores/user';
 import { useMenu } from '@/composables/menu';
-import AppIcon from '@/components/ui/AppIcon/AppIcon.vue';
+import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
 
 const { logOut, isOpenedBurger, menuLinks } = useMenu();

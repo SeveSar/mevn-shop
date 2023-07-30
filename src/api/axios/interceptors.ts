@@ -2,7 +2,7 @@ import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } fro
 import axios from 'axios';
 import type { UserResponse } from '../../types/responses/user';
 import { useUserStore } from '@/modules/user/stores/user';
-import router from '@/router/index';
+import router from '@/router';
 import { api } from '../api';
 import { getAccessToken, setToken } from '@/utils/tokenHelper';
 

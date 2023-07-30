@@ -33,7 +33,7 @@
     </div>
 
     <button class="product__remove" @click="cartStore.removeItem(item.id)">
-      <AppIcon name="IconCrossBig" />
+      <BaseIcon name="IconCrossBig" />
     </button>
   </div>
 </template>
@@ -41,7 +41,7 @@
 <script lang="ts" setup>
 import type { ICartItem } from '@/types/ICart';
 
-import AppIcon from '@/components/ui/AppIcon/AppIcon.vue';
+import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
 import { useCartStore } from '@/modules/cart/stores/cart';
 
 interface Props {

@@ -12,7 +12,7 @@
       >
         <div class="modal-ingredients__ingredient-icon">
           <img :src="item.img" alt="" />
-          <AppIcon name="IconTickCircle" class="modal-ingredients__ingredient-checkmark" />
+          <BaseIcon name="IconTickCircle" class="modal-ingredients__ingredient-checkmark" />
         </div>
         <div class="modal-ingredients__ingredient-info">
           <div class="modal-ingredients__ingredient-title">
@@ -27,8 +27,8 @@
     </template>
     <template v-else>
       <div class="modal-ingredients__skeleton-item" v-for="i in 4" :key="i">
-        <UiSkeleton width="105" height="105" corner="6" />
-        <UiSkeleton width="95" height="15" corner="6" :style="{ margin: '8px auto 0' }" />
+        <BaseSkeleton width="105" height="105" corner="6" />
+        <BaseSkeleton width="95" height="15" corner="6" :style="{ margin: '8px auto 0' }" />
       </div>
     </template>
   </div>
@@ -36,8 +36,8 @@
 
 <script setup lang="ts">
 import { IIngredientItem } from '@/types/IProduct';
-import AppIcon from '@/components/ui/AppIcon/AppIcon.vue';
-import UiSkeleton from '@/components/ui/UiSkeleton.vue';
+import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
+import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
 import { watch } from 'vue';
 
 interface Props {
