@@ -1,6 +1,6 @@
 import type { AxiosInstance, AxiosResponse } from 'axios';
 import type { ApiResponse, IHttpClient, IOptions } from '../types/api';
-import { getAccessToken } from '@/utils/tokenHelper';
+import { getAccessToken } from '@/utils/localstorage';
 
 export class AxiosHttpClient implements IHttpClient {
   private $http: AxiosInstance;

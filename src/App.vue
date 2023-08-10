@@ -18,4 +18,8 @@ import { useModalStore } from './stores/modal';
 const modalStore = useModalStore();
 </script>
 
-<style lang="less"></style>
+<style lang="less">
+html {
+  color-scheme: light;
+}
+</style>

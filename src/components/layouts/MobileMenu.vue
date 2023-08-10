@@ -1,7 +1,7 @@
 <template>
   <div class="mobile-menu" :class="{ active: isOpenedBurger }">
     <div class="user-auth">
-      <BaseButton v-if="!userStore.isLoggedIn" class="user-auth__btn" @click="modalStore.openAuthModal">
+      <BaseButton variant="text" v-if="!userStore.isLoggedIn" class="user-auth__btn" @click="modalStore.openAuthModal">
         <BaseIcon name="IconUser"></BaseIcon>
         Войти в аккаунт
       </BaseButton>
@@ -9,13 +9,8 @@
         <div class="current">
           <BaseButton variant="text">
             <BaseIcon name="IconUser"></BaseIcon>
-            Вы
+            {{ userStore.user?.email }}
           </BaseButton>
-        </div>
-        <div class="dropdown">
-          <div class="dropdown__inner">
-            <BaseButton @click="logOut">Выйти</BaseButton>
-          </div>
         </div>
       </div>
     </div>
@@ -28,6 +23,9 @@
         </li>
       </ul>
     </nav>
+    <div class="mobile-menu__footer">
+      <BaseButton class="mobile-menu__logout" variant="text" @click="logOut">Выйти</BaseButton>
+    </div>
   </div>
 </template>
 
@@ -35,6 +33,7 @@
 import { useModalStore } from '@/stores/modal';
 import { useUserStore } from '@/modules/user/stores/user';
 import { useMenu } from '@/composables/menu';
+
 import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
 
@@ -56,6 +55,8 @@ const userStore = useUserStore();
   padding: 100px 20px 20px;
   transition: all 0.2s ease-in-out;
   transform: translateY(-100%);
+  display: flex;
+  flex-direction: column;
 
   &.active {
     transform: translateY(0);
@@ -68,12 +69,12 @@ const userStore = useUserStore();
       margin-right: 6px;
     }
   }
-  .dropdown {
-    @media screen and (max-width: 991px) {
-      left: 0;
-      right: auto;
-    }
+
+  &__footer {
+    margin-top: auto;
+    padding-top: 25px;
   }
+
   .user-auth__btn {
     color: #ff7010;
     display: flex;

@@ -53,7 +53,7 @@ import { getValidationRule } from '@/utils/validations';
 import BaseInput from '@/components/ui/BaseInput.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
 import { getErrorMessage } from '@/utils/errorHandler';
-
+import { useModalStore } from '@/stores/modal';
 import { useUserStore } from '@/modules/user/stores/user';
 import { toaster } from '@/main';
 
@@ -75,6 +75,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const userStore = useUserStore();
+    const modalStore = useModalStore();
 
     const isLoading = ref(false);
     const userCredentials = reactive({
@@ -101,6 +102,7 @@ export default defineComponent({
           isLoading.value = true;
           await userStore.signUp(userCredentials.email, userCredentials.password);
           toaster.showToast({ type: 'info', text: 'Вы зарегистрировались' });
+          modalStore.closeAuthModal();
         } catch (e) {
           const message = getErrorMessage(e);
           toaster.showToast({ type: 'error', text: message });

@@ -1,5 +1,5 @@
 <template>
-  <DatePicker v-model="modelValue" :popover="{ visibility: 'click' }" :masks="{ input: 'DD-MM-YYYY' }">
+  <DatePicker v-model="modelValue" color="main" :popover="{ visibility: 'click' }" :masks="{ input: 'DD-MM-YYYY' }">
     <template #default="{ inputValue, inputEvents }">
       <BaseInput class="order-form__date-control" disabled placeholder="Дата" :value="inputValue" v-on="inputEvents" />
     </template>

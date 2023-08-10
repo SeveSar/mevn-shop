@@ -4,7 +4,7 @@
       <button
         class="base-tab__tab"
         @click.prevent="$emit('update:modelValue', tab)"
-        :class="{ 'base-tab__tab--active': tab.id === modelValue?.id }"
+        :class="{ 'base-tab__tab--active': tab.id.toLocaleLowerCase() === modelValue.id.toLocaleLowerCase() }"
         v-for="tab in items"
         :key="tab.id"
       >
@@ -17,7 +17,7 @@
   </div>
 </template>
 
-<script lang="ts" setup generic="T extends ITab">
+<script lang="ts" setup>
 import { computed } from 'vue';
 
 export interface ITab {
@@ -26,8 +26,8 @@ export interface ITab {
   [key: string]: any;
 }
 interface Props {
-  modelValue: T;
-  items: T[];
+  modelValue: ITab;
+  items: ITab[];
   size?: 'small' | 'medium';
 }
 const props = withDefaults(defineProps<Props>(), {

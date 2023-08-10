@@ -8,6 +8,6 @@
 </template>
 
 <script lang="ts" setup>
-import TheHeader from "@/components/layouts/TheHeader.vue";
+import TheHeader from '@/components/layouts/TheHeader/TheHeader.vue';
 </script>
 <style lang="less" scoped></style>

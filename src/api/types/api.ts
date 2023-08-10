@@ -11,7 +11,7 @@ export interface IOptions {
     authorization?: boolean | string;
   };
   data?: any;
-  config?: { responseType?: ResponseType; params?: any };
+  config?: AxiosRequestConfig;
 }
 
 export interface ApiResponse<T> {

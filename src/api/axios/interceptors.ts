@@ -4,7 +4,7 @@ import type { UserResponse } from '../../types/responses/user';
 import { useUserStore } from '@/modules/user/stores/user';
 import router from '@/router';
 import { api } from '../api';
-import { getAccessToken, setToken } from '@/utils/tokenHelper';
+import { getAccessToken, setToken } from '@/utils/localstorage';
 
 enum StatusCode {
   Unauthorized = 401,
@@ -27,26 +27,20 @@ const errorHandler = async (error: AxiosError) => {
   const { status } = response;
   switch (status) {
     case StatusCode.Unauthorized: {
-      if (config && !config._isRetry) {
-        config._isRetry = true;
-        try {
-          if (refreshTokenRequest === null) {
-            refreshTokenRequest = api.user.refresh();
-          }
-          const res = await refreshTokenRequest;
-          refreshTokenRequest = null;
-          setToken(res.data.accessToken);
-
-          return axios(setTokenHeaders(config));
-        } catch (e) {
-          userStore.logOut().then(() => {
-            router.push('/login');
-          });
+      try {
+        if (refreshTokenRequest === null) {
+          refreshTokenRequest = api.user.refresh();
         }
+        const res = await refreshTokenRequest;
+        refreshTokenRequest = null;
+        setToken(res.data.accessToken);
+        config.headers.authorization = `Bearer ${getAccessToken()}`;
+        return axios(config);
+      } catch (e) {
+        userStore.logOut().then(() => {
+          router.push('/login');
+        });
       }
-      userStore.logOut().then(() => {
-        router.push('/login');
-      });
     }
   }
   return Promise.reject(error);
@@ -60,23 +54,6 @@ const onResponseSuccess = (successRes: AxiosResponse): AxiosResponse => {
   return successRes;
 };
 
-const urlsSkipAuth = ['/api/auth/login', '/api/auth/logout'];
-
-const setTokenHeaders = (config: AxiosRequestConfig) => {
-  if (config.url && urlsSkipAuth.includes(config.url)) {
-    return config;
-  }
-
-  const token = getAccessToken();
-
-  if (token && config.headers) {
-    config.headers = config.headers as { Authorization: string };
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-};
-
 export default function (http: AxiosInstance) {
-  http.interceptors.request.use(setTokenHeaders);
   http.interceptors.response.use(onResponseSuccess, onResponseError);
 }

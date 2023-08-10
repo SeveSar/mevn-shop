@@ -11,20 +11,22 @@
         </div>
         <div class="product__content-col product__content-info">
           <div class="product__actions">
-            <button
-              class="product__actions-btn"
-              :disabled="item.quantity <= 1"
-              @click="cartStore.updateCnt({ idProduct: item.id, newQuantity: item.quantity - 1 })"
-            >
-              -
-            </button>
-            <input type="number" readonly :value="item.quantity" min="1" />
-            <button
-              class="product__actions-btn"
-              @click="cartStore.updateCnt({ idProduct: item.id, newQuantity: item.quantity + 1 })"
-            >
-              +
-            </button>
+            <div class="product__actions-counter">
+              <button
+                class="product__actions-btn"
+                :disabled="item.quantity <= 1"
+                @click="cartStore.updateCnt({ idProduct: item.id, newQuantity: item.quantity - 1 })"
+              >
+                -
+              </button>
+              <input type="number" readonly :value="item.quantity" min="1" />
+              <button
+                class="product__actions-btn"
+                @click="cartStore.updateCnt({ idProduct: item.id, newQuantity: item.quantity + 1 })"
+              >
+                +
+              </button>
+            </div>
           </div>
 
           <div class="product__price">{{ item.totalPrice * item.quantity }} ₽</div>
@@ -76,6 +78,17 @@ const props = withDefaults(defineProps<Props>(), {
       justify-content: space-between;
     }
 
+    &-col {
+      &:first-child {
+        width: 68%;
+        margin-right: 10px;
+      }
+
+      &:last-child {
+        flex-grow: 1;
+      }
+    }
+
     &-info {
       display: flex;
       align-items: center;
@@ -122,14 +135,17 @@ const props = withDefaults(defineProps<Props>(), {
   }
 
   &__actions {
-    display: flex;
-    background: #ffeee2;
-    border-radius: 6px;
-    align-items: center;
-    height: 36px;
-    padding: 0 6px;
-    margin-right: 40px;
-    max-width: 92px;
+    flex-grow: 1;
+    margin-right: 15px;
+    &-counter {
+      display: flex;
+      background: #ffeee2;
+      border-radius: 6px;
+      align-items: center;
+      height: 36px;
+      padding: 0 6px;
+      max-width: 92px;
+    }
 
     &-btn {
       color: #ff7010;

@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, toRefs, watch } from 'vue';
+import { defineComponent, toRefs, watch } from 'vue';
 import { useModalFunctions } from '@/composables/modalFunctions';
 import BaseIcon from './BaseIcon/BaseIcon.vue';
 import { useRoute } from 'vue-router';

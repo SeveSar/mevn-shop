@@ -1,18 +1,23 @@
-import { computed, toRefs, reactive, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { api } from '@/api/api';
-import { setToken, cleanTokensData, getItemFromLocalstorage } from '@/utils/tokenHelper';
+import { useCartStore } from '@/modules/cart/stores/cart';
+import { setToken, cleanTokensData, getItemFromLocalstorage, clearAll } from '@/utils/localstorage';
 import type { IUser } from '@/types/IUser';
 
 export const useUserStore = defineStore('user', () => {
+  const cartStore = useCartStore();
   const user = ref<IUser | null>(null);
 
   const isLoggedIn = computed(() => !!user.value);
 
   async function login(email: string, password: string) {
     const data = await api.user.login(email, password, getItemFromLocalstorage('CART'));
+
     user.value = data.user;
     setToken(data.accessToken);
+
+    cartStore.getCart();
   }
   async function signUp(email: string, password: string) {
     const data = await api.user.register(email, password);
@@ -36,7 +41,8 @@ export const useUserStore = defineStore('user', () => {
 
   async function logOut() {
     await api.user.logOut();
-    cleanTokensData();
+    cartStore.cart = [];
+    clearAll();
     user.value = null;
   }
 

@@ -4,9 +4,9 @@ import { useUserStore } from '@/modules/user/stores/user';
 import { api } from '@/api/api';
 import type { TCart } from '@/types/ICart';
 import { useProductsStore } from '../../product/stores/products';
-import { getItemFromLocalstorage, setItemInLocalstorage } from '@/utils/tokenHelper';
+import { getItemFromLocalstorage, setItemInLocalstorage } from '@/utils/localstorage';
 import type { IDoughItem, IIngredientItem, ISizeItem } from '@/types/IProduct';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 
 export const useCartStore = defineStore('cart', () => {
   const cart = ref<TCart>([]);
@@ -122,17 +122,33 @@ export const useCartStore = defineStore('cart', () => {
     }
   };
 
-  const updateCnt = ({ newQuantity, idProduct }: { newQuantity: number; idProduct: string }) => {
+  const updateCnt = async ({ newQuantity, idProduct }: { newQuantity: number; idProduct: string }) => {
     const productCart = cart.value.find((item) => item.id === idProduct);
+
     if (!productCart) return;
-    productCart.quantity = newQuantity;
-    setItemInLocalstorage('CART', cart.value);
+
     if (userStore.isLoggedIn) {
-      debouncedFetchUpdateCnt({ idProduct, updatedProduct: { quantity: newQuantity } });
+      try {
+        debouncedFetchUpdateCnt({ idProduct, updatedProduct: { quantity: newQuantity } });
+        productCart.quantity = newQuantity;
+        setItemInLocalstorage('CART', cart.value);
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      productCart.quantity = newQuantity;
+      setItemInLocalstorage('CART', cart.value);
     }
   };
 
-  const debouncedFetchUpdateCnt = debounce(api.cart.updateProduct.bind(api.cart), 300);
+  const debouncedFetchUpdateCnt = debounce(async (updatedProduct) => {
+    try {
+      return await api.cart.updateProduct(updatedProduct);
+    } catch (e) {
+      console.log(e, 'eee');
+      throw e;
+    }
+  }, 300);
 
   const removeItem = async (id: string) => {
     if (!inCart(id)) return false;
@@ -142,7 +158,6 @@ export const useCartStore = defineStore('cart', () => {
 
     if (userStore.isLoggedIn) {
       const res = await api.cart.removeProduct(id);
-      console.log(res);
     }
   };
   return {

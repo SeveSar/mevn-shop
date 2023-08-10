@@ -11,6 +11,7 @@ export class CartDTO {
   imageUrl: string;
   ingredients: IIngredientItem[];
   constructor(model: IProductCart) {
+    console.log(model, 'model');
     this.title = model.product.title;
     this.imageUrl = model.product.imageUrl;
     this.totalPrice = model.totalPrice;

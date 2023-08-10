@@ -87,6 +87,7 @@ export default defineComponent({
   position: relative;
   z-index: 999;
   background-color: #fff;
+
   @media screen and (max-width: 991px) {
     position: fixed;
     width: 100%;

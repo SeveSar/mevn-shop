@@ -8,14 +8,14 @@
       <BaseInput v-model="localModelValue.porch" label-text="Подъезд" />
       <BaseInput v-model="localModelValue.floor" label-text="Этаж" />
       <BaseInput v-model="localModelValue.flat" label-text="Квартира" />
-      <BaseInput v-model="localModelValue.door_station" label-text="Домофон" />
+      <BaseInput v-model="localModelValue.door_phone" label-text="Домофон" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import BaseInput from '@/components/ui/BaseInput.vue';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 import { ref, watch } from 'vue';
 
 interface IModelValue {
@@ -24,7 +24,7 @@ interface IModelValue {
   porch: string;
   floor: string;
   flat: string;
-  door_station: string;
+  door_phone: string;
 }
 
 interface Props {
