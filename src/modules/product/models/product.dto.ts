@@ -10,8 +10,8 @@ export class ProductDTO {
   imageUrl: string;
   amount: number;
 
-  constructor(model: IProductBase) {
-    this.id = model.id;
+  constructor(model: IProductResponse) {
+    this.id = model._id;
     this.title = model.title;
     this.price = model.price;
     this.description = model.description;
@@ -27,30 +27,40 @@ export class ProductFullDTO {
   description: string;
   imageUrl: string;
   amount: number;
-
   sizes: ISizeItem[];
   ingredients: IIngredientItem[];
   dough: IDoughItem[];
   filters: TFilterItem[];
 
   constructor(model: IProductResponse) {
-    this.id = model.id;
+    this.id = model._id;
     this.title = model.title;
     this.price = model.price;
     this.description = model.description;
     this.imageUrl = model.imageUrl;
     this.amount = model.amount;
-    this.sizes = model.sizes;
+
+    this.sizes = model.sizes.map((item) => {
+      return {
+        ...item,
+        id: item._id,
+      };
+    });
     this.ingredients = model.ingredients.map((item) => {
       return {
         ...item,
-        id: item.id,
+        id: item._id,
         img: import.meta.env.VITE_BASE_URL + '/' + item.img,
         isActive: false,
       };
     });
 
-    this.dough = model.dough;
+    this.dough = model.dough.map((item) => {
+      return {
+        ...item,
+        id: item._id,
+      };
+    });
 
     this.filters = model.filters.map((item) => {
       return {

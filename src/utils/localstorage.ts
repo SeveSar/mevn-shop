@@ -1,6 +1,6 @@
-const ACCESS_TOKEN = "TOKEN";
+const ACCESS_TOKEN = 'TOKEN';
 const KEYS = {
-  CART: "CART",
+  CART: 'CART',
 } as const;
 
 const setItemInLocalstorage = (key: keyof typeof KEYS, item: any) => {
@@ -16,6 +16,10 @@ const clearAll = () => {
   localStorage.clear();
 };
 
+const removeItem = (key: keyof typeof KEYS) => {
+  localStorage.removeItem(key);
+};
+
 function setToken(value: string): void {
   localStorage.setItem(ACCESS_TOKEN, value);
 }
@@ -28,4 +32,12 @@ function cleanTokensData(): void {
   localStorage.removeItem(ACCESS_TOKEN);
 }
 
-export { setToken, clearAll, cleanTokensData, getAccessToken, setItemInLocalstorage, getItemFromLocalstorage };
+export {
+  setToken,
+  clearAll,
+  cleanTokensData,
+  getAccessToken,
+  setItemInLocalstorage,
+  getItemFromLocalstorage,
+  removeItem,
+};

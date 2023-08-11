@@ -124,7 +124,7 @@ export default defineComponent({
         const data = await api.product.createProduct(productFields.value);
         console.log(data, 'data');
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     };
 

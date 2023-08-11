@@ -66,7 +66,7 @@
         <div class="cart__footer-cnt"><span>Всего в корзине: </span> {{ totalItems }} шт</div>
         <div class="cart__footer-price"><span>Итого: </span>{{ totalPrice }} ₽</div>
       </div>
-      <BaseButton type="submit" class="button_order"> Оформить заказ </BaseButton>
+      <BaseButton type="submit" class="button_order" :is-loading="isLoadingOrder"> Оформить заказ </BaseButton>
     </div>
   </form>
 </template>
@@ -86,6 +86,10 @@ import { useModalStore } from '@/stores/modal';
 import { storeToRefs } from 'pinia';
 import { useCartStore } from '../../stores/cart';
 import { api } from '@/api/api';
+import router from '@/router';
+import { RouteNamesEnum } from '@/router/router.types';
+import { toaster } from '@/main';
+import { clearAll } from '@/utils/localstorage';
 
 interface ITypeOrder {
   title: string;
@@ -105,6 +109,7 @@ const TYPE_DELIVERIES_MAP: Record<ITypeOrder['id'], Component> = {
   RESTAURANT: TypeOrderPickup,
 } as const;
 
+const isLoadingOrder = ref(false);
 const orderTypeTimingTabs = ref<{ label: string; value: TTypeTiming }[]>([
   { label: 'Как можно скорее', value: 'URGENT' },
   { label: 'По вемени', value: 'DATE' },
@@ -153,6 +158,7 @@ watch(
 );
 
 const onOrder = async () => {
+  isLoadingOrder.value = true;
   const { name, phone, email, typeDelivery, payment, comment, delivery, typeTiming, timingDate } = orderInfo;
   const currentOrderInfo: {
     name: string;
@@ -190,10 +196,15 @@ const onOrder = async () => {
   }
 
   try {
-    const res = await api.order.createOrder(currentOrderInfo);
-    console.log(res, 'res');
+    await api.order.createOrder(currentOrderInfo);
+    router.push({ name: RouteNamesEnum.orders });
+    toaster.showToast({ text: 'Заказ успешно оформлен', type: 'info' });
+    cartStore.clearCart();
   } catch (e) {
     console.error(e);
+    toaster.showToast({ text: 'Ошибка', type: 'error' });
+  } finally {
+    isLoadingOrder.value = false;
   }
 };
 </script>

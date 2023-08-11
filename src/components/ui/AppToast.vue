@@ -12,7 +12,7 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
 
-type TypeToast = 'error' | 'info';
+type TypeToast = 'error' | 'info' | 'success';
 
 interface IToast {
   id: number;
@@ -32,7 +32,7 @@ export default defineComponent({
 
   setup() {
     let id: number = 0;
-    let timer: number;
+    let timer: any;
     const getCurrentIcon = (type: 'error' | 'info') => {
       return ICONS_TYPES[type];
     };

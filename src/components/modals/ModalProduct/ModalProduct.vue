@@ -152,7 +152,7 @@ const fetchProductById = async () => {
     selectedTabDough.value = productData.value.dough[0];
     selectedTabSize.value = productData.value.sizes[0];
   } catch (e) {
-    console.log(e);
+    console.error(e);
   } finally {
     isLoading.value = false;
   }

@@ -1,9 +1,10 @@
-import { IDoughItem, IIngredientItem, IProduct, ISizeItem, IProductBase } from '@/types/IProduct';
+import { IDoughItem, IIngredientItem, IProduct, ISizeItem, IProductBase, IIngredientItemBase } from '@/types/IProduct';
 import { TFilterItemResponse } from './filter';
 
 export interface IProductResponse extends IProductBase {
-  sizes: ISizeItem[];
-  dough: IDoughItem[];
+  _id: string;
+  sizes: (Omit<ISizeItem, 'id'> & { _id: string })[];
+  dough: (Omit<IDoughItem, 'id'> & { _id: string })[];
   filters: TFilterItemResponse[];
-  ingredients: Omit<IIngredientItem, 'isActive'>[];
+  ingredients: (IIngredientItemBase & { _id: string })[];
 }

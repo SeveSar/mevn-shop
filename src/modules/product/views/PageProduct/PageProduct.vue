@@ -27,7 +27,7 @@ export default defineComponent({
     const product = computed(() => {
       return productsStore.getProductById(productId.value);
     });
-    console.log(productId.value);
+
     const hasProduct = computed(() => {
       return typeof product.value !== 'undefined';
     });
@@ -37,7 +37,7 @@ export default defineComponent({
         const res = await api.product.fetchProduct(productId.value);
         console.log(res, 'res');
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     };
 

@@ -3,7 +3,7 @@ import { ProductDTO, ProductFullDTO } from '../models/product.dto';
 import type { IHttpClient } from '@/api/types/api';
 import type { IProduct, IProductBase } from '@/types/IProduct';
 import type { IFilterResponse } from '@/types/responses/filter';
-import { FilterDTO } from '@/types/dtos/filter.dto';
+import { FilterDTO } from '@/models/filter.dto';
 
 export class ProductServices {
   private readonly $http: IHttpClient;

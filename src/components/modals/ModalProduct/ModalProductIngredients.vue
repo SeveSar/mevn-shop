@@ -38,7 +38,6 @@
 import { IIngredientItem } from '@/types/IProduct';
 import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
 import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
-import { watch } from 'vue';
 
 interface Props {
   ingredients: IIngredientItem[];
@@ -47,14 +46,6 @@ interface Props {
 
 const props = defineProps<Props>();
 const emit = defineEmits(['toggleActiveIngredient']);
-console.log(props.isLoading, 'loading');
-
-watch(
-  () => props.isLoading,
-  (val) => {
-    console.log(val);
-  }
-);
 </script>
 
 <style scoped lang="less">

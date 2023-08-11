@@ -35,7 +35,7 @@ export const useUserStore = defineStore('user', () => {
       }
     } catch (e) {
       cleanTokensData();
-      console.log(e);
+      console.error(e);
     }
   }
 

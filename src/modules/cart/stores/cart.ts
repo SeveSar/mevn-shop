@@ -4,7 +4,11 @@ import { useUserStore } from '@/modules/user/stores/user';
 import { api } from '@/api/api';
 import type { TCart } from '@/types/ICart';
 import { useProductsStore } from '../../product/stores/products';
-import { getItemFromLocalstorage, setItemInLocalstorage } from '@/utils/localstorage';
+import {
+  getItemFromLocalstorage,
+  setItemInLocalstorage,
+  removeItem as removeItemFromStorage,
+} from '@/utils/localstorage';
 import type { IDoughItem, IIngredientItem, ISizeItem } from '@/types/IProduct';
 import debounce from 'lodash/debounce';
 
@@ -160,6 +164,11 @@ export const useCartStore = defineStore('cart', () => {
       const res = await api.cart.removeProduct(id);
     }
   };
+
+  const clearCart = () => {
+    cart.value = [];
+    removeItemFromStorage('CART');
+  };
   return {
     removeItem,
     calculateTotalPriceProduct,
@@ -171,5 +180,6 @@ export const useCartStore = defineStore('cart', () => {
     totalPrice,
     updateCnt,
     isSidePanelCart,
+    clearCart,
   };
 });

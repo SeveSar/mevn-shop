@@ -23,7 +23,7 @@ const start = async () => {
     await userStore.auth();
     await cartStore.getCart();
   } catch (e) {
-    console.log(e);
+    console.error(e);
   } finally {
     const spinnerAppElem = document.getElementById('app-spinner');
     if (spinnerAppElem) {

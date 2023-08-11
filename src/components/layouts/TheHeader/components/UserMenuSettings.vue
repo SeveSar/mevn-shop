@@ -10,7 +10,7 @@
         {{ userStore.user?.email }}
       </div>
       <div class="user-menu-settings__dropdown">
-        <BaseCardShadow class="user-menu-settings__dropdown-inner">
+        <div class="user-menu-settings__dropdown-inner">
           <div class="user-menu-settings__dropdown-links">
             <router-link class="user-menu-settings__dropdown-link" :to="{ name: RouteNamesEnum.orders }">
               История заказов
@@ -22,7 +22,7 @@
           <div class="user-menu-settings__dropdown-footer">
             <BaseButton variant="text" @click="logOut">Выход из аккаунта</BaseButton>
           </div>
-        </BaseCardShadow>
+        </div>
       </div>
     </div>
   </div>
@@ -35,7 +35,6 @@ import { useModalStore } from '@/stores/modal';
 import { useMenu } from '@/composables/menu';
 import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
-import BaseCardShadow from '@/components/ui/BaseCardShadow.vue';
 
 const userStore = useUserStore();
 const modalStore = useModalStore();
@@ -106,6 +105,11 @@ const { logOut } = useMenu();
 
     &-inner {
       padding: 16px 0 16px 0;
+      border-radius: 12px;
+      background: @white-color;
+      position: relative;
+      border: 1px solid @gray-color;
+      box-shadow: 0px 2px 8px 0px rgba(25, 25, 25, 0.1);
     }
 
     &-links {
