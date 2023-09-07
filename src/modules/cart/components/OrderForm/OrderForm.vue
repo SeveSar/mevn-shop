@@ -5,11 +5,33 @@
         <h3 class="order-form__block-title">О вас</h3>
       </div>
       <div class="order-form__row">
-        <BaseInput v-model="orderInfo.name" :required="true" label-text="Имя" />
-        <BaseInput v-model="orderInfo.phone" :required="true" label-text="Номер телефона" />
-        <BaseInput v-model="orderInfo.email" label-text="Почта" />
+        <BaseInput
+          v-model="orderInfo.name"
+          :required="true"
+          label-text="Имя"
+          :errors="
+          v$.name.$error ? v$.name.$errors[0].$message as string : null 
+        "
+        />
+        <BaseInput
+          v-model="orderInfo.phone"
+          :required="true"
+          :errors="v$.phone.$error ? v$.phone.$errors[0].$message as string : null "
+          label-text="Номер телефона"
+          mask="phone"
+          ref="phoneRef"
+        />
+
+        <BaseInput
+          v-model="orderInfo.email"
+          label-text="Почта"
+          :errors="
+          v$.email.$error ? v$.email.$errors[0].$message as string : null 
+        "
+        />
       </div>
     </div>
+
     <div class="order-form__block">
       <div class="order-form__block-header">
         <h3 class="order-form__block-title">Доставка</h3>
@@ -35,7 +57,13 @@
             name="order-time"
           />
           <div class="order-form__time-date" v-if="orderInfo.typeTiming === 'DATE'">
-            <BaseDatePicker v-model="orderInfo.timingDate" mode="dateTime" is24hr />
+            <BaseDatePicker
+              :errors="v$.timingDate.$error ? v$.timingDate.$errors[0].$message as string : null"
+              v-model="orderInfo.timingDate"
+              mask="date"
+              mode="dateTime"
+              is24hr
+            />
           </div>
         </div>
       </div>
@@ -80,27 +108,25 @@ import TypeOrderDelivery from './typeOrders/TypeOrderDelivery.vue';
 import TypeOrderPickup from './typeOrders/TypeOrderPickup.vue';
 import BaseDatePicker from '@/components/ui/BaseDatePicker.vue';
 import BaseTextArea from '@/components/ui/BaseTextArea.vue';
-import { reactive, type Component, ref, watch } from 'vue';
-import { useUserStore } from '@/modules/user/stores/user';
-import { useModalStore } from '@/stores/modal';
+import { reactive, type Component, ref, watch, onMounted, computed, provide } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useCartStore } from '../../stores/cart';
 import { api } from '@/api/api';
 import router from '@/router';
 import { RouteNamesEnum } from '@/router/router.types';
 import { toaster } from '@/main';
-import { clearAll } from '@/utils/localstorage';
+import type { IOrderCreate } from '@/types/IOrder';
+import type { TOrderTypeDelivery, TOrderTypeTiming, TOrderPayment } from '@/constants';
+import { getValidationRule } from '@/utils/validations';
+import { useVuelidate } from '@vuelidate/core';
+import { required, minLength, helpers } from '@vuelidate/validators';
 
 interface ITypeOrder {
   title: string;
-  id: 'ADDRESS' | 'RESTAURANT';
+  id: TOrderTypeDelivery;
 }
-type TTypeTiming = 'URGENT' | 'DATE';
-type TTypePayment = 'CASH' | 'CARD' | 'APPLE';
 
 const cartStore = useCartStore();
-const modalStore = useModalStore();
-const userStore = useUserStore();
 
 const { totalItems, totalPrice } = storeToRefs(cartStore);
 
@@ -110,12 +136,12 @@ const TYPE_DELIVERIES_MAP: Record<ITypeOrder['id'], Component> = {
 } as const;
 
 const isLoadingOrder = ref(false);
-const orderTypeTimingTabs = ref<{ label: string; value: TTypeTiming }[]>([
+const orderTypeTimingTabs = ref<{ label: string; value: TOrderTypeTiming }[]>([
   { label: 'Как можно скорее', value: 'URGENT' },
   { label: 'По вемени', value: 'DATE' },
 ]);
 
-const paymanetVariants = ref<{ label: string; value: TTypePayment }[]>([
+const paymanetVariants = ref<{ label: string; value: TOrderPayment }[]>([
   { label: 'Наличными', value: 'CASH' },
   { label: 'Картой', value: 'CARD' },
   { label: 'Apple Pay', value: 'APPLE' },
@@ -134,58 +160,72 @@ const orderInfo = reactive({
   delivery: {
     address: {
       street: '',
-      house: '',
-      porch: '',
-      floor: '',
-      flat: '',
-      door_phone: '',
+      house: null,
+      porch: null,
+      floor: null,
+      flat: null,
+      door_phone: null,
     },
     restaurant: '',
   },
-  typeTiming: orderTypeTimingTabs.value[0].value as TTypeTiming,
+  typeTiming: orderTypeTimingTabs.value[0].value as TOrderTypeTiming,
   timingDate: null,
   payment: paymanetVariants.value[0].value,
   comment: '',
 });
 
-watch(
-  () => orderInfo.typeTiming,
-  (val) => {
-    if (val === 'URGENT') {
-      orderInfo.timingDate = null;
-    }
+const rules = computed(() => {
+  const localeRules: any = {
+    email: getValidationRule('optionalEmail'),
+    name: getValidationRule('requiredMinlength'),
+    phone: getValidationRule('phone'),
+  };
+
+  if (orderInfo.typeTiming === 'DATE') {
+    localeRules.timingDate = {
+      required: helpers.withMessage('Поле не должно быть пустым', required),
+    };
   }
-);
+
+  if (orderInfo.typeDelivery.id === 'ADDRESS') {
+    localeRules.delivery = {
+      address: {
+        street: {
+          required: helpers.withMessage('Поле не должно быть пустым', required),
+          minLength: helpers.withMessage('Не менее 2 символов', minLength(2)),
+        },
+      },
+    };
+  } else {
+    localeRules.delivery = {
+      restaurant: {
+        required: helpers.withMessage('Поле не должно быть пустым', required),
+        minLength: helpers.withMessage('Не менее 2 символов', minLength(2)),
+      },
+    };
+  }
+
+  return localeRules;
+});
+
+const v$ = useVuelidate(rules, orderInfo);
+
+const phoneRef = ref<InstanceType<typeof BaseInput> | null>(null);
 
 const onOrder = async () => {
+  const isFormCorrect = await v$.value.$validate();
+
+  if (!isFormCorrect) return;
   isLoadingOrder.value = true;
-  const { name, phone, email, typeDelivery, payment, comment, delivery, typeTiming, timingDate } = orderInfo;
-  const currentOrderInfo: {
-    name: string;
-    phone: string;
-    email: string;
-    typeDelivery: string;
-    comment: string;
-    payment: string;
-    typeTiming: TTypeTiming;
-    timingDate: string | null;
-    address?: {
-      street: string;
-      house: string;
-      porch: string;
-      floor: string;
-      flat: string;
-      door_phone: string;
-    };
-    restaurant?: string;
-  } = {
+  const { name, email, typeDelivery, payment, comment, delivery, typeTiming, timingDate } = orderInfo;
+  const currentOrderInfo: IOrderCreate = {
     name,
-    phone,
+    phone: phoneRef.value.getUnMaskedValue(),
     email: email ? email : null,
     typeDelivery: typeDelivery.id,
     comment: comment ? comment : null,
     payment,
-    timingDate: timingDate ? timingDate.toUTCString() : null,
+    timingDate: timingDate ? timingDate.toISOString() : null,
     typeTiming,
   };
 
@@ -204,9 +244,21 @@ const onOrder = async () => {
     console.error(e);
     toaster.showToast({ text: 'Ошибка', type: 'error' });
   } finally {
+    v$.value.$reset();
     isLoadingOrder.value = false;
   }
 };
+
+watch(
+  () => orderInfo.typeTiming,
+  (val) => {
+    if (val === 'URGENT') {
+      orderInfo.timingDate = null;
+    }
+  }
+);
+
+provide('v$', v$);
 </script>
 
 <style scoped lang="less">

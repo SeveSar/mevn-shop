@@ -1,3 +1,6 @@
+import { OrderDTO } from './../../models/order.dto';
+import { IOrderCreate } from '@/types/IOrder';
+import { IOrder } from '@/types/IOrder';
 import { IHttpClient } from '../types/api';
 
 export class OrderService {
@@ -6,8 +9,8 @@ export class OrderService {
     this.$http = httpClient;
   }
 
-  async createOrder(body: any) {
-    const res = await this.$http.makeRequest({
+  async createOrder(body: IOrderCreate) {
+    const res = await this.$http.makeRequest<{ message: string }>({
       url: '/order',
       method: 'POST',
       data: body,
@@ -17,13 +20,16 @@ export class OrderService {
   }
 
   async getOrders() {
-    const res = await this.$http.makeRequest({
+    const res = await this.$http.makeRequest<{ items: IOrder[]; total: number; currentPage: number }>({
       url: '/order',
       method: 'GET',
       headers: { authorization: true },
     });
-    console.log(res.data, 'data,');
 
-    return res.data;
+    return {
+      items: res.data.items.map((order) => new OrderDTO(order)),
+      total: res.data.total,
+      currentPage: res.data.currentPage,
+    };
   }
 }

@@ -1,7 +1,7 @@
 import type { IProductResponse } from '@/types/responses/product';
 import { ProductDTO, ProductFullDTO } from '../models/product.dto';
 import type { IHttpClient } from '@/api/types/api';
-import type { IProduct, IProductBase } from '@/types/IProduct';
+import type { IProductBase } from '@/types/IProduct';
 import type { IFilterResponse } from '@/types/responses/filter';
 import { FilterDTO } from '@/models/filter.dto';
 

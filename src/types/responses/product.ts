@@ -1,4 +1,4 @@
-import { IDoughItem, IIngredientItem, IProduct, ISizeItem, IProductBase, IIngredientItemBase } from '@/types/IProduct';
+import { IDoughItem, IIngredientItem, ISizeItem, IProductBase, IIngredientItemBase } from '@/types/IProduct';
 import { TFilterItemResponse } from './filter';
 
 export interface IProductResponse extends IProductBase {

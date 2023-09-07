@@ -131,13 +131,13 @@ const addToCart = async () => {
 
   try {
     isLoadingAddingToCart.value = true;
+    modalStore.isModalProduct = false;
+
     await cartStore.addToCart({
       dough: selectedTabDough.value,
       size: selectedTabSize.value,
       ingredients: productData.value?.ingredients.filter((ing) => ing.isActive) ?? [],
     });
-
-    modalStore.isModalProduct = false;
   } catch (e) {
     console.error(e);
   } finally {

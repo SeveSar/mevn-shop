@@ -6,16 +6,18 @@
     </span>
 
     <input
-      v-model="model"
       class="base-input__control"
       :class="{ error: errors }"
-      :value="value ? value : model"
+      :value="value ? value : modelValue"
       :placeholder="placeholder"
       :type="type"
       data-testid="base-input"
       :disabled="disabled"
       @blur="onBlur"
       @focus="onFocus"
+      @input="updateModelValue"
+      ref="inputRef"
+      v-bind="$attrs"
     />
 
     <transition name="fade">
@@ -24,19 +26,30 @@
   </label>
 </template>
 
+<script lang="ts">
+export default defineComponent({
+  inheritAttrs: false,
+});
+</script>
+
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { ref, onMounted, defineComponent, onUnmounted } from 'vue';
+import IMask, { InputMask } from 'imask';
+import { TMaskKeys, getMask } from '@/configs/mask';
 
 interface Props {
   modelValue?: string | number;
+  value?: string | number;
   labelText?: string;
   errors?: string;
   placeholder?: string;
   type?: 'text' | 'number' | 'password';
   required?: boolean;
   disabled?: boolean;
-  value?: string | number;
+  mask?: TMaskKeys;
+  unMaskedValue?: boolean;
 }
+
 const props = withDefaults(defineProps<Props>(), {
   labelText: '',
   errors: '',
@@ -49,13 +62,46 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(['update:modelValue', 'onBlur', 'onFocus']);
 
-const model = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(value) {
-    emit('update:modelValue', value);
-  },
+let maskInstance: InputMask<{}> | null = null;
+
+const inputRef = ref(null);
+
+const maskInit = () => {
+  if (!props.mask) {
+    return;
+  }
+  maskInstance = IMask(inputRef.value, getMask(props.mask));
+
+  maskInstance.on('accept', handleAccept);
+  emit('update:modelValue', maskInstance.value);
+};
+onMounted(() => {
+  maskInit();
+});
+
+const handleAccept = () => {
+  emit('update:modelValue', maskInstance.value);
+  // maskInstance.updateValue();
+};
+const updateModelValue = (e: Event) => {
+  if (!props.mask) {
+    emit('update:modelValue', (e.target as HTMLInputElement).value);
+  }
+};
+
+const getUnMaskedValue = () => {
+  if (!maskInstance) return;
+  return maskInstance.unmaskedValue;
+};
+onUnmounted(() => {
+  if (maskInstance) {
+    maskInstance.off('accept', handleAccept);
+    maskInstance?.destroy();
+  }
+});
+
+defineExpose({
+  getUnMaskedValue,
 });
 
 const onBlur = () => {

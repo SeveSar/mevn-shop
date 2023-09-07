@@ -1,5 +1,5 @@
 import type { IHttpClient } from '@/api/types/api';
-import type { ICartResponse, IProductCart } from '@/types/responses/cart';
+import type { ICartResponse, IProductCartResponse } from '@/types/responses/cart';
 import { CartDTO } from '../models/cart.dto';
 
 export class CartService {
@@ -39,7 +39,13 @@ export class CartService {
     };
   }
 
-  async updateProduct({ idProduct, updatedProduct }: { idProduct: string; updatedProduct: Partial<IProductCart> }) {
+  async updateProduct({
+    idProduct,
+    updatedProduct,
+  }: {
+    idProduct: string;
+    updatedProduct: Partial<IProductCartResponse>;
+  }) {
     const res = await this.$http.makeRequest<ICartResponse>({
       url: `/basket/${idProduct}`,
       method: 'PATCH',

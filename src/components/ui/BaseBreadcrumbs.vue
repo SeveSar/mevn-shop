@@ -1,0 +1,48 @@
+<template>
+  <nav class="breadcrumbs">
+    <router-link v-for="(crumb, index) in breadcrumbs" :key="index" :to="crumb.to" class="breadcrumb-link">
+      {{ crumb.label }}
+    </router-link>
+  </nav>
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+const route = useRoute();
+
+const breadcrumbs = computed(() => {
+  const crumbs = [];
+  const matched = route.matched;
+
+  matched.forEach((match, index) => {
+    crumbs.push({
+      label: match.meta.breadcrumb || match.name,
+      to: getFullPath(match),
+    });
+  });
+
+  return crumbs;
+});
+
+function getFullPath(routeMatch) {
+  return routeMatch.path.startsWith('/') ? routeMatch.path : '/' + routeMatch.path;
+}
+</script>
+
+<style scoped lang="less">
+.breadcrumbs {
+  background: #f0f0f0;
+  padding: 10px;
+}
+
+.breadcrumb-link {
+  margin-right: 5px;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.breadcrumb-link:last-child {
+  color: #333;
+}
+</style>

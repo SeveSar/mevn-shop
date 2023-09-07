@@ -1,8 +1,13 @@
 export const ORDER_STATUS = {
   PROCESSED: 'PROCESSED',
-  DELIVERED: 'DELIVERED',
-  SHIPPED: 'SHIPPED',
-  CANCELED: 'CANCLED',
+  DONE: 'DONE',
+  CANCELED: 'CANCELED',
+} as const;
+
+export const ORDER_STATUS_MAP: Record<TOrderStatus, string> = {
+  PROCESSED: 'Обрабатывается',
+  DONE: 'Выполнен',
+  CANCELED: 'Отменен',
 } as const;
 
 export const ORDER_TYPE_DELIVERY = {
@@ -19,6 +24,12 @@ export const ORDER_PAYMENT = {
   CASH: 'CASH',
   CARD: 'CARD',
   APPLE: 'APPLE',
+} as const;
+
+export const ORDER_PAYMENT_MAP: Record<TOrderPayment, string> = {
+  CASH: 'Наличкой',
+  CARD: 'Картой',
+  APPLE: 'ApplePay',
 } as const;
 
 export type TOrderPayment = (typeof ORDER_PAYMENT)[keyof typeof ORDER_PAYMENT];

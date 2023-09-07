@@ -9,6 +9,10 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   linkActiveClass: 'active',
   linkExactActiveClass: 'exact-active',
+  scrollBehavior(to, from, savedPosition) {
+    // always scroll to top
+    return { top: 0 };
+  },
   routes: [
     {
       path: '/',
@@ -59,18 +63,26 @@ const router = createRouter({
       component: () => import('@/modules/profile/views/PageProfile/PageProfile.vue'),
       meta: {
         isAuth: true,
+        breadcrumb: 'Профиль',
       },
       redirect: { name: RouteNamesEnum.settings },
+
       children: [
         {
           path: 'settings',
           name: RouteNamesEnum.settings,
           component: () => import('@/modules/profile/views/PageSettings/PageSettings.vue'),
+          meta: {
+            breadcrumb: 'Настройки',
+          },
         },
         {
           path: 'orders',
           name: RouteNamesEnum.orders,
           component: () => import('@/modules/profile/views/PageOrders/PageOrders.vue'),
+          meta: {
+            breadcrumb: 'Заказы',
+          },
         },
       ],
     },

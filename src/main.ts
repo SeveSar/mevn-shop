@@ -6,7 +6,6 @@ import router from './router';
 import AppToast from './components/ui/AppToast.vue';
 
 import './assets/less/main.less';
-import 'v-calendar/style.css';
 
 import { useUserStore } from './modules/user/stores/user';
 

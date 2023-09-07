@@ -6,6 +6,7 @@ export interface IProductBase {
   description: string;
   imageUrl: string;
   amount: number;
+  id: string;
 }
 
 export interface IIngredientItemBase {
@@ -13,7 +14,7 @@ export interface IIngredientItemBase {
   title: string;
   img: string;
 }
-export interface IProduct extends IProductBase {
+export interface IProductFull extends IProductBase {
   id: string;
   ingredients: IIngredientItem[];
   dough: IDoughItem[];

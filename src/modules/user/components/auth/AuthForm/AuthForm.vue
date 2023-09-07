@@ -7,16 +7,16 @@
   <div class="form-switcher__notify">
     {{ currentNotifyText }}
     <button @click="switchTab">
-      {{ currentFormType === "login" ? "Создать" : "Войти" }}
+      {{ currentFormType === 'login' ? 'Создать' : 'Войти' }}
     </button>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
-import FormLogin from "../forms/FormLogin.vue";
-import FormRegister from "../forms/FormRegister.vue";
-type FormType = "login" | "register";
+import { computed, defineComponent, ref, watch } from 'vue';
+import FormLogin from '../forms/FormLogin.vue';
+import FormRegister from '../forms/FormRegister.vue';
+type FormType = 'login' | 'register';
 
 export default defineComponent({
   components: {
@@ -24,23 +24,21 @@ export default defineComponent({
     FormRegister,
   },
   setup(props) {
-    let currentFormType = ref<FormType>("login");
+    let currentFormType = ref<FormType>('login');
 
     const switchTab = () => {
       switch (currentFormType.value) {
-        case "login":
-          currentFormType.value = "register";
+        case 'login':
+          currentFormType.value = 'register';
           break;
-        case "register":
-          currentFormType.value = "login";
+        case 'register':
+          currentFormType.value = 'login';
           break;
       }
     };
 
     const currentNotifyText = computed(() => {
-      return currentFormType.value === "login"
-        ? "Нет аккаунта?"
-        : "Уже есть аккаунт?";
+      return currentFormType.value === 'login' ? 'Нет аккаунта?' : 'Уже есть аккаунт?';
     });
 
     return {

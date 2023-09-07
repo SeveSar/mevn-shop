@@ -9,16 +9,15 @@
     </div>
 
     <router-view v-slot="{ Component }">
-      <keep-alive>
+      <keep-aliveplog>
         <component :is="Component" />
-      </keep-alive>
+      </keep-aliveplog>
     </router-view>
   </section>
 </template>
 
 <script setup lang="ts">
 import { RouteNamesEnum } from '@/router/router.types';
-import BaseButton from '@/components/ui/BaseButton.vue';
 </script>
 
 <style scoped lang="less">

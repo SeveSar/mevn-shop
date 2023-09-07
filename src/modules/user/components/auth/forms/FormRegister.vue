@@ -5,41 +5,47 @@
       <div class="form-auth__text">Сможете быстро оформлять заказы, использовать бонусы</div>
     </div>
     <div class="form-auth__body">
-      <BaseInput
-        class="form-auth__control"
-        v-model="userCredentials.email"
-        labelText="Ваш E-mail"
-        id="auth-1"
-        name="email"
-        @onFocus="v$.email.$reset"
-        :errors="
-          v$.email.$errors.length ? v$.email.$errors[0].$message as string : null
-        "
-      />
-      <BaseInput
-        class="form-auth__control"
-        labelText="Ваш пароль"
-        id="auth-2"
-        type="password"
-        name="password"
-        @onFocus="v$.password.$reset"
-        :errors="
-          v$.password.$errors.length ? v$.password.$errors[0].$message as string : null
-        "
-        v-model="userCredentials.password"
-      />
-      <BaseInput
-        class="form-auth__control"
-        labelText="Ваше имя"
-        id="auth-2"
-        type="password"
-        name="password"
-        @onFocus="v$.name.$reset"
-        :errors="
-          v$.name.$errors.length ? v$.name.$errors[0].$message as string : null
-        "
-        v-model="userCredentials.name"
-      />
+      <div class="form-auth__group">
+        <BaseInput
+          class="form-auth__control"
+          v-model="userCredentials.email"
+          labelText="Ваш E-mail"
+          id="auth-1"
+          name="email"
+          @onFocus="v$.email.$reset"
+          :errors="
+            v$.email.$errors.length ? v$.email.$errors[0].$message as string : null
+          "
+        />
+      </div>
+      <div class="form-auth__group">
+        <BaseInput
+          class="form-auth__control"
+          labelText="Ваш пароль"
+          id="auth-2"
+          type="password"
+          name="password"
+          @onFocus="v$.password.$reset"
+          :errors="
+            v$.password.$errors.length ? v$.password.$errors[0].$message as string : null
+          "
+          v-model="userCredentials.password"
+        />
+      </div>
+      <div class="form-auth__group">
+        <BaseInput
+          class="form-auth__control"
+          labelText="Ваше имя"
+          id="auth-2"
+          type="password"
+          name="password"
+          @onFocus="v$.name.$reset"
+          :errors="
+            v$.name.$errors.length ? v$.name.$errors[0].$message as string : null
+          "
+          v-model="userCredentials.name"
+        />
+      </div>
     </div>
     <BaseButton class="form-auth__submit" :isLoading="isLoading" type="submit">Зарегистрироваться</BaseButton>
   </form>
@@ -87,7 +93,7 @@ export default defineComponent({
     const rules = {
       email: getValidationRule('email'),
       password: getValidationRule('password'),
-      name: getValidationRule('name'),
+      name: getValidationRule('requiredMinlength'),
     };
 
     const v$ = useVuelidate(rules, userCredentials, {
@@ -144,7 +150,7 @@ export default defineComponent({
     margin: 45px auto 0;
     width: 100%;
   }
-  &__control {
+  &__group {
     margin-bottom: 25px;
   }
 }

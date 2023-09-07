@@ -48,7 +48,6 @@ const classes = computed(() => ({
   [`button-size--${props.size}`]: true,
   [`button--disabled`]: props.disabled,
   [`button--loading`]: props.isLoading,
-
   [`button-color--${props.color}`]: true,
 }));
 

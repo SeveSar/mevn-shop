@@ -5,28 +5,32 @@
       <div class="form-auth__text">Сможете быстро оформлять заказы, использовать бонусы</div>
     </div>
     <div class="form-auth__body">
-      <BaseInput
-        class="form-auth__control"
-        v-model="userCredentials.email"
-        labelText="Ваш E-mail"
-        id="auth-1"
-        name="email"
-        @on-focus="v$.email.$reset"
-        :errors="
-          v$.email.$errors.length ? v$.email.$errors[0].$message as string : null
-        "
-      />
-      <BaseInput
-        labelText="Ваш пароль"
-        id="auth-2"
-        type="password"
-        name="password"
-        :errors="
-          v$.password.$errors.length ? v$.password.$errors[0].$message as string : null
-        "
-        v-model="userCredentials.password"
-        @on-focus="v$.password.$reset"
-      />
+      <div class="form-auth__group">
+        <BaseInput
+          class="form-auth__control"
+          v-model="userCredentials.email"
+          labelText="Ваш E-mail"
+          id="auth-1"
+          name="email"
+          @on-focus="v$.email.$reset"
+          :errors="
+            v$.email.$errors.length ? v$.email.$errors[0].$message as string : null
+          "
+        />
+      </div>
+      <div class="form-auth__group">
+        <BaseInput
+          labelText="Ваш пароль"
+          id="auth-2"
+          type="password"
+          name="password"
+          :errors="
+            v$.password.$errors.length ? v$.password.$errors[0].$message as string : null
+          "
+          v-model="userCredentials.password"
+          @on-focus="v$.password.$reset"
+        />
+      </div>
     </div>
 
     <BaseButton class="form-auth__submit" type="submit" :is-loading="isLoading"> Авторизоваться </BaseButton>
@@ -77,18 +81,17 @@ export default defineComponent({
     const onSubmit = async () => {
       const isFormCorrect = await v$.value.$validate();
 
-      if (isFormCorrect) {
-        try {
-          isLoading.value = true;
-          await userStore.login(userCredentials.email, userCredentials.password);
-          modalStore.closeAuthModal();
-          toaster.showToast({ type: 'info', text: 'Вы авторизовались' });
-        } catch (e) {
-          const message = getErrorMessage(e);
-          toaster.showToast({ type: 'error', text: message });
-        } finally {
-          isLoading.value = false;
-        }
+      if (!isFormCorrect) return;
+      try {
+        isLoading.value = true;
+        await userStore.login(userCredentials.email, userCredentials.password);
+        modalStore.closeAuthModal();
+        toaster.showToast({ type: 'info', text: 'Вы авторизовались' });
+      } catch (e) {
+        const message = getErrorMessage(e);
+        toaster.showToast({ type: 'error', text: message });
+      } finally {
+        isLoading.value = false;
       }
     };
 
@@ -133,7 +136,8 @@ export default defineComponent({
     margin: 25px auto 0;
     width: 100%;
   }
-  &__control {
+
+  &__group {
     margin-bottom: 25px;
   }
 }
