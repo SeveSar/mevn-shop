@@ -11,7 +11,6 @@ test('properly handles v-model', async () => {
       modelValue: value,
     },
   });
-
   // Get the input DOM node by querying the associated label.
   const inputElement = getByRole('textbox');
 
@@ -20,9 +19,7 @@ test('properly handles v-model', async () => {
 
   // Проверяем, что событие 'input' было эмитировано
   expect(emitted().input).toBeTruthy();
-
   // Проверяем, что значение 'Test Value' было передано в событие 'input'
-
   expect(getByDisplayValue(value)).toBeInTheDocument();
 
   debug();

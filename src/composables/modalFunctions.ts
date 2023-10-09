@@ -1,5 +1,5 @@
 import { type Ref, onMounted, onUnmounted, watch } from 'vue';
-import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 
 export function useModalFunctions(isOpen: Ref<boolean>, close: () => void) {
   const route = useRoute();
@@ -26,7 +26,7 @@ export function useModalFunctions(isOpen: Ref<boolean>, close: () => void) {
     () => route.name,
     () => {
       document.body.classList.remove('no-scroll');
-      close();
+      // close();
     }
   );
 }

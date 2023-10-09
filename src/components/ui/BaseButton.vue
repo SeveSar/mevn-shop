@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineComponent } from 'vue';
+import { computed } from 'vue';
 import type { ButtonHTMLAttributes } from 'vue';
 import BaseIcon from './BaseIcon/BaseIcon.vue';
 
@@ -31,6 +31,7 @@ interface Props {
   isLoading?: boolean;
   to?: { name: string } | string | null;
 }
+
 const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
   size: 'medium',

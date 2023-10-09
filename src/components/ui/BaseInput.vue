@@ -36,6 +36,7 @@ export default defineComponent({
 import { ref, onMounted, defineComponent, onUnmounted } from 'vue';
 import IMask, { InputMask } from 'imask';
 import { TMaskKeys, getMask } from '@/configs/mask';
+import { useRouter } from 'vue-router';
 
 interface Props {
   modelValue?: string | number;
@@ -47,9 +48,9 @@ interface Props {
   required?: boolean;
   disabled?: boolean;
   mask?: TMaskKeys;
-  unMaskedValue?: boolean;
 }
 
+const router = useRouter();
 const props = withDefaults(defineProps<Props>(), {
   labelText: '',
   errors: '',

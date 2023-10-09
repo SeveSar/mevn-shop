@@ -12,7 +12,6 @@
 
 <script setup lang="ts">
 import { OrderProductDTO } from '@/models/order.dto';
-import { computed } from 'vue';
 
 interface Props {
   product: OrderProductDTO;

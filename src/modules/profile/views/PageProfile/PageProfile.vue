@@ -9,9 +9,9 @@
     </div>
 
     <router-view v-slot="{ Component }">
-      <keep-aliveplog>
+      <keep-alive>
         <component :is="Component" />
-      </keep-aliveplog>
+      </keep-alive>
     </router-view>
   </section>
 </template>

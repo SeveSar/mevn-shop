@@ -19,11 +19,14 @@ export class OrderService {
     return res.data;
   }
 
-  async getOrders() {
+  async getOrders({ page }: { page: number }) {
     const res = await this.$http.makeRequest<{ items: IOrder[]; total: number; currentPage: number }>({
       url: '/order',
       method: 'GET',
       headers: { authorization: true },
+      config: {
+        params: { page },
+      },
     });
 
     return {

@@ -16,13 +16,20 @@ import ModalAuth from './modules/user/components/modals/ModalAuth/ModalAuth.vue'
 import { useModalStore } from './stores/modal';
 import { useRoute } from 'vue-router';
 import { watch } from 'vue';
+import { useRouter } from 'vue-router';
 
 const modalStore = useModalStore();
 const route = useRoute();
-
-watch(route, () => {
-  console.log(route, 'route');
-});
+const router = useRouter();
+watch(
+  () => route.query.requireAuth,
+  (val) => {
+    if (val) {
+      modalStore.openAuthModal();
+      router.replace({ query: {} });
+    }
+  }
+);
 </script>
 
 <style lang="less">

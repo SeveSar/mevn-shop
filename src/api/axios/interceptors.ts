@@ -16,6 +16,7 @@ interface ConfigImplements extends AxiosRequestConfig {
   _isRetry?: boolean;
 }
 let refreshTokenRequest: Promise<AxiosResponse<UserResponse>> | null = null;
+
 const errorHandler = async (error: AxiosError) => {
   const userStore = useUserStore();
   const response = error.response;

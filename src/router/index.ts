@@ -22,9 +22,6 @@ const router = createRouter({
       path: '/products',
       name: RouteNamesEnum.products,
       component: () => import('@/modules/product/views/PageProducts/PageProducts.vue'),
-      meta: {
-        isAuth: true,
-      },
     },
     {
       path: '/login',
@@ -94,14 +91,14 @@ const router = createRouter({
         isAuth: true,
       },
     },
-    {
-      path: '/order-done',
-      name: 'Order',
-      component: () => import('@/modules/order/views/PageOrder/PageOrder.vue'),
-      meta: {
-        isAuth: true,
-      },
-    },
+    // {
+    //   path: '/order-done',
+    //   name: 'Order',
+    //   component: () => import('@/modules/order/views/PageOrder/PageOrder.vue'),
+    //   meta: {
+    //     isAuth: true,
+    //   },
+    // },
 
     {
       name: 'Product',
@@ -119,5 +116,5 @@ const router = createRouter({
 });
 
 router.beforeEach(loadLayoutMiddleware);
-// router.beforeEach(authMiddleware);
+router.beforeEach(authMiddleware);
 export default router;

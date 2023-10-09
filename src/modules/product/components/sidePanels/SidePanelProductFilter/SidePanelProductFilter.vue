@@ -1,8 +1,8 @@
 <template>
   <BaseSidePanel
-    :isOpen="modal"
+    :isOpen="isOpen"
     @close="onClose"
-    @show="emit('update:modal', true)"
+    @show="emit('update:isOpen', true)"
     class="panel-product-filter"
     title="Фильтры"
   >
@@ -56,10 +56,10 @@ import type { IFilter } from '@/types/IFilter';
 import { api } from '@/api/api';
 
 interface Props {
-  modal: boolean;
+  isOpen: boolean;
 }
 const props = defineProps<Props>();
-const emit = defineEmits(['update:modal']);
+const emit = defineEmits(['update:isOpen']);
 
 const productsStore = useProductsStore();
 
@@ -94,7 +94,7 @@ const fetchFilters = async () => {
 };
 
 const onClose = () => {
-  emit('update:modal', false);
+  emit('update:isOpen', false);
   selectedFilters.value = [...lastAcceptedFilters.value];
 };
 fetchFilters();

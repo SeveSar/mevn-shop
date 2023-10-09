@@ -2,8 +2,8 @@
   <transition name="fade">
     <div class="modal-overlay" v-if="isOpen" @mousedown.self="close" data-testid="base-modal-overlay">
       <div class="modal">
-        <button class="modal-close" @click="close">
-          <!-- <img src="@/assets/images/icons/close.svg" alt="" /> -->
+        <button class="modal-close" @click="close" data-testid="button-close">
+          <IconCrossBig class="modal-close__icon" />
         </button>
         <div class="modal__header" v-if="$slots.header">
           <slot name="header"></slot>
@@ -16,38 +16,28 @@
   </transition>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { defineComponent, toRefs, watch } from 'vue';
 import { useModalFunctions } from '@/composables/modalFunctions';
-export default defineComponent({
-  props: {
-    isOpen: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  emits: ['close', 'show'],
+import IconCrossBig from '@/components/ui/icons/IconCrossBig.vue';
 
-  setup(props, { emit }) {
-    //state
-    const { isOpen } = toRefs(props);
-
-    useModalFunctions(isOpen, close);
-
-    //methods
-    function close() {
-      emit('close');
-    }
-    const show = () => {
-      emit('show');
-    };
-
-    return {
-      close,
-      show,
-    };
+const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    default: false,
   },
 });
+
+const emit = defineEmits(['close', 'show']);
+
+const { isOpen } = toRefs(props);
+
+useModalFunctions(isOpen, close);
+
+//methods
+function close() {
+  emit('close');
+}
 </script>
 
 <style scoped lang="less">
@@ -70,6 +60,12 @@ export default defineComponent({
 
   &:hover {
     transform: translateY(-3px);
+  }
+
+  &__icon {
+    width: 30px;
+    height: auto;
+    color: @white-color;
   }
 }
 

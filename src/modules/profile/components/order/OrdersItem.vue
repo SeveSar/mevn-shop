@@ -1,7 +1,7 @@
 <template>
-  <AccordionList :is-close-others="false">
+  <BaseAccordionList :is-close-others="false">
     <div class="orders-item">
-      <AccordionItem>
+      <BaseAccordionListItem>
         <template #trigger="{ isVisible }">
           <div class="orders-item__header orders-item-header" :class="{ 'orders-item-header--active': isVisible }">
             <IconArrowDown class="orders-item-header__icon" />
@@ -48,15 +48,15 @@
             </div>
           </div>
         </template>
-      </AccordionItem>
+      </BaseAccordionListItem>
     </div>
-  </AccordionList>
+  </BaseAccordionList>
 </template>
 
 <script setup lang="ts">
 import IconArrowDown from '@/components/ui/icons/IconArrowDown.vue';
-import AccordionList from '@/components/ui/accordion/AccordionList.vue';
-import AccordionItem from '@/components/ui/accordion/AccordionItem.vue';
+import BaseAccordionList from '@/components/ui/accordion/BaseAccordionList.vue';
+import BaseAccordionListItem from '@/components/ui/accordion/BaseAccordionListItem.vue';
 import OrdersItemProduct from './OrdersItemProduct.vue';
 
 import { computed, ref } from 'vue';

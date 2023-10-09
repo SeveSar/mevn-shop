@@ -4,7 +4,7 @@
       <transition name="slide-panel-inner">
         <div class="side-panel" v-show="isOpen">
           <button class="side-panel__close" @click="close">
-            <BaseIcon name="IconCrossBig" />
+            <BaseIcon class="side-panel__close-icon" name="IconCrossBig" />
           </button>
           <div class="side-panel__header">
             <h3 class="side-panel__title">
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, watch } from 'vue';
+import { defineComponent, ref, toRefs, watch } from 'vue';
 import { useModalFunctions } from '@/composables/modalFunctions';
 import BaseIcon from './BaseIcon/BaseIcon.vue';
 import { useRoute } from 'vue-router';
@@ -55,13 +55,8 @@ export default defineComponent({
       emit('close');
     }
 
-    const show = () => {
-      emit('show');
-    };
-
     return {
       close,
-      show,
     };
   },
 });
@@ -105,6 +100,11 @@ export default defineComponent({
     right: 20px;
     &:hover {
       transform: translateY(-3px);
+    }
+
+    &-icon {
+      width: 25px;
+      height: auto;
     }
   }
 

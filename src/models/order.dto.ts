@@ -64,7 +64,5 @@ export class OrderProductDTO {
     this.ingredients = model.ingredients;
     this.size = model.size;
     this.imageUrl = model.product.imageUrl;
-
-    console.log(model.product.imageUrl, 'fff');
   }
 }

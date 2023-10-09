@@ -20,6 +20,7 @@ const userStore = useUserStore();
 const start = async () => {
   try {
     await userStore.auth();
+
     await cartStore.getCart();
   } catch (e) {
     console.error(e);

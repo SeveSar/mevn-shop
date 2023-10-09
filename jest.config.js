@@ -11,7 +11,7 @@ module.exports = {
   },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
-    '^.+\\.svg$': '<rootDir>/svgTransform.js',
+    '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
+    '\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/file-mock.js',
   },
 };

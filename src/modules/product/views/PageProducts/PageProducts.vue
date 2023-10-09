@@ -10,7 +10,7 @@
     </ProductBlock>
   </div>
   <teleport to="body">
-    <SidePanelProductFilter v-model:modal="isProductFilterPanel" />
+    <SidePanelProductFilter v-model:isOpen="isProductFilterPanel" />
   </teleport>
 </template>
 

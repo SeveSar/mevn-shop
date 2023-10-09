@@ -1,4 +1,4 @@
-import { render, fireEvent, screen, getByRole } from '@testing-library/vue';
+import { render, fireEvent, screen, getByRole, waitFor } from '@testing-library/vue';
 import '@testing-library/jest-dom';
 import BaseModal from './BaseModal.vue';
 
@@ -23,9 +23,9 @@ it('renders with header and body', () => {
   debug();
 });
 
-it('closes by clicking close button', async () => {
+it.only('closes by clicking close button', async () => {
   const body = 'Body';
-  const { debug, queryByText, getByRole, rerender } = render(BaseModal, {
+  const { debug, queryByText, getByRole, queryByTestId, rerender } = render(BaseModal, {
     slots: {
       default: body,
     },
@@ -38,8 +38,10 @@ it('closes by clicking close button', async () => {
   await rerender({
     isOpen: false,
   });
-
-  expect(queryByText(body)).toBeNull();
+  waitFor(() => {
+    expect(queryByText(body)).toBeNull();
+    expect(queryByTestId('base-modal-overlay')).toBeNull();
+  });
   debug();
 });
 

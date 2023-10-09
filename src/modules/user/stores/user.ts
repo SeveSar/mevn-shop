@@ -19,6 +19,7 @@ export const useUserStore = defineStore('user', () => {
 
     cartStore.getCart();
   }
+
   async function signUp(email: string, password: string) {
     const data = await api.user.register(email, password);
     user.value = data.user;
