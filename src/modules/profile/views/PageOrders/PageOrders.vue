@@ -29,7 +29,7 @@ import { useRoute } from 'vue-router';
 const orderItems = ref<OrderDTO[]>([]);
 const route = useRoute();
 const totalOrders = ref(0);
-const currentPage = ref(+route.query.page ?? 1);
+const currentPage = ref(+route.query.page || 1);
 const isLoading = ref(true);
 
 const getOrders = async () => {
