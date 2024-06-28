@@ -1,9 +1,9 @@
-import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from 'axios';
+import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
 import type { UserResponse } from '../../types/responses/user';
+import { api } from '../api';
 import { useUserStore } from '@/modules/user/stores/user';
 import router from '@/router';
-import { api } from '../api';
 import { getAccessToken, setToken } from '@/utils/localstorage';
 
 enum StatusCode {
@@ -13,17 +13,17 @@ enum StatusCode {
   InternalServerError = 500,
 }
 interface ConfigImplements extends AxiosRequestConfig {
-  _isRetry?: boolean;
+  _isRetry?: boolean
 }
-let refreshTokenRequest: Promise<AxiosResponse<UserResponse>> | null = null;
+let refreshTokenRequest: Promise<UserResponse> | null = null;
 
-const errorHandler = async (error: AxiosError) => {
+async function errorHandler(error: AxiosError) {
   const userStore = useUserStore();
   const response = error.response;
   const config = error.config as ConfigImplements;
 
   if (!response) {
-    return Promise.reject('Unknown Error');
+    return Promise.reject(new Error('Unknown Error'));
   }
   const { status } = response;
   switch (status) {
@@ -32,12 +32,14 @@ const errorHandler = async (error: AxiosError) => {
         if (refreshTokenRequest === null) {
           refreshTokenRequest = api.user.refresh();
         }
-        const res = await refreshTokenRequest;
+        await refreshTokenRequest;
         refreshTokenRequest = null;
-        setToken(res.data.accessToken);
-        config.headers.authorization = `Bearer ${getAccessToken()}`;
+        if (config.headers) {
+          config.headers.authorization = `Bearer ${getAccessToken()}`;
+        }
         return axios(config);
-      } catch (e) {
+      }
+      catch (e) {
         userStore.logOut().then(() => {
           router.push('/login');
         });
@@ -45,15 +47,15 @@ const errorHandler = async (error: AxiosError) => {
     }
   }
   return Promise.reject(error);
-};
+}
 
-const onResponseError = async (error: AxiosError): Promise<AxiosResponse> => {
+async function onResponseError(error: AxiosError) {
   return errorHandler(error);
-};
+}
 
-const onResponseSuccess = (successRes: AxiosResponse): AxiosResponse => {
+function onResponseSuccess(successRes: AxiosResponse) {
   return successRes;
-};
+}
 
 export default function (http: AxiosInstance) {
   http.interceptors.response.use(onResponseSuccess, onResponseError);

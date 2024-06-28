@@ -1,29 +1,30 @@
 import { ORDER_PAYMENT_MAP } from './../constants';
-import { IProductCartResponse } from '@/types/responses/cart';
-import { ORDER_STATUS_MAP, TOrderPayment, TOrderStatus, TOrderTypeDelivery, TOrderTypeTiming } from '@/constants';
-import { IDoughItem, IIngredientItem, ISizeItem } from '@/types/IProduct';
-import { IUser } from '@/types/IUser';
-import type { IOrderAddress, IOrder } from '@/types/IOrder';
-import { IProductResponse } from '@/types/responses/product';
+import type { IProductCartResponse } from '@/types/responses/cart';
+import type { TOrderPayment, TOrderStatus, TOrderTypeDelivery, TOrderTypeTiming } from '@/constants';
+import { ORDER_STATUS_MAP } from '@/constants';
+import type { IDoughItem, IIngredientItem, ISizeItem } from '@/types/IProduct';
+import type { IUser } from '@/types/IUser';
+import type { IOrder, IOrderAddress } from '@/types/IOrder';
+import type { IProductResponse } from '@/types/responses/product';
 
 export class OrderDTO {
-  _id: string;
-  user: IUser;
-  email: string | null;
-  name: string;
-  phone: string;
+  _id!: string;
+  user!: IUser;
+  email!: string | null;
+  name!: string;
+  phone!: string;
   products: OrderProductDTO[];
-  number: string;
-  status: TOrderStatus;
-  comment: string | null;
-  address: IOrderAddress | null;
-  typeDelivery: TOrderTypeDelivery;
-  typeTiming: TOrderTypeTiming;
-  timingDate: null | string;
-  restaurant: string | null;
-  payment: TOrderPayment;
-  createdAt: string;
-  updatedAt: string;
+  number!: string;
+  status!: TOrderStatus;
+  comment!: string | null;
+  address!: IOrderAddress | null;
+  typeDelivery!: TOrderTypeDelivery;
+  typeTiming!: TOrderTypeTiming;
+  timingDate!: null | string;
+  restaurant!: string | null;
+  payment!: TOrderPayment;
+  createdAt!: string;
+  updatedAt!: string;
 
   constructor(model: IOrder) {
     Object.assign(this, model);

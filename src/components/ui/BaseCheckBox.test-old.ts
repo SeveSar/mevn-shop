@@ -4,7 +4,7 @@ import BaseCheckBox from './BaseCheckBox.vue';
 
 // предосталвяется jest'ом
 // в нём описывается  сам тест
-test('renders with label and checked with prop modelValue: Array', () => {
+it('renders with label and checked with prop modelValue: Array', () => {
   const label = 'Test checkbox';
   const options = {
     props: {
@@ -33,7 +33,7 @@ it('renders checked with prop modelValue: boolean', () => {
   screen.debug();
 });
 
-test('renders unchecked with prop modelValue: boolean', () => {
+it('renders unchecked with prop modelValue: boolean', () => {
   render(BaseCheckBox, {
     props: {
       modelValue: false,

@@ -1,18 +1,19 @@
 <template>
   <nav class="breadcrumbs">
-    <router-link v-for="(crumb, index) in breadcrumbs" :key="index" :to="crumb.to" class="breadcrumb-link">
+    <router-link v-for="(crumb, index) in breadcrumbs" :key="index" :to="crumb.to" fa faw awf aa aw fwa fw
+      class="breadcrumb-link">
       {{ crumb.label }}
     </router-link>
   </nav>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from "vue";
 import { useRoute } from 'vue-router';
 const route = useRoute();
 
 const breadcrumbs = computed(() => {
-  const crumbs = [];
+  const crumbs: any = [];
   const matched = route.matched;
 
   matched.forEach((match, index) => {
@@ -25,7 +26,7 @@ const breadcrumbs = computed(() => {
   return crumbs;
 });
 
-function getFullPath(routeMatch) {
+function getFullPath(routeMatch: any) {
   return routeMatch.path.startsWith('/') ? routeMatch.path : '/' + routeMatch.path;
 }
 </script>

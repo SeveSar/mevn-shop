@@ -1,8 +1,45 @@
+<script lang="ts">
+import { defineComponent, ref, toRefs, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import BaseIcon from './BaseIcon/BaseIcon.vue';
+import { useModalFunctions } from '@/composables/modalFunctions';
+
+export default defineComponent({
+  components: {
+    BaseIcon,
+  },
+  props: {
+    isOpen: {
+      type: Boolean,
+      default: false,
+    },
+    title: {
+      type: String,
+      default: null,
+    },
+  },
+  emits: ['close', 'show'],
+  setup(props, { emit }) {
+    const { isOpen } = toRefs(props);
+
+    useModalFunctions(isOpen, close);
+    // methods
+    function close() {
+      emit('close');
+    }
+
+    return {
+      close,
+    };
+  },
+});
+</script>
+
 <template>
   <transition name="slide-panel">
-    <div class="side-panel-overlay" v-show="isOpen" @mousedown.self="close">
+    <div v-show="isOpen" class="side-panel-overlay" @mousedown.self="close">
       <transition name="slide-panel-inner">
-        <div class="side-panel" v-show="isOpen">
+        <div v-show="isOpen" class="side-panel">
           <button class="side-panel__close" @click="close">
             <BaseIcon class="side-panel__close-icon" name="IconCrossBig" />
           </button>
@@ -22,45 +59,6 @@
     </div>
   </transition>
 </template>
-
-<script lang="ts">
-import { defineComponent, ref, toRefs, watch } from 'vue';
-import { useModalFunctions } from '@/composables/modalFunctions';
-import BaseIcon from './BaseIcon/BaseIcon.vue';
-import { useRoute } from 'vue-router';
-
-export default defineComponent({
-  emits: ['close', 'show'],
-  components: {
-    BaseIcon,
-  },
-  props: {
-    isOpen: {
-      type: Boolean,
-      default: false,
-    },
-    title: {
-      type: String,
-      default: null,
-    },
-  },
-  setup(props, { emit }) {
-    const route = useRoute();
-    //state
-    const { isOpen } = toRefs(props);
-
-    useModalFunctions(isOpen, close);
-    //methods
-    function close() {
-      emit('close');
-    }
-
-    return {
-      close,
-    };
-  },
-});
-</script>
 
 <style scoped lang="less">
 .side-panel {

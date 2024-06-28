@@ -1,37 +1,12 @@
-<template>
-  <article class="product">
-    <div class="product__img">
-      <img :src="(product.imageUrl as string)" />
-    </div>
-    <div class="product__body">
-      <h4 class="product__name">
-        {{ product.title }}
-      </h4>
-
-      <div class="product__descr">
-        {{ product.description }}
-      </div>
-
-      <!-- <div class="product__text">Рейтинг: {{ product.rating }}</div> -->
-    </div>
-    <div class="product__actions">
-      <BaseButton @click="openProductModal(product)"> Выбрать </BaseButton>
-
-      <div class="product__price">от {{ product.price }} ₽</div>
-    </div>
-  </article>
-</template>
-
 <script lang="ts">
 import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
 
+import type { ProductDTO } from '../../models/product.dto';
 import { useProductsStore } from '@/modules/product/stores/products';
 import BaseButton from '@/components/ui/BaseButton.vue';
 
-import type { IProduct } from '@/types/IProduct';
 import { useModalStore } from '@/stores/modal';
-import { ProductDTO } from '../../models/product.dto';
 
 export default defineComponent({
   components: {
@@ -57,6 +32,34 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <article class="product">
+    <div class="product__img">
+      <img :src="(product.imageUrl as string)">
+    </div>
+    <div class="product__body">
+      <h4 class="product__name">
+        {{ product.title }}
+      </h4>
+
+      <div class="product__descr">
+        {{ product.description }}
+      </div>
+
+      <!-- <div class="product__text">Рейтинг: {{ product.rating }}</div> -->
+    </div>
+    <div class="product__actions">
+      <BaseButton @click="openProductModal(product)">
+        Выбрать
+      </BaseButton>
+
+      <div class="product__price">
+        от {{ product.price }} ₽
+      </div>
+    </div>
+  </article>
+</template>
 
 <style scoped lang="less">
 .product {

@@ -6,51 +6,49 @@ jest.mock('vue-router', () => ({
   useRoute: jest.fn(() => ({ name: 'Home' })),
 }));
 
-it('renders with header and body', () => {
-  const header = 'Header';
-  const body = 'Body';
-  const { debug, getByText } = render(BaseModal, {
+const renderModal = (header = '', body = '', isOpen = true) => {
+  return render(BaseModal, {
     slots: {
       header,
       default: body,
     },
     props: {
-      isOpen: true,
+      isOpen,
     },
   });
+};
+
+it('renders with header and body', () => {
+  const header = 'Header';
+  const body = 'Body';
+
+  const { getByText } = renderModal(header, body);
+
   getByText(header);
   getByText(body);
-  debug();
+  screen.debug();
 });
 
-it.only('closes by clicking close button', async () => {
+it('closes by clicking close button', async () => {
   const body = 'Body';
-  const { debug, queryByText, getByRole, queryByTestId, rerender } = render(BaseModal, {
-    slots: {
-      default: body,
-    },
-    props: {
-      isOpen: true,
-    },
-  });
 
+  const { queryByTestId, rerender, getByRole, queryByText, getByTestId } = renderModal('', body);
+
+  getByTestId('base-modal-overlay');
   fireEvent.click(getByRole('button'));
   await rerender({
     isOpen: false,
   });
-  waitFor(() => {
+
+  await waitFor(() => {
     expect(queryByText(body)).toBeNull();
     expect(queryByTestId('base-modal-overlay')).toBeNull();
   });
-  debug();
+  screen.debug();
 });
 
 it('closes by clicking overlay element', async () => {
-  const { debug, getByTestId, queryByTestId, rerender } = render(BaseModal, {
-    props: {
-      isOpen: true,
-    },
-  });
+  const { getByTestId, queryByTestId, rerender } = renderModal();
 
   fireEvent.click(getByTestId('base-modal-overlay'));
   await rerender({
@@ -58,5 +56,5 @@ it('closes by clicking overlay element', async () => {
   });
 
   expect(queryByTestId('base-modal-overlay')).toBeNull();
-  debug();
+  screen.debug();
 });

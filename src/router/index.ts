@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
 import ErrorPage from '@/views/PageError/PageError.vue';
 import { loadLayoutMiddleware } from './middleware/loadLayout.middleware';
 import { authMiddleware } from './middleware/auth.middleware';
@@ -100,11 +100,11 @@ const router = createRouter({
     //   },
     // },
 
-    {
-      name: 'Product',
-      path: '/products/:id',
-      component: () => import('@/modules/product/views/PageProduct/PageProduct.vue'),
-    },
+    // {
+    //   name: 'Product',
+    //   path: '/products/:id',
+    //   component: () => import('@/modules/product/views/PageProduct/PageProduct.vue'),
+    // },
     {
       path: '/:pathMatch(.*)*',
       component: ErrorPage,
@@ -112,9 +112,10 @@ const router = createRouter({
         layout: AppLayoutsEnum.error,
       },
     },
-  ],
+  ] as RouteRecordRaw[],
 });
 
 router.beforeEach(loadLayoutMiddleware);
 router.beforeEach(authMiddleware);
+
 export default router;

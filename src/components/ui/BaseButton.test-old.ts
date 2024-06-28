@@ -4,9 +4,9 @@ import BaseButton from './BaseButton.vue';
 
 // предосталвяется jest'ом
 // в нём описывается  сам тест
-test('renders base button', () => {
+it('renders base button', () => {
   //3 состовляющие теста
-  // given
+  // given (Arrange)
   const options = {
     slots: {
       default: 'Test button',

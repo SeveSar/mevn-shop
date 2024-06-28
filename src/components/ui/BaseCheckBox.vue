@@ -1,13 +1,5 @@
-<template>
-  <label class="base-checkbox" :class="{ 'base-checkbox--active': isChecked }">
-    <input type="checkbox" class="base-checkbox__control" :value="value" v-model="model" :disabled="disabled" />
-
-    {{ label }}
-  </label>
-</template>
-
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { computed, defineComponent } from 'vue';
 
 export default defineComponent({
   props: {
@@ -35,9 +27,13 @@ export default defineComponent({
     const isChecked = computed(() => {
       if (typeof props.modelValue === 'boolean') {
         return model.value;
-      } else if (Array.isArray(props.modelValue)) {
+      }
+
+      else if (Array.isArray(props.modelValue)) {
         return props.modelValue.includes(props.value);
       }
+
+      return false;
     });
     return {
       isChecked,
@@ -46,6 +42,14 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <label class="base-checkbox" :class="{ 'base-checkbox--active': isChecked }">
+    <input v-model="model" type="checkbox" class="base-checkbox__control" :value="value" :disabled="disabled">
+
+    {{ label }}
+  </label>
+</template>
 
 <style scoped lang="less">
 .base-checkbox {

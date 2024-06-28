@@ -29,7 +29,7 @@ interface Props {
   type?: ButtonHTMLAttributes['type'];
   disabled?: boolean;
   isLoading?: boolean;
-  to?: { name: string } | string | null;
+  to?: { name: string; query?: { [key: string]: string } } | string | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -43,7 +43,6 @@ const props = withDefaults(defineProps<Props>(), {
   to: null,
 });
 const emit = defineEmits(['click']);
-
 const classes = computed(() => ({
   [`button-variant--${props.variant}`]: true,
   [`button-size--${props.size}`]: true,

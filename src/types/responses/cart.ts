@@ -1,4 +1,4 @@
-import type { IDoughItem, IIngredientItem, IProduct, ISizeItem } from '@/types/IProduct';
+import type { IDoughItem, IIngredientItem, ISizeItem } from '@/types/IProduct';
 import type { IProductResponse } from './product';
 
 export interface IProductCartResponse {

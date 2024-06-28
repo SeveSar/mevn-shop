@@ -2,7 +2,7 @@ import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { api } from '@/api/api';
 import { useCartStore } from '@/modules/cart/stores/cart';
-import { setToken, cleanTokensData, getItemFromLocalstorage, clearAll } from '@/utils/localstorage';
+import { cleanTokensData, clearAll, getItemFromLocalstorage, setToken } from '@/utils/localstorage';
 import type { IUser } from '@/types/IUser';
 
 export const useUserStore = defineStore('user', () => {
@@ -29,12 +29,13 @@ export const useUserStore = defineStore('user', () => {
 
   async function auth() {
     try {
-      const res = await api.user.refresh();
-      if (res) {
-        user.value = res.data.user;
-        setToken(res.data.accessToken);
+      const data = await api.user.refresh();
+      if (data) {
+        user.value = data.user;
       }
-    } catch (e) {
+          cartStore.getCart();
+    }
+    catch (e) {
       cleanTokensData();
       console.error(e);
     }

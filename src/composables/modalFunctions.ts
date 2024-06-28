@@ -18,15 +18,17 @@ export function useModalFunctions(isOpen: Ref<boolean>, close: () => void) {
   });
 
   watch(isOpen, (val) => {
-    if (val) document.body.classList.add('no-scroll');
-    else document.body.classList.remove('no-scroll');
+    if (val) { document.body.classList.add('no-scroll'); }
+    else {
+      document.body.classList.remove('no-scroll');
+    }
   });
 
   watch(
     () => route.name,
     () => {
       document.body.classList.remove('no-scroll');
-      // close();
-    }
+      close();
+    },
   );
 }

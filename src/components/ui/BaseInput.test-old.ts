@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 
 import BaseInput from './BaseInput.vue';
 
-test('properly handles v-model', async () => {
+it('properly handles v-model', async () => {
   // Asserts initial state.
   const value = 'Test Value';
   const { emitted, getByRole, debug, getByDisplayValue } = render(BaseInput, {
@@ -25,7 +25,7 @@ test('properly handles v-model', async () => {
   debug();
 });
 
-test('renders input element with placeholder', () => {
+it('renders input element with placeholder', () => {
   const placeholderText = 'Placeholder Test';
 
   const { getByPlaceholderText, debug } = render(BaseInput, {
@@ -40,7 +40,7 @@ test('renders input element with placeholder', () => {
   debug();
 });
 
-test('renders error elem', () => {
+it('renders error elem', () => {
   const errorText = 'Error Test';
   const { queryByText, debug } = render(BaseInput, {
     props: {
@@ -54,7 +54,7 @@ test('renders error elem', () => {
   debug();
 });
 
-test('renders label elem', () => {
+it('renders label elem', () => {
   const labelText = 'Label Test';
   const { queryByText, debug } = render(BaseInput, {
     props: {

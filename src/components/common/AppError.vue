@@ -5,12 +5,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 export default defineComponent({
   props: {
     title: {
       type: String,
-      default: "Ошибка 404. Страница не найдена",
+      default: 'Ошибка 404. Страница не найдена',
     },
   },
 });
@@ -18,7 +18,6 @@ export default defineComponent({
 
 <style scoped>
 .error {
-  height: calc(100vh - 105px);
   text-align: center;
   display: flex;
   align-items: center;

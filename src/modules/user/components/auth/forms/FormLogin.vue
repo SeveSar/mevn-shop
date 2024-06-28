@@ -6,30 +6,13 @@
     </div>
     <div class="form-auth__body">
       <div class="form-auth__group">
-        <BaseInput
-          class="form-auth__control"
-          v-model="userCredentials.email"
-          labelText="Ваш E-mail"
-          id="auth-1"
-          name="email"
-          @on-focus="v$.email.$reset"
-          :errors="
-            v$.email.$errors.length ? v$.email.$errors[0].$message as string : null
-          "
-        />
+        <BaseInput class="form-auth__control" v-model="userCredentials.email" labelText="Ваш E-mail" id="auth-1"
+          name="email" @on-focus="v$.email.$reset" :errors="v$.email.$errors.length ? v$.email.$errors[0].$message as string : null
+    " />
       </div>
       <div class="form-auth__group">
-        <BaseInput
-          labelText="Ваш пароль"
-          id="auth-2"
-          type="password"
-          name="password"
-          :errors="
-            v$.password.$errors.length ? v$.password.$errors[0].$message as string : null
-          "
-          v-model="userCredentials.password"
-          @on-focus="v$.password.$reset"
-        />
+        <BaseInput labelText="Ваш пароль" id="auth-2" type="password" name="password" :errors="v$.password.$errors.length ? v$.password.$errors[0].$message as string : null
+    " v-model="userCredentials.password" @on-focus="v$.password.$reset" />
       </div>
     </div>
 
@@ -119,19 +102,23 @@ export default defineComponent({
   &__header {
     text-align: center;
   }
+
   &__title {
     font-weight: 500;
     font-size: 32px;
     line-height: 40px;
     margin-bottom: 15px;
   }
+
   &__text {
     font-size: 16px;
     line-height: 22px;
   }
+
   &__body {
     margin-top: 20px;
   }
+
   &__submit {
     margin: 25px auto 0;
     width: 100%;

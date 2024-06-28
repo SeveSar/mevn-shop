@@ -30,13 +30,8 @@
                 {{ currentAddress }}
               </div>
               <div class="orders-item-header__pizzas">
-                <img
-                  class="orders-item-header__pizzas-icon"
-                  src="@/assets/images/small-pizza.png"
-                  v-for="i in pizzaImages"
-                  alt=""
-                  :key="i"
-                />
+                <img class="orders-item-header__pizzas-icon" src="@/assets/images/small-pizza.png"
+                  v-for="i in pizzaImages" alt="" :key="i" />
               </div>
             </div>
           </div>
@@ -99,11 +94,13 @@ const pizzaImages = computed(() => {
   &-header {
     position: relative;
     cursor: pointer;
+
     &--active {
       .orders-item-header__icon {
         transform: rotate(180deg);
       }
     }
+
     &__icon {
       position: absolute;
       right: 0;
@@ -111,6 +108,7 @@ const pizzaImages = computed(() => {
       color: @main-color;
       transition: transform 0.2s ease-in-out;
     }
+
     &__top {
       display: grid;
       grid-template-columns: repeat(4, max-content);

@@ -8,13 +8,7 @@
       <form class="form" @submit.prevent="createPizza">
         <BaseInput class="form__control" placeholder="Имя" v-model="productFields.title" />
         <BaseInput class="form__control" placeholder="Цена" type="number" v-model="productFields.price" />
-        <BaseInput
-          class="form__control"
-          type="number"
-          placeholder="Количество"
-          v-model="productFields.amount"
-          tpye="number"
-        />
+        <BaseInput class="form__control" type="number" placeholder="Количество" v-model="productFields.amount" />
         <div class="form__group">
           <BaseTextArea height="150px" placeholder="Описание" v-model="productFields.description"></BaseTextArea>
         </div>
@@ -27,25 +21,13 @@
         </div>
         <div class="form__group form__checkbox">
           <div class="form__checkbox-title">Добавить размеры:</div>
-          <BaseCheckBox
-            class="form__checkbox-control"
-            :value="check.value"
-            v-model="productFields.sizes"
-            v-for="check in sizesValues"
-            :key="check.id"
-            :label="check.label"
-          ></BaseCheckBox>
+          <BaseCheckBox class="form__checkbox-control" :value="check.value" v-model="productFields.sizes"
+            v-for="check in sizesValues" :key="check.id" :label="check.label"></BaseCheckBox>
         </div>
         <div class="form-group form__checkbox">
           <div class="form__checkbox-title">Добавить типы теста:</div>
-          <BaseCheckBox
-            class="form__checkbox-control"
-            :value="check.value"
-            v-model="productFields.dough"
-            v-for="check in doughValues"
-            :key="check.id"
-            :label="check.label"
-          ></BaseCheckBox>
+          <BaseCheckBox class="form__checkbox-control" :value="check.value" v-model="productFields.dough"
+            v-for="check in doughValues" :key="check.id" :label="check.label"></BaseCheckBox>
         </div>
 
         <div class="form__footer">
@@ -155,29 +137,35 @@ export default defineComponent({
     display: flex;
     justify-content: center;
   }
+
   &__checkbox {
     &-control {
       &:not(:last-child) {
         margin-right: 20px;
       }
     }
+
     &-title {
       margin-bottom: 10px;
     }
   }
+
   &__group {
     margin-bottom: 25px;
   }
+
   &__control {
     margin-bottom: 25px;
   }
 }
+
 .modal-content {
   .form-upload {
     .form-group {
       margin-bottom: 0;
       flex-grow: 1;
     }
+
     &__or {
       display: inline-block;
       margin: 15px 0px;

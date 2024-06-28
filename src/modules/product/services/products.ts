@@ -12,18 +12,19 @@ export class ProductServices {
     this.$http = httpClient;
   }
 
-  async fetchProducts(filters?: string[]): Promise<IProductBase[]> {
+  async fetchProducts(filters?: string[]) {
     let res;
     if (filters && filters.length) {
-      res = await this.$http.makeRequest<IProductBase[]>({
+      res = await this.$http.makeRequest<IProductResponse[]>({
         url: '/products',
         method: 'GET',
         config: {
           params: { filters },
         },
       });
+
     } else {
-      res = await this.$http.makeRequest<IProductBase[]>({
+      res = await this.$http.makeRequest<IProductResponse[]>({
         url: '/products',
         method: 'GET',
         headers: {
@@ -31,7 +32,7 @@ export class ProductServices {
         },
       });
     }
-
+    console.log(res, 'rerere')
     return res.data.map((product) => {
       return new ProductDTO(product);
     });

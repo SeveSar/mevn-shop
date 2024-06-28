@@ -2,6 +2,7 @@ import type { AxiosInstance } from 'axios';
 import type { UserResponse } from '@/types/responses/user';
 import type { IHttpClient } from '@/api/types/api';
 import type { TCart } from '@/types/ICart';
+import { setToken } from '@/utils/localstorage';
 
 export class AuthService {
   private readonly $http: IHttpClient;
@@ -11,6 +12,7 @@ export class AuthService {
     this.$http = httpClient;
     this.$axios = axios;
   }
+
   async register(email: string, password: string) {
     const res = await this.$http.makeRequest<UserResponse>({
       url: '/auth/register',
@@ -27,7 +29,7 @@ export class AuthService {
     const body = {
       email,
       password,
-    } as { email: string; password: string; cart?: null | TCart };
+    } as { email: string, password: string, cart?: null | TCart };
 
     if (cart) {
       body.cart = cart;
@@ -42,10 +44,12 @@ export class AuthService {
   }
 
   async refresh() {
-    return this.$axios.get<UserResponse>('api/auth/refresh', {
+    const { data } = await this.$axios.get<UserResponse>('api/auth/refresh', {
       baseURL: import.meta.env.VITE_BASE_URL,
       withCredentials: true,
     });
+    setToken(data.accessToken);
+    return data;
   }
 
   async logOut() {

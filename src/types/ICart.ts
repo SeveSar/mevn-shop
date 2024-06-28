@@ -8,7 +8,7 @@ export interface ICartItem {
   ingredients: IIngredientItem[];
   title: string;
   imageUrl: string;
-  basket: string;
+  basket?: string;
 }
 
 export type TCart = ICartItem[];

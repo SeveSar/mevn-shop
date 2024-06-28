@@ -1,20 +1,39 @@
 {
   "files": [],
-  "include": ["src/**/*.ts", "env.dt.ts", "src/**/*.d.ts", "src/**/*.vue", "tests/**/*.ts"],
-  "exclude": ["src/**/__tests__/*", "node_modules"],
+  "include": [
+    "src/**/*.ts",
+    "env.dt.ts",
+    "src/**/*.d.ts",
+    "src/**/*.vue",
+    "tests/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/__tests__/*",
+    "node_modules"
+  ],
   "compilerOptions": {
-    "composite": true,
+    "target": "ES6", // Установите target на ES6 или выше
+    "module": "ESNext",
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
+    "skipLibCheck": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
-    "baseUrl": ".",
-    "module": "es2022",
-    "moduleResolution": "Node",
-
+    "useDefineForClassFields": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
-    "types": ["@types/jest", "vite/client"]
+    "types": [
+      "@types/jest",
+      "vite/client"
+    ]
   },
-
   "references": [
     {
       "path": "./tsconfig.node.json"

@@ -25,6 +25,7 @@ export default defineComponent({
     BaseModal,
     AuthForm,
   },
+
   setup() {
     const storeModal = useModalStore();
     const userCredentials = ref({}) as Ref<IUserCredentials>;

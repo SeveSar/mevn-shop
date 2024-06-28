@@ -1,56 +1,15 @@
-<template>
-  <label class="base-input">
-    <span class="base-input__label" v-if="labelText">
-      {{ labelText }}
-      <span class="base-input__label-required" v-if="required">*</span>
-    </span>
+<script lang="ts" setup>
+import { onMounted, onUnmounted, ref } from 'vue';
+import type { InputMask } from 'imask';
+import IMask from 'imask';
+import { useRouter } from 'vue-router';
+import type { TMaskKeys } from '@/configs/mask';
+import { getMask } from '@/configs/mask';
 
-    <input
-      class="base-input__control"
-      :class="{ error: errors }"
-      :value="value ? value : modelValue"
-      :placeholder="placeholder"
-      :type="type"
-      data-testid="base-input"
-      :disabled="disabled"
-      @blur="onBlur"
-      @focus="onFocus"
-      @input="updateModelValue"
-      ref="inputRef"
-      v-bind="$attrs"
-    />
-
-    <transition name="fade">
-      <small class="base-input__error" v-if="errors">{{ errors }}</small>
-    </transition>
-  </label>
-</template>
-
-<script lang="ts">
-export default defineComponent({
+defineOptions({
   inheritAttrs: false,
 });
-</script>
 
-<script lang="ts" setup>
-import { ref, onMounted, defineComponent, onUnmounted } from 'vue';
-import IMask, { InputMask } from 'imask';
-import { TMaskKeys, getMask } from '@/configs/mask';
-import { useRouter } from 'vue-router';
-
-interface Props {
-  modelValue?: string | number;
-  value?: string | number;
-  labelText?: string;
-  errors?: string;
-  placeholder?: string;
-  type?: 'text' | 'number' | 'password';
-  required?: boolean;
-  disabled?: boolean;
-  mask?: TMaskKeys;
-}
-
-const router = useRouter();
 const props = withDefaults(defineProps<Props>(), {
   labelText: '',
   errors: '',
@@ -63,37 +22,51 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(['update:modelValue', 'onBlur', 'onFocus']);
 
-let maskInstance: InputMask<{}> | null = null;
+interface Props {
+  modelValue?: string | number
+  value?: string | number
+  labelText?: string
+  errors?: string | null
+  placeholder?: string
+  type?: 'text' | 'number' | 'password'
+  required?: boolean
+  disabled?: boolean
+  mask?: TMaskKeys
+}
+
+let maskInstance: InputMask<object> | null = null;
 
 const inputRef = ref(null);
 
-const maskInit = () => {
+function maskInit() {
   if (!props.mask) {
     return;
   }
+  if (!inputRef.value) { return; }
   maskInstance = IMask(inputRef.value, getMask(props.mask));
 
   maskInstance.on('accept', handleAccept);
   emit('update:modelValue', maskInstance.value);
-};
+}
 onMounted(() => {
   maskInit();
 });
 
-const handleAccept = () => {
+function handleAccept() {
+  if (!maskInstance) { return; }
   emit('update:modelValue', maskInstance.value);
   // maskInstance.updateValue();
-};
-const updateModelValue = (e: Event) => {
+}
+function updateModelValue(e: Event) {
   if (!props.mask) {
     emit('update:modelValue', (e.target as HTMLInputElement).value);
   }
-};
+}
 
-const getUnMaskedValue = () => {
-  if (!maskInstance) return;
+function getUnMaskedValue() {
+  if (!maskInstance) { return; }
   return maskInstance.unmaskedValue;
-};
+}
 onUnmounted(() => {
   if (maskInstance) {
     maskInstance.off('accept', handleAccept);
@@ -105,13 +78,32 @@ defineExpose({
   getUnMaskedValue,
 });
 
-const onBlur = () => {
+function onBlur() {
   emit('onBlur');
-};
-const onFocus = () => {
+}
+function onFocus() {
   emit('onFocus');
-};
+}
 </script>
+
+<template>
+  <label class="base-input">
+    <span v-if="labelText" class="base-input__label">
+      {{ labelText }}
+      <span v-if="required" class="base-input__label-required">*</span>
+    </span>
+
+    <input
+      ref="inputRef" class="base-input__control" :class="{ error: errors }"
+      :value="value ? value : modelValue" :placeholder="placeholder" :type="type" data-testid="base-input" :disabled="disabled"
+      v-bind="$attrs" @blur="onBlur" @focus="onFocus" @input="updateModelValue"
+    >
+
+    <transition name="fade">
+      <small v-if="errors" class="base-input__error">{{ errors }}</small>
+    </transition>
+  </label>
+</template>
 
 <style scoped lang="less">
 .base-input {
@@ -136,14 +128,17 @@ const onFocus = () => {
     &::placeholder {
       color: #a5a5a5;
     }
+
     &:focus {
       border-color: #ff7010;
       outline: none;
     }
+
     &.error {
       border-color: @red-color;
     }
   }
+
   &__label {
     text-align: left;
     font-size: 14px;
@@ -156,6 +151,7 @@ const onFocus = () => {
       color: @red-color;
     }
   }
+
   &__error {
     color: @red-color;
     display: inline-block;
@@ -165,6 +161,7 @@ const onFocus = () => {
     left: 0;
   }
 }
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;

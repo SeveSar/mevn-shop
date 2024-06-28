@@ -1,5 +1,5 @@
 <template>
-  <div class="skeleton" :style="styles"></div>
+  <div class="skeleton" :style="styles  "></div>
 </template>
 
 <script lang="ts" setup>
