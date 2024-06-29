@@ -1,24 +1,14 @@
-<template>
-  <BaseModal :isOpen="isAuthModal" @close="storeModal.closeAuthModal">
-    <div class="modal-content">
-      <div class="modal-content__inner">
-        <AuthForm />
-      </div>
-    </div>
-  </BaseModal>
-</template>
-
 <script lang="ts">
-import { defineComponent, ref, computed, type Ref } from 'vue';
+import { type Ref, computed, defineComponent, ref } from 'vue';
 
-import BaseModal from '@/components/ui/BaseModal.vue';
-import { useModalStore } from '@/stores/modal';
 import { storeToRefs } from 'pinia';
 import AuthForm from '../../auth/AuthForm/AuthForm.vue';
+import BaseModal from '@/components/ui/BaseModal.vue';
+import { useAuthModal } from '@/modules/user';
 
 interface IUserCredentials {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 export default defineComponent({
   components: {
@@ -27,7 +17,7 @@ export default defineComponent({
   },
 
   setup() {
-    const storeModal = useModalStore();
+    const storeModal = useAuthModal();
     const userCredentials = ref({}) as Ref<IUserCredentials>;
     const { isAuthModal } = storeToRefs(storeModal);
     const typeForm = ref<'FormLogin' | 'FormRegister'>('FormLogin');
@@ -57,6 +47,17 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <BaseModal :is-open="isAuthModal" @close="storeModal.closeAuthModal">
+    <div class="modal-content">
+      <div class="modal-content__inner">
+        <AuthForm />
+      </div>
+    </div>
+  </BaseModal>
+</template>
+
 <style scoped lang="less">
 .modal-content {
   &__inner {

@@ -1,36 +1,5 @@
-<template>
-  <div class="mobile-menu" :class="{ active: isOpenedBurger }">
-    <div class="user-auth">
-      <BaseButton variant="text" v-if="!userStore.isLoggedIn" class="user-auth__btn" @click="modalStore.openAuthModal">
-        <BaseIcon name="IconUser"></BaseIcon>
-        Войти в аккаунт
-      </BaseButton>
-      <div v-if="userStore.isLoggedIn" class="user-drop">
-        <div class="current">
-          <BaseButton variant="text">
-            <BaseIcon name="IconUser"></BaseIcon>
-            {{ userStore.user?.email }}
-          </BaseButton>
-        </div>
-      </div>
-    </div>
-    <nav class="nav" v-if="userStore.isLoggedIn">
-      <ul class="nav-list">
-        <li class="nav-list__item" v-for="link in menuLinks" :key="link.title">
-          <router-link to="/" :class="{ active: link.active }">
-            {{ link.title }}
-          </router-link>
-        </li>
-      </ul>
-    </nav>
-    <div class="mobile-menu__footer">
-      <BaseButton class="mobile-menu__logout" variant="text" @click="logOut">Выйти</BaseButton>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { useModalStore } from '@/stores/modal';
+import { useAuthModal } from '@/modules/user';
 import { useUserStore } from '@/modules/user/stores/user';
 import { useMenu } from '@/composables/menu';
 
@@ -38,10 +7,43 @@ import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
 
 const { logOut, isOpenedBurger, menuLinks } = useMenu();
-const modalStore = useModalStore();
+const modalStore = useAuthModal();
 
 const userStore = useUserStore();
 </script>
+
+<template>
+  <div class="mobile-menu" :class="{ active: isOpenedBurger }">
+    <div class="user-auth">
+      <BaseButton v-if="!userStore.isLoggedIn" variant="text" class="user-auth__btn" @click="modalStore.openAuthModal">
+        <BaseIcon name="IconUser" />
+        Войти в аккаунт
+      </BaseButton>
+      <div v-if="userStore.isLoggedIn" class="user-drop">
+        <div class="current">
+          <BaseButton variant="text">
+            <BaseIcon name="IconUser" />
+            {{ userStore.user?.email }}
+          </BaseButton>
+        </div>
+      </div>
+    </div>
+    <nav v-if="userStore.isLoggedIn" class="nav">
+      <ul class="nav-list">
+        <li v-for="link in menuLinks" :key="link.title" class="nav-list__item">
+          <router-link to="/" :class="{ active: link.active }">
+            {{ link.title }}
+          </router-link>
+        </li>
+      </ul>
+    </nav>
+    <div class="mobile-menu__footer">
+      <BaseButton class="mobile-menu__logout" variant="text" @click="logOut">
+        Выйти
+      </BaseButton>
+    </div>
+  </div>
+</template>
 
 <style scoped lang="less">
 .mobile-menu {

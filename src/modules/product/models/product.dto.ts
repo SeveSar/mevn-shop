@@ -1,6 +1,6 @@
 import type { IProductResponse } from '@/types/responses/product';
 import type { TFilterItem } from '@/types/IFilter';
-import type { IIngredientItem, ISizeItem, IDoughItem } from '@/types/IProduct';
+import type { IDoughItem, IIngredientItem, ISizeItem } from '@/types/IProduct';
 
 export class ProductDTO {
   id: string;
@@ -50,7 +50,7 @@ export class ProductFullDTO {
       return {
         ...item,
         id: item._id,
-        img: import.meta.env.VITE_BASE_URL + '/' + item.img,
+        img: `${import.meta.env.VITE_BASE_URL}/${item.img}`,
         isActive: false,
       };
     });

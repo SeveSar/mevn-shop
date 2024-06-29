@@ -2,7 +2,7 @@
 import CartItem from '../widgets/cart/CartItem.vue';
 import BaseSidePanel from '@/components/ui/BaseSidePanel.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
-import { useCartStore } from '@/modules/cart/stores/cart';
+import { useCartStore } from '@/modules/cart';
 import { RouteNamesEnum } from '@/router/router.types';
 
 const cartStore = useCartStore();

@@ -7,9 +7,9 @@ import AppToast from './components/ui/AppToast.vue';
 
 import './assets/less/main.less';
 
-import { useUserStore } from './modules/user/stores/user';
+import { useUserStore } from '@/modules/user/stores/user';
 
-import { useCartStore } from './modules/cart/stores/cart';
+import { useCartStore } from '@/modules/cart/stores';
 
 const app = createApp(App);
 app.use(createPinia());
@@ -17,14 +17,16 @@ app.use(createPinia());
 const cartStore = useCartStore();
 const userStore = useUserStore();
 
-const start = async () => {
+async function start() {
   try {
     await userStore.auth();
 
     await cartStore.getCart();
-  } catch (e) {
+  }
+  catch (e) {
     console.error(e);
-  } finally {
+  }
+  finally {
     const spinnerAppElem = document.getElementById('app-spinner');
     if (spinnerAppElem) {
       spinnerAppElem.style.display = 'none';
@@ -32,7 +34,7 @@ const start = async () => {
     app.use(router);
     app.mount('#app');
   }
-};
+}
 start();
 
 export const toaster = createApp(AppToast).mount('#app-toast') as InstanceType<typeof AppToast>;

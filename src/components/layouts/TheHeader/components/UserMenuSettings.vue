@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import { useUserStore } from '@/modules/user/stores/user';
+import { RouteNamesEnum } from '@/router/router.types';
+import { useAuthModal } from '@/modules/user';
+import { useMenu } from '@/composables/menu';
+import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
+import BaseButton from '@/components/ui/BaseButton.vue';
+
+const userStore = useUserStore();
+const modalStore = useAuthModal();
+const { logOut } = useMenu();
+</script>
+
 <template>
   <div class="user-menu-settings">
     <button v-if="!userStore.isLoggedIn" class="user-menu-settings__login" @click="modalStore.openAuthModal">
@@ -20,26 +33,15 @@
             </router-link>
           </div>
           <div class="user-menu-settings__dropdown-footer">
-            <BaseButton variant="text" @click="logOut">Выход из аккаунта</BaseButton>
+            <BaseButton variant="text" @click="logOut">
+              Выход из аккаунта
+            </BaseButton>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { useUserStore } from '@/modules/user/stores/user';
-import { RouteNamesEnum } from '@/router/router.types';
-import { useModalStore } from '@/stores/modal';
-import { useMenu } from '@/composables/menu';
-import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
-import BaseButton from '@/components/ui/BaseButton.vue';
-
-const userStore = useUserStore();
-const modalStore = useModalStore();
-const { logOut } = useMenu();
-</script>
 
 <style scoped lang="less">
 .user-menu-settings {

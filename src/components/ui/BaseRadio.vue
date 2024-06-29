@@ -1,21 +1,12 @@
-<template>
-  <label class="base-radio" :class="{ 'base-radio--active': modelValue === value }">
-    <input class="base-radio__control" type="radio" :name="name" :value="value" @change="onChange" />
-    <div class="base-radio__label" v-if="label">
-      {{ label }}
-    </div>
-  </label>
-</template>
-
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue';
+import { type PropType, defineComponent } from 'vue';
 
 export default defineComponent({
   props: {
     modelValue: {
       type: null as unknown as PropType<string | null>,
       default: null,
-      validator: (val) => typeof val === 'string',
+      validator: val => typeof val === 'string',
     },
     name: {
       type: String,
@@ -30,6 +21,7 @@ export default defineComponent({
       default: null,
     },
   },
+  emits: ['update:modelValue'],
   setup(props, { emit }) {
     const onChange = () => {
       emit('update:modelValue', props.value);
@@ -40,6 +32,15 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <label class="base-radio" :class="{ 'base-radio--active': modelValue === value }">
+    <input class="base-radio__control" type="radio" :name="name" :value="value" @change="onChange">
+    <div v-if="label" class="base-radio__label">
+      {{ label }}
+    </div>
+  </label>
+</template>
 
 <style scoped lang="less">
 .base-radio {

@@ -1,64 +1,16 @@
-<template>
-  <BaseSidePanel
-    :isOpen="isOpen"
-    @close="onClose"
-    @show="emit('update:isOpen', true)"
-    class="panel-product-filter"
-    title="Фильтры"
-  >
-    <template #default>
-      <div class="panel-product-filter__list" v-if="!isLoading && filtersRes">
-        <div class="panel-product-filter__block" v-for="filter in filtersRes" :key="filter.id">
-          <div class="panel-product-filter__block-title">
-            {{ filter.title }}
-          </div>
-          <div class="panel-product-filter__items">
-            <label
-              class="panel-product-filter__item"
-              :class="{
-                'panel-product-filter__item--active': isActiveFilter(value.id),
-              }"
-              v-for="value in filter.items"
-              :key="value.id"
-            >
-              {{ value.title }}
-
-              <input
-                type="checkbox"
-                v-model="selectedFilters"
-                :value="value.id"
-                name="filter"
-                class="panel-product-filter__control"
-              />
-            </label>
-          </div>
-        </div>
-      </div>
-    </template>
-    <template #footer>
-      <div class="panel-product-filter__actions">
-        <BaseButton variant="border" @click="resetFilterProducts" :disabled="!lastAcceptedFilters.length"
-          >Сбросить</BaseButton
-        >
-        <BaseButton @click="filterProducts" :isLoading="productsStore.isLoading">Применить</BaseButton>
-      </div>
-    </template>
-  </BaseSidePanel>
-</template>
-
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
+import { useProductsStore } from '../../../stores/products';
 import BaseSidePanel from '@/components/ui/BaseSidePanel.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
-import { useProductsStore } from '../../../stores/products';
 
 import type { IFilter } from '@/types/IFilter';
 import { api } from '@/api/api';
 
 interface Props {
-  isOpen: boolean;
+  isOpen: boolean
 }
-const props = defineProps<Props>();
+defineProps<Props>();
 const emit = defineEmits(['update:isOpen']);
 
 const productsStore = useProductsStore();
@@ -68,37 +20,89 @@ const lastAcceptedFilters = ref<string[]>([]);
 const filtersRes = ref<IFilter[] | null>(null);
 const isLoading = ref(false);
 
-const isActiveFilter = (value: string) => {
+function isActiveFilter(value: string) {
   return selectedFilters.value.includes(value);
-};
+}
 
-const filterProducts = () => {
+function filterProducts() {
   lastAcceptedFilters.value = [...selectedFilters.value];
   productsStore.getProducts(selectedFilters.value);
-};
+}
 
-const resetFilterProducts = async () => {
+async function resetFilterProducts() {
   selectedFilters.value = [];
   lastAcceptedFilters.value = [];
   await productsStore.getProducts();
-};
+}
 
-const fetchFilters = async () => {
+async function fetchFilters() {
   try {
     isLoading.value = true;
     filtersRes.value = await api.product.fetchProductFilters();
-  } catch (e) {
-  } finally {
+  }
+  catch (e) {
+  }
+  finally {
     isLoading.value = false;
   }
-};
+}
 
-const onClose = () => {
+function onClose() {
   emit('update:isOpen', false);
   selectedFilters.value = [...lastAcceptedFilters.value];
-};
+}
 fetchFilters();
 </script>
+
+<template>
+  <BaseSidePanel
+    :is-open="isOpen"
+    class="panel-product-filter"
+    title="Фильтры"
+    @close="onClose"
+    @show="emit('update:isOpen', true)"
+  >
+    <template #default>
+      <div v-if="!isLoading && filtersRes" class="panel-product-filter__list">
+        <div v-for="filter in filtersRes" :key="filter.id" class="panel-product-filter__block">
+          <div class="panel-product-filter__block-title">
+            {{ filter.title }}
+          </div>
+          <div class="panel-product-filter__items">
+            <label
+              v-for="value in filter.items"
+              :key="value.id"
+              class="panel-product-filter__item"
+              :class="{
+                'panel-product-filter__item--active': isActiveFilter(value.id),
+              }"
+            >
+              {{ value.title }}
+
+              <input
+                v-model="selectedFilters"
+                type="checkbox"
+                :value="value.id"
+                name="filter"
+                class="panel-product-filter__control"
+              >
+            </label>
+          </div>
+        </div>
+      </div>
+    </template>
+    <template #footer>
+      <div class="panel-product-filter__actions">
+        <BaseButton variant="border" :disabled="!lastAcceptedFilters.length" @click="resetFilterProducts">
+          Сбросить
+        </BaseButton>
+        <BaseButton :is-loading="productsStore.isLoading" @click="filterProducts">
+          Применить
+        </BaseButton>
+      </div>
+    </template>
+  </BaseSidePanel>
+</template>
 
 <style scoped lang="less">
 .panel-product-filter {

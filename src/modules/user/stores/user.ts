@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { api } from '@/api/api';
-import { useCartStore } from '@/modules/cart/stores/cart';
+import { useCartStore } from '@/modules/cart';
 import { cleanTokensData, clearAll, getItemFromLocalstorage, setToken } from '@/utils/localstorage';
 import type { IUser } from '@/types/IUser';
 
@@ -33,7 +33,7 @@ export const useUserStore = defineStore('user', () => {
       if (data) {
         user.value = data.user;
       }
-          cartStore.getCart();
+      cartStore.getCart();
     }
     catch (e) {
       cleanTokensData();

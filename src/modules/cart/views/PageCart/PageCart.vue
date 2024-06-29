@@ -1,31 +1,35 @@
+<script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
+import { useCartStore } from '../../stores';
+
+import OrderForm from '../../components/OrderForm/OrderForm.vue';
+import CartItem from '@/components/widgets/cart/CartItem.vue';
+import { RouteNamesEnum } from '@/router/router.types';
+
+const cartStore = useCartStore();
+const { cart } = storeToRefs(cartStore);
+</script>
+
 <template>
   <div class="cart">
-    <div class="cart__inner" v-show="cart.length">
+    <div v-show="cart.length" class="cart__inner">
       <div class="cart__header">
-        <h1 class="page-title">Ваш заказ</h1>
+        <h1 class="page-title">
+          Ваш заказ
+        </h1>
       </div>
       <CartItem v-for="item in cart" :key="item.id" :item="item" />
     </div>
-    <div class="cart-empty" v-show="!cart.length">
-      <img src="@/assets/images/empty-cart.png" alt="" />
-      <router-link :to="{ name: RouteNamesEnum.products }">Вернуться к покупкам</router-link>
+    <div v-show="!cart.length" class="cart-empty">
+      <img src="@/assets/images/empty-cart.png" alt="">
+      <router-link :to="{ name: RouteNamesEnum.products }">
+        Вернуться к покупкам
+      </router-link>
     </div>
     <OrderForm v-if="cart.length" />
   </div>
 </template>
-
-<script setup lang="ts">
-import { useCartStore } from '../../stores/cart';
-import { storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router';
-
-import CartItem from '@/components/widgets/cart/CartItem.vue';
-import OrderForm from '../../components/OrderForm/OrderForm.vue';
-import { RouteNamesEnum } from '@/router/router.types';
-const cartStore = useCartStore();
-const { cart } = storeToRefs(cartStore);
-const router = useRouter();
-</script>
 
 <style scoped lang="less">
 .cart {

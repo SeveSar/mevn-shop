@@ -1,7 +1,7 @@
-import { ref } from "vue";
-import { defineStore } from "pinia";
+import { ref } from 'vue';
+import { defineStore } from 'pinia';
 
-export const useModalStore = defineStore("modal", () => {
+export const useAuthModal = defineStore('authModal', () => {
   const isAuthModal = ref(false);
   const isModalProduct = ref(false);
 

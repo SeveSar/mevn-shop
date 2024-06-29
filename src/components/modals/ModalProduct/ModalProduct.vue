@@ -1,92 +1,31 @@
-<template>
-  <BaseModal :isOpen="modalStore.isModalProduct" @close="close" class="modal-product">
-    <div class="modal-product__body">
-      <div class="modal-product__photo">
-        <img v-if="!isLoading" :src="productData?.imageUrl" class="modal-product__photo-img" alt="" />
-        <BaseSkeleton v-else width="400" height="400" corner="50%" :style="{ margin: 'auto' }" />
-      </div>
-      <form class="modal-product__info modal-product-info" @submit.prevent="addToCart">
-        <div class="modal-product-info__header">
-          <h3 class="modal-product-info__title" v-if="!isLoading">
-            {{ productData?.title }}
-          </h3>
-          <BaseSkeleton v-else width="70%" height="18" corner="6" />
-        </div>
-
-        <ModalProductIngredients
-          :isLoading="isLoading"
-          :ingredients="productData?.ingredients.slice(0, 4) ?? []"
-          @toggleActiveIngredient="toggleActiveIngredient"
-        />
-
-        <ModalProductTabs
-          class="modal-product__tabs"
-          :isLoading="isLoading"
-          :selectedTabSize="selectedTabSize"
-          :selectedTabDough="selectedTabDough"
-          :doughs="productData?.dough ?? []"
-          :sizes="productData?.sizes ?? []"
-          @update:selectedTabDough="(value) => (selectedTabDough = value)"
-          @update:selectedTabSize="(value) => (selectedTabSize = value)"
-        />
-
-        <ModalProductIngredients
-          :isLoading="isLoading"
-          :ingredients="productData?.ingredients.slice(4, productData?.ingredients.length) ?? []"
-          @toggleActiveIngredient="toggleActiveIngredient"
-        />
-
-        <div class="modal-product-info__footer">
-          <template v-if="!isLoading">
-            <div class="modal-product-info__price">
-              <div class="modal-product-info__price-price">
-                Итого:
-                <span class="modal-product-info__price-value">
-                  {{ totalPrice }}
-                  ₽
-                </span>
-              </div>
-            </div>
-            <BaseButton type="submit" :isLoading="isLoadingAddingToCart"> Добавить </BaseButton>
-          </template>
-          <template v-else>
-            <BaseSkeleton width="130" height="28" corner="6" />
-            <BaseSkeleton width="125" height="48" corner="6" />
-          </template>
-        </div>
-      </form>
-    </div>
-  </BaseModal>
-</template>
-
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue';
 import BaseModal from '../../ui/BaseModal.vue';
-import { useModalStore } from '../../../stores/modal';
-import { useProductsStore } from '@/modules/product/stores/products';
-import { useCartStore } from '@/modules/cart/stores/cart';
+import BaseButton from '../../ui/BaseButton.vue';
 import ModalProductIngredients from './ModalProductIngredients.vue';
 import ModalProductTabs from './ModalProductTabs.vue';
-import BaseButton from '../../ui/BaseButton.vue';
+import { useAuthModal } from '@/modules/user';
+import { useProductsStore } from '@/modules/product';
+import { useCartStore } from '@/modules/cart';
 import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
 
 import { api } from '@/api/api';
-import { ProductFullDTO } from '@/modules/product/models/product.dto';
+import type { ProductFullDTO } from '@/modules/product';
 
 export interface ISelectedTabSize {
-  title: string;
-  id: string;
-  price: number;
-  size: number;
+  title: string
+  id: string
+  price: number
+  size: number
 }
 
 export interface ISelectedTabDough {
-  title: string;
-  id: string;
-  price: number;
+  title: string
+  id: string
+  price: number
 }
 
-const modalStore = useModalStore();
+const modalStore = useAuthModal();
 const productsStore = useProductsStore();
 const cartStore = useCartStore();
 const selectedTabDough = ref<ISelectedTabDough | null>(null);
@@ -111,23 +50,23 @@ const totalPrice = computed(() => {
   return price;
 });
 
-const toggleActiveIngredient = (itemId: string) => {
-  const ingredientItem = productData.value?.ingredients.find((item) => item.id === itemId);
+function toggleActiveIngredient(itemId: string) {
+  const ingredientItem = productData.value?.ingredients.find(item => item.id === itemId);
 
-  if (!ingredientItem) return;
+  if (!ingredientItem) { return; }
 
   ingredientItem.isActive = !ingredientItem.isActive;
-};
+}
 
-const close = () => {
+function close() {
   modalStore.closeProductModal();
   selectedTabDough.value = null;
   selectedTabSize.value = null;
   productsStore.activeProductId = '';
-};
+}
 
-const addToCart = async () => {
-  if (!selectedTabDough.value || !selectedTabSize.value) return;
+async function addToCart() {
+  if (!selectedTabDough.value || !selectedTabSize.value) { return; }
 
   try {
     isLoadingAddingToCart.value = true;
@@ -136,27 +75,31 @@ const addToCart = async () => {
     await cartStore.addToCart({
       dough: selectedTabDough.value,
       size: selectedTabSize.value,
-      ingredients: productData.value?.ingredients.filter((ing) => ing.isActive) ?? [],
+      ingredients: productData.value?.ingredients.filter(ing => ing.isActive) ?? [],
     });
-  } catch (e) {
+  }
+  catch (e) {
     console.error(e);
-  } finally {
+  }
+  finally {
     isLoadingAddingToCart.value = false;
   }
-};
+}
 
-const fetchProductById = async () => {
+async function fetchProductById() {
   try {
     isLoading.value = true;
     productData.value = await api.product.fetchProductById(productsStore.activeProductId);
     selectedTabDough.value = productData.value.dough[0];
     selectedTabSize.value = productData.value.sizes[0];
-  } catch (e) {
+  }
+  catch (e) {
     console.error(e);
-  } finally {
+  }
+  finally {
     isLoading.value = false;
   }
-};
+}
 
 watch(
   () => productsStore.activeProductId,
@@ -164,9 +107,72 @@ watch(
     if (val) {
       fetchProductById();
     }
-  }
+  },
 );
 </script>
+
+<template>
+  <BaseModal :is-open="modalStore.isModalProduct" class="modal-product" @close="close">
+    <div class="modal-product__body">
+      <div class="modal-product__photo">
+        <img v-if="!isLoading" :src="productData?.imageUrl" class="modal-product__photo-img" alt="">
+        <BaseSkeleton v-else width="400" height="400" corner="50%" :style="{ margin: 'auto' }" />
+      </div>
+      <form class="modal-product__info modal-product-info" @submit.prevent="addToCart">
+        <div class="modal-product-info__header">
+          <h3 v-if="!isLoading" class="modal-product-info__title">
+            {{ productData?.title }}
+          </h3>
+          <BaseSkeleton v-else width="70%" height="18" corner="6" />
+        </div>
+
+        <ModalProductIngredients
+          :is-loading="isLoading"
+          :ingredients="productData?.ingredients.slice(0, 4) ?? []"
+          @toggle-active-ingredient="toggleActiveIngredient"
+        />
+
+        <ModalProductTabs
+          class="modal-product__tabs"
+          :is-loading="isLoading"
+          :selected-tab-size="selectedTabSize"
+          :selected-tab-dough="selectedTabDough"
+          :doughs="productData?.dough ?? []"
+          :sizes="productData?.sizes ?? []"
+          @update:selected-tab-dough="(value) => (selectedTabDough = value)"
+          @update:selected-tab-size="(value) => (selectedTabSize = value)"
+        />
+
+        <ModalProductIngredients
+          :is-loading="isLoading"
+          :ingredients="productData?.ingredients.slice(4, productData?.ingredients.length) ?? []"
+          @toggle-active-ingredient="toggleActiveIngredient"
+        />
+
+        <div class="modal-product-info__footer">
+          <template v-if="!isLoading">
+            <div class="modal-product-info__price">
+              <div class="modal-product-info__price-price">
+                Итого:
+                <span class="modal-product-info__price-value">
+                  {{ totalPrice }}
+                  ₽
+                </span>
+              </div>
+            </div>
+            <BaseButton type="submit" :is-loading="isLoadingAddingToCart">
+              Добавить
+            </BaseButton>
+          </template>
+          <template v-else>
+            <BaseSkeleton width="130" height="28" corner="6" />
+            <BaseSkeleton width="125" height="48" corner="6" />
+          </template>
+        </div>
+      </form>
+    </div>
+  </BaseModal>
+</template>
 
 <style scoped lang="less">
 .modal-product {

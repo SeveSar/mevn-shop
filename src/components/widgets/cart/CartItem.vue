@@ -1,12 +1,32 @@
+<script lang="ts" setup>
+import type { ICartItem } from '@/types/ICart';
+
+import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
+import { useCartStore } from '@/modules/cart';
+
+interface Props {
+  isMinni?: boolean
+  item: ICartItem
+}
+withDefaults(defineProps<Props>(), {
+  isMinni: false,
+});
+const cartStore = useCartStore();
+</script>
+
 <template>
   <div class="product" :class="{ 'product--minni': isMinni }">
     <div class="product__content">
-      <img :src="item.imageUrl" alt="" class="product__img" />
+      <img :src="item.imageUrl" alt="" class="product__img">
       <div class="product__content-row">
         <div class="product__content-col">
           <div class="product__info">
-            <h4 class="product__name">{{ item.title }}</h4>
-            <div class="product__descr">{{ item.dough.title }}, {{ item.size.title }}</div>
+            <h4 class="product__name">
+              {{ item.title }}
+            </h4>
+            <div class="product__descr">
+              {{ item.dough.title }}, {{ item.size.title }}
+            </div>
           </div>
         </div>
         <div class="product__content-col product__content-info">
@@ -19,7 +39,7 @@
               >
                 -
               </button>
-              <input type="number" readonly :value="item.quantity" min="1" />
+              <input type="number" readonly :value="item.quantity" min="1">
               <button
                 class="product__actions-btn"
                 @click="cartStore.updateCnt({ idProduct: item.id, newQuantity: item.quantity + 1 })"
@@ -29,7 +49,9 @@
             </div>
           </div>
 
-          <div class="product__price">{{ item.totalPrice * item.quantity }} ₽</div>
+          <div class="product__price">
+            {{ item.totalPrice * item.quantity }} ₽
+          </div>
         </div>
       </div>
     </div>
@@ -39,23 +61,6 @@
     </button>
   </div>
 </template>
-
-<script lang="ts" setup>
-import type { ICartItem } from '@/types/ICart';
-
-import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
-import { useCartStore } from '@/modules/cart/stores/cart';
-
-interface Props {
-  isMinni?: boolean;
-  item: ICartItem;
-}
-
-const cartStore = useCartStore();
-const props = withDefaults(defineProps<Props>(), {
-  isMinni: false,
-});
-</script>
 
 <style lang="less" scoped>
 .product {

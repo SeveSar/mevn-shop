@@ -1,31 +1,13 @@
-<template>
-  <TheHeader />
-  <MobileMenu />
-  <main class="main">
-    <div class="container">
-      <slot></slot>
-    </div>
-  </main>
-
-  <Teleport to="body">
-    <button class="cart-button" @click="cartStore.isSidePanelCart = true">
-      <img class="cart-button__img" src="@/assets/images/icons/cart.svg" alt="" />
-      <span class="cart-button__text">{{ cartStore.totalItems }}</span>
-    </button>
-    <SidePanelCart />
-    <ModalProduct />
-  </Teleport>
-</template>
-
 <script lang="ts">
+import { useRoute, useRouter } from 'vue-router';
+import { defineComponent, onMounted, watch } from 'vue';
 import TheHeader from '@/components/layouts/TheHeader/TheHeader.vue';
 import MobileMenu from '@/components/layouts/MobileMenu.vue';
 import SidePanelCart from '@/components/sidePanels/SidePanelCart.vue';
 import ModalProduct from '@/components/modals/ModalProduct/ModalProduct.vue';
-import { useRouter, useRoute } from 'vue-router';
 
-import { watch, defineComponent, onMounted } from 'vue';
-import { useCartStore } from '@/modules/cart/stores/cart';
+import { useCartStore } from '@/modules/cart';
+
 export default defineComponent({
   components: {
     TheHeader,
@@ -54,7 +36,7 @@ export default defineComponent({
       () => route.query,
       () => {
         checkRouteErrors();
-      }
+      },
     );
     return {
       cartStore,
@@ -62,6 +44,26 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <TheHeader />
+  <MobileMenu />
+  <main class="main">
+    <div class="container">
+      <slot />
+    </div>
+  </main>
+
+  <Teleport to="body">
+    <button class="cart-button" @click="cartStore.isSidePanelCart = true">
+      <img class="cart-button__img" src="@/assets/images/icons/cart.svg" alt="">
+      <span class="cart-button__text">{{ cartStore.totalItems }}</span>
+    </button>
+    <SidePanelCart />
+    <ModalProduct />
+  </Teleport>
+</template>
+
 <style scoped lang="less">
 .cart-button {
   position: fixed;

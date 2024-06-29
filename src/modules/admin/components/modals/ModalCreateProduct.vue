@@ -1,52 +1,12 @@
-<template>
-  <BaseModal :isOpen="modelValue" @close="$emit('update:modelValue', false)" @show="$emit('update:modelValue', true)">
-    <template #header>
-      <h2 class="modal-title">Добавить пиццу</h2>
-    </template>
-
-    <div class="modal-content">
-      <form class="form" @submit.prevent="createPizza">
-        <BaseInput class="form__control" placeholder="Имя" v-model="productFields.title" />
-        <BaseInput class="form__control" placeholder="Цена" type="number" v-model="productFields.price" />
-        <BaseInput class="form__control" type="number" placeholder="Количество" v-model="productFields.amount" />
-        <div class="form__group">
-          <BaseTextArea height="150px" placeholder="Описание" v-model="productFields.description"></BaseTextArea>
-        </div>
-        <div class="form__group form-upload">
-          <UploadProductImage v-model="file" />
-          <div v-if="!file">
-            <span class="form-upload__or">Или</span>
-            <BaseInput type="text" placeholder="URL картинки" v-model="urlInput" />
-          </div>
-        </div>
-        <div class="form__group form__checkbox">
-          <div class="form__checkbox-title">Добавить размеры:</div>
-          <BaseCheckBox class="form__checkbox-control" :value="check.value" v-model="productFields.sizes"
-            v-for="check in sizesValues" :key="check.id" :label="check.label"></BaseCheckBox>
-        </div>
-        <div class="form-group form__checkbox">
-          <div class="form__checkbox-title">Добавить типы теста:</div>
-          <BaseCheckBox class="form__checkbox-control" :value="check.value" v-model="productFields.dough"
-            v-for="check in doughValues" :key="check.id" :label="check.label"></BaseCheckBox>
-        </div>
-
-        <div class="form__footer">
-          <BaseButton type="submit"> Создать </BaseButton>
-        </div>
-      </form>
-    </div>
-  </BaseModal>
-</template>
-
 <script lang="ts">
-import { defineComponent, ref, type Ref } from 'vue';
+import { type Ref, defineComponent, ref } from 'vue';
 import BaseModal from '@/components/ui/BaseModal.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
 import UploadProductImage from '@/modules/admin/components/UploadProductImage/UploadProductImage.vue';
 import BaseCheckBox from '@/components/ui/BaseCheckBox.vue';
 import BaseTextArea from '@/components/ui/BaseTextArea.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
-import type { IProduct } from '@/types/IProduct';
+import type { IProductFull } from '@/types/IProduct';
 
 import { api } from '@/api/api';
 
@@ -67,7 +27,7 @@ export default defineComponent({
   },
 
   setup() {
-    //state
+    // state
     const sizesValues = [
       { label: '20 см', value: 20, id: 'size-1' },
       { label: '28 см', value: 28, id: 'size-2' },
@@ -80,7 +40,7 @@ export default defineComponent({
 
     const urlInput = ref('');
     const file = ref(null) as Ref<File | null>;
-    const productFields = ref<IProduct>({
+    const productFields = ref<IProductFull>({
       id: '',
       title: '',
       price: 0,
@@ -91,13 +51,13 @@ export default defineComponent({
       category: '',
       dough: [],
       filters: [],
+      ingredients: [],
     });
     const modalRef = ref<InstanceType<typeof BaseModal> | null>(null);
 
-    //methods
+    // methods
     const createPizza = async () => {
       try {
-        const bodyRequest = {};
         if (file.value) {
           const fileRes = await api.files.uploadFile(file.value);
           productFields.value.imageUrl = fileRes.filename;
@@ -105,7 +65,8 @@ export default defineComponent({
 
         const data = await api.product.createProduct(productFields.value);
         console.log(data, 'data');
-      } catch (e) {
+      }
+      catch (e) {
         console.error(e);
       }
     };
@@ -122,6 +83,58 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <BaseModal :is-open="modelValue" @close="$emit('update:modelValue', false)" @show="$emit('update:modelValue', true)">
+    <template #header>
+      <h2 class="modal-title">
+        Добавить пиццу
+      </h2>
+    </template>
+
+    <div class="modal-content">
+      <form class="form" @submit.prevent="createPizza">
+        <BaseInput v-model="productFields.title" class="form__control" placeholder="Имя" />
+        <BaseInput v-model="productFields.price" class="form__control" placeholder="Цена" type="number" />
+        <BaseInput v-model="productFields.amount" class="form__control" type="number" placeholder="Количество" />
+        <div class="form__group">
+          <BaseTextArea v-model="productFields.description" height="150px" placeholder="Описание" />
+        </div>
+        <div class="form__group form-upload">
+          <UploadProductImage v-model="file" />
+          <div v-if="!file">
+            <span class="form-upload__or">Или</span>
+            <BaseInput v-model="urlInput" type="text" placeholder="URL картинки" />
+          </div>
+        </div>
+        <div class="form__group form__checkbox">
+          <div class="form__checkbox-title">
+            Добавить размеры:
+          </div>
+          <BaseCheckBox
+            v-for="check in sizesValues" :key="check.id" v-model="productFields.sizes"
+            class="form__checkbox-control" :value="check.value" :label="check.label"
+          />
+        </div>
+        <div class="form-group form__checkbox">
+          <div class="form__checkbox-title">
+            Добавить типы теста:
+          </div>
+          <BaseCheckBox
+            v-for="check in doughValues" :key="check.id" v-model="productFields.dough"
+            class="form__checkbox-control" :value="check.value" :label="check.label"
+          />
+        </div>
+
+        <div class="form__footer">
+          <BaseButton type="submit">
+            Создать
+          </BaseButton>
+        </div>
+      </form>
+    </div>
+  </BaseModal>
+</template>
 
 <style scoped lang="less">
 .modal-title {

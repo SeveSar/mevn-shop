@@ -1,27 +1,5 @@
-<template>
-  <form @submit.prevent="onSubmit" class="form-auth">
-    <div class="form-auth__header">
-      <h3 class="form-auth__title">Авторизация</h3>
-      <div class="form-auth__text">Сможете быстро оформлять заказы, использовать бонусы</div>
-    </div>
-    <div class="form-auth__body">
-      <div class="form-auth__group">
-        <BaseInput class="form-auth__control" v-model="userCredentials.email" labelText="Ваш E-mail" id="auth-1"
-          name="email" @on-focus="v$.email.$reset" :errors="v$.email.$errors.length ? v$.email.$errors[0].$message as string : null
-    " />
-      </div>
-      <div class="form-auth__group">
-        <BaseInput labelText="Ваш пароль" id="auth-2" type="password" name="password" :errors="v$.password.$errors.length ? v$.password.$errors[0].$message as string : null
-    " v-model="userCredentials.password" @on-focus="v$.password.$reset" />
-      </div>
-    </div>
-
-    <BaseButton class="form-auth__submit" type="submit" :is-loading="isLoading"> Авторизоваться </BaseButton>
-  </form>
-</template>
-
 <script lang="ts">
-import { reactive, defineComponent, type PropType, inject, ref } from 'vue';
+import { type PropType, defineComponent, inject, reactive, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 import { getValidationRule } from '@/utils/validations';
@@ -30,13 +8,13 @@ import BaseButton from '@/components/ui/BaseButton.vue';
 import { useUserStore } from '@/modules/user/stores/user';
 
 import { getErrorMessage } from '@/utils/errorHandler';
-import { useModalStore } from '@/stores/modal';
+import { useAuthModal } from '@/modules/user';
 
 import { toaster } from '@/main';
 
 interface IUserCredentials {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 export default defineComponent({
   components: {
@@ -50,33 +28,12 @@ export default defineComponent({
     },
   },
 
-  setup(props, { emit }) {
+  setup() {
     const userStore = useUserStore();
     const userCredentials = reactive({
       email: '',
       password: '',
     });
-
-    const isLoading = ref(false);
-
-    const modalStore = useModalStore();
-
-    const onSubmit = async () => {
-      const isFormCorrect = await v$.value.$validate();
-
-      if (!isFormCorrect) return;
-      try {
-        isLoading.value = true;
-        await userStore.login(userCredentials.email, userCredentials.password);
-        modalStore.closeAuthModal();
-        toaster.showToast({ type: 'info', text: 'Вы авторизовались' });
-      } catch (e) {
-        const message = getErrorMessage(e);
-        toaster.showToast({ type: 'error', text: message });
-      } finally {
-        isLoading.value = false;
-      }
-    };
 
     const rules = {
       email: getValidationRule('email'),
@@ -87,6 +44,30 @@ export default defineComponent({
       $rewardEarly: true,
       $lazy: true,
     });
+
+    const isLoading = ref(false);
+
+    const modalStore = useAuthModal();
+
+    const onSubmit = async () => {
+      const isFormCorrect = await v$.value.$validate();
+
+      if (!isFormCorrect) { return; }
+      try {
+        isLoading.value = true;
+        await userStore.login(userCredentials.email, userCredentials.password);
+        modalStore.closeAuthModal();
+        toaster.showToast({ type: 'info', text: 'Вы авторизовались' });
+      }
+      catch (e) {
+        const message = getErrorMessage(e);
+        toaster.showToast({ type: 'error', text: message });
+      }
+      finally {
+        isLoading.value = false;
+      }
+    };
+
     return {
       onSubmit,
       userCredentials,
@@ -96,6 +77,38 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <form class="form-auth" @submit.prevent="onSubmit">
+    <div class="form-auth__header">
+      <h3 class="form-auth__title">
+        Авторизация
+      </h3>
+      <div class="form-auth__text">
+        Сможете быстро оформлять заказы, использовать бонусы
+      </div>
+    </div>
+    <div class="form-auth__body">
+      <div class="form-auth__group">
+        <BaseInput
+          id="auth-1" v-model="userCredentials.email" class="form-auth__control" label-text="Ваш E-mail"
+          name="email" :errors="v$.email.$errors.length ? v$.email.$errors[0].$message as string : null
+          " @on-focus="v$.email.$reset"
+        />
+      </div>
+      <div class="form-auth__group">
+        <BaseInput
+          id="auth-2" v-model="userCredentials.password" label-text="Ваш пароль" type="password" name="password" :errors="v$.password.$errors.length ? v$.password.$errors[0].$message as string : null
+          " @on-focus="v$.password.$reset"
+        />
+      </div>
+    </div>
+
+    <BaseButton class="form-auth__submit" type="submit" :is-loading="isLoading">
+      Авторизоваться
+    </BaseButton>
+  </form>
+</template>
 
 <style scoped lang="less">
 .form-auth {

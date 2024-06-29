@@ -1,17 +1,8 @@
-<template>
-  <ul class="list-product" v-if="products?.length">
-    <li class="list-product__item" v-for="product in products" :key="product.id">
-      <ProductListItem :product="product" />
-    </li>
-  </ul>
-</template>
-
 <script lang="ts">
-import ProductListItem from '../../components/ProductList/ProductListItem.vue';
-
 import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
-import type { ProductDTO } from '../../models/product.dto';
+import ProductListItem from '../../components/ProductList/ProductListItem.vue';
+import type { ProductDTO } from '../../models';
 
 export default defineComponent({
   components: {
@@ -25,6 +16,14 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <ul v-if="products?.length" class="list-product">
+    <li v-for="product in products" :key="product.id" class="list-product__item">
+      <ProductListItem :product="product" />
+    </li>
+  </ul>
+</template>
 
 <style lang="less" scoped>
 .list-product {

@@ -1,25 +1,11 @@
-<template>
-  <Teleport to="body">
-    <ModalAuth />
-  </Teleport>
-
-  <AppLayout>
-    <router-view />
-  </AppLayout>
-</template>
-
 <script lang="ts" setup>
+import { useRoute, useRouter } from 'vue-router';
+import { ref, watch } from 'vue';
+
+import { ModalAuth, useAuthModal } from '@/modules/user';
 import AppLayout from '@/layouts/AppLayout.vue';
 
-import ModalAuth from './modules/user/components/modals/ModalAuth/ModalAuth.vue';
-
-import { useModalStore } from './stores/modal';
-import { useRoute } from 'vue-router';
-import { ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
-
-
-const modalStore = useModalStore();
+const modalStore = useAuthModal();
 const route = useRoute();
 
 const router = useRouter();
@@ -31,9 +17,19 @@ watch(
       modalStore.openAuthModal();
       router.replace({ query: {} });
     }
-  }
+  },
 );
 </script>
+
+<template>
+  <Teleport to="body">
+    <ModalAuth />
+  </Teleport>
+
+  <AppLayout>
+    <router-view />
+  </AppLayout>
+</template>
 
 <style lang="less">
 html {

@@ -1,15 +1,16 @@
-import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
-import ErrorPage from '@/views/PageError/PageError.vue';
+import type { RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import { loadLayoutMiddleware } from './middleware/loadLayout.middleware';
 import { authMiddleware } from './middleware/auth.middleware';
-import { AppLayoutsEnum } from '@/layouts/layouts.types';
 import { RouteNamesEnum } from './router.types';
+import { AppLayoutsEnum } from '@/layouts/layouts.types';
+import ErrorPage from '@/views/PageError/PageError.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   linkActiveClass: 'active',
   linkExactActiveClass: 'exact-active',
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior() {
     // always scroll to top
     return { top: 0 };
   },

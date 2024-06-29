@@ -3,7 +3,7 @@ import { type Component, computed, onMounted, provide, reactive, ref, watch } fr
 import { storeToRefs } from 'pinia';
 import { useVuelidate } from '@vuelidate/core';
 import { helpers, minLength, required } from '@vuelidate/validators';
-import { useCartStore } from '../../stores/cart';
+import { useCartStore } from '../../stores';
 import TypeOrderDelivery from './typeOrders/TypeOrderDelivery.vue';
 import TypeOrderPickup from './typeOrders/TypeOrderPickup.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
@@ -232,7 +232,7 @@ provide('v$', v$);
       <div class="order-form__content">
         <component
           :is="TYPE_DELIVERIES_MAP[orderInfo.typeDelivery.id]"
-          v-model="orderInfo.delivery[orderInfo.typeDelivery.id.toLocaleLowerCase()]"
+          v-model="orderInfo.delivery[(orderInfo.typeDelivery.id).toLocaleLowerCase() as keyof OrderInfo['delivery']]"
         />
       </div>
       <div class="order-form__make">

@@ -1,6 +1,6 @@
+import { CartDTO } from '../models/cart.dto';
 import type { IHttpClient } from '@/api/types/api';
 import type { ICartResponse, IProductCartResponse } from '@/types/responses/cart';
-import { CartDTO } from '../models/cart.dto';
 
 export class CartService {
   private readonly $http: IHttpClient;
@@ -35,7 +35,7 @@ export class CartService {
 
     return {
       ...res.data,
-      products: res.data.products.map((item) => new CartDTO(item)),
+      products: res.data.products.map(item => new CartDTO(item)),
     };
   }
 
@@ -43,8 +43,8 @@ export class CartService {
     idProduct,
     updatedProduct,
   }: {
-    idProduct: string;
-    updatedProduct: Partial<IProductCartResponse>;
+    idProduct: string
+    updatedProduct: Partial<IProductCartResponse>
   }) {
     const res = await this.$http.makeRequest<ICartResponse>({
       url: `/basket/${idProduct}`,
@@ -55,7 +55,7 @@ export class CartService {
 
     return {
       ...res.data,
-      products: res.data.products.map((item) => new CartDTO(item)),
+      products: res.data.products.map(item => new CartDTO(item)),
     };
   }
 
@@ -68,7 +68,7 @@ export class CartService {
 
     return {
       ...res.data,
-      products: res.data.products.map((item) => new CartDTO(item)),
+      products: res.data.products.map(item => new CartDTO(item)),
     };
   }
 }

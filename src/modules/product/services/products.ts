@@ -1,9 +1,9 @@
+import { ProductDTO, ProductFullDTO } from '../models';
 import type { IProductResponse } from '@/types/responses/product';
-import { ProductDTO, ProductFullDTO } from '../models/product.dto';
 import type { IHttpClient } from '@/api/types/api';
-import type { IProductBase } from '@/types/IProduct';
 import type { IFilterResponse } from '@/types/responses/filter';
 import { FilterDTO } from '@/models/filter.dto';
+import type { IProductFull } from '@/types/IProduct';
 
 export class ProductServices {
   private readonly $http: IHttpClient;
@@ -22,8 +22,8 @@ export class ProductServices {
           params: { filters },
         },
       });
-
-    } else {
+    }
+    else {
       res = await this.$http.makeRequest<IProductResponse[]>({
         url: '/products',
         method: 'GET',
@@ -32,7 +32,7 @@ export class ProductServices {
         },
       });
     }
-    console.log(res, 'rerere')
+    console.log(res, 'rerere');
     return res.data.map((product) => {
       return new ProductDTO(product);
     });
@@ -59,10 +59,10 @@ export class ProductServices {
       },
     });
 
-    return res.data.map((item) => new FilterDTO(item));
+    return res.data.map(item => new FilterDTO(item));
   }
 
-  async createProduct(productData: IProductResponse) {
+  async createProduct(productData: IProductFull) {
     const res = await this.$http.makeRequest<any>({
       url: '/products',
       data: productData,

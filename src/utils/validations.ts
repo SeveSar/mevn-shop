@@ -1,4 +1,4 @@
-import { required, email, minLength, helpers } from '@vuelidate/validators';
+import { email, helpers, minLength, required } from '@vuelidate/validators';
 
 export const validations = {
   email: {
@@ -12,7 +12,7 @@ export const validations = {
     required: helpers.withMessage('Поле не должно быть пустым', required),
     ruPhone: helpers.withMessage(
       'Введите корректный номер телефона',
-      helpers.regex(/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/)
+      helpers.regex(/^(\+7|7|8)?[\s\-]?\(?[489]\d{2}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$/),
     ),
   },
   password: {
@@ -25,7 +25,7 @@ export const validations = {
   },
 } as const;
 
-const getValidationRule = (key: keyof typeof validations) => {
+function getValidationRule(key: keyof typeof validations) {
   return validations[key];
-};
+}
 export { getValidationRule };

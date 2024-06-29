@@ -1,35 +1,17 @@
-<template>
-  <component
-    :is="currentComponent"
-    :class="classes"
-    :to="to ? to : null"
-    :type="to ? null : type"
-    class="button"
-    @click="emit('click')"
-  >
-    <slot v-if="!isLoading" />
-
-    <template v-else>
-      <BaseIcon class="button__loading" name="IconSpinner" />
-      Загрузка
-    </template>
-  </component>
-</template>
-
 <script lang="ts" setup>
 import { computed } from 'vue';
 import type { ButtonHTMLAttributes } from 'vue';
 import BaseIcon from './BaseIcon/BaseIcon.vue';
 
 interface Props {
-  variant?: 'default' | 'text' | 'border';
-  color?: 'primary' | 'secondary';
-  size?: 'medium' | 'small';
-  rounded?: boolean;
-  type?: ButtonHTMLAttributes['type'];
-  disabled?: boolean;
-  isLoading?: boolean;
-  to?: { name: string; query?: { [key: string]: string } } | string | null;
+  variant?: 'default' | 'text' | 'border'
+  color?: 'primary' | 'secondary'
+  size?: 'medium' | 'small'
+  rounded?: boolean
+  type?: ButtonHTMLAttributes['type']
+  disabled?: boolean
+  isLoading?: boolean
+  to?: { name: string, query?: { [key: string]: string } } | string | null
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -55,6 +37,24 @@ const currentComponent = computed(() => {
   return props.to ? 'router-link' : 'button';
 });
 </script>
+
+<template>
+  <component
+    :is="currentComponent"
+    :class="classes"
+    :to="to ? to : null"
+    :type="to ? null : type"
+    class="button"
+    @click="emit('click')"
+  >
+    <slot v-if="!isLoading" />
+
+    <template v-else>
+      <BaseIcon class="button__loading" name="IconSpinner" />
+      Загрузка
+    </template>
+  </component>
+</template>
 
 <style lang="less" scoped>
 .button {

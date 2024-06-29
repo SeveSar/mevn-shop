@@ -1,66 +1,16 @@
-<template>
-  <header class="header">
-    <div class="header__inner">
-      <div class="header__top">
-        <div class="container">
-          <div class="header__top-inner">
-            <div class="header__top-col">
-              <div class="header__text">Время работы: с 11:00 до 23:00</div>
-            </div>
-            <div class="header__top-col">
-              <UserMenuSettings />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="header__bottom">
-        <div class="container">
-          <div class="header__bottom-inner">
-            <div class="header__bottom-logo">
-              <router-link :to="{ name: RouteNamesEnum.products }" href="#" class="logo">
-                <img src="@/assets/images/logo.svg" alt="" />
-              </router-link>
-            </div>
-            <nav class="nav" v-if="userStore.isLoggedIn">
-              <ul class="nav-list">
-                <li class="nav-list__item" v-for="link in menuLinks" :key="link.title">
-                  <router-link to="/" :class="{ active: link.active }">
-                    {{ link.title }}
-                  </router-link>
-                </li>
-              </ul>
-            </nav>
-            <div class="header__bottom-user">
-              <button class="user-cart" @click="cartStore.isSidePanelCart = true">
-                <BaseIcon name="IconBasket" />
-                <div class="user-cart__price">{{ cartStore.totalPrice }} ₽</div>
-              </button>
-              <div class="burger" @click="isOpenedBurger = !isOpenedBurger" :class="{ active: isOpenedBurger }">
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-</template>
-
 <script lang="ts">
+import { defineComponent } from 'vue';
+import UserMenuSettings from './components/UserMenuSettings.vue';
 import { useUserStore } from '@/modules/user/stores/user';
 
 import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
-import BaseButton from '@/components/ui/BaseButton.vue';
-import UserMenuSettings from './components/UserMenuSettings.vue';
-import { defineComponent } from 'vue';
-import { useCartStore } from '@/modules/cart/stores/cart';
+import { useCartStore } from '@/modules/cart';
 import { useMenu } from '@/composables/menu';
 import { RouteNamesEnum } from '@/router/router.types';
 
 export default defineComponent({
   components: {
     BaseIcon,
-    BaseButton,
     UserMenuSettings,
   },
   setup() {
@@ -74,12 +24,63 @@ export default defineComponent({
       userStore,
       cartStore,
       isOpenedBurger,
-
       RouteNamesEnum,
     };
   },
 });
 </script>
+
+<template>
+  <header class="header">
+    <div class="header__inner">
+      <div class="header__top">
+        <div class="container">
+          <div class="header__top-inner">
+            <div class="header__top-col">
+              <div class="header__text">
+                Время работы: с 11:00 до 23:00
+              </div>
+            </div>
+            <div class="header__top-col">
+              <UserMenuSettings />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="header__bottom">
+        <div class="container">
+          <div class="header__bottom-inner">
+            <div class="header__bottom-logo">
+              <router-link :to="{ name: RouteNamesEnum.products }" href="#" class="logo">
+                <img src="@/assets/images/logo.svg" alt="">
+              </router-link>
+            </div>
+            <nav v-if="userStore.isLoggedIn" class="nav">
+              <ul class="nav-list">
+                <li v-for="link in menuLinks" :key="link.title" class="nav-list__item">
+                  <router-link to="/" :class="{ active: link.active }">
+                    {{ link.title }}
+                  </router-link>
+                </li>
+              </ul>
+            </nav>
+            <div class="header__bottom-user">
+              <button class="user-cart" @click="cartStore.isSidePanelCart = true">
+                <BaseIcon name="IconBasket" />
+                <div class="user-cart__price">
+                  {{ cartStore.totalPrice }} ₽
+                </div>
+              </button>
+              <div class="burger" :class="{ active: isOpenedBurger }" @click="isOpenedBurger = !isOpenedBurger">
+                <span />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</template>
 
 <style scoped lang="less">
 .header {

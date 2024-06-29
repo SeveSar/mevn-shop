@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
+import debounce from 'lodash/debounce';
+import { useProductsStore } from '../../product/stores';
 import { useUserStore } from '@/modules/user/stores/user';
 import { api } from '@/api/api';
 import type { TCart } from '@/types/ICart';
-import { useProductsStore } from '../../product/stores/products';
 import {
   getItemFromLocalstorage,
-  setItemInLocalstorage,
   removeItem as removeItemFromStorage,
+  setItemInLocalstorage,
 } from '@/utils/localstorage';
 import type { IDoughItem, IIngredientItem, ISizeItem } from '@/types/IProduct';
-import debounce from 'lodash/debounce';
 
 export const useCartStore = defineStore('cart', () => {
   const cart = ref<TCart>([]);
@@ -24,13 +24,14 @@ export const useCartStore = defineStore('cart', () => {
       const res = await api.cart.getCart();
       cart.value = res.products;
       setItemInLocalstorage('CART', cart.value);
-    } else {
+    }
+    else {
       cart.value = getItemFromLocalstorage('CART') ?? [];
     }
   };
 
   const getIndex = (id: string) => {
-    return cart.value.findIndex((item) => item.id === id);
+    return cart.value.findIndex(item => item.id === id);
   };
 
   const inCart = (id: string) => {
@@ -59,14 +60,14 @@ export const useCartStore = defineStore('cart', () => {
     dough,
     size,
   }: {
-    idProduct: string;
-    ingredients: IIngredientItem[];
-    dough: IDoughItem;
-    size: ISizeItem;
+    idProduct: string
+    ingredients: IIngredientItem[]
+    dough: IDoughItem
+    size: ISizeItem
   }) => {
     const productsStore = useProductsStore();
-    const product = productsStore.products.find((pr) => pr.id === idProduct);
-    if (!product) return 0;
+    const product = productsStore.products.find(pr => pr.id === idProduct);
+    if (!product) { return 0; }
     const ingredientsPrice = ingredients.reduce((sum, item) => {
       if (item.isActive) {
         return (sum += item.price);
@@ -83,9 +84,9 @@ export const useCartStore = defineStore('cart', () => {
     size,
     ingredients,
   }: {
-    dough: IDoughItem;
-    size: ISizeItem;
-    ingredients: IIngredientItem[];
+    dough: IDoughItem
+    size: ISizeItem
+    ingredients: IIngredientItem[]
   }) => {
     const userStore = useUserStore();
     const productsStore = useProductsStore();
@@ -102,9 +103,10 @@ export const useCartStore = defineStore('cart', () => {
         ingredients,
       });
       setItemInLocalstorage('CART', cart.value);
-    } else {
-      const productCart = cart.value.find((pr) => pr.id === productsStore.activeProductId);
-      if (!productCart) return;
+    }
+    else {
+      const productCart = cart.value.find(pr => pr.id === productsStore.activeProductId);
+      if (!productCart) { return; }
 
       productCart.quantity += 1;
       productCart.totalPrice = calculateTotalPriceProduct({
@@ -120,26 +122,28 @@ export const useCartStore = defineStore('cart', () => {
     }
 
     if (userStore.isLoggedIn) {
-      const ingredientsIds = ingredients.map((item) => item.id);
+      const ingredientsIds = ingredients.map(item => item.id);
 
       await api.cart.addToCart(productsStore.activeProductId, dough.id, size.id, ingredientsIds);
     }
   };
 
-  const updateCnt = async ({ newQuantity, idProduct }: { newQuantity: number; idProduct: string }) => {
-    const productCart = cart.value.find((item) => item.id === idProduct);
+  const updateCnt = async ({ newQuantity, idProduct }: { newQuantity: number, idProduct: string }) => {
+    const productCart = cart.value.find(item => item.id === idProduct);
 
-    if (!productCart) return;
+    if (!productCart) { return; }
 
     if (userStore.isLoggedIn) {
       try {
         debouncedFetchUpdateCnt({ idProduct, updatedProduct: { quantity: newQuantity } });
         productCart.quantity = newQuantity;
         setItemInLocalstorage('CART', cart.value);
-      } catch (e) {
+      }
+      catch (e) {
         console.log(e);
       }
-    } else {
+    }
+    else {
       productCart.quantity = newQuantity;
       setItemInLocalstorage('CART', cart.value);
     }
@@ -148,16 +152,17 @@ export const useCartStore = defineStore('cart', () => {
   const debouncedFetchUpdateCnt = debounce(async (updatedProduct) => {
     try {
       return await api.cart.updateProduct(updatedProduct);
-    } catch (e) {
+    }
+    catch (e) {
       console.log(e, 'eee');
       throw e;
     }
   }, 300);
 
   const removeItem = async (id: string) => {
-    if (!inCart(id)) return false;
+    if (!inCart(id)) { return false; }
 
-    cart.value = cart.value.filter((item) => item.id !== id);
+    cart.value = cart.value.filter(item => item.id !== id);
     setItemInLocalstorage('CART', cart.value);
 
     if (userStore.isLoggedIn) {
