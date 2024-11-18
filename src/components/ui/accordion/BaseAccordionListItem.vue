@@ -1,7 +1,36 @@
+<script setup lang="ts">
+import { computed, inject, ref } from 'vue';
+
+const accordion = inject('accordion') as { count: number, active: null | number };
+const isCloseOthers = inject('isCloseOthers') as boolean;
+
+const index = ref<number>(accordion.count++);
+const isOpen = ref(false);
+
+const visible = computed(() => {
+  if (isCloseOthers) {
+    return accordion.active === index.value;
+  }
+  else {
+    return isOpen.value;
+  }
+});
+function open() {
+  if (visible.value) {
+    accordion.active = null;
+  }
+  else {
+    accordion.active = index.value;
+  }
+
+  isOpen.value = !isOpen.value;
+}
+</script>
+
 <template>
   <div class="accordion-item">
     <div class="accordion-item__trigger" @click="open">
-      <slot name="trigger" :isVisible="visible" />
+      <slot name="trigger" :is-visible="visible" />
     </div>
 
     <div class="accordion-item__content" :class="{ 'accordion-item__content--active': visible }">
@@ -11,34 +40,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { computed, inject, ref } from 'vue';
-
-const accordion = inject('accordion') as { count: number; active: null | number };
-const isCloseOthers = inject('isCloseOthers') as boolean;
-
-const index = ref<number>(accordion.count++);
-const isOpen = ref(false);
-
-const open = () => {
-  if (visible.value) {
-    accordion.active = null;
-  } else {
-    accordion.active = index.value;
-  }
-
-  isOpen.value = !isOpen.value;
-};
-
-const visible = computed(() => {
-  if (isCloseOthers) {
-    return accordion.active === index.value;
-  } else {
-    return isOpen.value;
-  }
-});
-</script>
 
 <style scoped lang="less">
 .accordion-item {

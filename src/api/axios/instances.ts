@@ -3,7 +3,7 @@ import type { AxiosInstance } from 'axios';
 import initInterceptors from './interceptors';
 
 const instance: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL + '/api',
+  baseURL: `${import.meta.env.VITE_BASE_URL}/api`,
   headers: {
     'Content-Type': 'application/json',
   },

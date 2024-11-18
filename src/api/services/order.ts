@@ -1,7 +1,6 @@
+import type { IHttpClient } from '../types/api';
 import { OrderDTO } from './../../models/order.dto';
-import { IOrderCreate } from '@/types/IOrder';
-import { IOrder } from '@/types/IOrder';
-import { IHttpClient } from '../types/api';
+import type { IOrder, IOrderCreate } from '@/types/IOrder';
 
 export class OrderService {
   $http: IHttpClient;
@@ -20,7 +19,7 @@ export class OrderService {
   }
 
   async getOrders({ page }: { page: number }) {
-    const res = await this.$http.makeRequest<{ items: IOrder[]; total: number; currentPage: number }>({
+    const res = await this.$http.makeRequest<{ items: IOrder[], total: number, currentPage: number }>({
       url: '/order',
       method: 'GET',
       headers: { authorization: true },
@@ -30,7 +29,7 @@ export class OrderService {
     });
 
     return {
-      items: res.data.items.map((order) => new OrderDTO(order)),
+      items: res.data.items.map(order => new OrderDTO(order)),
       total: res.data.total,
       currentPage: res.data.currentPage,
     };

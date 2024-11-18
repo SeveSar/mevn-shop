@@ -2,9 +2,19 @@
 import { onMounted, onUnmounted, ref } from 'vue';
 import type { InputMask } from 'imask';
 import IMask from 'imask';
-import { useRouter } from 'vue-router';
 import type { TMaskKeys } from '@/configs/mask';
 import { getMask } from '@/configs/mask';
+
+interface Props {
+  modelValue: string | number | null
+  labelText?: string
+  errors?: string | null
+  placeholder?: string
+  type?: 'text' | 'number' | 'password'
+  required?: boolean
+  disabled?: boolean
+  mask?: TMaskKeys
+}
 
 defineOptions({
   inheritAttrs: false,
@@ -21,18 +31,6 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits(['update:modelValue', 'onBlur', 'onFocus']);
-
-interface Props {
-  modelValue?: string | number
-  value?: string | number
-  labelText?: string
-  errors?: string | null
-  placeholder?: string
-  type?: 'text' | 'number' | 'password'
-  required?: boolean
-  disabled?: boolean
-  mask?: TMaskKeys
-}
 
 let maskInstance: InputMask<object> | null = null;
 
@@ -95,7 +93,7 @@ function onFocus() {
 
     <input
       ref="inputRef" class="base-input__control" :class="{ error: errors }"
-      :value="value ? value : modelValue" :placeholder="placeholder" :type="type" data-testid="base-input" :disabled="disabled"
+      :value="modelValue" :placeholder="placeholder" :type="type" data-testid="base-input" :disabled="disabled"
       v-bind="$attrs" @blur="onBlur" @focus="onFocus" @input="updateModelValue"
     >
 

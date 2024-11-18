@@ -1,79 +1,79 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import BaseInput from '@/components/ui/BaseInput.vue';
+import BaseButton from '@/components/ui/BaseButton.vue';
+import type { IUser } from '@/types/IUser';
+
+interface Props {
+  userInfo: Omit<IUser, '_id' | 'avatar'>
+  isChanging: boolean
+}
+const props = defineProps<Props>();
+const emit = defineEmits(['onSubmitForm']);
+
+const userFields = ref<Props['userInfo']>({
+  name: props.userInfo.name,
+  phone: props.userInfo.phone,
+  email: props.userInfo.email,
+  birthDay: props.userInfo.birthDay,
+});
+
+function onSaveInfo() {
+  emit('onSubmitForm');
+}
+</script>
+
 <template>
   <form class="settings-form" @submit.prevent="onSaveInfo">
-    <div class="settings-form__preview" v-if="!isChanging">
+    <div v-if="!isChanging" class="settings-form__preview">
       <label class="settings-form__label">
         Имя*
         <span>
-          {{ userInfo.name }}
+          {{ userInfo.name || '-' }}
         </span>
       </label>
       <label class="settings-form__label">
         Номер телефона*
         <span>
-          {{ userInfo.phone }}
+          {{ userInfo.phone || '-' }}
         </span>
       </label>
       <label class="settings-form__label">
         Почта
         <span>
-          {{ userInfo.email }}
+          {{ userInfo.email || '-' }}
         </span>
       </label>
       <label class="settings-form__label">
         Дата рождения
         <span>
-          {{ userInfo.birthday }}
+          {{ userInfo.birthDay || '-' }}
         </span>
       </label>
     </div>
-    <div class="settings-form__body" v-else>
+    <div v-else class="settings-form__body">
       <div class="settings-form__controls">
         <div class="settings-form__group">
-          <BaseInput type="text" labelText="Имя" required v-model="nameControl" />
+          <BaseInput v-model="userFields.name" type="text" label-text="Имя" required />
         </div>
         <div class="settings-form__group">
-          <BaseInput type="text" labelText="Номер телефона" required v-model="phoneControl" />
+          <BaseInput v-model="userFields.phone" type="text" label-text="Номер телефона" required />
         </div>
         <div class="settings-form__group">
-          <BaseInput type="text" labelText="Почта" v-model="emailControl" />
+          <BaseInput v-model="userFields.email" type="text" label-text="Почта" />
         </div>
         <div class="settings-form__group">
-          <BaseInput type="text" labelText="Дата рождения" v-model="birthdayControl" />
+          <BaseInput v-model="userFields.birthDay" type="text" label-text="Дата рождения" />
         </div>
       </div>
       <div class="settings-form__footer">
-        <BaseButton type="submit"> Сохранить изменения </BaseButton>
+        <BaseButton type="submit">
+          Сохранить изменения
+        </BaseButton>
       </div>
     </div>
   </form>
 </template>
-
-<script setup lang="ts">
-import BaseInput from '@/components/ui/BaseInput.vue';
-import BaseButton from '@/components/ui/BaseButton.vue';
-import { ref } from 'vue';
-
-interface Props {
-  userInfo: {
-    name: string;
-    phone: string;
-    email: string;
-    birthday: string;
-  };
-  isChanging: boolean;
-}
-const props = defineProps<Props>();
-const emit = defineEmits(['onSubmitForm']);
-
-const nameControl = ref(props.userInfo.name);
-const phoneControl = ref(props.userInfo.phone);
-const emailControl = ref(props.userInfo.email);
-const birthdayControl = ref(props.userInfo.birthday);
-
-const onSaveInfo = () => {
-  emit('onSubmitForm');
-};
-</script>
 
 <style scoped lang="less">
 .settings-form {

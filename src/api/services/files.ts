@@ -1,5 +1,5 @@
-import type { IFile } from '@/types/IFile';
 import type { IHttpClient } from '../types/api';
+import type { IFile } from '@/types/IFile';
 
 export class FilesServices {
   private readonly $http: IHttpClient;
@@ -13,7 +13,8 @@ export class FilesServices {
 
     if (Array.isArray(files)) {
       filesArray = [...files];
-    } else {
+    }
+    else {
       filesArray = [files];
     }
     filesArray.forEach((file) => {

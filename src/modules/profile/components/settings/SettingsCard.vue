@@ -1,25 +1,27 @@
+<script setup lang="ts">
+interface Props {
+  title: string
+  isChanging: boolean
+}
+defineProps<Props>();
+const emit = defineEmits(['onChange']);
+</script>
+
 <template>
   <div class="settings-card">
     <div class="settings-card__header">
       <h3 class="settings-card__title">
         {{ title }}
       </h3>
-      <button class="settings-card__change" @click="emit('onChange')" v-if="!isChanging">Изменить</button>
+      <button v-if="!isChanging" class="settings-card__change" @click="emit('onChange')">
+        Изменить
+      </button>
     </div>
     <div class="settings-card__content">
       <slot />
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-interface Props {
-  title: string;
-  isChanging: boolean;
-}
-const props = defineProps<Props>();
-const emit = defineEmits(['onChange']);
-</script>
 
 <style scoped lang="less">
 .settings-card {

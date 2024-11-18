@@ -1,21 +1,32 @@
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
+import SettingsCard from '../../components/settings/SettingsCard.vue';
+import SettingsForm from '../../components/settings/SettingsForm.vue';
+import { api } from '@/api/api';
+import type { UserResponse } from '@/types/responses/user';
+
+const isChanging = ref(false);
+const userData = ref<UserResponse | null>(null);
+onMounted(async () => {
+  try {
+    userData.value = await api.user.refresh();
+  }
+  catch (e) {
+    console.log(e);
+  }
+});
+</script>
+
 <template>
-  <div class="page-settings">
-    <SettingsCard title="Личные данные" @onChange="isChanging = true" :is-changing="isChanging">
+  <div v-if="userData" class="page-settings">
+    <SettingsCard title="Личные данные" :is-changing="isChanging" @on-change="isChanging = true">
       <SettingsForm
-        :user-info="{ name: 'Ara', phone: '767676', email: 'a@a', birthday: '01.01.2000' }"
+        :user-info="{ name: userData.user.name, phone: userData?.user.phone, email: userData?.user.email, birthDay: null }"
         :is-changing="isChanging"
-        @onSubmitForm="isChanging = false"
+        @on-submit-form="isChanging = false"
       />
     </SettingsCard>
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue';
-import SettingsCard from '../../components/settings/SettingsCard.vue';
-import SettingsForm from '../../components/settings/SettingsForm.vue';
-
-const isChanging = ref(false);
-</script>
 
 <style scoped></style>

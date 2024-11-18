@@ -1,4 +1,4 @@
-import { fileURLToPath, URL } from 'url';
+import { URL, fileURLToPath } from 'node:url';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vitest/config';
 import vue from '@vitejs/plugin-vue';
@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [
     vue(),
     visualizer(),
-    Checker({ typescript: true })
+    Checker({ typescript: true }),
     // checker({
     //   // e.g. use TypeScript check
     //   typescript: true,
@@ -24,7 +24,7 @@ export default defineConfig({
   // base: "/Pizza-spa-vue/",
   build: {
     sourcemap: true,
-    target: 'es2015'
+    target: 'es2015',
   },
   server: {
     port: 3000,

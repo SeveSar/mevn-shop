@@ -29,7 +29,7 @@ const model = computed({
         class="order-form__date-control"
         :errors="errors"
         placeholder="Дата"
-        :value="inputValue"
+        :model-value="inputValue"
         :mask="mask"
         v-on="inputEvents"
       />

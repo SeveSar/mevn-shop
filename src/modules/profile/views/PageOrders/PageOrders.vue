@@ -42,7 +42,7 @@ watch(currentPage, () => {
     <OrderSkeleton v-if="isLoading" :count="5" />
     <template v-else-if="!isLoading && orderItems.length">
       <OrdersItem v-for="item in orderItems" :key="item._id" :item="item" />
-      <div class="page-orders__pagination">
+      <div v-if="currentPage > 1" class="page-orders__pagination">
         <BasePagination
           :total-count="totalOrders" :per-page="5" :current-page="currentPage"
           @change-page="(page) => (currentPage = page)"

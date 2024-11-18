@@ -11,14 +11,9 @@ const router = createRouter({
   linkActiveClass: 'active',
   linkExactActiveClass: 'exact-active',
   scrollBehavior() {
-    // always scroll to top
     return { top: 0 };
   },
   routes: [
-    {
-      path: '/',
-      redirect: { name: RouteNamesEnum.products },
-    },
     {
       path: '/products',
       name: RouteNamesEnum.products,
@@ -33,7 +28,6 @@ const router = createRouter({
       path: '/admin',
       name: RouteNamesEnum.admin,
       component: () => import('@/modules/admin/views/PageAdmin/PageAdmin.vue'),
-
       children: [
         {
           name: 'Pizza',
