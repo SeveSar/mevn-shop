@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import BaseInput from '@/components/ui/BaseInput.vue';
-import BaseButton from '@/components/ui/BaseButton.vue';
 import type { IUser } from '@/types/IUser';
+import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseInput from '@/components/ui/BaseInput.vue';
+import { ref } from 'vue';
 
 interface Props {
   userInfo: Omit<IUser, '_id' | 'avatar'>

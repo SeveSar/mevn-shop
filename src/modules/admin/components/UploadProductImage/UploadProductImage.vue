@@ -1,26 +1,5 @@
-<template>
-  <div class="uploader">
-    <label class="uploader__button">
-      <input
-        class="uploader__button-input"
-        type="file"
-        accept="image/*"
-        @change="getFile"
-      />
-      <span class="ploader__button-text"> Загрузить картинку </span>
-    </label>
-    <div class="uploader__preview" v-if="modelValue" @click="deleteFile">
-      <img class="uploader__img" :src="getSrc()" alt="" />
-      <div class="uploader__details">
-        <div class="uploader__name">{{ modelValue.name }}</div>
-        <div class="uploader__size">{{ modelValue.size }} bytes</div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script lang="ts">
-import { defineComponent, toRefs, type PropType } from "vue";
+import { defineComponent, type PropType, toRefs } from 'vue';
 
 export default defineComponent({
   props: {
@@ -29,7 +8,7 @@ export default defineComponent({
       default: null,
     },
   },
-  emits: ["update:modelValue"],
+  emits: ['update:modelValue'],
 
   setup(props, { emit }) {
     const { modelValue } = toRefs(props);
@@ -37,18 +16,18 @@ export default defineComponent({
       const target = event.target as HTMLInputElement;
       const files = target.files;
       if (files) {
-        emit("update:modelValue", files[0]);
+        emit('update:modelValue', files[0]);
       }
-      target.value = "";
+      target.value = '';
     };
     const getSrc = () => {
       if (!modelValue.value) {
-        return "";
+        return '';
       }
       return URL.createObjectURL(modelValue.value);
     };
     const deleteFile = () => {
-      emit("update:modelValue", null);
+      emit('update:modelValue', null);
     };
     return {
       getFile,
@@ -58,6 +37,31 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <div class="uploader">
+    <label class="uploader__button">
+      <input
+        class="uploader__button-input"
+        type="file"
+        accept="image/*"
+        @change="getFile"
+      >
+      <span class="ploader__button-text"> Загрузить картинку </span>
+    </label>
+    <div v-if="modelValue" class="uploader__preview" @click="deleteFile">
+      <img class="uploader__img" :src="getSrc()" alt="">
+      <div class="uploader__details">
+        <div class="uploader__name">
+          {{ modelValue.name }}
+        </div>
+        <div class="uploader__size">
+          {{ modelValue.size }} bytes
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style scoped lang="less">
 .uploader {

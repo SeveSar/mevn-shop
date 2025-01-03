@@ -1,3 +1,50 @@
+<script lang="ts">
+</script>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+
+const props = withDefaults(defineProps<Props>(), {
+  offset: 4,
+});
+
+const emits = defineEmits(['changePage']);
+
+interface Props {
+  perPage: number
+  totalCount: number
+  currentPage: number
+  offset?: number
+}
+
+const router = useRouter();
+
+const totalPages = computed(() => {
+  return Math.ceil(props.totalCount / props.perPage);
+});
+
+const serializedPages = computed(() => {
+  const pages = [];
+  for (let i = 1; i <= totalPages.value; i++) {
+    if (
+      (props.currentPage - i < props.offset && props.currentPage - i > -props.offset)
+      || i === totalPages.value
+      || i === 1
+    ) {
+      pages.push(i);
+    }
+  }
+
+  return pages;
+});
+
+function changePage(page: number) {
+  router.push({ query: { page: page.toString() } });
+  emits('changePage', page);
+}
+</script>
+
 <template>
   <ul class="base-pagination">
     <li
@@ -5,13 +52,13 @@
       :class="{ 'base-pagination__item--disabled': currentPage <= 1 }"
       @click="changePage(currentPage - 1)"
     >
-      &lt
+      {{ '<' }}
     </li>
     <li
+      v-for="(page) in serializedPages"
+      :key="page"
       class="base-pagination__item"
       :class="{ 'base-pagination__item--active': currentPage === page }"
-      v-for="(page, idx) in serializedPages"
-      :key="page"
       @click.prevent="changePage(page)"
     >
       {{ page }}
@@ -21,59 +68,10 @@
       :class="{ 'base-pagination__item--disabled': currentPage >= totalPages }"
       @click="changePage(currentPage + 1)"
     >
-      >
+      {{ '>' }}
     </li>
   </ul>
 </template>
-
-<script lang="ts">
-export default {
-  name: 'BasePagination',
-};
-</script>
-
-<script setup lang="ts">
-import { computed, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import { useRouter } from 'vue-router';
-
-interface Props {
-  perPage: number;
-  totalCount: number;
-  currentPage: number;
-  offset?: number;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  offset: 4,
-});
-const emits = defineEmits(['changePage']);
-const router = useRouter();
-const route = useRoute();
-const totalPages = computed(() => {
-  return Math.ceil(props.totalCount / props.perPage);
-});
-
-const serializedPages = computed(() => {
-  const pages = [];
-  for (let i = 1; i <= totalPages.value; i++) {
-    if (
-      (props.currentPage - i < props.offset && props.currentPage - i > -props.offset) ||
-      i === totalPages.value ||
-      i === 1
-    ) {
-      pages.push(i);
-    }
-  }
-
-  return pages;
-});
-
-const changePage = (page: number) => {
-  router.push({ query: { page: page.toString() } });
-  emits('changePage', page);
-};
-</script>
 
 <style lang="less" scoped>
 .base-pagination {
@@ -91,7 +89,7 @@ const changePage = (page: number) => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ;
+    background-color:;
     border: 1px solid @gray-color;
     color: @black-color;
     font-size: 16px;

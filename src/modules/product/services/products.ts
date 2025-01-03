@@ -1,9 +1,9 @@
-import { ProductDTO, ProductFullDTO } from '../models';
-import type { IProductResponse } from '@/types/responses/product';
 import type { IHttpClient } from '@/api/types/api';
-import type { IFilterResponse } from '@/types/responses/filter';
-import { FilterDTO } from '@/models/filter.dto';
 import type { IProductFull } from '@/types/IProduct';
+import type { IFilterResponse } from '@/types/responses/filter';
+import type { IProductResponse } from '@/types/responses/product';
+import { FilterDTO } from '@/models/filter.dto';
+import { ProductDTO, ProductFullDTO } from '../models';
 
 export class ProductServices {
   private readonly $http: IHttpClient;

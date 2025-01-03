@@ -1,11 +1,6 @@
-<template>
-  <div class="error">
-    <h1>{{ title }}</h1>
-  </div>
-</template>
-
 <script lang="ts">
 import { defineComponent } from 'vue';
+
 export default defineComponent({
   props: {
     title: {
@@ -15,6 +10,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <div class="error">
+    <h1>{{ title }}</h1>
+  </div>
+</template>
 
 <style scoped>
 .error {

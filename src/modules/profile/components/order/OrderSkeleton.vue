@@ -1,6 +1,18 @@
+<script setup lang="ts">
+import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
+
+interface Props {
+  count?: number
+}
+
+withDefaults(defineProps<Props>(), {
+  count: 1,
+});
+</script>
+
 <template>
   <div class="order-skeletons">
-    <div class="order-skeletons__item order-skeletons-item" v-for="i in count" :key="i">
+    <div v-for="i in count" :key="i" class="order-skeletons__item order-skeletons-item">
       <div class="order-skeletons-item__header">
         <BaseSkeleton width="100" height="40" corner="5" />
         <BaseSkeleton width="100" height="40" corner="5" />
@@ -18,18 +30,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
-
-interface Props {
-  count?: number;
-}
-
-withDefaults(defineProps<Props>(), {
-  count: 1,
-});
-</script>
 
 <style scoped lang="less">
 .order-skeletons {

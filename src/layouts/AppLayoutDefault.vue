@@ -1,12 +1,12 @@
 <script lang="ts">
-import { useRoute, useRouter } from 'vue-router';
-import { defineComponent, onMounted, watch } from 'vue';
-import TheHeader from '@/components/layouts/TheHeader/TheHeader.vue';
 import MobileMenu from '@/components/layouts/MobileMenu.vue';
-import SidePanelCart from '@/components/sidePanels/SidePanelCart.vue';
+import TheHeader from '@/components/layouts/TheHeader/TheHeader.vue';
 import ModalProduct from '@/components/modals/ModalProduct/ModalProduct.vue';
-
+import SidePanelCart from '@/components/sidePanels/SidePanelCart.vue';
 import { useCartStore } from '@/modules/cart';
+import { defineComponent, onMounted, watch } from 'vue';
+
+import { useRoute, useRouter } from 'vue-router';
 
 export default defineComponent({
   components: {

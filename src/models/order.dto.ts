@@ -1,11 +1,11 @@
-import { ORDER_PAYMENT_MAP } from './../constants';
-import type { IProductCartResponse } from '@/types/responses/cart';
 import type { TOrderPayment, TOrderStatus, TOrderTypeDelivery, TOrderTypeTiming } from '@/constants';
-import { ORDER_STATUS_MAP } from '@/constants';
+import type { IOrder, IOrderAddress } from '@/types/IOrder';
 import type { IDoughItem, IIngredientItem, ISizeItem } from '@/types/IProduct';
 import type { IUser } from '@/types/IUser';
-import type { IOrder, IOrderAddress } from '@/types/IOrder';
+import type { IProductCartResponse } from '@/types/responses/cart';
 import type { IProductResponse } from '@/types/responses/product';
+import { ORDER_STATUS_MAP } from '@/constants';
+import { ORDER_PAYMENT_MAP } from './../constants';
 
 export class OrderDTO {
   _id!: string;

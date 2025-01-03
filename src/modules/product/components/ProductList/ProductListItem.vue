@@ -1,12 +1,12 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
-
 import type { ProductDTO } from '../../models';
-import { useProductsStore } from '@/modules/product';
-import BaseButton from '@/components/ui/BaseButton.vue';
 
+import BaseButton from '@/components/ui/BaseButton.vue';
+import { useProductsStore } from '@/modules/product';
 import { useAuthModal } from '@/modules/user';
+
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   components: {

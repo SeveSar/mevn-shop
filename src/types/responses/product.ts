@@ -1,5 +1,5 @@
-import type { TFilterItemResponse } from './filter';
 import type { IDoughItem, IIngredientItemBase, IProductBase, ISizeItem } from '@/types/IProduct';
+import type { TFilterItemResponse } from './filter';
 
 export interface IProductResponse extends IProductBase {
   _id: string

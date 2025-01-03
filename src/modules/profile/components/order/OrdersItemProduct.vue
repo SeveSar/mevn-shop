@@ -1,23 +1,31 @@
-<template>
-  <div class="order-product">
-    <div class="order-product__header">
-      <img class="order-product__img" :src="product.imageUrl" />
-      <div class="order-product__title">{{ product.title }}</div>
-    </div>
-    <div class="order-product__extra">{{ product.dough.title }}, {{ product.size.title }}</div>
-    <div class="order-product__count">{{ product.quantity }} товар</div>
-    <div class="order-product__price">{{ product.totalPrice * product.quantity }} ₽</div>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { OrderProductDTO } from '@/models/order.dto';
+import type { OrderProductDTO } from '@/models/order.dto';
 
 interface Props {
-  product: OrderProductDTO;
+  product: OrderProductDTO
 }
 const props = defineProps<Props>();
 </script>
+
+<template>
+  <div class="order-product">
+    <div class="order-product__header">
+      <img class="order-product__img" :src="product.imageUrl">
+      <div class="order-product__title">
+        {{ product.title }}
+      </div>
+    </div>
+    <div class="order-product__extra">
+      {{ product.dough.title }}, {{ product.size.title }}
+    </div>
+    <div class="order-product__count">
+      {{ product.quantity }} товар
+    </div>
+    <div class="order-product__price">
+      {{ product.totalPrice * product.quantity }} ₽
+    </div>
+  </div>
+</template>
 
 <style scoped lang="less">
 .order-product {

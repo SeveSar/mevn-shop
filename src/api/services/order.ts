@@ -1,6 +1,6 @@
+import type { IOrder, IOrderCreate } from '@/types/IOrder';
 import type { IHttpClient } from '../types/api';
 import { OrderDTO } from './../../models/order.dto';
-import type { IOrder, IOrderCreate } from '@/types/IOrder';
 
 export class OrderService {
   $http: IHttpClient;

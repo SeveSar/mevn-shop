@@ -1,8 +1,8 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
-import ProductListItem from '../../components/ProductList/ProductListItem.vue';
 import type { ProductDTO } from '../../models';
+import { defineComponent } from 'vue';
+import ProductListItem from '../../components/ProductList/ProductListItem.vue';
 
 export default defineComponent({
   components: {

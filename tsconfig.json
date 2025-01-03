@@ -1,4 +1,32 @@
 {
+  "compilerOptions": {
+    "target": "ES6",
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
+    "useDefineForClassFields": true, // Установите target на ES6 или выше
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "resolveJsonModule": true,
+    "types": [
+      "@types/jest",
+      "vite/client"
+    ],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
   "files": [],
   "include": [
     "src/**/*.ts",
@@ -10,33 +38,5 @@
   "exclude": [
     "src/**/__tests__/*",
     "node_modules"
-  ],
-  "compilerOptions": {
-    "target": "ES6", // Установите target на ES6 или выше
-    "module": "ESNext",
-    "lib": [
-      "DOM",
-      "ESNext"
-    ],
-    "skipLibCheck": true,
-    "strict": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "useDefineForClassFields": true,
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
-    "types": [
-      "@types/jest",
-      "vite/client"
-    ]
-  },
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
   ]
 }

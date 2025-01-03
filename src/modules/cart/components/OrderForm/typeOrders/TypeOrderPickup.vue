@@ -1,3 +1,25 @@
+<script setup lang="ts">
+import type { Validation } from '@vuelidate/core';
+import type { Ref } from 'vue';
+import BaseInput from '@/components/ui/BaseInput.vue';
+import { computed, inject } from 'vue';
+
+interface Props {
+  modelValue: string
+}
+const props = defineProps<Props>();
+const emit = defineEmits(['update:modelValue']);
+const v$ = inject('v$') as Ref<Validation>;
+const modelValue = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit('update:modelValue', value);
+  },
+});
+</script>
+
 <template>
   <div class="order-pickup">
     <BaseInput
@@ -9,27 +31,5 @@
     />
   </div>
 </template>
-
-<script setup lang="ts">
-import BaseInput from '@/components/ui/BaseInput.vue';
-import { Validation } from '@vuelidate/core';
-import { Ref, computed, inject } from 'vue';
-
-interface Props {
-  modelValue: string;
-}
-const v$ = inject('v$') as Ref<Validation>;
-const props = defineProps<Props>();
-const emit = defineEmits(['update:modelValue']);
-
-const modelValue = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(value) {
-    emit('update:modelValue', value);
-  },
-});
-</script>
 
 <style scoped></style>

@@ -1,10 +1,20 @@
+<script setup lang="ts">
+import { RouteNamesEnum } from '@/router/router.types';
+</script>
+
 <template>
   <section class="profile">
     <div class="profile__header">
-      <h1 class="profile__title">Мой аккаунт</h1>
+      <h1 class="profile__title">
+        Мой аккаунт
+      </h1>
       <div class="profile__tabs">
-        <router-link class="btn profile__tabs-tab" :to="{ name: RouteNamesEnum.settings }">Настройки</router-link>
-        <router-link class="btn profile__tabs-tab" :to="{ name: RouteNamesEnum.orders }">История заказов</router-link>
+        <router-link class="btn profile__tabs-tab" :to="{ name: RouteNamesEnum.settings }">
+          Настройки
+        </router-link>
+        <router-link class="btn profile__tabs-tab" :to="{ name: RouteNamesEnum.orders }">
+          История заказов
+        </router-link>
       </div>
     </div>
 
@@ -15,10 +25,6 @@
     </router-view>
   </section>
 </template>
-
-<script setup lang="ts">
-import { RouteNamesEnum } from '@/router/router.types';
-</script>
 
 <style scoped lang="less">
 .profile {

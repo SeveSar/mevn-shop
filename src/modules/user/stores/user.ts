@@ -1,9 +1,9 @@
-import { computed, ref } from 'vue';
-import { defineStore } from 'pinia';
+import type { IUser } from '@/types/IUser';
 import { api } from '@/api/api';
 import { useCartStore } from '@/modules/cart';
 import { cleanTokensData, clearAll, getItemFromLocalstorage, setToken } from '@/utils/localstorage';
-import type { IUser } from '@/types/IUser';
+import { defineStore } from 'pinia';
+import { computed, ref } from 'vue';
 
 export const useUserStore = defineStore('user', () => {
   const cartStore = useCartStore();
@@ -21,7 +21,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   async function signUp(email: string, password: string) {
-    const data = await api.user.register(email, password);
+    const data = await api.user.register(email, password, getItemFromLocalstorage('CART'));
     user.value = data.user;
     setToken(data.accessToken);
     return data;

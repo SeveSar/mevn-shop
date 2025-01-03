@@ -1,16 +1,16 @@
 <script lang="ts">
-import { type PropType, defineComponent, inject, reactive, ref } from 'vue';
-
-import useVuelidate from '@vuelidate/core';
-import { getValidationRule } from '@/utils/validations';
-import BaseInput from '@/components/ui/BaseInput.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
-import { useUserStore } from '@/modules/user/stores/user';
 
-import { getErrorMessage } from '@/utils/errorHandler';
-import { useAuthModal } from '@/modules/user';
-
+import BaseInput from '@/components/ui/BaseInput.vue';
 import { toaster } from '@/main';
+import { useAuthModal } from '@/modules/user';
+import { useUserStore } from '@/modules/user/stores/user';
+import { getErrorMessage } from '@/utils/errorHandler';
+
+import { getValidationRule } from '@/utils/validations';
+import useVuelidate from '@vuelidate/core';
+
+import { defineComponent, type PropType, reactive, ref } from 'vue';
 
 interface IUserCredentials {
   email: string

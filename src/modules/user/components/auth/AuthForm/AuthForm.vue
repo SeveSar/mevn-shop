@@ -1,21 +1,8 @@
-<template>
-  <div class="form-switcher">
-    <keep-alive>
-      <component :is="`form-${currentFormType.toLowerCase()}`"></component>
-    </keep-alive>
-  </div>
-  <div class="form-switcher__notify">
-    {{ currentNotifyText }}
-    <button @click="switchTab">
-      {{ currentFormType === 'login' ? 'Создать' : 'Войти' }}
-    </button>
-  </div>
-</template>
-
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import FormLogin from '../forms/FormLogin.vue';
 import FormRegister from '../forms/FormRegister.vue';
+
 type FormType = 'login' | 'register';
 
 export default defineComponent({
@@ -23,8 +10,8 @@ export default defineComponent({
     FormLogin,
     FormRegister,
   },
-  setup(props) {
-    let currentFormType = ref<FormType>('login');
+  setup() {
+    const currentFormType = ref<FormType>('login');
 
     const switchTab = () => {
       switch (currentFormType.value) {
@@ -49,6 +36,21 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <div class="form-switcher">
+    <keep-alive>
+      <component :is="`form-${currentFormType.toLowerCase()}`" />
+    </keep-alive>
+  </div>
+  <div class="form-switcher__notify">
+    {{ currentNotifyText }}
+    <button @click="switchTab">
+      {{ currentFormType === 'login' ? 'Создать' : 'Войти' }}
+    </button>
+  </div>
+</template>
+
 <style scoped lang="less">
 .form-switcher {
   &__notify {

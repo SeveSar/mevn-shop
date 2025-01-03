@@ -1,5 +1,5 @@
-@import "reset";
-@import "fonts";
+@import 'reset';
+@import 'fonts';
 @import 'animations';
 @import 'vcalendar';
 
@@ -8,9 +8,10 @@ html {
 }
 
 body {
-  font-family: "SF-Pro";
+  font-family: 'SF-Pro';
   font-weight: 400;
   height: 100%;
+
   &.no-scroll {
     overflow: hidden;
   }
@@ -31,6 +32,7 @@ button {
   background-color: #f9f9f9;
   flex-grow: 1;
   padding-top: 70px;
+
   @media screen and (max-width: 991px) {
     padding-top: 71px;
   }
@@ -46,5 +48,5 @@ button {
   opacity: 0;
 }
 
-@import "blocks/container";
-@import "blocks/burger";
+@import 'blocks/container';
+@import 'blocks/burger';

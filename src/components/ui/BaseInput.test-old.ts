@@ -1,7 +1,7 @@
-import { render, fireEvent } from '@testing-library/vue';
-import '@testing-library/jest-dom';
-
+import { fireEvent, render } from '@testing-library/vue';
 import BaseInput from './BaseInput.vue';
+
+import '@testing-library/jest-dom';
 
 it('properly handles v-model', async () => {
   // Asserts initial state.
@@ -58,7 +58,7 @@ it('renders label elem', () => {
   const labelText = 'Label Test';
   const { queryByText, debug } = render(BaseInput, {
     props: {
-      labelText: labelText,
+      labelText,
       modelValue: 'Test value',
     },
   });

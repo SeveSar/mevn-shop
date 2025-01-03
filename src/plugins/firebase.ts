@@ -1,4 +1,4 @@
-import firebase from "firebase/compat/app";
+import firebase from 'firebase/compat/app';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_KEY,

@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import type { UserResponse } from '@/types/responses/user';
+import { api } from '@/api/api';
 import { onMounted, ref } from 'vue';
 import SettingsCard from '../../components/settings/SettingsCard.vue';
 import SettingsForm from '../../components/settings/SettingsForm.vue';
-import { api } from '@/api/api';
-import type { UserResponse } from '@/types/responses/user';
 
 const isChanging = ref(false);
 const userData = ref<UserResponse | null>(null);

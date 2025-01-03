@@ -1,14 +1,14 @@
 <script lang="ts">
-import { type Ref, defineComponent, ref } from 'vue';
-import BaseModal from '@/components/ui/BaseModal.vue';
-import BaseInput from '@/components/ui/BaseInput.vue';
-import UploadProductImage from '@/modules/admin/components/UploadProductImage/UploadProductImage.vue';
-import BaseCheckBox from '@/components/ui/BaseCheckBox.vue';
-import BaseTextArea from '@/components/ui/BaseTextArea.vue';
-import BaseButton from '@/components/ui/BaseButton.vue';
 import type { IProductFull } from '@/types/IProduct';
-
 import { api } from '@/api/api';
+import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseCheckBox from '@/components/ui/BaseCheckBox.vue';
+import BaseInput from '@/components/ui/BaseInput.vue';
+import BaseModal from '@/components/ui/BaseModal.vue';
+import BaseTextArea from '@/components/ui/BaseTextArea.vue';
+import UploadProductImage from '@/modules/admin/components/UploadProductImage/UploadProductImage.vue';
+
+import { defineComponent, type Ref, ref } from 'vue';
 
 export default defineComponent({
   components: {

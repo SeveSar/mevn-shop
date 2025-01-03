@@ -1,12 +1,12 @@
-import { render, fireEvent, screen, getByRole, waitFor } from '@testing-library/vue';
-import '@testing-library/jest-dom';
+import { fireEvent, render, screen, waitFor } from '@testing-library/vue';
 import BaseModal from './BaseModal.vue';
+import '@testing-library/jest-dom';
 
 jest.mock('vue-router', () => ({
   useRoute: jest.fn(() => ({ name: 'Home' })),
 }));
 
-const renderModal = (header = '', body = '', isOpen = true) => {
+function renderModal(header = '', body = '', isOpen = true) {
   return render(BaseModal, {
     slots: {
       header,
@@ -16,7 +16,7 @@ const renderModal = (header = '', body = '', isOpen = true) => {
       isOpen,
     },
   });
-};
+}
 
 it('renders with header and body', () => {
   const header = 'Header';

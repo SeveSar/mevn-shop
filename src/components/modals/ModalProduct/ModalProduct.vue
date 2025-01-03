@@ -1,16 +1,16 @@
 <script lang="ts" setup>
+import type { ProductFullDTO } from '@/modules/product';
+import { api } from '@/api/api';
+import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
+import { useCartStore } from '@/modules/cart';
+import { useProductsStore } from '@/modules/product';
+import { useAuthModal } from '@/modules/user';
 import { computed, ref, watch } from 'vue';
-import BaseModal from '../../ui/BaseModal.vue';
 import BaseButton from '../../ui/BaseButton.vue';
+import BaseModal from '../../ui/BaseModal.vue';
+
 import ModalProductIngredients from './ModalProductIngredients.vue';
 import ModalProductTabs from './ModalProductTabs.vue';
-import { useAuthModal } from '@/modules/user';
-import { useProductsStore } from '@/modules/product';
-import { useCartStore } from '@/modules/cart';
-import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
-
-import { api } from '@/api/api';
-import type { ProductFullDTO } from '@/modules/product';
 
 export interface ISelectedTabSize {
   title: string

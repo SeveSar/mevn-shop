@@ -1,3 +1,37 @@
+<script setup lang="ts">
+import type { Validation } from '@vuelidate/core';
+import type { Ref } from 'vue';
+import BaseInput from '@/components/ui/BaseInput.vue';
+import cloneDeep from 'lodash/cloneDeep';
+import { inject, ref, watch } from 'vue';
+
+interface IModelValue {
+  street: string
+  house: string
+  porch: string
+  floor: string
+  flat: string
+  door_phone: string
+}
+
+interface Props {
+  modelValue: IModelValue
+}
+const props = defineProps<Props>();
+const emit = defineEmits(['update:modelValue']);
+
+const localModelValue = ref(cloneDeep(props.modelValue));
+const v$ = inject('v$') as Ref<Validation>;
+
+watch(
+  localModelValue,
+  (val) => {
+    emit('update:modelValue', val);
+  },
+  { deep: true },
+);
+</script>
+
 <template>
   <div class="order-delivery">
     <BaseInput
@@ -15,39 +49,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import BaseInput from '@/components/ui/BaseInput.vue';
-import { Validation } from '@vuelidate/core';
-import cloneDeep from 'lodash/cloneDeep';
-import { Ref, inject, ref, watch } from 'vue';
-
-interface IModelValue {
-  street: string;
-  house: string;
-  porch: string;
-  floor: string;
-  flat: string;
-  door_phone: string;
-}
-
-interface Props {
-  modelValue: IModelValue;
-}
-const props = defineProps<Props>();
-const emit = defineEmits(['update:modelValue']);
-
-const localModelValue = ref(cloneDeep(props.modelValue));
-const v$ = inject('v$') as Ref<Validation>;
-
-watch(
-  localModelValue,
-  (val) => {
-    emit('update:modelValue', val);
-  },
-  { deep: true }
-);
-</script>
 
 <style scoped lang="less">
 .order-delivery {

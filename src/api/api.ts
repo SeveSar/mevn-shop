@@ -1,12 +1,12 @@
-import axios from 'axios';
-import { instance } from './axios/instances';
-import { AxiosHttpClient } from './axios';
+import { CartService } from '@/modules/cart/services/cart';
+import { ProductServices } from '@/modules/product';
+import { AuthService } from '@/modules/user/services/user';
 
+import axios from 'axios';
+import { AxiosHttpClient } from './axios';
+import { instance } from './axios/instances';
 import { FilesServices } from './services/files';
 import { OrderService } from './services/order';
-import { AuthService } from '@/modules/user/services/user';
-import { ProductServices } from '@/modules/product';
-import { CartService } from '@/modules/cart/services/cart';
 
 const axiosHttpClient = new AxiosHttpClient(instance);
 

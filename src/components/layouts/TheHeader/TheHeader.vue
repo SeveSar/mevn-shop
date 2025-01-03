@@ -1,12 +1,12 @@
 <script lang="ts">
+import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
+import { useMenu } from '@/composables/menu';
+import { useCartStore } from '@/modules/cart';
+
+import { useUserStore } from '@/modules/user/stores/user';
+import { RouteNamesEnum } from '@/router/router.types';
 import { defineComponent } from 'vue';
 import UserMenuSettings from './components/UserMenuSettings.vue';
-import { useUserStore } from '@/modules/user/stores/user';
-
-import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
-import { useCartStore } from '@/modules/cart';
-import { useMenu } from '@/composables/menu';
-import { RouteNamesEnum } from '@/router/router.types';
 
 export default defineComponent({
   components: {

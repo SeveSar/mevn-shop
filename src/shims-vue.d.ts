@@ -1,6 +1,7 @@
-//shims-vue.d.ts
+// shims-vue.d.ts
 declare module '*.vue' {
-import { defineComponent } from "vue";
+  import type { defineComponent } from 'vue';
+
   const component: ReturnType<typeof defineComponent>;
   export default component;
 }

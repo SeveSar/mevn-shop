@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref } from 'vue';
-import type { InputMask } from 'imask';
-import IMask from 'imask';
 import type { TMaskKeys } from '@/configs/mask';
+import type { InputMask } from 'imask';
 import { getMask } from '@/configs/mask';
+import IMask from 'imask';
+import { onMounted, onUnmounted, ref } from 'vue';
 
 interface Props {
   modelValue: string | number | null

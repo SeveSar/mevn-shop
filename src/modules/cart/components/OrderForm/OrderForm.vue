@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { type Component, computed, onMounted, provide, reactive, ref, watch } from 'vue';
-import { storeToRefs } from 'pinia';
+import type { TOrderPayment, TOrderTypeDelivery, TOrderTypeTiming } from '@/constants';
+import type { IOrderCreate } from '@/types/IOrder';
+import { api } from '@/api/api';
+import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseDatePicker from '@/components/ui/BaseDatePicker.vue';
+import BaseInput from '@/components/ui/BaseInput.vue';
+import BaseRadio from '@/components/ui/BaseRadio.vue';
+import BaseTab from '@/components/ui/BaseTab.vue';
+import BaseTextArea from '@/components/ui/BaseTextArea.vue';
+import { toaster } from '@/main';
+import router from '@/router';
+import { RouteNamesEnum } from '@/router/router.types';
+import { getValidationRule } from '@/utils/validations';
 import { useVuelidate } from '@vuelidate/core';
 import { helpers, minLength, required } from '@vuelidate/validators';
+import { storeToRefs } from 'pinia';
+import { type Component, computed, provide, reactive, ref, watch } from 'vue';
 import { useCartStore } from '../../stores';
 import TypeOrderDelivery from './typeOrders/TypeOrderDelivery.vue';
 import TypeOrderPickup from './typeOrders/TypeOrderPickup.vue';
-import BaseInput from '@/components/ui/BaseInput.vue';
-import BaseRadio from '@/components/ui/BaseRadio.vue';
-import BaseButton from '@/components/ui/BaseButton.vue';
-import BaseTab from '@/components/ui/BaseTab.vue';
-import BaseDatePicker from '@/components/ui/BaseDatePicker.vue';
-import BaseTextArea from '@/components/ui/BaseTextArea.vue';
-import { api } from '@/api/api';
-import router from '@/router';
-import { RouteNamesEnum } from '@/router/router.types';
-import { toaster } from '@/main';
-import type { IOrderCreate } from '@/types/IOrder';
-import type { TOrderPayment, TOrderTypeDelivery, TOrderTypeTiming } from '@/constants';
-import { getValidationRule } from '@/utils/validations';
 
 interface ITypeOrder {
   title: string

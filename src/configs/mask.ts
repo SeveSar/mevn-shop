@@ -14,6 +14,6 @@ const mask = {
 
 export type TMaskKeys = keyof typeof mask;
 
-export const getMask = (key: TMaskKeys) => {
+export function getMask(key: TMaskKeys) {
   return mask[key];
-};
+}

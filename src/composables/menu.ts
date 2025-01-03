@@ -1,7 +1,7 @@
-import { RouteNamesEnum } from './../router/router.types';
+import { useUserStore } from '@/modules/user/stores/user';
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '@/modules/user/stores/user';
+import { RouteNamesEnum } from './../router/router.types';
 
 const menuLinks = [
   { title: 'Пицца', active: true },
@@ -29,7 +29,7 @@ export function useMenu() {
     () => route.query,
     () => {
       isOpenedBurger.value = false;
-    }
+    },
   );
   return {
     isOpenedBurger,

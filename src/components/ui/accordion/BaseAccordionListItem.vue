@@ -50,7 +50,9 @@ function open() {
   &__content {
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows 500ms, -ms-grid-rows 500ms;
+    transition:
+      grid-template-rows 500ms,
+      -ms-grid-rows 500ms;
 
     &--active {
       grid-template-rows: 1fr;

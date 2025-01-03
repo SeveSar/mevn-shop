@@ -1,4 +1,4 @@
-import type { AxiosInstance, AxiosResponse } from 'axios';
+import type { AxiosInstance } from 'axios';
 import type { ApiResponse, IHttpClient, IOptions } from '../types/api';
 import { getAccessToken } from '@/utils/localstorage';
 

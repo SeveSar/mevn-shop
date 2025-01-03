@@ -1,5 +1,5 @@
-import type { IHttpClient } from '../types/api';
 import type { IFile } from '@/types/IFile';
+import type { IHttpClient } from '../types/api';
 
 export class FilesServices {
   private readonly $http: IHttpClient;

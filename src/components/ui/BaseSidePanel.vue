@@ -1,8 +1,7 @@
 <script lang="ts">
-import { defineComponent, ref, toRefs, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import BaseIcon from './BaseIcon/BaseIcon.vue';
 import { useModalFunctions } from '@/composables/modalFunctions';
+import { defineComponent, toRefs } from 'vue';
+import BaseIcon from './BaseIcon/BaseIcon.vue';
 
 export default defineComponent({
   components: {

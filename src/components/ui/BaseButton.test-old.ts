@@ -1,11 +1,11 @@
-//для тестирования компонентов
-import { render, prettyDOM, screen } from '@testing-library/vue';
+// для тестирования компонентов
+import { render, screen } from '@testing-library/vue';
 import BaseButton from './BaseButton.vue';
 
 // предосталвяется jest'ом
 // в нём описывается  сам тест
 it('renders base button', () => {
-  //3 состовляющие теста
+  // 3 состовляющие теста
   // given (Arrange)
   const options = {
     slots: {
@@ -13,11 +13,11 @@ it('renders base button', () => {
     },
   };
 
-  //when (act)
+  // when (act)
 
   render(BaseButton, options);
 
-  //then(assert)
+  // then(assert)
 
   // выводы дома в консоль
   // console.log(prettyDOM());

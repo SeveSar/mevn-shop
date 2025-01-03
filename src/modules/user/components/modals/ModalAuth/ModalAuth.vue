@@ -1,10 +1,10 @@
 <script lang="ts">
-import { type Ref, computed, defineComponent, ref } from 'vue';
-
-import { storeToRefs } from 'pinia';
-import AuthForm from '../../auth/AuthForm/AuthForm.vue';
 import BaseModal from '@/components/ui/BaseModal.vue';
+
 import { useAuthModal } from '@/modules/user';
+import { storeToRefs } from 'pinia';
+import { computed, defineComponent, type Ref, ref } from 'vue';
+import AuthForm from '../../auth/AuthForm/AuthForm.vue';
 
 interface IUserCredentials {
   email: string

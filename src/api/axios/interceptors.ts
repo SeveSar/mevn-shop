@@ -1,10 +1,10 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import axios from 'axios';
 import type { UserResponse } from '../../types/responses/user';
-import { api } from '../api';
 import { useUserStore } from '@/modules/user/stores/user';
 import router from '@/router';
-import { getAccessToken, setToken } from '@/utils/localstorage';
+import { getAccessToken } from '@/utils/localstorage';
+import axios from 'axios';
+import { api } from '../api';
 
 enum StatusCode {
   Unauthorized = 401,

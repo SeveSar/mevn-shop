@@ -1,15 +1,11 @@
-<template>
-  <div class="skeleton" :style="styles  "></div>
-</template>
-
 <script lang="ts" setup>
-import { computed, defineComponent } from 'vue';
+import { computed } from 'vue';
 
 interface Props {
-  width?: number | string;
-  height?: number | string;
-  corner?: string | number;
-  theme?: 'light' | 'dark';
+  width?: number | string
+  height?: number | string
+  corner?: string | number
+  theme?: 'light' | 'dark'
 }
 const props = withDefaults(defineProps<Props>(), {
   width: '100%',
@@ -18,9 +14,9 @@ const props = withDefaults(defineProps<Props>(), {
   theme: 'light',
 });
 
-const _width = computed(() => (isNumeric(props.width) ? props.width + 'px' : props.width));
-const _height = computed(() => (isNumeric(props.height) ? props.height + 'px' : props.height));
-const _corner = computed(() => (isNumeric(props.corner) ? props.corner + 'px' : props.corner));
+const _width = computed(() => (isNumeric(props.width) ? `${props.width}px` : props.width));
+const _height = computed(() => (isNumeric(props.height) ? `${props.height}px` : props.height));
+const _corner = computed(() => (isNumeric(props.corner) ? `${props.corner}px` : props.corner));
 const _background = computed(() => (props.theme === 'dark' ? 'rgba(255,255,255, 0.2)' : '#dddbdd'));
 const styles = computed(() => ({
   width: _width.value,
@@ -36,6 +32,10 @@ function isNumeric(value: string | number) {
   return /^\d+$/.test(value);
 }
 </script>
+
+<template>
+  <div class="skeleton" :style="styles " />
+</template>
 
 <style lang="less" scoped>
 .skeleton {

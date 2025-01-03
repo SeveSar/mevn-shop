@@ -1,17 +1,31 @@
+<script setup lang="ts">
+import type { IIngredientItem } from '@/types/IProduct';
+import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
+import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
+
+interface Props {
+  ingredients: IIngredientItem[]
+  isLoading: boolean
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits(['toggleActiveIngredient']);
+</script>
+
 <template>
   <div class="modal-ingredients">
     <template v-if="!isLoading">
       <div
+        v-for="item in ingredients"
+        :key="item.id"
         class="modal-ingredients__ingredient"
         :class="{
           'modal-ingredients__ingredient--active': item.isActive,
         }"
-        v-for="item in ingredients"
-        :key="item.id"
         @click="emit('toggleActiveIngredient', item.id)"
       >
         <div class="modal-ingredients__ingredient-icon">
-          <img :src="item.img" alt="" />
+          <img :src="item.img" alt="">
           <BaseIcon name="IconTickCircle" class="modal-ingredients__ingredient-checkmark" />
         </div>
         <div class="modal-ingredients__ingredient-info">
@@ -26,27 +40,13 @@
       </div>
     </template>
     <template v-else>
-      <div class="modal-ingredients__skeleton-item" v-for="i in 4" :key="i">
+      <div v-for="i in 4" :key="i" class="modal-ingredients__skeleton-item">
         <BaseSkeleton width="105" height="105" corner="6" />
         <BaseSkeleton width="95" height="15" corner="6" :style="{ margin: '8px auto 0' }" />
       </div>
     </template>
   </div>
 </template>
-
-<script setup lang="ts">
-import { IIngredientItem } from '@/types/IProduct';
-import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
-import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
-
-interface Props {
-  ingredients: IIngredientItem[];
-  isLoading: boolean;
-}
-
-const props = defineProps<Props>();
-const emit = defineEmits(['toggleActiveIngredient']);
-</script>
 
 <style scoped lang="less">
 .modal-ingredients {

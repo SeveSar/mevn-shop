@@ -1,9 +1,6 @@
-<template>
-  <component :is="loadAsyncIcon"></component>
-</template>
-
 <script lang="ts">
-import { defineAsyncComponent, defineComponent, computed } from "vue";
+import { computed, defineAsyncComponent, defineComponent } from 'vue';
+
 export default defineComponent({
   props: {
     name: {
@@ -19,5 +16,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <component :is="loadAsyncIcon" />
+</template>
 
 <style scoped></style>

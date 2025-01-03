@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import ProductList from '../../components/ProductList/ProductList.vue';
-
 import ProductBlock from '../../components/ProductBlock/ProductBlock.vue';
-import SidePanelProductFilter from '../../components/sidePanels/SidePanelProductFilter/SidePanelProductFilter.vue';
 
-import { useProductsStore } from '../../stores';
+import ProductList from '../../components/ProductList/ProductList.vue';
 import ProductSkeleton from '../../components/ProductList/ProductSkeleton.vue';
+
+import SidePanelProductFilter from '../../components/sidePanels/SidePanelProductFilter/SidePanelProductFilter.vue';
+import { useProductsStore } from '../../stores';
 
 // state
 
@@ -32,6 +32,6 @@ fetchData();
     </ProductBlock>
   </div>
   <teleport to="body">
-    <SidePanelProductFilter v-model:isOpen="isProductFilterPanel" />
+    <SidePanelProductFilter v-model:is-open="isProductFilterPanel" />
   </teleport>
 </template>

@@ -1,25 +1,7 @@
-<template>
-  <transition name="fade">
-    <div class="modal-overlay" v-if="isOpen" @mousedown.self="close" data-testid="base-modal-overlay">
-      <div class="modal">
-        <button class="modal-close" @click="close" data-testid="button-close">
-          <IconCrossBig class="modal-close__icon" />
-        </button>
-        <div class="modal__header" v-if="$slots.header">
-          <slot name="header"></slot>
-        </div>
-        <div class="modal__content">
-          <slot></slot>
-        </div>
-      </div>
-    </div>
-  </transition>
-</template>
-
 <script lang="ts" setup>
-import { defineComponent, toRefs, watch } from 'vue';
-import { useModalFunctions } from '@/composables/modalFunctions';
 import IconCrossBig from '@/components/ui/icons/IconCrossBig.vue';
+import { useModalFunctions } from '@/composables/modalFunctions';
+import { toRefs } from 'vue';
 
 const props = defineProps({
   isOpen: {
@@ -34,11 +16,29 @@ const { isOpen } = toRefs(props);
 
 useModalFunctions(isOpen, close);
 
-//methods
+// methods
 function close() {
   emit('close');
 }
 </script>
+
+<template>
+  <transition name="fade">
+    <div v-if="isOpen" class="modal-overlay" data-testid="base-modal-overlay" @mousedown.self="close">
+      <div class="modal">
+        <button class="modal-close" data-testid="button-close" @click="close">
+          <IconCrossBig class="modal-close__icon" />
+        </button>
+        <div v-if="$slots.header" class="modal__header">
+          <slot name="header" />
+        </div>
+        <div class="modal__content">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </transition>
+</template>
 
 <style scoped lang="less">
 .modal {

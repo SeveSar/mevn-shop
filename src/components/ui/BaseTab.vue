@@ -1,34 +1,15 @@
-<template>
-  <div class="base-tab" :class="classes">
-    <div class="base-tab__nav">
-      <button
-        class="base-tab__tab"
-        @click.prevent="$emit('update:modelValue', tab)"
-        :class="{ 'base-tab__tab--active': tab.id.toLocaleLowerCase() === modelValue.id.toLocaleLowerCase() }"
-        v-for="tab in items"
-        :key="tab.id"
-      >
-        {{ tab.title }}
-      </button>
-    </div>
-    <div class="base-tab__content" v-if="$slots.default">
-      <slot />
-    </div>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { computed } from 'vue';
 
 export interface ITab {
-  title: string;
-  id: string;
-  [key: string]: any;
+  title: string
+  id: string
+  [key: string]: any
 }
 interface Props {
-  modelValue: ITab;
-  items: ITab[];
-  size?: 'small' | 'medium';
+  modelValue: ITab
+  items: ITab[]
+  size?: 'small' | 'medium'
 }
 const props = withDefaults(defineProps<Props>(), {
   size: 'medium',
@@ -39,6 +20,25 @@ const classes = computed(() => {
   };
 });
 </script>
+
+<template>
+  <div class="base-tab" :class="classes">
+    <div class="base-tab__nav">
+      <button
+        v-for="tab in items"
+        :key="tab.id"
+        class="base-tab__tab"
+        :class="{ 'base-tab__tab--active': tab.id.toLocaleLowerCase() === modelValue.id.toLocaleLowerCase() }"
+        @click.prevent="$emit('update:modelValue', tab)"
+      >
+        {{ tab.title }}
+      </button>
+    </div>
+    <div v-if="$slots.default" class="base-tab__content">
+      <slot />
+    </div>
+  </div>
+</template>
 
 <style scoped lang="less">
 .base-tab {

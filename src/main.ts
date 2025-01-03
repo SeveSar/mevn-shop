@@ -1,15 +1,15 @@
-import { createApp } from 'vue';
+import { useCartStore } from '@/modules/cart/stores';
+import { useUserStore } from '@/modules/user/stores/user';
 import { createPinia } from 'pinia';
+import { createApp } from 'vue';
+
 import App from './App.vue';
-import router from './router';
 
 import AppToast from './components/ui/AppToast.vue';
 
+import router from './router';
+
 import './assets/less/main.less';
-
-import { useUserStore } from '@/modules/user/stores/user';
-
-import { useCartStore } from '@/modules/cart/stores';
 
 const app = createApp(App);
 app.use(createPinia());

@@ -1,15 +1,7 @@
-<template>
-  <nav class="breadcrumbs">
-    <router-link v-for="(crumb, index) in breadcrumbs" :key="index" :to="crumb.to" fa faw awf aa aw fwa fw
-      class="breadcrumb-link">
-      {{ crumb.label }}
-    </router-link>
-  </nav>
-</template>
-
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+
 const route = useRoute();
 
 const breadcrumbs = computed(() => {
@@ -27,9 +19,20 @@ const breadcrumbs = computed(() => {
 });
 
 function getFullPath(routeMatch: any) {
-  return routeMatch.path.startsWith('/') ? routeMatch.path : '/' + routeMatch.path;
+  return routeMatch.path.startsWith('/') ? routeMatch.path : `/${routeMatch.path}`;
 }
 </script>
+
+<template>
+  <nav class="breadcrumbs">
+    <router-link
+      v-for="(crumb, index) in breadcrumbs" :key="index" :to="crumb.to" fa faw awf aa aw fwa fw
+      class="breadcrumb-link"
+    >
+      {{ crumb.label }}
+    </router-link>
+  </nav>
+</template>
 
 <style scoped lang="less">
 .breadcrumbs {

@@ -1,10 +1,10 @@
 import type { RouteRecordRaw } from 'vue-router';
-import { createRouter, createWebHistory } from 'vue-router';
-import { loadLayoutMiddleware } from './middleware/loadLayout.middleware';
-import { authMiddleware } from './middleware/auth.middleware';
-import { RouteNamesEnum } from './router.types';
 import { AppLayoutsEnum } from '@/layouts/layouts.types';
 import ErrorPage from '@/views/PageError/PageError.vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import { authMiddleware } from './middleware/auth.middleware';
+import { loadLayoutMiddleware } from './middleware/loadLayout.middleware';
+import { RouteNamesEnum } from './router.types';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,6 +14,10 @@ const router = createRouter({
     return { top: 0 };
   },
   routes: [
+    {
+      path: '/',
+      redirect: { name: RouteNamesEnum.products },
+    },
     {
       path: '/products',
       name: RouteNamesEnum.products,

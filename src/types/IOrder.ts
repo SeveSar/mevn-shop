@@ -1,7 +1,7 @@
-import type { IUser } from './IUser';
-import type { IProductCartResponse } from './responses/cart';
-
 import type { TOrderPayment, TOrderStatus, TOrderTypeDelivery, TOrderTypeTiming } from '@/constants';
+import type { IUser } from './IUser';
+
+import type { IProductCartResponse } from './responses/cart';
 
 export interface IOrder {
   _id: string

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useAuthModal } from '@/modules/user';
-import { useUserStore } from '@/modules/user/stores/user';
+import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
 import { useMenu } from '@/composables/menu';
 
-import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
-import BaseButton from '@/components/ui/BaseButton.vue';
+import { useAuthModal } from '@/modules/user';
+import { useUserStore } from '@/modules/user/stores/user';
 
 const { logOut, isOpenedBurger, menuLinks } = useMenu();
 const modalStore = useAuthModal();

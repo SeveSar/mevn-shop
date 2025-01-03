@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import type { TMaskKeys } from '@/configs/mask';
 import { DatePicker } from 'v-calendar';
 import { computed } from 'vue';
 import BaseInput from './BaseInput.vue';
-import type { TMaskKeys } from '@/configs/mask';
 
 interface Props {
   modelValue: string | Date | null

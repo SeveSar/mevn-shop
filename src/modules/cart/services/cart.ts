@@ -1,6 +1,6 @@
-import { CartDTO } from '../models/cart.dto';
 import type { IHttpClient } from '@/api/types/api';
 import type { ICartResponse, IProductCartResponse } from '@/types/responses/cart';
+import { CartDTO } from '../models/cart.dto';
 
 export class CartService {
   private readonly $http: IHttpClient;

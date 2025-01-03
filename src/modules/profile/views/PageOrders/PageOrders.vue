@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue';
+import type { OrderDTO } from '@/models/order.dto';
+import { api } from '@/api/api';
+import BasePagination from '@/components/ui/BasePagination.vue';
+import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import OrdersItem from '../../components/order/OrdersItem.vue';
 import OrderSkeleton from '../../components/order/OrderSkeleton.vue';
-import { api } from '@/api/api';
-import BasePagination from '@/components/ui/BasePagination.vue';
-import type { OrderDTO } from '@/models/order.dto';
 
 const orderItems = ref<OrderDTO[]>([]);
 const route = useRoute();

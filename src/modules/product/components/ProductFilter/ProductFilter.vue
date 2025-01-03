@@ -1,11 +1,5 @@
-<template>
-  <div class="product-filter">
-    <div class="product-filter__section"></div>
-  </div>
-</template>
-
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   components: {},
@@ -14,6 +8,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <div class="product-filter">
+    <div class="product-filter__section" />
+  </div>
+</template>
 
 <style scoped lang="less">
 .filter {

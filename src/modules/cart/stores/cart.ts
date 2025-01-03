@@ -1,16 +1,16 @@
-import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
-import debounce from 'lodash/debounce';
-import { useProductsStore } from '../../product/stores';
-import { useUserStore } from '@/modules/user/stores/user';
-import { api } from '@/api/api';
 import type { TCart } from '@/types/ICart';
+import type { IDoughItem, IIngredientItem, ISizeItem } from '@/types/IProduct';
+import { api } from '@/api/api';
+import { useUserStore } from '@/modules/user/stores/user';
 import {
   getItemFromLocalstorage,
   removeItem as removeItemFromStorage,
   setItemInLocalstorage,
 } from '@/utils/localstorage';
-import type { IDoughItem, IIngredientItem, ISizeItem } from '@/types/IProduct';
+import debounce from 'lodash/debounce';
+import { defineStore } from 'pinia';
+import { computed, ref } from 'vue';
+import { useProductsStore } from '../../product/stores';
 
 export const useCartStore = defineStore('cart', () => {
   const cart = ref<TCart>([]);

@@ -1,6 +1,18 @@
+<script setup lang="ts">
+import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
+
+interface Props {
+  count?: number
+}
+
+withDefaults(defineProps<Props>(), {
+  count: 1,
+});
+</script>
+
 <template>
   <div class="product-skeleton-list">
-    <div class="product-skeleton" v-for="n in count" :key="n">
+    <div v-for="n in count" :key="n" class="product-skeleton">
       <div class="product-skeleton__img">
         <BaseSkeleton class="product-skeleton__img-img" width="170" height="170" corner="50%" />
       </div>
@@ -15,18 +27,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
-
-interface Props {
-  count?: number;
-}
-
-withDefaults(defineProps<Props>(), {
-  count: 1,
-});
-</script>
 
 <style lang="less" scoped>
 .product-skeleton {

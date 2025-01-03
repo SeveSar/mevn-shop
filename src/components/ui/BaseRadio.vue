@@ -1,5 +1,5 @@
 <script lang="ts">
-import { type PropType, defineComponent } from 'vue';
+import { defineComponent, type PropType } from 'vue';
 
 export default defineComponent({
   props: {

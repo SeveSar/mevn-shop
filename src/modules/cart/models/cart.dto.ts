@@ -1,6 +1,6 @@
-import type { IProductResponse } from '@/types/responses/product';
-import type { IProductCartResponse } from '@/types/responses/cart';
 import type { IDoughItem, IIngredientItem, ISizeItem } from '@/types/IProduct';
+import type { IProductCartResponse } from '@/types/responses/cart';
+import type { IProductResponse } from '@/types/responses/product';
 
 export class CartDTO {
   title: string;

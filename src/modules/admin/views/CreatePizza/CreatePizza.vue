@@ -1,39 +1,28 @@
-<template>
-  <div class="create-pizza">
-    <div class="admin-buttons">
-      <button class="admin-buttons__btn" v-for="button in creatingButtons" :key="button.id" @click="openModal(button.modal)">
-        {{ button.title }}
-      </button>
-    </div>
-    <ModalCreateProduct v-model="isModalCreateProduct" />
-  </div>
-</template>
-
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import ModalCreateProduct from "../../components/modals/ModalCreateProduct.vue";
+import { defineComponent, ref } from 'vue';
+import ModalCreateProduct from '../../components/modals/ModalCreateProduct.vue';
+
 export default defineComponent({
   components: {
     ModalCreateProduct,
   },
   setup() {
-    //state
+    // state
     const isModalCreateProduct = ref(false);
     const isModalCreateCategories = ref(false);
     const creatingButtons = [
-      { title: "Создать товар", id: 1, modal: "product" },
-      { title: "Создать категории", id: 2, modal: "category" },
+      { title: 'Создать товар', id: 1, modal: 'product' },
+      { title: 'Создать категории', id: 2, modal: 'category' },
     ];
 
-    //methods
+    // methods
     const openModal = (modalType: string) => {
       switch (modalType) {
-        case "product":
+        case 'product':
           isModalCreateProduct.value = true;
           return;
-        case "category":
+        case 'category':
           isModalCreateCategories.value = true;
-          return;
       }
     };
     return {
@@ -44,6 +33,17 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <div class="create-pizza">
+    <div class="admin-buttons">
+      <button v-for="button in creatingButtons" :key="button.id" class="admin-buttons__btn" @click="openModal(button.modal)">
+        {{ button.title }}
+      </button>
+    </div>
+    <ModalCreateProduct v-model="isModalCreateProduct" />
+  </div>
+</template>
 
 <style scoped lang="less">
 .create-pizza {

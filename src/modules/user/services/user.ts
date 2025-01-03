@@ -1,7 +1,7 @@
-import type { AxiosInstance } from 'axios';
-import type { UserResponse } from '@/types/responses/user';
 import type { IHttpClient } from '@/api/types/api';
 import type { TCart } from '@/types/ICart';
+import type { UserResponse } from '@/types/responses/user';
+import type { AxiosInstance } from 'axios';
 import { setToken } from '@/utils/localstorage';
 
 export class AuthService {
@@ -13,14 +13,19 @@ export class AuthService {
     this.$axios = axios;
   }
 
-  async register(email: string, password: string) {
+  async register(email: string, password: string, cart: TCart | null) {
+    const body = {
+      email,
+      password,
+    } as { email: string, password: string, cart?: null | TCart };
+
+    if (cart) {
+      body.cart = cart;
+    }
     const res = await this.$http.makeRequest<UserResponse>({
       url: '/auth/register',
       method: 'POST',
-      data: {
-        email,
-        password,
-      },
+      data: body,
     });
     return res.data;
   }

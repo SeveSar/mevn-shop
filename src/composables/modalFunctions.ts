@@ -1,4 +1,4 @@
-import { type Ref, onMounted, onUnmounted, watch } from 'vue';
+import { onMounted, onUnmounted, type Ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 export function useModalFunctions(isOpen: Ref<boolean>, close: () => void) {

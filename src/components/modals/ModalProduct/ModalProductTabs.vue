@@ -1,49 +1,17 @@
-<template>
-  <div class="modal-product-tabs">
-    <template v-if="!isLoading">
-      <div class="modal-product-tabs__dough">
-        <BaseTab
-          class="modal-product-tabs__tab-dough"
-          v-if="selectedTabDoughModel"
-          v-model="selectedTabDoughModel"
-          :items="doughs || []"
-        />
-      </div>
-      <div class="modal-product-tabs__sizes">
-        <BaseTab
-          class="modal-product-tabs__tab-size"
-          v-if="selectedTabSizeModel"
-          v-model="selectedTabSizeModel"
-          size="small"
-          :items="sizes || []"
-        />
-      </div>
-    </template>
-    <template v-else>
-      <div class="modal-product-tabs__skeletons">
-        <BaseSkeleton width="100%" height="48px" corner="6" />
-      </div>
-      <div class="modal-product-tabs__skeletons">
-        <BaseSkeleton width="100%" height="48px" corner="6" />
-      </div>
-    </template>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { IDoughItem, ISizeItem } from '@/types/IProduct';
+import type { IDoughItem, ISizeItem } from '@/types/IProduct';
 
-import BaseTab from '@/components/ui/BaseTab.vue';
-import { ISelectedTabDough, ISelectedTabSize } from './ModalProduct.vue';
+import type { ISelectedTabDough, ISelectedTabSize } from './ModalProduct.vue';
 import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
+import BaseTab from '@/components/ui/BaseTab.vue';
 import { computed } from 'vue';
 
 interface Props {
-  selectedTabDough: ISelectedTabDough | null;
-  selectedTabSize: ISelectedTabSize | null;
-  doughs: IDoughItem[];
-  sizes: ISizeItem[];
-  isLoading: boolean;
+  selectedTabDough: ISelectedTabDough | null
+  selectedTabSize: ISelectedTabSize | null
+  doughs: IDoughItem[]
+  sizes: ISizeItem[]
+  isLoading: boolean
 }
 const props = defineProps<Props>();
 const emit = defineEmits(['update:selectedTabSize', 'update:selectedTabDough']);
@@ -66,6 +34,38 @@ const selectedTabDoughModel = computed({
   },
 });
 </script>
+
+<template>
+  <div class="modal-product-tabs">
+    <template v-if="!isLoading">
+      <div class="modal-product-tabs__dough">
+        <BaseTab
+          v-if="selectedTabDoughModel"
+          v-model="selectedTabDoughModel"
+          class="modal-product-tabs__tab-dough"
+          :items="doughs || []"
+        />
+      </div>
+      <div class="modal-product-tabs__sizes">
+        <BaseTab
+          v-if="selectedTabSizeModel"
+          v-model="selectedTabSizeModel"
+          class="modal-product-tabs__tab-size"
+          size="small"
+          :items="sizes || []"
+        />
+      </div>
+    </template>
+    <template v-else>
+      <div class="modal-product-tabs__skeletons">
+        <BaseSkeleton width="100%" height="48px" corner="6" />
+      </div>
+      <div class="modal-product-tabs__skeletons">
+        <BaseSkeleton width="100%" height="48px" corner="6" />
+      </div>
+    </template>
+  </div>
+</template>
 
 <style scoped lang="less">
 .modal-product-tabs {

@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
+import { useMenu } from '@/composables/menu';
+import { useAuthModal } from '@/modules/user';
 import { useUserStore } from '@/modules/user/stores/user';
 import { RouteNamesEnum } from '@/router/router.types';
-import { useAuthModal } from '@/modules/user';
-import { useMenu } from '@/composables/menu';
-import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
-import BaseButton from '@/components/ui/BaseButton.vue';
 
 const userStore = useUserStore();
 const modalStore = useAuthModal();

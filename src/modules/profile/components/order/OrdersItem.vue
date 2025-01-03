@@ -1,3 +1,39 @@
+<script setup lang="ts">
+import type { OrderDTO, OrderProductDTO } from '@/models/order.dto';
+import BaseAccordionList from '@/components/ui/accordion/BaseAccordionList.vue';
+import BaseAccordionListItem from '@/components/ui/accordion/BaseAccordionListItem.vue';
+import IconArrowDown from '@/components/ui/icons/IconArrowDown.vue';
+
+import { computed } from 'vue';
+import OrdersItemProduct from './OrdersItemProduct.vue';
+
+interface Props {
+  item: OrderDTO
+}
+const props = defineProps<Props>();
+
+const currentAddress = computed(() => {
+  const { street, house, porch, floor, door_phone: doorPhone } = props.item?.address || {};
+  const addressParts = [];
+  if (street) { addressParts.push(`Ул. ${street}`); }
+  if (house) { addressParts.push(`${house},`); }
+  if (porch) { addressParts.push(`подъезд ${porch},`); }
+  if (floor) { addressParts.push(`${floor} этаж,`); }
+  if (doorPhone) { addressParts.push(`домофон ${doorPhone}#`); }
+
+  const total = addressParts.length > 0 ? addressParts.join(' ') : 'Адрес не указан';
+  return total;
+});
+
+function getTotalPriceOrder(products: OrderProductDTO[]) {
+  return products.reduce((acc, pr) => acc + pr.totalPrice, 0);
+}
+
+const pizzaImages = computed(() => {
+  return props.item.products.length >= 3 ? 3 : props.item.products.length;
+});
+</script>
+
 <template>
   <BaseAccordionList :is-close-others="false">
     <div class="orders-item">
@@ -9,20 +45,28 @@
               <div class="orders-item-header__col">
                 <span class="orders-item-header__caption">Заказ</span>
                 <div class="orders-item-header__flex">
-                  <div class="orders-item-header__text">№{{ item.number }}</div>
+                  <div class="orders-item-header__text">
+                    №{{ item.number }}
+                  </div>
                 </div>
               </div>
               <div class="orders-item-header__col">
                 <span class="orders-item-header__caption">Сумма заказа</span>
-                <div class="orders-item-header__text">{{ getTotalPriceOrder(item.products) }} ₽</div>
+                <div class="orders-item-header__text">
+                  {{ getTotalPriceOrder(item.products) }} ₽
+                </div>
               </div>
               <div class="orders-item-header__col">
                 <span class="orders-item-header__caption">Статус</span>
-                <div class="orders-item-header__text">{{ item.getStatusTitle() }}</div>
+                <div class="orders-item-header__text">
+                  {{ item.getStatusTitle() }}
+                </div>
               </div>
               <div class="orders-item-header__col">
                 <span class="orders-item-header__caption">Оплачено</span>
-                <div class="orders-item-header__text">{{ item.getPaymentTitle() }}</div>
+                <div class="orders-item-header__text">
+                  {{ item.getPaymentTitle() }}
+                </div>
               </div>
             </div>
             <div class="orders-item-header__bottom">
@@ -30,8 +74,10 @@
                 {{ currentAddress }}
               </div>
               <div class="orders-item-header__pizzas">
-                <img class="orders-item-header__pizzas-icon" src="@/assets/images/small-pizza.png"
-                  v-for="i in pizzaImages" alt="" :key="i" />
+                <img
+                  v-for="i in pizzaImages" :key="i"
+                  class="orders-item-header__pizzas-icon" src="@/assets/images/small-pizza.png" alt=""
+                >
               </div>
             </div>
           </div>
@@ -47,41 +93,6 @@
     </div>
   </BaseAccordionList>
 </template>
-
-<script setup lang="ts">
-import IconArrowDown from '@/components/ui/icons/IconArrowDown.vue';
-import BaseAccordionList from '@/components/ui/accordion/BaseAccordionList.vue';
-import BaseAccordionListItem from '@/components/ui/accordion/BaseAccordionListItem.vue';
-import OrdersItemProduct from './OrdersItemProduct.vue';
-
-import { computed, ref } from 'vue';
-import { OrderDTO, OrderProductDTO } from '@/models/order.dto';
-interface Props {
-  item: OrderDTO;
-}
-const props = defineProps<Props>();
-
-const currentAddress = computed(() => {
-  const { street, house, porch, floor, door_phone: doorPhone } = props.item?.address || {};
-  const addressParts = [];
-  if (street) addressParts.push(`Ул. ${street}`);
-  if (house) addressParts.push(`${house},`);
-  if (porch) addressParts.push(`подъезд ${porch},`);
-  if (floor) addressParts.push(`${floor} этаж,`);
-  if (doorPhone) addressParts.push(`домофон ${doorPhone}#`);
-
-  const total = addressParts.length > 0 ? addressParts.join(' ') : 'Адрес не указан';
-  return total;
-});
-
-const getTotalPriceOrder = (products: OrderProductDTO[]) => {
-  return products.reduce((acc, pr) => acc + pr.totalPrice, 0);
-};
-
-const pizzaImages = computed(() => {
-  return props.item.products.length >= 3 ? 3 : props.item.products.length;
-});
-</script>
 
 <style scoped lang="less">
 .orders-item {

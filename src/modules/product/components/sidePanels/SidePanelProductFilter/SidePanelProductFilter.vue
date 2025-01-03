@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
-import { useProductsStore } from '../../../stores/products';
-import BaseSidePanel from '@/components/ui/BaseSidePanel.vue';
-import BaseButton from '@/components/ui/BaseButton.vue';
-
 import type { IFilter } from '@/types/IFilter';
 import { api } from '@/api/api';
+import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseSidePanel from '@/components/ui/BaseSidePanel.vue';
+
+import { ref } from 'vue';
+import { useProductsStore } from '../../../stores/products';
 
 interface Props {
   isOpen: boolean

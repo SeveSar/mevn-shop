@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router';
-import { useCartStore } from '../../stores';
-
-import OrderForm from '../../components/OrderForm/OrderForm.vue';
 import CartItem from '@/components/widgets/cart/CartItem.vue';
 import { RouteNamesEnum } from '@/router/router.types';
+import { storeToRefs } from 'pinia';
+
+import OrderForm from '../../components/OrderForm/OrderForm.vue';
+import { useCartStore } from '../../stores';
 
 const cartStore = useCartStore();
 const { cart } = storeToRefs(cartStore);

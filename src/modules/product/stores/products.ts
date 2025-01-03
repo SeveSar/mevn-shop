@@ -1,7 +1,7 @@
-import { computed, ref } from 'vue';
-import { defineStore } from 'pinia';
 import type { ProductDTO } from '../models';
 import { api } from '@/api/api';
+import { defineStore } from 'pinia';
+import { computed, ref } from 'vue';
 
 export const useProductsStore = defineStore('products', () => {
   const products = ref<ProductDTO[]>([]);

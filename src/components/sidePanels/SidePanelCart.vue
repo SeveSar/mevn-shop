@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import CartItem from '../widgets/cart/CartItem.vue';
-import BaseSidePanel from '@/components/ui/BaseSidePanel.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseSidePanel from '@/components/ui/BaseSidePanel.vue';
 import { useCartStore } from '@/modules/cart';
 import { RouteNamesEnum } from '@/router/router.types';
+import CartItem from '../widgets/cart/CartItem.vue';
 
 const cartStore = useCartStore();
 </script>

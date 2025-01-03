@@ -1,23 +1,12 @@
-<template>
-  <transition-group name="toast">
-    <div class="toast" v-for="item in toasts" :class="item.type" :key="item.id" @click="removeToast(item.id)">
-      <!-- <BaseIcon class="toast__icon" :name="getCurrentIcon(item.type)" /> -->
-      <div class="toast__text">
-        {{ item.text }}
-      </div>
-    </div>
-  </transition-group>
-</template>
-
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
 
 type TypeToast = 'error' | 'info' | 'success';
 
 interface IToast {
-  id: number;
-  text: string;
-  type: TypeToast;
+  id: number
+  text: string
+  type: TypeToast
 }
 
 const ICONS_TYPES = {
@@ -38,7 +27,7 @@ export default defineComponent({
     };
     const toasts = ref<IToast[]>([]);
 
-    const showToast = (toast: { type: TypeToast; text: string }) => {
+    const showToast = (toast: { type: TypeToast, text: string }) => {
       id++;
       const newToast = {
         ...toast,
@@ -48,7 +37,7 @@ export default defineComponent({
     };
 
     const removeToast = (id: number) => {
-      toasts.value = toasts.value.filter((toast) => toast.id !== id);
+      toasts.value = toasts.value.filter(toast => toast.id !== id);
       id--;
     };
 
@@ -60,7 +49,7 @@ export default defineComponent({
           toasts.value.shift();
         }, 2000);
       },
-      { deep: true }
+      { deep: true },
     );
 
     return {
@@ -72,6 +61,17 @@ export default defineComponent({
   },
 });
 </script>
+
+<template>
+  <transition-group name="toast">
+    <div v-for="item in toasts" :key="item.id" class="toast" :class="item.type" @click="removeToast(item.id)">
+      <!-- <BaseIcon class="toast__icon" :name="getCurrentIcon(item.type)" /> -->
+      <div class="toast__text">
+        {{ item.text }}
+      </div>
+    </div>
+  </transition-group>
+</template>
 
 <style lang="less">
 #app-toast {

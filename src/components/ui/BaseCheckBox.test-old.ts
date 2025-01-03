@@ -1,5 +1,5 @@
-//для тестирования компонентов
-import { render, prettyDOM, screen } from '@testing-library/vue';
+// для тестирования компонентов
+import { render, screen } from '@testing-library/vue';
 import BaseCheckBox from './BaseCheckBox.vue';
 
 // предосталвяется jest'ом
@@ -8,7 +8,7 @@ it('renders with label and checked with prop modelValue: Array', () => {
   const label = 'Test checkbox';
   const options = {
     props: {
-      label: label,
+      label,
       value: 1,
       modelValue: [1, 2, 3],
     },

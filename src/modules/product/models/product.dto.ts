@@ -1,6 +1,6 @@
-import type { IProductResponse } from '@/types/responses/product';
 import type { TFilterItem } from '@/types/IFilter';
 import type { IDoughItem, IIngredientItem, ISizeItem } from '@/types/IProduct';
+import type { IProductResponse } from '@/types/responses/product';
 
 export class ProductDTO {
   id: string;
