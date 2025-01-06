@@ -6,7 +6,7 @@ import { useCartStore } from '@/modules/cart';
 import { useUserStore } from '@/modules/user/stores/user';
 import { RouteNamesEnum } from '@/router/router.types';
 import { defineComponent } from 'vue';
-import UserMenuSettings from './components/UserMenuSettings.vue';
+import UserMenuSettings from './UserMenuSettings.vue';
 
 export default defineComponent({
   components: {
@@ -85,14 +85,15 @@ export default defineComponent({
 <style scoped lang="less">
 .header {
   width: 100%;
-  position: relative;
   z-index: 999;
   background-color: #fff;
-
+  position: sticky;
+  top: 0;
+  left: 0;
   @media screen and (max-width: 991px) {
-    position: fixed;
     width: 100%;
   }
+
   &__top {
     border-bottom: 1px solid #f0f0f0;
     padding: 4px 0;
@@ -111,17 +112,6 @@ export default defineComponent({
       }
     }
   }
-  // .user-auth {
-  //   margin-left: 40px;
-  //   &__btn {
-  //     color: #ff7010;
-  //     display: flex;
-  //     align-items: center;
-  //   }
-  //   svg {
-  //     margin-right: 10px;
-  //   }
-  // }
 
   .logo {
     display: block;

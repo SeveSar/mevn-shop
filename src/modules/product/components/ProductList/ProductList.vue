@@ -31,7 +31,7 @@ export default defineComponent({
   flex-wrap: wrap;
   margin: 0 -15px;
   @media screen and (max-width: 575px) {
-    margin: 60px 0 0;
+    margin: 0;
   }
   &__item {
     width: calc(100% / 4);

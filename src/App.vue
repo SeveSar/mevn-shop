@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import AppLayout from '@/layouts/AppLayout.vue';
-import { ModalAuth, useAuthModal } from '@/modules/user';
+import { ModalAuth, useAuthModalStore } from '@/modules/user';
 
 import { watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-const modalStore = useAuthModal();
+const modalStore = useAuthModalStore();
 const route = useRoute();
 
 const router = useRouter();

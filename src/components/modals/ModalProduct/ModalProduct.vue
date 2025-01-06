@@ -4,7 +4,7 @@ import { api } from '@/api/api';
 import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
 import { useCartStore } from '@/modules/cart';
 import { useProductsStore } from '@/modules/product';
-import { useAuthModal } from '@/modules/user';
+import { useAuthModalStore } from '@/modules/user';
 import { computed, ref, watch } from 'vue';
 import BaseButton from '../../ui/BaseButton.vue';
 import BaseModal from '../../ui/BaseModal.vue';
@@ -25,7 +25,7 @@ export interface ISelectedTabDough {
   price: number
 }
 
-const modalStore = useAuthModal();
+const modalStore = useAuthModalStore();
 const productsStore = useProductsStore();
 const cartStore = useCartStore();
 const selectedTabDough = ref<ISelectedTabDough | null>(null);

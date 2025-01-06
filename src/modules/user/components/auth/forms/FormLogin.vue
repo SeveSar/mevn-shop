@@ -3,7 +3,7 @@ import BaseButton from '@/components/ui/BaseButton.vue';
 
 import BaseInput from '@/components/ui/BaseInput.vue';
 import { toaster } from '@/main';
-import { useAuthModal } from '@/modules/user';
+import { useAuthModalStore } from '@/modules/user';
 import { useUserStore } from '@/modules/user/stores/user';
 import { getErrorMessage } from '@/utils/errorHandler';
 
@@ -47,7 +47,7 @@ export default defineComponent({
 
     const isLoading = ref(false);
 
-    const modalStore = useAuthModal();
+    const modalStore = useAuthModalStore();
 
     const onSubmit = async () => {
       const isFormCorrect = await v$.value.$validate();

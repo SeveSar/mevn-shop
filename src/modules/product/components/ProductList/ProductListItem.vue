@@ -4,7 +4,7 @@ import type { ProductDTO } from '../../models';
 
 import BaseButton from '@/components/ui/BaseButton.vue';
 import { useProductsStore } from '@/modules/product';
-import { useAuthModal } from '@/modules/user';
+import { useAuthModalStore } from '@/modules/user';
 
 import { defineComponent } from 'vue';
 
@@ -20,7 +20,7 @@ export default defineComponent({
   },
   setup() {
     const productsStore = useProductsStore();
-    const modalAuthStore = useAuthModal();
+    const modalAuthStore = useAuthModalStore();
     const openProductModal = (product: ProductDTO) => {
       productsStore.activeProductId = product.id;
       modalAuthStore.openProductModal();

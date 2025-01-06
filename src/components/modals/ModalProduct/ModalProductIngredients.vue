@@ -8,7 +8,7 @@ interface Props {
   isLoading: boolean
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 const emit = defineEmits(['toggleActiveIngredient']);
 </script>
 

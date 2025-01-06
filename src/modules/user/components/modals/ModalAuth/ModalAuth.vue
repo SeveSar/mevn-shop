@@ -1,7 +1,7 @@
 <script lang="ts">
 import BaseModal from '@/components/ui/BaseModal.vue';
 
-import { useAuthModal } from '@/modules/user';
+import { useAuthModalStore } from '@/modules/user';
 import { storeToRefs } from 'pinia';
 import { computed, defineComponent, type Ref, ref } from 'vue';
 import AuthForm from '../../auth/AuthForm/AuthForm.vue';
@@ -17,7 +17,7 @@ export default defineComponent({
   },
 
   setup() {
-    const storeModal = useAuthModal();
+    const storeModal = useAuthModalStore();
     const userCredentials = ref({}) as Ref<IUserCredentials>;
     const { isAuthModal } = storeToRefs(storeModal);
     const typeForm = ref<'FormLogin' | 'FormRegister'>('FormLogin');

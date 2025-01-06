@@ -3,7 +3,7 @@ import BaseButton from '@/components/ui/BaseButton.vue';
 
 import BaseInput from '@/components/ui/BaseInput.vue';
 import { toaster } from '@/main';
-import { useAuthModal } from '@/modules/user';
+import { useAuthModalStore } from '@/modules/user';
 import { useUserStore } from '@/modules/user/stores/user';
 import { getErrorMessage } from '@/utils/errorHandler';
 import { getValidationRule } from '@/utils/validations';
@@ -28,7 +28,7 @@ export default defineComponent({
   },
   setup() {
     const userStore = useUserStore();
-    const modalStore = useAuthModal();
+    const modalStore = useAuthModalStore();
 
     const isLoading = ref(false);
     const userCredentials = reactive({

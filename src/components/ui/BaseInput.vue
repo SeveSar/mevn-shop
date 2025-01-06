@@ -46,9 +46,6 @@ function maskInit() {
   maskInstance.on('accept', handleAccept);
   emit('update:modelValue', maskInstance.value);
 }
-onMounted(() => {
-  maskInit();
-});
 
 function handleAccept() {
   if (!maskInstance) { return; }
@@ -65,16 +62,6 @@ function getUnMaskedValue() {
   if (!maskInstance) { return; }
   return maskInstance.unmaskedValue;
 }
-onUnmounted(() => {
-  if (maskInstance) {
-    maskInstance.off('accept', handleAccept);
-    maskInstance?.destroy();
-  }
-});
-
-defineExpose({
-  getUnMaskedValue,
-});
 
 function onBlur() {
   emit('onBlur');
@@ -82,6 +69,21 @@ function onBlur() {
 function onFocus() {
   emit('onFocus');
 }
+
+onUnmounted(() => {
+  if (maskInstance) {
+    maskInstance.off('accept', handleAccept);
+    maskInstance?.destroy();
+  }
+});
+
+onMounted(() => {
+  maskInit();
+});
+
+defineExpose({
+  getUnMaskedValue,
+});
 </script>
 
 <template>

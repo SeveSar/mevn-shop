@@ -3,11 +3,11 @@ import BaseButton from '@/components/ui/BaseButton.vue';
 import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
 import { useMenu } from '@/composables/menu';
 
-import { useAuthModal } from '@/modules/user';
+import { useAuthModalStore } from '@/modules/user';
 import { useUserStore } from '@/modules/user/stores/user';
 
 const { logOut, isOpenedBurger, menuLinks } = useMenu();
-const modalStore = useAuthModal();
+const modalStore = useAuthModalStore();
 
 const userStore = useUserStore();
 </script>

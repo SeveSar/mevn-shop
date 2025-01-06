@@ -2,12 +2,12 @@
 import BaseButton from '@/components/ui/BaseButton.vue';
 import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
 import { useMenu } from '@/composables/menu';
-import { useAuthModal } from '@/modules/user';
+import { useAuthModalStore } from '@/modules/user';
 import { useUserStore } from '@/modules/user/stores/user';
 import { RouteNamesEnum } from '@/router/router.types';
 
 const userStore = useUserStore();
-const modalStore = useAuthModal();
+const modalStore = useAuthModalStore();
 const { logOut } = useMenu();
 </script>
 

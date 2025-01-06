@@ -15,7 +15,6 @@ import { useProductsStore } from '../../product/stores';
 export const useCartStore = defineStore('cart', () => {
   const cart = ref<TCart>([]);
   const isSidePanelCart = ref(false);
-  const inProccess = ref<string[]>([]);
 
   const userStore = useUserStore();
 
@@ -36,10 +35,6 @@ export const useCartStore = defineStore('cart', () => {
 
   const inCart = (id: string) => {
     return getIndex(id) !== -1;
-  };
-
-  const inProccessing = (id: string) => {
-    return inProccess.value.includes(id);
   };
 
   const totalPrice = computed(() => {
@@ -128,6 +123,16 @@ export const useCartStore = defineStore('cart', () => {
     }
   };
 
+  const debouncedFetchUpdateCnt = debounce(async (updatedProduct) => {
+    try {
+      return await api.cart.updateProduct(updatedProduct);
+    }
+    catch (e) {
+      console.log(e, 'eee');
+      throw e;
+    }
+  }, 300);
+
   const updateCnt = async ({ newQuantity, idProduct }: { newQuantity: number, idProduct: string }) => {
     const productCart = cart.value.find(item => item.id === idProduct);
 
@@ -149,16 +154,6 @@ export const useCartStore = defineStore('cart', () => {
     }
   };
 
-  const debouncedFetchUpdateCnt = debounce(async (updatedProduct) => {
-    try {
-      return await api.cart.updateProduct(updatedProduct);
-    }
-    catch (e) {
-      console.log(e, 'eee');
-      throw e;
-    }
-  }, 300);
-
   const removeItem = async (id: string) => {
     if (!inCart(id)) { return false; }
 
@@ -166,7 +161,7 @@ export const useCartStore = defineStore('cart', () => {
     setItemInLocalstorage('CART', cart.value);
 
     if (userStore.isLoggedIn) {
-      const res = await api.cart.removeProduct(id);
+      await api.cart.removeProduct(id);
     }
   };
 
