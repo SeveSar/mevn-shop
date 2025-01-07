@@ -2,10 +2,25 @@
 import BaseButton from '@/components/ui/BaseButton.vue';
 import BaseSidePanel from '@/components/ui/BaseSidePanel.vue';
 import { useCartStore } from '@/modules/cart';
+import { useAuthModalStore, useUserStore } from '@/modules/user';
 import { RouteNamesEnum } from '@/router/router.types';
+import { useRouter } from 'vue-router';
 import CartItem from '../widgets/cart/CartItem.vue';
 
 const cartStore = useCartStore();
+const userStore = useUserStore();
+const authModalStore = useAuthModalStore();
+const router = useRouter();
+
+function onSubmit() {
+  if (!userStore.isLoggedIn) {
+    cartStore.isSidePanelCart = false;
+    authModalStore.isAuthModal = true;
+  }
+  else {
+    router.push({ name: RouteNamesEnum.cart });
+  }
+}
 </script>
 
 <template>
@@ -25,7 +40,7 @@ const cartStore = useCartStore();
         <div class="panel-cart__price">
           Итого: {{ cartStore.totalPrice }} ₽
         </div>
-        <BaseButton :to="{ name: RouteNamesEnum.cart }">
+        <BaseButton @click="onSubmit">
           Оформить заказ
         </BaseButton>
       </div>

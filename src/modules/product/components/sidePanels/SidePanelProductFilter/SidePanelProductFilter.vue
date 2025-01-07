@@ -32,6 +32,7 @@ function filterProducts() {
 async function resetFilterProducts() {
   selectedFilters.value = [];
   lastAcceptedFilters.value = [];
+  emit('update:isOpen', false);
   await productsStore.getProducts();
 }
 
@@ -41,6 +42,7 @@ async function fetchFilters() {
     filtersRes.value = await api.product.fetchProductFilters();
   }
   catch (e) {
+    console.log(e);
   }
   finally {
     isLoading.value = false;
