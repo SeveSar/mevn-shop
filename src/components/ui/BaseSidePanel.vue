@@ -64,6 +64,7 @@ export default defineComponent({
   background: #ffffff;
   max-width: 520px;
   position: absolute;
+  top: 0;
   right: 0;
   width: 100%;
   color: #191919;
@@ -72,6 +73,10 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   overflow: auto;
+
+  @media screen and (max-width: @breakpoint-sm) {
+    max-width: 100%;
+  }
 
   &--active {
     opacity: 1;
@@ -122,22 +127,22 @@ export default defineComponent({
     padding: 12px 20px 12px;
     border-top: 1px solid @gray-color;
     margin-top: auto;
+    position: sticky;
+    bottom: 0;
+    background-color: @white-color;
   }
 }
 
 .side-panel-overlay {
   background: rgba(25, 25, 25, 0.4);
-  backdrop-filter: blur(32px);
   z-index: 1001;
-  position: relative;
-
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: @breakpoint-sm) {
     padding: 20px;
   }
 }

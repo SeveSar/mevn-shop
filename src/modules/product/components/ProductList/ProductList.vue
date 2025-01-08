@@ -30,7 +30,7 @@ export default defineComponent({
   display: flex;
   flex-wrap: wrap;
   margin: 0 -15px;
-  @media screen and (max-width: 575px) {
+  @media screen and (max-width: @breakpoint-sm) {
     margin: 0;
   }
   &__item {
@@ -40,13 +40,13 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     transition: all 0.2s ease-in-out;
-    @media screen and (max-width: 1200px) {
+    @media screen and (max-width: @breakpoint-xl) {
       width: calc(100% / 3);
     }
-    @media screen and (max-width: 875px) {
+    @media screen and (max-width: @breakpoint-lg) {
       width: calc(100% / 2);
     }
-    @media screen and (max-width: 575px) {
+    @media screen and (max-width: @breakpoint-sm) {
       width: 100%;
       padding: 0;
     }

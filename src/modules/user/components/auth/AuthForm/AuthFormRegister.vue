@@ -155,11 +155,13 @@ export default defineComponent({
     margin-top: 20px;
   }
   &__submit {
-    margin: 45px auto 0;
+    margin: 25px auto 0;
     width: 100%;
   }
   &__group {
-    margin-bottom: 25px;
+    &:not(:last-child) {
+      margin-bottom: 25px;
+    }
   }
 }
 </style>

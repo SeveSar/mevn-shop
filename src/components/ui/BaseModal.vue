@@ -72,7 +72,6 @@ function close() {
 .modal-overlay {
   display: flex;
   background: rgba(25, 25, 25, 0.4);
-  backdrop-filter: blur(32px);
   z-index: 1001;
   position: relative;
   overflow: auto;
@@ -83,7 +82,7 @@ function close() {
   width: 100%;
   height: 100%;
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: @breakpoint-sm) {
     padding: 20px;
   }
 }

@@ -118,7 +118,7 @@ const cartStore = useCartStore();
     font-weight: 600;
     font-size: 20px;
     line-height: 28px;
-    @media screen and (max-width: 575px) {
+    @media screen and (max-width: @breakpoint-sm) {
       font-size: 15px;
       line-height: 18px;
       margin-bottom: 1px;
@@ -132,7 +132,7 @@ const cartStore = useCartStore();
     margin-right: 15px;
     object-fit: contain;
     display: block;
-    @media screen and (max-width: 575px) {
+    @media screen and (max-width: @breakpoint-sm) {
       width: 70px;
       height: 70px;
       margin-right: 8px;

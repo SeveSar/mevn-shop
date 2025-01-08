@@ -76,7 +76,7 @@ export default defineComponent({
 <style lang="less">
 #app-toast {
   position: fixed;
-  bottom: 30px;
+  top: 30px;
   right: 20px;
   z-index: 1500;
 }

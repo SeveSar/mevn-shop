@@ -43,7 +43,7 @@ const { cart } = storeToRefs(cartStore);
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
-    @media screen and (max-width: 575px) {
+    @media screen and (max-width: @breakpoint-sm) {
       flex-direction: column;
       align-items: flex-start;
     }
@@ -56,7 +56,7 @@ const { cart } = storeToRefs(cartStore);
       display: block;
       margin: auto;
       width: 60%;
-      @media screen and (max-width: 575px) {
+      @media screen and (max-width: @breakpoint-sm) {
         width: 100%;
       }
     }
@@ -87,7 +87,7 @@ const { cart } = storeToRefs(cartStore);
     color: #ff7010;
     padding: 20px 16px;
 
-    @media screen and (max-width: 575px) {
+    @media screen and (max-width: @breakpoint-sm) {
       flex-direction: column;
       align-items: flex-start;
       .cart__footer-price {

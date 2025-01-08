@@ -34,7 +34,6 @@ export default defineComponent({
       email: '',
       password: '',
     });
-
     const rules = {
       email: getValidationRule('email'),
       password: getValidationRule('password'),
@@ -138,7 +137,9 @@ export default defineComponent({
   }
 
   &__group {
-    margin-bottom: 25px;
+    &:not(:last-child) {
+      margin-bottom: 25px;
+    }
   }
 }
 </style>

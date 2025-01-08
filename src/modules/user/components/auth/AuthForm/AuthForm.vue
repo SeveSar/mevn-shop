@@ -1,46 +1,37 @@
-<script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
-import FormLogin from '../forms/FormLogin.vue';
-import FormRegister from '../forms/FormRegister.vue';
+<script lang="ts" setup>
+import { computed, ref } from 'vue';
+import AuthFormLogin from './AuthFormLogin.vue';
+import AuthFormRegister from './AuthFormRegister.vue';
+
+const COMPONETS = {
+  login: AuthFormLogin,
+  register: AuthFormRegister,
+} as const;
 
 type FormType = 'login' | 'register';
 
-export default defineComponent({
-  components: {
-    FormLogin,
-    FormRegister,
-  },
-  setup() {
-    const currentFormType = ref<FormType>('login');
+const currentFormType = ref<FormType>('login');
 
-    const switchTab = () => {
-      switch (currentFormType.value) {
-        case 'login':
-          currentFormType.value = 'register';
-          break;
-        case 'register':
-          currentFormType.value = 'login';
-          break;
-      }
-    };
+function switchTab() {
+  switch (currentFormType.value) {
+    case 'login':
+      currentFormType.value = 'register';
+      break;
+    case 'register':
+      currentFormType.value = 'login';
+      break;
+  }
+}
 
-    const currentNotifyText = computed(() => {
-      return currentFormType.value === 'login' ? 'Нет аккаунта?' : 'Уже есть аккаунт?';
-    });
-
-    return {
-      currentFormType,
-      switchTab,
-      currentNotifyText,
-    };
-  },
+const currentNotifyText = computed(() => {
+  return currentFormType.value === 'login' ? 'Нет аккаунта?' : 'Уже есть аккаунт?';
 });
 </script>
 
 <template>
   <div class="form-switcher">
     <keep-alive>
-      <component :is="`form-${currentFormType.toLowerCase()}`" />
+      <component :is="COMPONETS[currentFormType]" />
     </keep-alive>
   </div>
   <div class="form-switcher__notify">

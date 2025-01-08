@@ -366,7 +366,7 @@ provide('v$', v$);
     color: #ff7010;
     padding: 20px 16px;
 
-    @media screen and (max-width: 575px) {
+    @media screen and (max-width: @breakpoint-sm) {
       flex-direction: column;
       align-items: flex-start;
       .cart__footer-price {

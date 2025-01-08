@@ -3,7 +3,7 @@ import BaseModal from '@/components/ui/BaseModal.vue';
 
 import { useAuthModalStore } from '@/modules/user';
 import { storeToRefs } from 'pinia';
-import { computed, defineComponent, type Ref, ref } from 'vue';
+import { defineComponent, type Ref, ref } from 'vue';
 import AuthForm from '../../auth/AuthForm/AuthForm.vue';
 
 interface IUserCredentials {
@@ -20,26 +20,8 @@ export default defineComponent({
     const storeModal = useAuthModalStore();
     const userCredentials = ref({}) as Ref<IUserCredentials>;
     const { isAuthModal } = storeToRefs(storeModal);
-    const typeForm = ref<'FormLogin' | 'FormRegister'>('FormLogin');
-    const currentTextButton = computed(() => {
-      return typeForm.value === 'FormLogin'
-        ? { text: 'Не зарегестрированы ?', buttonText: 'Создать аккаунт' }
-        : { text: 'Уже есть аккаунт ?', buttonText: 'Войди в аккаунт' };
-    });
-    const changeForm = () => {
-      switch (typeForm.value) {
-        case 'FormLogin':
-          typeForm.value = 'FormRegister';
-          break;
-        case 'FormRegister':
-          typeForm.value = 'FormLogin';
-      }
-    };
 
     return {
-      typeForm,
-      currentTextButton,
-      changeForm,
       storeModal,
       isAuthModal,
       userCredentials,
