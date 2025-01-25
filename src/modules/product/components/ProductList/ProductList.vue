@@ -31,18 +31,19 @@ export default defineComponent({
   flex-wrap: wrap;
   gap: 30px;
   &__item {
-    flex: 1 1 calc((100% / 4) - 60px);
+    flex: 0 0 calc((100% - 3 * 30px) / 4);
     display: flex;
     flex-direction: column;
     transition: all 0.2s ease-in-out;
+
     @media screen and (max-width: @breakpoint-xl) {
-      flex: 1 1 calc((100% / 3) - 60px);
+      flex: 0 0 calc((100% - 2 * 30px) / 3);
     }
     @media screen and (max-width: @breakpoint-lg) {
-      flex: 1 1 calc((100% / 2) - 60px);
+      flex: 0 0 calc((100% - 1 * 30px) / 2);
     }
     @media screen and (max-width: @breakpoint-sm) {
-      width: 100%;
+      flex: 0 0 100%;
       padding: 0;
     }
     &:hover {

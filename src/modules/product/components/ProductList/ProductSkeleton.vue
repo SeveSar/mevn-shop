@@ -34,16 +34,16 @@ withDefaults(defineProps<Props>(), {
   border: 1px solid var(--line-gray, #f0f0f0);
   background: #fff;
   padding: 50px 20px 20px;
-  flex: 1 1 calc((100% / 4) - 60px);
+  flex: 0 0 calc((100% - 3 * 30px) / 4);
 
   @media screen and (max-width: @breakpoint-xl) {
-    flex: 1 1 calc((100% / 3) - 60px);
+    flex: 0 0 calc((100% - 2 * 30px) / 3);
   }
   @media screen and (max-width: @breakpoint-lg) {
-    flex: 1 1 calc((100% / 2) - 60px);
+    flex: 0 0 calc((100% - 1 * 30px) / 2);
   }
   @media screen and (max-width: @breakpoint-sm) {
-    width: 100%;
+    flex: 0 0 100%;
   }
   &-list {
     display: flex;
