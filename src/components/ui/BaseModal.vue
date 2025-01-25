@@ -3,11 +3,12 @@ import IconCrossBig from '@/components/ui/icons/IconCrossBig.vue';
 import { useModalFunctions } from '@/composables/modalFunctions';
 import { toRefs } from 'vue';
 
-const props = defineProps({
-  isOpen: {
-    type: Boolean,
-    default: false,
-  },
+interface Props {
+  isOpen: boolean
+  contentWidth?: string
+}
+const props = withDefaults(defineProps<Props>(), {
+  contentWidth: '850px',
 });
 
 const emit = defineEmits(['close', 'show']);
@@ -25,7 +26,7 @@ function close() {
 <template>
   <transition name="fade">
     <div v-if="isOpen" class="modal-overlay" data-testid="base-modal-overlay" @mousedown.self="close">
-      <div class="modal">
+      <div class="modal" :style="{ maxWidth: contentWidth }">
         <button class="modal-close" data-testid="button-close" @click="close">
           <IconCrossBig class="modal-close__icon" />
         </button>
@@ -44,7 +45,6 @@ function close() {
 .modal {
   background: @white-color;
   border-radius: 24px;
-  max-width: 850px;
   margin: auto;
   width: 100%;
   padding: 60px 20px;
@@ -57,13 +57,21 @@ function close() {
   right: -62px;
   top: 0;
   transition: all 0.3s ease;
+  width: 30px;
+  @media screen and (max-width: @breakpoint-xl) {
+    right: -25px;
+    width: 20px;
+  }
+  @media screen and (max-width: @breakpoint-lg) {
+    display: none;
+  }
 
   &:hover {
     transform: translateY(-3px);
   }
 
   &__icon {
-    width: 30px;
+    width: 100%;
     height: auto;
     color: @white-color;
   }
@@ -82,7 +90,7 @@ function close() {
   width: 100%;
   height: 100%;
 
-  @media screen and (max-width: @breakpoint-sm) {
+  @media screen and (max-width: @breakpoint-lg) {
     padding: 20px;
   }
 }

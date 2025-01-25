@@ -58,7 +58,6 @@ const emit = defineEmits(['toggleActiveIngredient']);
 
   &__ingredient {
     width: calc((100% / 4) - 20px);
-
     &:hover {
       .modal-ingredients__ingredient-icon {
         border-color: @main-color;

@@ -112,7 +112,7 @@ watch(
 </script>
 
 <template>
-  <BaseModal :is-open="modalStore.isModalProduct" class="modal-product" @close="close">
+  <BaseModal :is-open="modalStore.isModalProduct" class="modal-product" content-width="1080px" @close="close">
     <div class="modal-product__body">
       <div class="modal-product__photo">
         <img v-if="!isLoading" :src="productData?.imageUrl" class="modal-product__photo-img" alt="">
@@ -176,19 +176,23 @@ watch(
 
 <style scoped lang="less">
 .modal-product {
-  & :deep(.modal) {
-    max-width: 1080px;
-  }
-
   &__body {
     display: flex;
+    @media screen and (max-width: @breakpoint-lg) {
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
   }
 
   &__photo {
     width: 50%;
     display: flex;
     align-items: center;
-
+    justify-content: center;
+    @media screen and (max-width: @breakpoint-lg) {
+      width: 100%;
+    }
     &-img {
       width: 100%;
       flex-shrink: 0;
@@ -197,6 +201,9 @@ watch(
 
   &__info {
     width: 50%;
+    @media screen and (max-width: @breakpoint-lg) {
+      width: 100%;
+    }
   }
 
   &__tabs {
