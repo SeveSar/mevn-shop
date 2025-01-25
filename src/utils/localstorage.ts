@@ -1,14 +1,12 @@
 const ACCESS_TOKEN = 'TOKEN';
 
-const KEYS = {
-  CART: 'CART',
-} as const;
+type KEYS = 'CART';
 
-function setItemInLocalstorage(key: keyof typeof KEYS, item: any) {
+function setItemInLocalstorage(key: KEYS, item: any) {
   localStorage.setItem(key, JSON.stringify(item));
 }
 
-function getItemFromLocalstorage<T>(key: keyof typeof KEYS): T {
+function getItemFromLocalstorage<T>(key: KEYS): T {
   const item = localStorage.getItem(key);
   return item ? JSON.parse(item) : null;
 }
@@ -17,7 +15,7 @@ function clearAll() {
   localStorage.clear();
 }
 
-function removeItem(key: keyof typeof KEYS) {
+function removeItem(key: KEYS) {
   localStorage.removeItem(key);
 }
 

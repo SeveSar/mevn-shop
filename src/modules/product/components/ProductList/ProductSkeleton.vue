@@ -34,9 +34,20 @@ withDefaults(defineProps<Props>(), {
   border: 1px solid var(--line-gray, #f0f0f0);
   background: #fff;
   padding: 50px 20px 20px;
+  flex: 1 1 calc((100% / 4) - 60px);
+
+  @media screen and (max-width: @breakpoint-xl) {
+    flex: 1 1 calc((100% / 3) - 60px);
+  }
+  @media screen and (max-width: @breakpoint-lg) {
+    flex: 1 1 calc((100% / 2) - 60px);
+  }
+  @media screen and (max-width: @breakpoint-sm) {
+    width: 100%;
+  }
   &-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 30px;
   }
 
