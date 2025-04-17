@@ -1,13 +1,16 @@
 import type { IUser } from '@/types/IUser';
 import { api } from '@/api/api';
 import { useCartStore } from '@/modules/cart';
+import { RouteNamesEnum } from '@/router/router.types';
 import { cleanTokensData, clearAll, getItemFromLocalstorage, setToken } from '@/utils/localstorage';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export const useUserStore = defineStore('user', () => {
   const cartStore = useCartStore();
   const user = ref<IUser | null>(null);
+  const router = useRouter();
 
   const isLoggedIn = computed(() => !!user.value);
 
@@ -41,11 +44,15 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  async function logOut() {
-    await api.user.logOut();
-    cartStore.cart = [];
-    clearAll();
-    user.value = null;
+  function logOut() {
+    api.user.logOut().then(() => {
+      cartStore.cart = [];
+      clearAll();
+      user.value = null;
+      router.push({ name: RouteNamesEnum.products });
+    }).catch((e) => {
+      console.log(e);
+    });
   }
 
   return {

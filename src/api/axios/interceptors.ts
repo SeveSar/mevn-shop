@@ -1,7 +1,6 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { UserResponse } from '../../types/responses/user';
 import { useUserStore } from '@/modules/user/stores/user';
-import router from '@/router';
 import { getAccessToken } from '@/utils/localstorage';
 import axios from 'axios';
 import { api } from '../api';
@@ -17,7 +16,7 @@ interface ConfigImplements extends AxiosRequestConfig {
 }
 let refreshTokenRequest: Promise<UserResponse> | null = null;
 
-async function errorHandler(error: AxiosError) {
+async function onResponseError(error: AxiosError) {
   const userStore = useUserStore();
   const response = error.response;
   const config = error.config as ConfigImplements;
@@ -40,23 +39,17 @@ async function errorHandler(error: AxiosError) {
         return axios(config);
       }
       catch (e) {
-        userStore.logOut().then(() => {
-          router.push('/login');
-        });
+        userStore.logOut();
       }
     }
   }
   return Promise.reject(error);
 }
 
-async function onResponseError(error: AxiosError) {
-  return errorHandler(error);
-}
-
 function onResponseSuccess(successRes: AxiosResponse) {
   return successRes;
 }
 
-export default function (http: AxiosInstance) {
+export function initInterceptors(http: AxiosInstance) {
   http.interceptors.response.use(onResponseSuccess, onResponseError);
 }

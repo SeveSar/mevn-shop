@@ -21,7 +21,7 @@ export default defineComponent({
 
   setup() {
     let id: number = 0;
-    let timer: any;
+    let timer: ReturnType<typeof setTimeout>;
     const getCurrentIcon = (type: 'error' | 'info') => {
       return ICONS_TYPES[type];
     };

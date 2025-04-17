@@ -2,7 +2,6 @@
 import type { TOrderPayment, TOrderTypeDelivery, TOrderTypeTiming } from '@/constants';
 import type { IOrderCreate } from '@/types/IOrder';
 import { api } from '@/api/api';
-import BaseButton from '@/components/ui/BaseButton.vue';
 import BaseDatePicker from '@/components/ui/BaseDatePicker.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
 import BaseRadio from '@/components/ui/BaseRadio.vue';
@@ -15,6 +14,7 @@ import { getValidationRule } from '@/utils/validations';
 import { useVuelidate } from '@vuelidate/core';
 import { helpers, minLength, required } from '@vuelidate/validators';
 import { storeToRefs } from 'pinia';
+import { BaseButton } from 'pizza-mevn-ui-kit';
 import { type Component, computed, provide, reactive, ref, watch } from 'vue';
 import { useCartStore } from '../../stores';
 import TypeOrderDelivery from './typeOrders/TypeOrderDelivery.vue';

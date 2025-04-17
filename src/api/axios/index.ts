@@ -4,8 +4,12 @@ import { getAccessToken } from '@/utils/localstorage';
 
 export class AxiosHttpClient implements IHttpClient {
   private $http: AxiosInstance;
-  constructor(axiosInstance: AxiosInstance) {
+  constructor(
+    axiosInstance: AxiosInstance,
+    initInterceptors: (instance: AxiosInstance) => void,
+  ) {
     this.$http = axiosInstance;
+    initInterceptors(this.$http);
   }
 
   makeRequest<T>({ url, method, headers, data, config }: IOptions): Promise<ApiResponse<T>> {

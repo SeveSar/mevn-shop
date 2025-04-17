@@ -1,4 +1,3 @@
-import { useCartStore } from '@/modules/cart/stores';
 import { useUserStore } from '@/modules/user/stores/user';
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
@@ -14,14 +13,11 @@ import './assets/less/main.less';
 const app = createApp(App);
 app.use(createPinia());
 
-const cartStore = useCartStore();
 const userStore = useUserStore();
 
 async function start() {
   try {
     await userStore.auth();
-
-    await cartStore.getCart();
   }
   catch (e) {
     console.error(e);

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { IFilter } from '@/types/IFilter';
 import { api } from '@/api/api';
-import BaseButton from '@/components/ui/BaseButton.vue';
 import BaseSidePanel from '@/components/ui/BaseSidePanel.vue';
+import { BaseButton } from 'pizza-mevn-ui-kit';
 
 import { ref } from 'vue';
 import { useProductsStore } from '../../../stores/products';

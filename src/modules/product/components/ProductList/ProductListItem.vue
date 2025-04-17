@@ -2,9 +2,9 @@
 import type { PropType } from 'vue';
 import type { ProductDTO } from '../../models';
 
-import BaseButton from '@/components/ui/BaseButton.vue';
 import { useProductsStore } from '@/modules/product';
 import { useAuthModalStore } from '@/modules/user';
+import { BaseButton } from 'pizza-mevn-ui-kit';
 
 import { defineComponent } from 'vue';
 

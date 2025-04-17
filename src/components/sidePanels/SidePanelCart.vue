@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import BaseButton from '@/components/ui/BaseButton.vue';
 import BaseSidePanel from '@/components/ui/BaseSidePanel.vue';
 import { useCartStore } from '@/modules/cart';
 import { useAuthModalStore, useUserStore } from '@/modules/user';
 import { RouteNamesEnum } from '@/router/router.types';
+import { BaseButton } from 'pizza-mevn-ui-kit';
 import { useRouter } from 'vue-router';
 import CartItem from '../widgets/cart/CartItem.vue';
 

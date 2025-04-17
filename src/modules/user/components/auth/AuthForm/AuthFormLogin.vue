@@ -1,6 +1,4 @@
 <script lang="ts">
-import BaseButton from '@/components/ui/BaseButton.vue';
-
 import BaseInput from '@/components/ui/BaseInput.vue';
 import { toaster } from '@/main';
 import { useAuthModalStore } from '@/modules/user';
@@ -9,6 +7,7 @@ import { getErrorMessage } from '@/utils/errorHandler';
 
 import { getValidationRule } from '@/utils/validations';
 import useVuelidate from '@vuelidate/core';
+import { BaseButton } from 'pizza-mevn-ui-kit';
 
 import { defineComponent, type PropType, reactive, ref } from 'vue';
 

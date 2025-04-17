@@ -1,6 +1,5 @@
 import type { AxiosInstance } from 'axios';
 import axios from 'axios';
-import initInterceptors from './interceptors';
 
 const instance: AxiosInstance = axios.create({
   baseURL: `${import.meta.env.VITE_BASE_URL}/api`,
@@ -10,5 +9,4 @@ const instance: AxiosInstance = axios.create({
   withCredentials: true,
 });
 
-initInterceptors(instance);
 export { instance };

@@ -2,7 +2,7 @@ const ACCESS_TOKEN = 'TOKEN';
 
 type KEYS = 'CART';
 
-function setItemInLocalstorage(key: KEYS, item: any) {
+function setItemInLocalstorage(key: KEYS, item: unknown) {
   localStorage.setItem(key, JSON.stringify(item));
 }
 
