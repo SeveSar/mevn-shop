@@ -8,7 +8,7 @@ import AppToast from './components/ui/AppToast.vue';
 
 import router from './router';
 
-import './assets/less/main.less';
+import './assets/scss/main.scss';
 
 const app = createApp(App);
 app.use(createPinia());

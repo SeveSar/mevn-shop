@@ -41,7 +41,7 @@ function open() {
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .accordion-item {
   &__trigger {
     cursor: pointer;

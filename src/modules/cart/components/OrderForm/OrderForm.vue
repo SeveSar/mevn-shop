@@ -299,11 +299,11 @@ provide('v$', v$);
   </form>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .order-form {
   margin-top: 30px;
   &__block {
-    border-bottom: 1px solid @gray-color;
+    border-bottom: 1px solid $gray-color;
     padding-bottom: 20px;
     margin-bottom: 20px;
     &-header {
@@ -344,7 +344,7 @@ provide('v$', v$);
     font-style: normal;
     font-weight: 400;
     line-height: 22px;
-    color: @gray2-color;
+    color: $gray2-color;
   }
 
   &__tab {
@@ -366,7 +366,7 @@ provide('v$', v$);
     color: #ff7010;
     padding: 20px 16px;
 
-    @media screen and (max-width: @breakpoint-sm) {
+    @media screen and (max-width: $breakpoint-sm) {
       flex-direction: column;
       align-items: flex-start;
       .cart__footer-price {

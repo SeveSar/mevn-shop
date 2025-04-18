@@ -59,7 +59,7 @@ export default defineComponent({
   </transition>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .side-panel {
   background: #ffffff;
   max-width: 520px;
@@ -74,7 +74,7 @@ export default defineComponent({
   flex-direction: column;
   overflow: auto;
 
-  @media screen and (max-width: @breakpoint-sm) {
+  @media screen and (max-width: $breakpoint-sm) {
     max-width: 100%;
   }
 
@@ -89,14 +89,14 @@ export default defineComponent({
     font-weight: 600;
     font-size: 32px;
     line-height: 40px;
-    color: @black-color;
+    color: $black-color;
   }
 
   &__close {
     position: absolute;
     right: 0;
     top: 0;
-    color: @gray2-color;
+    color: $gray2-color;
     transition: all 0.3s ease;
     top: 40px;
     right: 20px;
@@ -125,11 +125,11 @@ export default defineComponent({
 
   &__footer {
     padding: 12px 20px 12px;
-    border-top: 1px solid @gray-color;
+    border-top: 1px solid $gray-color;
     margin-top: auto;
     position: sticky;
     bottom: 0;
-    background-color: @white-color;
+    background-color: $white-color;
   }
 }
 
@@ -142,7 +142,7 @@ export default defineComponent({
   width: 100%;
   height: 100%;
 
-  @media screen and (max-width: @breakpoint-sm) {
+  @media screen and (max-width: $breakpoint-sm) {
     padding: 20px;
   }
 }

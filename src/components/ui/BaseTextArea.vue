@@ -6,7 +6,7 @@ interface Props {
   placeholder?: string
   modelValue: string
 }
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   placeholder: '',
 });
 const emit = defineEmits(['update:modelValue']);
@@ -22,10 +22,10 @@ watch(input, (val) => {
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .ui-area {
   &__control {
-    border: 1px solid @gray-color;
+    border: 1px solid $gray-color;
     border-radius: 6px;
     resize: none;
     transition: border-color 0.3s ease;
@@ -35,13 +35,13 @@ watch(input, (val) => {
     line-height: 22px;
     width: 100%;
     min-height: 150px;
-    color: @black-color;
+    color: $black-color;
     &::placeholder {
-      color: @gray2-color;
+      color: $gray2-color;
     }
     &:focus {
       outline: none;
-      border-color: @main-color;
+      border-color: $main-color;
     }
   }
 }

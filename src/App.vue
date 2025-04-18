@@ -32,7 +32,7 @@ watch(
   </AppLayout>
 </template>
 
-<style lang="less">
+<style lang="scss">
 html {
   color-scheme: light;
 }

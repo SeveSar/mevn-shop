@@ -15,7 +15,7 @@ export default defineComponent({
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .filter {
   overflow-x: auto;
   margin: 0 -16px;

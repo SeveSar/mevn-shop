@@ -176,11 +176,11 @@ watch(
   </BaseModal>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .modal-product {
   &__body {
     display: flex;
-    @media screen and (max-width: @breakpoint-lg) {
+    @media screen and (max-width: $breakpoint-lg) {
       flex-direction: column;
       align-items: center;
       gap: 32px;
@@ -192,7 +192,7 @@ watch(
     display: flex;
     align-items: center;
     justify-content: center;
-    @media screen and (max-width: @breakpoint-lg) {
+    @media screen and (max-width: $breakpoint-lg) {
       width: 100%;
     }
     &-img {
@@ -203,7 +203,7 @@ watch(
 
   &__info {
     width: 50%;
-    @media screen and (max-width: @breakpoint-lg) {
+    @media screen and (max-width: $breakpoint-lg) {
       width: 100%;
     }
   }
@@ -245,7 +245,7 @@ watch(
       }
 
       &-value {
-        color: @main-color;
+        color: $main-color;
       }
     }
   }

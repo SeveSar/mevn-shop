@@ -82,7 +82,9 @@ export default defineComponent({
   </header>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
+@import './burger';
+
 .header {
   width: 100%;
   z-index: 999;
@@ -91,7 +93,7 @@ export default defineComponent({
   top: 0;
   left: 0;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  @media screen and (max-width: @breakpoint-lg) {
+  @media screen and (max-width: $breakpoint-lg) {
     width: 100%;
   }
 
@@ -106,7 +108,7 @@ export default defineComponent({
     &-col {
       display: flex;
       align-items: center;
-      @media screen and (max-width: @breakpoint-sm) {
+      @media screen and (max-width: $breakpoint-sm) {
         &:last-child {
           display: none;
         }
@@ -117,7 +119,7 @@ export default defineComponent({
   .logo {
     display: block;
     width: 141px;
-    @media screen and (max-width: @breakpoint-lg) {
+    @media screen and (max-width: $breakpoint-lg) {
       width: 120px;
     }
     img {
@@ -133,7 +135,7 @@ export default defineComponent({
 
   &__bottom {
     padding: 12px 0;
-    @media screen and (max-width: @breakpoint-lg) {
+    @media screen and (max-width: $breakpoint-lg) {
       padding: 7px 0;
     }
     &-inner {
@@ -150,7 +152,7 @@ export default defineComponent({
     align-items: center;
     padding: 0 17px;
     color: #ffffff;
-    @media screen and (max-width: @breakpoint-lg) {
+    @media screen and (max-width: $breakpoint-lg) {
       display: none;
     }
     svg {
@@ -158,14 +160,14 @@ export default defineComponent({
     }
   }
   .nav {
-    @media screen and (max-width: @breakpoint-lg) {
+    @media screen and (max-width: $breakpoint-lg) {
       display: none;
     }
   }
 }
 .nav-list {
   display: flex;
-  @media screen and (max-width: @breakpoint-lg) {
+  @media screen and (max-width: $breakpoint-lg) {
     flex-direction: column;
   }
   &__item {
@@ -173,7 +175,7 @@ export default defineComponent({
     line-height: 22px;
     &:not(:last-child) {
       margin-right: 32px;
-      @media screen and (max-width: @breakpoint-lg) {
+      @media screen and (max-width: $breakpoint-lg) {
         margin-right: 0;
         margin-bottom: 15px;
       }

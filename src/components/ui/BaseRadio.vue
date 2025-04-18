@@ -42,7 +42,7 @@ export default defineComponent({
   </label>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .base-radio {
   position: relative;
   padding-left: 24px;
@@ -51,7 +51,7 @@ export default defineComponent({
 
   &:hover {
     &::before {
-      border-color: @main-color;
+      border-color: $main-color;
     }
   }
 
@@ -71,7 +71,7 @@ export default defineComponent({
     height: 16px;
   }
   &::after {
-    background-color: @main-color;
+    background-color: $main-color;
     border-radius: 50%;
     width: 8px;
     height: 8px;
@@ -86,12 +86,12 @@ export default defineComponent({
     font-weight: 400;
     font-size: 16px;
     line-height: 1;
-    color: @black-color;
+    color: $black-color;
   }
 
   &--active {
     &::before {
-      border-color: @main-color;
+      border-color: $main-color;
     }
     &::after {
       opacity: 1;

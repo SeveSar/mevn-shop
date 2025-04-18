@@ -61,7 +61,7 @@ export default defineComponent({
   </article>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .product {
   display: flex;
   flex-direction: column;
@@ -108,7 +108,7 @@ export default defineComponent({
     font-weight: 600;
     font-size: 18px;
     line-height: 24px;
-    color: @black-color;
+    color: $black-color;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -119,7 +119,7 @@ export default defineComponent({
     font-weight: 400;
     font-size: 16px;
     line-height: 22px;
-    color: @black-color;
+    color: $black-color;
     margin-top: 12px;
     overflow: hidden;
     text-overflow: ellipsis;

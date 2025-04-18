@@ -94,12 +94,12 @@ const pizzaImages = computed(() => {
   </BaseAccordionList>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .orders-item {
   padding: 16px 20px;
   border-radius: 12px;
-  border: 1px solid @gray-color;
-  background: @white-color;
+  border: 1px solid $gray-color;
+  background: $white-color;
   margin-bottom: 50px;
 
   &-header {
@@ -116,7 +116,7 @@ const pizzaImages = computed(() => {
       position: absolute;
       right: 0;
       top: 15px;
-      color: @main-color;
+      color: $main-color;
       transition: transform 0.2s ease-in-out;
     }
 
@@ -125,7 +125,7 @@ const pizzaImages = computed(() => {
       grid-template-columns: repeat(4, max-content);
       column-gap: 15px;
       row-gap: 12px;
-      border-bottom: 1px solid @gray-color;
+      border-bottom: 1px solid $gray-color;
       justify-content: space-between;
       padding-bottom: 16px;
       padding-right: calc(16px + 85px);
@@ -139,7 +139,7 @@ const pizzaImages = computed(() => {
     }
 
     &__caption {
-      color: @gray2-color;
+      color: $gray2-color;
       font-size: 14px;
       font-weight: 400;
       line-height: 18px;
@@ -148,7 +148,7 @@ const pizzaImages = computed(() => {
     }
 
     &__text {
-      color: @black-color;
+      color: $black-color;
       font-size: 16px;
       font-weight: 400;
       line-height: 22px;

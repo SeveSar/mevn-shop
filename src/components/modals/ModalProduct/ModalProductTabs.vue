@@ -67,11 +67,11 @@ const selectedTabDoughModel = computed({
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .modal-product-tabs {
   &__tab-dough,
   &__tab-size {
-    border: 1px solid @gray-color;
+    border: 1px solid $gray-color;
     border-radius: 6px;
   }
 

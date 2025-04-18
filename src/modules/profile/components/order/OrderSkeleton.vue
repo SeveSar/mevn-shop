@@ -31,7 +31,7 @@ withDefaults(defineProps<Props>(), {
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .order-skeletons {
   &__item {
     padding: 16px 20px;
@@ -46,7 +46,7 @@ withDefaults(defineProps<Props>(), {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid @gray-color;
+      border-bottom: 1px solid $gray-color;
       padding-bottom: 16px;
       margin-bottom: 22px;
     }

@@ -40,7 +40,7 @@ export default defineComponent({
   </BaseModal>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .modal-content {
   &__inner {
     max-width: 320px;

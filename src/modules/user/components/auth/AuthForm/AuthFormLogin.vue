@@ -108,7 +108,7 @@ export default defineComponent({
   </form>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .form-auth {
   &__header {
     text-align: center;

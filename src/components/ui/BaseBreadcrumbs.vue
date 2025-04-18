@@ -34,7 +34,7 @@ function getFullPath(routeMatch: any) {
   </nav>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .breadcrumbs {
   background: #f0f0f0;
   padding: 10px;

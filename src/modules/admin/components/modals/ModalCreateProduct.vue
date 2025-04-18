@@ -136,12 +136,12 @@ export default defineComponent({
   </BaseModal>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .modal-title {
   text-align: center;
   font-size: 27px;
   line-height: 35px;
-  color: @black-color;
+  color: $black-color;
   margin-bottom: 25px;
 }
 

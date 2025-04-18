@@ -25,7 +25,7 @@ export default defineComponent({
   </ul>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .list-product {
   display: flex;
   flex-wrap: wrap;
@@ -36,13 +36,13 @@ export default defineComponent({
     flex-direction: column;
     transition: all 0.2s ease-in-out;
 
-    @media screen and (max-width: @breakpoint-xl) {
+    @media screen and (max-width: $breakpoint-xl) {
       flex: 0 0 calc((100% - 2 * 30px) / 3);
     }
-    @media screen and (max-width: @breakpoint-lg) {
+    @media screen and (max-width: $breakpoint-lg) {
       flex: 0 0 calc((100% - 1 * 30px) / 2);
     }
-    @media screen and (max-width: @breakpoint-sm) {
+    @media screen and (max-width: $breakpoint-sm) {
       flex: 0 0 100%;
       padding: 0;
     }

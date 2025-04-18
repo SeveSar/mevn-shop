@@ -37,7 +37,7 @@ function isNumeric(value: string | number) {
   <div class="skeleton" :style="styles " />
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .skeleton {
   position: relative;
   overflow: hidden;

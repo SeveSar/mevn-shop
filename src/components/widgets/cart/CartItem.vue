@@ -62,7 +62,7 @@ const cartStore = useCartStore();
   </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .product {
   background: #ffffff;
   border: 1px solid #f0f0f0;
@@ -104,7 +104,7 @@ const cartStore = useCartStore();
     position: absolute;
     right: 16px;
     top: 10px;
-    color: @main-color;
+    color: $main-color;
     svg {
       width: 15px;
     }
@@ -118,7 +118,7 @@ const cartStore = useCartStore();
     font-weight: 600;
     font-size: 20px;
     line-height: 28px;
-    @media screen and (max-width: @breakpoint-sm) {
+    @media screen and (max-width: $breakpoint-sm) {
       font-size: 15px;
       line-height: 18px;
       margin-bottom: 1px;
@@ -132,7 +132,7 @@ const cartStore = useCartStore();
     margin-right: 15px;
     object-fit: contain;
     display: block;
-    @media screen and (max-width: @breakpoint-sm) {
+    @media screen and (max-width: $breakpoint-sm) {
       width: 70px;
       height: 70px;
       margin-right: 8px;

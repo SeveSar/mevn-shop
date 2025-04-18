@@ -50,7 +50,7 @@ watch(
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .order-delivery {
   &__row {
     display: flex;

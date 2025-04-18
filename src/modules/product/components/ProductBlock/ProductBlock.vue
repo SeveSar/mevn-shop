@@ -26,7 +26,7 @@ export default defineComponent({
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .product-block {
   &__header {
     display: flex;

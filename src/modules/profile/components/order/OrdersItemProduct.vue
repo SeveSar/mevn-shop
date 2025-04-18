@@ -27,7 +27,7 @@ const props = defineProps<Props>();
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .order-product {
   display: grid;
   grid-template-columns: 350px 150px 105px max-content;
@@ -43,7 +43,7 @@ const props = defineProps<Props>();
   }
 
   &__title {
-    color: @black-color;
+    color: $black-color;
   }
 
   &__img {
@@ -56,7 +56,7 @@ const props = defineProps<Props>();
 
   &__extra {
     font-size: 14px;
-    color: @black-color;
+    color: $black-color;
   }
 
   &__title,
@@ -67,9 +67,9 @@ const props = defineProps<Props>();
   }
 
   &__count {
-    color: @main-color;
+    color: $main-color;
     padding: 10px 20px;
-    background-color: rgba(@main-color, 0.2);
+    background-color: rgba($main-color, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -77,7 +77,7 @@ const props = defineProps<Props>();
   }
 
   &__price {
-    color: @main-color;
+    color: $main-color;
   }
 }
 </style>

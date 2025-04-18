@@ -48,7 +48,7 @@ function onSubmit() {
   </BaseSidePanel>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .panel-cart {
   &__actions {
     display: flex;
@@ -59,7 +59,7 @@ function onSubmit() {
     font-weight: 600;
     font-size: 20px;
     line-height: 28px;
-    color: @main-color;
+    color: $main-color;
   }
 }
 </style>

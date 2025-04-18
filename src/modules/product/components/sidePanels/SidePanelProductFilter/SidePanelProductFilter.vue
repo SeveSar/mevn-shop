@@ -106,7 +106,7 @@ fetchFilters();
   </BaseSidePanel>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .panel-product-filter {
   &__block {
     &:not(:last-child) {
@@ -114,7 +114,7 @@ fetchFilters();
     }
 
     &-title {
-      color: @gray2-color;
+      color: $gray2-color;
       font-weight: 400;
       font-size: 16px;
       line-height: 22px;
@@ -140,15 +140,15 @@ fetchFilters();
     display: flex;
     align-items: center;
     justify-content: center;
-    color: @black-color;
+    color: $black-color;
     padding: 5px 16px;
     min-height: 40px;
-    border: 1px solid @gray-color;
+    border: 1px solid $gray-color;
     border-radius: 6px;
 
     &--active {
-      color: @white-color;
-      background-color: @main-color;
+      color: $white-color;
+      background-color: $main-color;
     }
   }
 

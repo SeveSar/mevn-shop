@@ -54,7 +54,7 @@ watch(currentPage, () => {
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .page-orders {
   padding-bottom: 50px;
 }

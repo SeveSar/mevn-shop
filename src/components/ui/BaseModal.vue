@@ -41,9 +41,9 @@ function close() {
   </transition>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .modal {
-  background: @white-color;
+  background: $white-color;
   border-radius: 24px;
   margin: auto;
   width: 100%;
@@ -58,11 +58,11 @@ function close() {
   top: 0;
   transition: all 0.3s ease;
   width: 30px;
-  @media screen and (max-width: @breakpoint-xl) {
+  @media screen and (max-width: $breakpoint-xl) {
     right: -25px;
     width: 20px;
   }
-  @media screen and (max-width: @breakpoint-lg) {
+  @media screen and (max-width: $breakpoint-lg) {
     display: none;
   }
 
@@ -73,7 +73,7 @@ function close() {
   &__icon {
     width: 100%;
     height: auto;
-    color: @white-color;
+    color: $white-color;
   }
 }
 
@@ -90,7 +90,7 @@ function close() {
   width: 100%;
   height: 100%;
 
-  @media screen and (max-width: @breakpoint-lg) {
+  @media screen and (max-width: $breakpoint-lg) {
     padding: 20px;
   }
 }

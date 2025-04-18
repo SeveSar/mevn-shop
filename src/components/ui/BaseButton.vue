@@ -56,7 +56,7 @@ const currentComponent = computed(() => {
   </component>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .button {
   user-select: none;
   font-family: 'SF-Pro';
@@ -71,33 +71,33 @@ const currentComponent = computed(() => {
   border-radius: 6px;
 
   &__loading {
-    color: @white-color;
+    color: $white-color;
     animation: spinner 1s infinite linear;
     margin-right: 8px;
   }
 
   &-color {
     &--primary {
-      color: @main-color;
+      color: $main-color;
 
       &.button-variant--default {
-        background: @main-color;
-        color: @white-color;
+        background: $main-color;
+        color: $white-color;
         &:hover {
-          background-color: darken(@main-color, 15%);
+          background-color: darken($main-color, 15%);
         }
       }
     }
 
     &--secondary {
-      color: @gray-color;
+      color: $gray-color;
 
       &.button-variant--default {
-        background-color: @gray-color;
-        color: @black-color;
+        background-color: $gray-color;
+        color: $black-color;
         &:hover,
         &.active {
-          background-color: @red-color;
+          background-color: $red-color;
           color: #fff;
         }
       }
@@ -111,13 +111,13 @@ const currentComponent = computed(() => {
     }
 
     &--border {
-      background-color: @gray-color;
+      background-color: $gray-color;
       background-color: transparent;
-      color: @black-color;
-      border: 1px solid @main-color;
+      color: $black-color;
+      border: 1px solid $main-color;
       border-radius: 6px;
       padding: 10px 25px;
-      color: @main-color;
+      color: $main-color;
     }
 
     &--text {

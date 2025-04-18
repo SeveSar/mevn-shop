@@ -45,7 +45,7 @@ const userStore = useUserStore();
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .mobile-menu {
   position: fixed;
   top: 0;

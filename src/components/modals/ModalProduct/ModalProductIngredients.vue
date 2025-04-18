@@ -48,7 +48,7 @@ const emit = defineEmits(['toggleActiveIngredient']);
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .modal-ingredients {
   display: flex;
   gap: 20px;
@@ -60,13 +60,13 @@ const emit = defineEmits(['toggleActiveIngredient']);
     width: calc((100% / 4) - 20px);
     &:hover {
       .modal-ingredients__ingredient-icon {
-        border-color: @main-color;
+        border-color: $main-color;
       }
     }
 
     &--active {
       .modal-ingredients__ingredient-icon {
-        border-color: @main-color;
+        border-color: $main-color;
       }
 
       .modal-ingredients__ingredient-checkmark {
@@ -94,7 +94,7 @@ const emit = defineEmits(['toggleActiveIngredient']);
       position: absolute;
       top: 8px;
       right: 8px;
-      color: @main-color;
+      color: $main-color;
       opacity: 0;
       transition: all 0.2s linear;
     }
@@ -108,7 +108,7 @@ const emit = defineEmits(['toggleActiveIngredient']);
     }
 
     &-price {
-      color: @main-color;
+      color: $main-color;
     }
   }
 }

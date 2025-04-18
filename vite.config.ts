@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 import vue from '@vitejs/plugin-vue';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -31,17 +32,23 @@ export default defineConfig({
     hmr: {
       overlay: true,
     },
+    watch: {
+      ignored: ['!**/node_modules/pizza-mevn-ui-kit/**'], // Указываем, чтобы Vite не игнорировал симлинк
+    },
   },
+
   css: {
     preprocessorOptions: {
-      less: {
-        additionalData: `@import "@/assets/less/variables.less";`,
+      scss: {
+        additionalData: `@use "@/assets/scss/variables.scss" as *;`,
       },
     },
   },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
+
     },
+    preserveSymlinks: true, // Включает поддержку символических ссылок
   },
 });

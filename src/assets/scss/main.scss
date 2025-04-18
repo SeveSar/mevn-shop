@@ -1,7 +1,8 @@
-@import 'reset';
-@import 'fonts';
-@import 'animations';
-@import 'vcalendar';
+@forward 'reset';
+@forward 'fonts';
+@forward 'animations';
+@forward 'vcalendar';
+@forward 'blocks/container';
 
 html {
   height: 100%;
@@ -33,7 +34,7 @@ button {
   flex-grow: 1;
   padding-top: 70px;
 
-  @media screen and (max-width: @breakpoint-lg) {
+  @media screen and (max-width: $breakpoint-lg) {
     padding-top: 30px;
   }
 }
@@ -47,6 +48,3 @@ button {
 .fade-leave-to {
   opacity: 0;
 }
-
-@import 'blocks/container';
-@import 'blocks/burger';

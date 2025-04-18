@@ -33,7 +33,7 @@ export default defineComponent({
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .admin {
   margin-bottom: 25px;
   &__title {
@@ -45,10 +45,10 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     &-link {
-      color: @black-color;
+      color: $black-color;
       margin: 0 10px;
       &.exact-active {
-        color: @main-color;
+        color: $main-color;
       }
     }
   }

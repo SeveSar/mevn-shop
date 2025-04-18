@@ -73,7 +73,7 @@ function changePage(page: number) {
   </ul>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .base-pagination {
   display: flex;
   align-items: center;
@@ -90,20 +90,20 @@ function changePage(page: number) {
     align-items: center;
     justify-content: center;
     background-color:;
-    border: 1px solid @gray-color;
-    color: @black-color;
+    border: 1px solid $gray-color;
+    color: $black-color;
     font-size: 16px;
     margin: 0 5px;
 
     &--active {
       pointer-events: none;
-      background-color: @main-color;
-      color: @white-color;
+      background-color: $main-color;
+      color: $white-color;
     }
 
     &--arrow {
-      background-color: @main-color;
-      color: @white-color;
+      background-color: $main-color;
+      color: $white-color;
     }
 
     &--disabled {

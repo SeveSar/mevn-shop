@@ -11,4 +11,4 @@ import TheHeader from '@/components/layouts/TheHeader/TheHeader.vue';
   </main>
 </template>
 
-<style lang="less" scoped></style>
+<style lang="scss" scoped></style>

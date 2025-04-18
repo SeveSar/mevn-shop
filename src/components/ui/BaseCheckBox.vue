@@ -51,7 +51,7 @@ export default defineComponent({
   </label>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .base-checkbox {
   font-weight: 400;
   font-size: 16px;
@@ -64,7 +64,7 @@ export default defineComponent({
     content: '';
     width: 16px;
     height: 16px;
-    border: 1px solid @gray2-color;
+    border: 1px solid $gray2-color;
     border-radius: 2px;
     position: absolute;
     left: 0;
@@ -73,8 +73,8 @@ export default defineComponent({
 
   &--active {
     &::before {
-      border-color: @main-color;
-      background-color: @main-color;
+      border-color: $main-color;
+      background-color: $main-color;
       background-image: url('@/assets/images/icons/tick.svg');
       background-repeat: no-repeat;
       background-position: center;

@@ -42,7 +42,7 @@ const currentNotifyText = computed(() => {
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .form-switcher {
   &__notify {
     text-align: center;

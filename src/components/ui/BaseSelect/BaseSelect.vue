@@ -50,7 +50,7 @@ export default defineComponent({
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .select {
   position: relative;
   width: 100%;
@@ -62,13 +62,13 @@ export default defineComponent({
   &.open {
     .select__selected {
       border-radius: 6px 6px 0 0;
-      border-color: @main-color;
+      border-color: $main-color;
       svg {
         transform: translateY(-50%) rotate(-180deg);
       }
     }
     .select__items {
-      border-color: @main-color;
+      border-color: $main-color;
     }
   }
   &__selected {
@@ -85,10 +85,10 @@ export default defineComponent({
     position: relative;
     border: 1px solid #f0f0f0;
     border-radius: 6px;
-    color: @gray-color;
+    color: $gray-color;
     transition: all 0.3s ease;
     &.chosen {
-      color: @black-color;
+      color: $black-color;
     }
     svg {
       position: absolute;
@@ -123,7 +123,7 @@ export default defineComponent({
     user-select: none;
     font-size: 16px;
     &:hover {
-      background-color: @main-color;
+      background-color: $main-color;
       color: #fff;
     }
   }

@@ -40,7 +40,7 @@ const classes = computed(() => {
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .base-tab {
   &__nav {
     display: flex;
@@ -48,10 +48,10 @@ const classes = computed(() => {
 
   &__tab {
     border-radius: 6px;
-    background-color: @white-color;
+    background-color: $white-color;
     font-size: 16px;
     line-height: 18px;
-    color: @black-color;
+    color: $black-color;
     min-width: 65px;
     display: flex;
     align-items: center;
@@ -59,8 +59,8 @@ const classes = computed(() => {
     padding: 7px 16px;
 
     &--active {
-      background-color: @main-color;
-      color: @white-color;
+      background-color: $main-color;
+      color: $white-color;
     }
   }
 

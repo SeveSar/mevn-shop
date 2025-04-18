@@ -26,7 +26,7 @@ import { RouteNamesEnum } from '@/router/router.types';
   </section>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .profile {
   padding-top: 40px;
   max-width: 850px;
@@ -34,7 +34,7 @@ import { RouteNamesEnum } from '@/router/router.types';
   margin: 0 auto;
 
   &__title {
-    color: @black-color;
+    color: $black-color;
     font-size: 40px;
     font-style: normal;
     font-weight: 600;

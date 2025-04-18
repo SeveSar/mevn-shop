@@ -63,7 +63,7 @@ export default defineComponent({
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .uploader {
   display: flex;
   align-items: center;
@@ -88,7 +88,7 @@ export default defineComponent({
     object-fit: cover;
   }
   &__name {
-    color: @main-color;
+    color: $main-color;
     margin-bottom: 10px;
   }
 
@@ -97,7 +97,7 @@ export default defineComponent({
   }
   &__button {
     padding: 15px 20px;
-    background-color: @main-color;
+    background-color: $main-color;
     color: #fff;
     border-radius: 12px;
     cursor: pointer;

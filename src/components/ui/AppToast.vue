@@ -73,7 +73,7 @@ export default defineComponent({
   </transition-group>
 </template>
 
-<style lang="less">
+<style lang="scss">
 #app-toast {
   position: fixed;
   top: 30px;

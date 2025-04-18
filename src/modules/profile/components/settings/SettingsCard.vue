@@ -23,7 +23,7 @@ const emit = defineEmits(['onChange']);
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .settings-card {
   border-radius: 12px;
   border: 1px solid var(--Line-gray, #f0f0f0);

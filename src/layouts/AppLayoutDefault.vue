@@ -64,7 +64,7 @@ export default defineComponent({
   </Teleport>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .cart-button {
   position: fixed;
   background: #ff7010;

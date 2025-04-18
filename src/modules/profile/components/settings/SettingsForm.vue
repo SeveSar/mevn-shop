@@ -75,7 +75,7 @@ function onSaveInfo() {
   </form>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .settings-form {
   &__preview {
     display: flex;
@@ -86,14 +86,14 @@ function onSaveInfo() {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    color: @gray2-color;
+    color: $gray2-color;
     line-height: 1.5;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     span {
       font-size: 16px;
-      color: @black-color;
+      color: $black-color;
     }
   }
   &__controls {

@@ -105,7 +105,7 @@ defineExpose({
   </label>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .base-input {
   position: relative;
   display: block;
@@ -135,7 +135,7 @@ defineExpose({
     }
 
     &.error {
-      border-color: @red-color;
+      border-color: $red-color;
     }
   }
 
@@ -148,12 +148,12 @@ defineExpose({
     margin-bottom: 8px;
 
     &-required {
-      color: @red-color;
+      color: $red-color;
     }
   }
 
   &__error {
-    color: @red-color;
+    color: $red-color;
     display: inline-block;
     margin-top: 5px;
     position: absolute;

@@ -28,7 +28,7 @@ withDefaults(defineProps<Props>(), {
   </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .product-skeleton {
   border-radius: 12px;
   border: 1px solid var(--line-gray, #f0f0f0);
@@ -36,13 +36,13 @@ withDefaults(defineProps<Props>(), {
   padding: 50px 20px 20px;
   flex: 0 0 calc((100% - 3 * 30px) / 4);
 
-  @media screen and (max-width: @breakpoint-xl) {
+  @media screen and (max-width: $breakpoint-xl) {
     flex: 0 0 calc((100% - 2 * 30px) / 3);
   }
-  @media screen and (max-width: @breakpoint-lg) {
+  @media screen and (max-width: $breakpoint-lg) {
     flex: 0 0 calc((100% - 1 * 30px) / 2);
   }
-  @media screen and (max-width: @breakpoint-sm) {
+  @media screen and (max-width: $breakpoint-sm) {
     flex: 0 0 100%;
   }
   &-list {

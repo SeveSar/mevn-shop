@@ -37,4 +37,4 @@ const model = computed({
   </DatePicker>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="scss"></style>

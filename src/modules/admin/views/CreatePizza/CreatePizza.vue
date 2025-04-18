@@ -45,7 +45,7 @@ export default defineComponent({
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .create-pizza {
   .admin-buttons {
     display: grid;
@@ -54,7 +54,7 @@ export default defineComponent({
     margin-top: 35px;
     &__btn {
       padding: 10px 15px;
-      background-color: @main-color;
+      background-color: $main-color;
       color: #fff;
       border-radius: 6px;
     }

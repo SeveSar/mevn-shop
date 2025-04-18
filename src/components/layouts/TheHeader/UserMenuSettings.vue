@@ -43,7 +43,7 @@ const { logOut } = useMenu();
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .user-menu-settings {
   &__login {
     display: flex;
@@ -51,21 +51,21 @@ const { logOut } = useMenu();
     transition: all 0.2s linear;
     font-size: 14px;
     line-height: 18px;
-    color: @black-color;
+    color: $black-color;
 
     &:hover {
-      color: @main-color;
+      color: $main-color;
     }
 
     &-icon {
       margin-right: 8px;
-      color: @main-color;
+      color: $main-color;
     }
   }
 
   &__logged {
     position: relative;
-    color: @main-color;
+    color: $main-color;
     cursor: pointer;
     &-current {
       display: flex;
@@ -108,9 +108,9 @@ const { logOut } = useMenu();
     &-inner {
       padding: 16px 0 16px 0;
       border-radius: 12px;
-      background: @white-color;
+      background: $white-color;
       position: relative;
-      border: 1px solid @gray-color;
+      border: 1px solid $gray-color;
       box-shadow: 0px 2px 8px 0px rgba(25, 25, 25, 0.1);
     }
 
@@ -123,9 +123,9 @@ const { logOut } = useMenu();
 
     &-link {
       transition: all 0.2s linear;
-      color: @black-color;
+      color: $black-color;
       &:hover {
-        color: @main-color;
+        color: $main-color;
       }
       & + & {
         margin-top: 16px;
@@ -133,7 +133,7 @@ const { logOut } = useMenu();
     }
 
     &-footer {
-      border-top: 1px solid @gray-color;
+      border-top: 1px solid $gray-color;
       padding: 16px 20px 0;
       margin-top: 16px;
     }
