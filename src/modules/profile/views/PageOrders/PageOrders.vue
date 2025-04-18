@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { OrderDTO } from '@/models/order.dto';
 import { api } from '@/api/api';
-import BasePagination from '@/components/ui/BasePagination.vue';
+import { BasePagination } from 'pizza-mevn-ui-kit';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import OrdersItem from '../../components/order/OrdersItem.vue';

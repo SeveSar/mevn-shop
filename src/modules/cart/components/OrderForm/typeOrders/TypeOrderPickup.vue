@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Validation } from '@vuelidate/core';
 import type { Ref } from 'vue';
-import BaseInput from '@/components/ui/BaseInput.vue';
+import { BaseInput } from 'pizza-mevn-ui-kit';
 import { computed, inject } from 'vue';
 
 interface Props {

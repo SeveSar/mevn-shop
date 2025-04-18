@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { IUser } from '@/types/IUser';
-import BaseInput from '@/components/ui/BaseInput.vue';
-import { BaseButton } from 'pizza-mevn-ui-kit';
+import { BaseButton, BaseInput } from 'pizza-mevn-ui-kit';
+
 import { ref } from 'vue';
 
 interface Props {
