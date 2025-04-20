@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
 import { useMenu } from '@/composables/menu';
 import { useAuthModalStore } from '@/modules/user';
-
 import { useUserStore } from '@/modules/user/stores/user';
-import { BaseButton } from 'pizza-mevn-ui-kit';
+
+import { BaseButton, BaseIcon } from 'pizza-mevn-ui-kit';
 
 const { logOut, isOpenedBurger, menuLinks } = useMenu();
 const modalStore = useAuthModalStore();
@@ -38,9 +37,7 @@ const userStore = useUserStore();
       </ul>
     </nav>
     <div class="mobile-menu__footer">
-      <BaseButton class="mobile-menu__logout" variant="text" @click="logOut">
-        Выйти
-      </BaseButton>
+      <BaseButton class="mobile-menu__logout" variant="text" @click="logOut"> Выйти </BaseButton>
     </div>
   </div>
 </template>

@@ -1,4 +1,6 @@
+import type { ITab } from 'pizza-mevn-ui-kit';
 import type { TFilterItem } from './IFilter';
+import { extend } from 'lodash';
 
 export interface IProductBase {
   title: string

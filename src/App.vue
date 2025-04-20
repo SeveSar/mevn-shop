@@ -18,7 +18,7 @@ watch(
       modalStore.openAuthModal();
       router.replace({ query: {} });
     }
-  },
+  }
 );
 </script>
 

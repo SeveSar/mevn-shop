@@ -1,11 +1,8 @@
 <script lang="ts">
 import type { IProductFull } from '@/types/IProduct';
 import { api } from '@/api/api';
-import BaseCheckBox from '@/components/ui/BaseCheckBox.vue';
-import BaseModal from '@/components/ui/BaseModal.vue';
-import BaseTextArea from '@/components/ui/BaseTextArea.vue';
 import UploadProductImage from '@/modules/admin/components/UploadProductImage/UploadProductImage.vue';
-import { BaseButton, BaseInput } from 'pizza-mevn-ui-kit';
+import { BaseButton, BaseCheckBox, BaseInput, BaseModal, BaseTextArea } from 'pizza-mevn-ui-kit';
 
 import { defineComponent, type Ref, ref } from 'vue';
 

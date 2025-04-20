@@ -1,25 +1,33 @@
 <script setup lang="ts">
 import type { OrderDTO, OrderProductDTO } from '@/models/order.dto';
-import BaseAccordionList from '@/components/ui/accordion/BaseAccordionList.vue';
-import BaseAccordionListItem from '@/components/ui/accordion/BaseAccordionListItem.vue';
-import IconArrowDown from '@/components/ui/icons/IconArrowDown.vue';
+import { BaseAccordionList, BaseAccordionListItem, BaseIcon } from 'pizza-mevn-ui-kit';
 
 import { computed } from 'vue';
 import OrdersItemProduct from './OrdersItemProduct.vue';
 
 interface Props {
-  item: OrderDTO
+  item: OrderDTO;
 }
 const props = defineProps<Props>();
 
 const currentAddress = computed(() => {
   const { street, house, porch, floor, door_phone: doorPhone } = props.item?.address || {};
   const addressParts = [];
-  if (street) { addressParts.push(`Ул. ${street}`); }
-  if (house) { addressParts.push(`${house},`); }
-  if (porch) { addressParts.push(`подъезд ${porch},`); }
-  if (floor) { addressParts.push(`${floor} этаж,`); }
-  if (doorPhone) { addressParts.push(`домофон ${doorPhone}#`); }
+  if (street) {
+    addressParts.push(`Ул. ${street}`);
+  }
+  if (house) {
+    addressParts.push(`${house},`);
+  }
+  if (porch) {
+    addressParts.push(`подъезд ${porch},`);
+  }
+  if (floor) {
+    addressParts.push(`${floor} этаж,`);
+  }
+  if (doorPhone) {
+    addressParts.push(`домофон ${doorPhone}#`);
+  }
 
   const total = addressParts.length > 0 ? addressParts.join(' ') : 'Адрес не указан';
   return total;
@@ -40,21 +48,17 @@ const pizzaImages = computed(() => {
       <BaseAccordionListItem>
         <template #trigger="{ isVisible }">
           <div class="orders-item__header orders-item-header" :class="{ 'orders-item-header--active': isVisible }">
-            <IconArrowDown class="orders-item-header__icon" />
+            <BaseIcon name="IconArrowDown" class="orders-item-header__icon" />
             <div class="orders-item-header__top">
               <div class="orders-item-header__col">
                 <span class="orders-item-header__caption">Заказ</span>
                 <div class="orders-item-header__flex">
-                  <div class="orders-item-header__text">
-                    №{{ item.number }}
-                  </div>
+                  <div class="orders-item-header__text">№{{ item.number }}</div>
                 </div>
               </div>
               <div class="orders-item-header__col">
                 <span class="orders-item-header__caption">Сумма заказа</span>
-                <div class="orders-item-header__text">
-                  {{ getTotalPriceOrder(item.products) }} ₽
-                </div>
+                <div class="orders-item-header__text">{{ getTotalPriceOrder(item.products) }} ₽</div>
               </div>
               <div class="orders-item-header__col">
                 <span class="orders-item-header__caption">Статус</span>
@@ -75,9 +79,12 @@ const pizzaImages = computed(() => {
               </div>
               <div class="orders-item-header__pizzas">
                 <img
-                  v-for="i in pizzaImages" :key="i"
-                  class="orders-item-header__pizzas-icon" src="@/assets/images/small-pizza.png" alt=""
-                >
+                  v-for="i in pizzaImages"
+                  :key="i"
+                  class="orders-item-header__pizzas-icon"
+                  src="@/assets/images/small-pizza.png"
+                  alt=""
+                />
               </div>
             </div>
           </div>

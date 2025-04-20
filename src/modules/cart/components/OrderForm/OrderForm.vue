@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import type { TOrderPayment, TOrderTypeDelivery, TOrderTypeTiming } from '@/constants';
 import type { IOrderCreate } from '@/types/IOrder';
+import type { ITab } from 'pizza-mevn-ui-kit';
 import { api } from '@/api/api';
-import BaseDatePicker from '@/components/ui/BaseDatePicker.vue';
-import BaseRadio from '@/components/ui/BaseRadio.vue';
-import BaseTab from '@/components/ui/BaseTab.vue';
-import BaseTextArea from '@/components/ui/BaseTextArea.vue';
 import { toaster } from '@/main';
 import router from '@/router';
 import { RouteNamesEnum } from '@/router/router.types';
@@ -13,16 +10,15 @@ import { getValidationRule } from '@/utils/validations';
 import { useVuelidate } from '@vuelidate/core';
 import { helpers, minLength, required } from '@vuelidate/validators';
 import { storeToRefs } from 'pinia';
-import { BaseButton, BaseInput } from 'pizza-mevn-ui-kit';
-
+import { BaseButton, BaseDatePicker, BaseInput, BaseRadio, BaseTab, BaseTextArea } from 'pizza-mevn-ui-kit';
 import { type Component, computed, provide, reactive, ref, watch } from 'vue';
 import { useCartStore } from '../../stores';
 import TypeOrderDelivery from './typeOrders/TypeOrderDelivery.vue';
 import TypeOrderPickup from './typeOrders/TypeOrderPickup.vue';
 
 interface ITypeOrder {
-  title: string
-  id: TOrderTypeDelivery
+  title: string;
+  id: TOrderTypeDelivery;
 }
 
 const cartStore = useCartStore();
@@ -35,42 +31,42 @@ const TYPE_DELIVERIES_MAP: Record<ITypeOrder['id'], Component> = {
 } as const;
 
 const isLoadingOrder = ref(false);
-const orderTypeTimingTabs = ref<{ label: string, value: TOrderTypeTiming }[]>([
+const orderTypeTimingTabs = ref<{ label: string; value: TOrderTypeTiming }[]>([
   { label: 'Как можно скорее', value: 'URGENT' },
   { label: 'По вемени', value: 'DATE' },
 ]);
 
-const paymanetVariants = ref<{ label: string, value: TOrderPayment }[]>([
+const paymanetVariants = ref<{ label: string; value: TOrderPayment }[]>([
   { label: 'Наличными', value: 'CASH' },
   { label: 'Картой', value: 'CARD' },
   { label: 'Apple Pay', value: 'APPLE' },
 ]);
 
-const deliveryTabs: ITypeOrder[] = [
+const deliveryTabs: ITab[] = [
   { title: 'Доставка', id: 'ADDRESS' },
   { title: 'Самовывоз', id: 'RESTAURANT' },
 ];
 interface OrderInfo {
-  name: string
-  phone: string
-  email: string
-  typeDelivery: ITypeOrder
+  name: string;
+  phone: string;
+  email: string;
+  typeDelivery: ITypeOrder;
   delivery: {
     address: {
-      street: string
-      house: number | null
-      porch: number | null
-      floor: number | null
-      flat: number | null
-      door_phone: number | null
-    }
-    restaurant: string
-  }
-  typeTiming: TOrderTypeTiming
-  timingDate: Date | null
-  payment: TOrderPayment
-  comment: string
-};
+      street: string;
+      house: number | null;
+      porch: number | null;
+      floor: number | null;
+      flat: number | null;
+      door_phone: number | null;
+    };
+    restaurant: string;
+  };
+  typeTiming: TOrderTypeTiming;
+  timingDate: Date | null;
+  payment: TOrderPayment;
+  comment: string;
+}
 const orderInfo = reactive<OrderInfo>({
   name: '',
   phone: '',
@@ -115,8 +111,7 @@ const rules = computed(() => {
         },
       },
     };
-  }
-  else {
+  } else {
     localeRules.delivery = {
       restaurant: {
         required: helpers.withMessage('Поле не должно быть пустым', required),
@@ -135,7 +130,9 @@ const phoneRef = ref<InstanceType<typeof BaseInput> | null>(null);
 async function onOrder() {
   const isFormCorrect = await v$.value.$validate();
 
-  if (!isFormCorrect) { return; }
+  if (!isFormCorrect) {
+    return;
+  }
   isLoadingOrder.value = true;
   const { name, email, typeDelivery, payment, comment, delivery, typeTiming, timingDate } = orderInfo;
   const currentOrderInfo: IOrderCreate = {
@@ -151,8 +148,7 @@ async function onOrder() {
 
   if (typeDelivery.id === 'ADDRESS') {
     currentOrderInfo.address = delivery.address;
-  }
-  else {
+  } else {
     currentOrderInfo.restaurant = delivery.restaurant;
   }
 
@@ -161,12 +157,10 @@ async function onOrder() {
     router.push({ name: RouteNamesEnum.orders });
     toaster.showToast({ text: 'Заказ успешно оформлен', type: 'info' });
     cartStore.clearCart();
-  }
-  catch (e) {
+  } catch (e) {
     console.error(e);
     toaster.showToast({ text: 'Ошибка', type: 'error' });
-  }
-  finally {
+  } finally {
     v$.value.$reset();
     isLoadingOrder.value = false;
   }
@@ -178,7 +172,7 @@ watch(
     if (val === 'URGENT') {
       orderInfo.timingDate = null;
     }
-  },
+  }
 );
 
 provide('v$', v$);
@@ -188,24 +182,20 @@ provide('v$', v$);
   <form class="order-form" @submit.prevent="onOrder">
     <div class="order-form__block">
       <div class="order-form__block-header">
-        <h3 class="order-form__block-title">
-          О вас
-        </h3>
+        <h3 class="order-form__block-title">О вас</h3>
       </div>
       <div class="order-form__row">
         <BaseInput
           v-model="orderInfo.name"
           :required="true"
           label-text="Имя"
-          :errors="
-            v$.name.$error ? v$.name.$errors[0].$message as string : null
-          "
+          :errors="v$.name.$error ? (v$.name.$errors[0].$message as string) : null"
         />
         <BaseInput
           ref="phoneRef"
           v-model="orderInfo.phone"
           :required="true"
-          :errors="v$.phone.$error ? v$.phone.$errors[0].$message as string : null "
+          :errors="v$.phone.$error ? (v$.phone.$errors[0].$message as string) : null"
           label-text="Номер телефона"
           mask="phone"
         />
@@ -213,18 +203,14 @@ provide('v$', v$);
         <BaseInput
           v-model="orderInfo.email"
           label-text="Почта"
-          :errors="
-            v$.email.$error ? v$.email.$errors[0].$message as string : null
-          "
+          :errors="v$.email.$error ? (v$.email.$errors[0].$message as string) : null"
         />
       </div>
     </div>
 
     <div class="order-form__block">
       <div class="order-form__block-header">
-        <h3 class="order-form__block-title">
-          Доставка
-        </h3>
+        <h3 class="order-form__block-title">Доставка</h3>
         <div class="order-form__tabs">
           <BaseTab v-model="orderInfo.typeDelivery" class="order-form__tab" :items="deliveryTabs" />
         </div>
@@ -232,7 +218,7 @@ provide('v$', v$);
       <div class="order-form__content">
         <component
           :is="TYPE_DELIVERIES_MAP[orderInfo.typeDelivery.id]"
-          v-model="orderInfo.delivery[(orderInfo.typeDelivery.id).toLocaleLowerCase() as keyof OrderInfo['delivery']]"
+          v-model="orderInfo.delivery[orderInfo.typeDelivery.id.toLocaleLowerCase() as keyof OrderInfo['delivery']]"
         />
       </div>
       <div class="order-form__make">
@@ -249,7 +235,7 @@ provide('v$', v$);
           <div v-if="orderInfo.typeTiming === 'DATE'" class="order-form__time-date">
             <BaseDatePicker
               v-model="orderInfo.timingDate"
-              :errors="v$.timingDate.$error ? v$.timingDate.$errors[0].$message as string : null"
+              :errors="v$.timingDate.$error ? (v$.timingDate.$errors[0].$message as string) : null"
               mask="date"
               mode="dateTime"
               is24hr
@@ -260,9 +246,7 @@ provide('v$', v$);
     </div>
     <div class="order-form__block">
       <div class="order-form__block-header">
-        <h3 class="order-form__block-title">
-          Оплата
-        </h3>
+        <h3 class="order-form__block-title">Оплата</h3>
       </div>
       <div class="order-form__row">
         <BaseRadio
@@ -277,24 +261,16 @@ provide('v$', v$);
     </div>
     <div class="order-form__block">
       <div class="order-form__block-header">
-        <h3 class="order-form__block-title">
-          Комментарий
-        </h3>
+        <h3 class="order-form__block-title">Комментарий</h3>
       </div>
       <BaseTextArea v-model="orderInfo.comment" placeholder="Есть уточнения?" />
     </div>
     <div class="order-form__footer">
       <div class="order-form__values">
-        <div class="cart__footer-cnt">
-          <span>Всего в корзине: </span> {{ totalItems }} шт
-        </div>
-        <div class="cart__footer-price">
-          <span>Итого: </span>{{ totalPrice }} ₽
-        </div>
+        <div class="cart__footer-cnt"><span>Всего в корзине: </span> {{ totalItems }} шт</div>
+        <div class="cart__footer-price"><span>Итого: </span>{{ totalPrice }} ₽</div>
       </div>
-      <BaseButton type="submit" class="button_order" :is-loading="isLoadingOrder">
-        Оформить заказ
-      </BaseButton>
+      <BaseButton type="submit" class="button_order" :is-loading="isLoadingOrder"> Оформить заказ </BaseButton>
     </div>
   </form>
 </template>

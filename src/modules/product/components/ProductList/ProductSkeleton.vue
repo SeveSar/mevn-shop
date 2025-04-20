@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
+import { BaseSkeleton } from 'pizza-mevn-ui-kit';
 
 interface Props {
   count?: number

@@ -1,8 +1,7 @@
 <script lang="ts">
-import BaseModal from '@/components/ui/BaseModal.vue';
-
 import { useAuthModalStore } from '@/modules/user';
 import { storeToRefs } from 'pinia';
+import { BaseModal } from 'pizza-mevn-ui-kit';
 import { defineComponent, type Ref, ref } from 'vue';
 import AuthForm from '../../auth/AuthForm/AuthForm.vue';
 

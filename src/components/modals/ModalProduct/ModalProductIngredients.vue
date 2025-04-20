@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import type { IIngredientItem } from '@/types/IProduct';
-import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
-import BaseSkeleton from '@/components/ui/BaseSkeleton.vue';
+import { BaseIcon, BaseSkeleton } from 'pizza-mevn-ui-kit';
 
 interface Props {
-  ingredients: IIngredientItem[]
-  isLoading: boolean
+  ingredients: IIngredientItem[];
+  isLoading: boolean;
 }
 
 defineProps<Props>();
@@ -25,7 +24,7 @@ const emit = defineEmits(['toggleActiveIngredient']);
         @click="emit('toggleActiveIngredient', item.id)"
       >
         <div class="modal-ingredients__ingredient-icon">
-          <img :src="item.img" alt="">
+          <img :src="item.img" alt="" />
           <BaseIcon name="IconTickCircle" class="modal-ingredients__ingredient-checkmark" />
         </div>
         <div class="modal-ingredients__ingredient-info">

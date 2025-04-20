@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import BaseIcon from '@/components/ui/BaseIcon/BaseIcon.vue';
 import { useMenu } from '@/composables/menu';
 import { useAuthModalStore } from '@/modules/user';
 import { useUserStore } from '@/modules/user/stores/user';
 import { RouteNamesEnum } from '@/router/router.types';
-import { BaseButton } from 'pizza-mevn-ui-kit';
+import { BaseButton, BaseIcon } from 'pizza-mevn-ui-kit';
 
 const userStore = useUserStore();
 const modalStore = useAuthModalStore();
@@ -33,9 +32,7 @@ const { logOut } = useMenu();
             </router-link>
           </div>
           <div class="user-menu-settings__dropdown-footer">
-            <BaseButton variant="text" @click="logOut">
-              Выход из аккаунта
-            </BaseButton>
+            <BaseButton variant="text" @click="logOut"> Выход из аккаунта </BaseButton>
           </div>
         </div>
       </div>
