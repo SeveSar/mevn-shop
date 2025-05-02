@@ -13,12 +13,12 @@ const router = useRouter();
 
 function onSubmit() {
   if (!userStore.isLoggedIn) {
-    cartStore.isSidePanelCart = false;
     authModalStore.isAuthModal = true;
   }
   else {
     router.push({ name: RouteNamesEnum.cart });
   }
+  cartStore.isSidePanelCart = false;
 }
 </script>
 

@@ -31,6 +31,7 @@ const { cart } = storeToRefs(cartStore);
 </template>
 
 <style scoped lang="scss">
+@use 'sass:color';
 .cart {
   max-width: 882px;
   width: 100%;
@@ -69,7 +70,7 @@ const { cart } = storeToRefs(cartStore);
       color: #ff7010;
       transition: all 0.2s linear;
       &:hover {
-        color: darken(#ff7010, 15%);
+        color: color.adjust(#ff7010, $lightness: -15%);
       }
     }
   }

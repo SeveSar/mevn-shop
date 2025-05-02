@@ -1,5 +1,6 @@
 <script lang="ts">
 import MobileMenu from '@/components/layouts/MobileMenu.vue';
+import TheFooter from '@/components/layouts/TheFooter.vue';
 import TheHeader from '@/components/layouts/TheHeader/TheHeader.vue';
 import ModalProduct from '@/components/modals/ModalProduct/ModalProduct.vue';
 import SidePanelCart from '@/components/sidePanels/SidePanelCart.vue';
@@ -14,6 +15,7 @@ export default defineComponent({
     MobileMenu,
     SidePanelCart,
     ModalProduct,
+    TheFooter,
   },
   setup() {
     const route = useRoute();
@@ -47,13 +49,14 @@ export default defineComponent({
 
 <template>
   <TheHeader />
+
   <MobileMenu />
   <main class="main">
     <div class="container">
       <slot />
     </div>
   </main>
-
+  <TheFooter />
   <Teleport to="body">
     <button class="cart-button" @click="cartStore.isSidePanelCart = true">
       <img class="cart-button__img" src="@/assets/images/icons/cart.svg" alt="">

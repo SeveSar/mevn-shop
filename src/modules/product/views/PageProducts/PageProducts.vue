@@ -35,3 +35,9 @@ fetchData();
     <SidePanelProductFilter v-model:is-open="isProductFilterPanel" />
   </teleport>
 </template>
+
+<style lang="scss">
+.products {
+  padding-bottom: 60px;
+}
+</style>
