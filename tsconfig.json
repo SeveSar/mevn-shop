@@ -7,7 +7,7 @@
     ],
     "useDefineForClassFields": true, // Установите target на ES6 или выше
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "paths": {
       "@/*": [
         "./src/*"

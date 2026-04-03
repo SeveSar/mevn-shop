@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CartItem from '@/components/widgets/cart/CartItem.vue';
+import CartItem from '@/components/cart/CartItem.vue';
 import { RouteNamesEnum } from '@/router/router.types';
 import { storeToRefs } from 'pinia';
 
@@ -32,6 +32,7 @@ const { cart } = storeToRefs(cartStore);
 
 <style scoped lang="scss">
 @use 'sass:color';
+
 .cart {
   max-width: 882px;
   width: 100%;
@@ -44,6 +45,7 @@ const { cart } = storeToRefs(cartStore);
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
+
     @media screen and (max-width: $breakpoint-sm) {
       flex-direction: column;
       align-items: flex-start;
@@ -53,14 +55,17 @@ const { cart } = storeToRefs(cartStore);
   &-empty {
     display: flex;
     flex-direction: column;
+
     img {
       display: block;
       margin: auto;
       width: 60%;
+
       @media screen and (max-width: $breakpoint-sm) {
         width: 100%;
       }
     }
+
     a {
       font-weight: 400;
       font-size: 25px;
@@ -69,6 +74,7 @@ const { cart } = storeToRefs(cartStore);
       display: inline-block;
       color: #ff7010;
       transition: all 0.2s linear;
+
       &:hover {
         color: color.adjust(#ff7010, $lightness: -15%);
       }
@@ -91,14 +97,17 @@ const { cart } = storeToRefs(cartStore);
     @media screen and (max-width: $breakpoint-sm) {
       flex-direction: column;
       align-items: flex-start;
+
       .cart__footer-price {
         margin-top: 15px;
       }
     }
+
     span {
       color: #000;
     }
   }
+
   .button_order {
     margin: 25px auto 0;
   }

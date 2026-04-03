@@ -4,7 +4,7 @@ import { useAuthModalStore, useUserStore } from '@/modules/user';
 import { RouteNamesEnum } from '@/router/router.types';
 import { BaseButton, BaseSidePanel } from 'pizza-mevn-ui-kit';
 import { useRouter } from 'vue-router';
-import CartItem from '../widgets/cart/CartItem.vue';
+import CartItem from '../cart/CartItem.vue';
 
 const cartStore = useCartStore();
 const userStore = useUserStore();
@@ -23,12 +23,8 @@ function onSubmit() {
 </script>
 
 <template>
-  <BaseSidePanel
-    :is-open="cartStore.isSidePanelCart"
-    class="panel-cart"
-    title="Ваш заказ"
-    @close="cartStore.isSidePanelCart = false"
-  >
+  <BaseSidePanel :is-open="cartStore.isSidePanelCart" class="panel-cart" title="Ваш заказ"
+    @close="cartStore.isSidePanelCart = false">
     <template #default>
       <div class="panel-cart__list">
         <CartItem v-for="item in cartStore.cart" :key="item.id" is-minni :item="item" />
@@ -54,6 +50,7 @@ function onSubmit() {
     justify-content: space-between;
     align-items: center;
   }
+
   &__price {
     font-weight: 600;
     font-size: 20px;

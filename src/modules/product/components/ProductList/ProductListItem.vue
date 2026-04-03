@@ -2,8 +2,7 @@
 import type { PropType } from 'vue';
 import type { ProductDTO } from '../../models';
 
-import { useProductsStore } from '@/modules/product';
-import { useAuthModalStore } from '@/modules/user';
+import { useProductsStore, useModalProductStore } from '@/modules/product';
 import { BaseButton } from 'pizza-mevn-ui-kit';
 
 import { defineComponent } from 'vue';
@@ -20,10 +19,10 @@ export default defineComponent({
   },
   setup() {
     const productsStore = useProductsStore();
-    const modalAuthStore = useAuthModalStore();
+    const modalProductStore = useModalProductStore();
     const openProductModal = (product: ProductDTO) => {
       productsStore.activeProductId = product.id;
-      modalAuthStore.openProductModal();
+      modalProductStore.openProductModal();
     };
     return {
       productsStore,
@@ -127,11 +126,13 @@ export default defineComponent({
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
+
   &__actions {
     margin-top: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     .button {
       min-width: 131px;
     }

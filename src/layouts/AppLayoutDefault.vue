@@ -2,7 +2,7 @@
 import MobileMenu from '@/components/layouts/MobileMenu.vue';
 import TheFooter from '@/components/layouts/TheFooter.vue';
 import TheHeader from '@/components/layouts/TheHeader/TheHeader.vue';
-import ModalProduct from '@/components/modals/ModalProduct/ModalProduct.vue';
+import { ModalProduct } from '@/modules/product';
 import SidePanelCart from '@/components/sidePanels/SidePanelCart.vue';
 import { useCartStore } from '@/modules/cart';
 import { defineComponent, onMounted, watch } from 'vue';
@@ -79,10 +79,12 @@ export default defineComponent({
   right: 20px;
   z-index: 444;
   bottom: 20px;
+
   &__img {
     margin: auto;
     display: block;
   }
+
   &__text {
     position: absolute;
     top: -2px;

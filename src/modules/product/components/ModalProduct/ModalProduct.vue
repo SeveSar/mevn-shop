@@ -5,14 +5,14 @@ import { api } from '@/api/api';
 import { toaster } from '@/main';
 import { useCartStore } from '@/modules/cart';
 import { useProductsStore } from '@/modules/product';
-import { useAuthModalStore } from '@/modules/user';
 import { BaseButton, BaseModal, BaseSkeleton } from 'pizza-mevn-ui-kit';
 
 import { computed, ref, watch } from 'vue';
 import ModalProductIngredients from './ModalProductIngredients.vue';
 import ModalProductTabs from './ModalProductTabs.vue';
+import { useModalProductStore } from '../../stores/modal-product';
 
-const modalStore = useAuthModalStore();
+const modalProductStore = useModalProductStore()
 const productsStore = useProductsStore();
 const cartStore = useCartStore();
 const selectedTabDough = ref<IDoughItem | null>(null);
@@ -48,7 +48,7 @@ function toggleActiveIngredient(itemId: string) {
 }
 
 function close() {
-  modalStore.closeProductModal();
+  modalProductStore.closeProductModal();
   selectedTabDough.value = null;
   selectedTabSize.value = null;
   productsStore.activeProductId = '';
@@ -61,7 +61,7 @@ async function addToCart() {
 
   try {
     isLoadingAddingToCart.value = true;
-    modalStore.isModalProduct = false;
+    modalProductStore.isModalProduct = false;
 
     await cartStore.addToCart({
       dough: selectedTabDough.value,
@@ -100,7 +100,7 @@ watch(
 </script>
 
 <template>
-  <BaseModal :is-open="modalStore.isModalProduct" class="modal-product" content-width="1080px" @close="close">
+  <BaseModal :is-open="modalProductStore.isModalProduct" class="modal-product" content-width="1080px" @close="close">
     <div class="modal-product__body">
       <div class="modal-product__photo">
         <img v-if="!isLoading" :src="productData?.imageUrl" class="modal-product__photo-img" alt="" />
@@ -114,28 +114,17 @@ watch(
           <BaseSkeleton v-else width="70%" height="18" corner="6" />
         </div>
 
-        <ModalProductIngredients
-          :is-loading="isLoading"
-          :ingredients="productData?.ingredients.slice(0, 4) ?? []"
-          @toggle-active-ingredient="toggleActiveIngredient"
-        />
+        <ModalProductIngredients :is-loading="isLoading" :ingredients="productData?.ingredients.slice(0, 4) ?? []"
+          @toggle-active-ingredient="toggleActiveIngredient" />
 
-        <ModalProductTabs
-          class="modal-product__tabs"
-          :is-loading="isLoading"
-          :selected-tab-size="selectedTabSize"
-          :selected-tab-dough="selectedTabDough"
-          :doughs="productData?.dough ?? []"
-          :sizes="productData?.sizes ?? []"
+        <ModalProductTabs class="modal-product__tabs" :is-loading="isLoading" :selected-tab-size="selectedTabSize"
+          :selected-tab-dough="selectedTabDough" :doughs="productData?.dough ?? []" :sizes="productData?.sizes ?? []"
           @update:selected-tab-dough="(value) => (selectedTabDough = value)"
-          @update:selected-tab-size="(value) => (selectedTabSize = value)"
-        />
+          @update:selected-tab-size="(value) => (selectedTabSize = value)" />
 
-        <ModalProductIngredients
-          :is-loading="isLoading"
+        <ModalProductIngredients :is-loading="isLoading"
           :ingredients="productData?.ingredients.slice(4, productData?.ingredients.length) ?? []"
-          @toggle-active-ingredient="toggleActiveIngredient"
-        />
+          @toggle-active-ingredient="toggleActiveIngredient" />
 
         <div class="modal-product-info__footer">
           <template v-if="!isLoading">
@@ -164,6 +153,7 @@ watch(
 .modal-product {
   &__body {
     display: flex;
+
     @media screen and (max-width: $breakpoint-lg) {
       flex-direction: column;
       align-items: center;
@@ -176,9 +166,11 @@ watch(
     display: flex;
     align-items: center;
     justify-content: center;
+
     @media screen and (max-width: $breakpoint-lg) {
       width: 100%;
     }
+
     &-img {
       width: 100%;
       flex-shrink: 0;
@@ -187,6 +179,7 @@ watch(
 
   &__info {
     width: 50%;
+
     @media screen and (max-width: $breakpoint-lg) {
       width: 100%;
     }
