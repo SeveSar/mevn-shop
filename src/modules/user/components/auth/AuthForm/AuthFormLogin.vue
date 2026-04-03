@@ -88,14 +88,15 @@ export default defineComponent({
     <div class="form-auth__body">
       <div class="form-auth__group">
         <BaseInput
-          id="auth-1" v-model="userCredentials.email" class="form-auth__control" label-text="Ваш E-mail"
-          name="email" :errors="v$.email.$errors.length ? v$.email.$errors[0].$message as string : null
+          id="auth-1" v-model="userCredentials.email" class="form-auth__control"
+          label-text="Ваш E-mail" name="email" :errors="v$.email.$errors.length ? v$.email.$errors[0].$message as string : null
           " @on-focus="v$.email.$reset"
         />
       </div>
       <div class="form-auth__group">
         <BaseInput
-          id="auth-2" v-model="userCredentials.password" label-text="Ваш пароль" type="password" name="password" :errors="v$.password.$errors.length ? v$.password.$errors[0].$message as string : null
+          id="auth-2" v-model="userCredentials.password" label-text="Ваш пароль" type="password"
+          name="password" :errors="v$.password.$errors.length ? v$.password.$errors[0].$message as string : null
           " @on-focus="v$.password.$reset"
         />
       </div>

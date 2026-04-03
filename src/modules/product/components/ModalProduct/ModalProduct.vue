@@ -8,11 +8,11 @@ import { useProductsStore } from '@/modules/product';
 import { BaseButton, BaseModal, BaseSkeleton } from 'pizza-mevn-ui-kit';
 
 import { computed, ref, watch } from 'vue';
+import { useModalProductStore } from '../../stores/modal-product';
 import ModalProductIngredients from './ModalProductIngredients.vue';
 import ModalProductTabs from './ModalProductTabs.vue';
-import { useModalProductStore } from '../../stores/modal-product';
 
-const modalProductStore = useModalProductStore()
+const modalProductStore = useModalProductStore();
 const productsStore = useProductsStore();
 const cartStore = useCartStore();
 const selectedTabDough = ref<IDoughItem | null>(null);
@@ -38,7 +38,7 @@ const totalPrice = computed(() => {
 });
 
 function toggleActiveIngredient(itemId: string) {
-  const ingredientItem = productData.value?.ingredients.find((item) => item.id === itemId);
+  const ingredientItem = productData.value?.ingredients.find(item => item.id === itemId);
 
   if (!ingredientItem) {
     return;
@@ -66,12 +66,14 @@ async function addToCart() {
     await cartStore.addToCart({
       dough: selectedTabDough.value,
       size: selectedTabSize.value,
-      ingredients: productData.value?.ingredients.filter((ing) => ing.isActive) ?? [],
+      ingredients: productData.value?.ingredients.filter(ing => ing.isActive) ?? [],
     });
-  } catch (e) {
+  }
+  catch (e) {
     console.error(e);
     toaster.showToast({ text: 'Ошибка', type: 'error' });
-  } finally {
+  }
+  finally {
     isLoadingAddingToCart.value = false;
   }
 }
@@ -82,9 +84,11 @@ async function fetchProductById() {
     productData.value = await api.product.fetchProductById(productsStore.activeProductId);
     selectedTabDough.value = productData.value.dough[0];
     selectedTabSize.value = productData.value.sizes[0];
-  } catch (e) {
+  }
+  catch (e) {
     console.error(e);
-  } finally {
+  }
+  finally {
     isLoading.value = false;
   }
 }
@@ -95,7 +99,7 @@ watch(
     if (val) {
       fetchProductById();
     }
-  }
+  },
 );
 </script>
 
@@ -103,7 +107,7 @@ watch(
   <BaseModal :is-open="modalProductStore.isModalProduct" class="modal-product" content-width="1080px" @close="close">
     <div class="modal-product__body">
       <div class="modal-product__photo">
-        <img v-if="!isLoading" :src="productData?.imageUrl" class="modal-product__photo-img" alt="" />
+        <img v-if="!isLoading" :src="productData?.imageUrl" class="modal-product__photo-img" alt="">
         <BaseSkeleton v-else width="400" height="400" corner="50%" :style="{ margin: 'auto' }" />
       </div>
       <form class="modal-product__info modal-product-info" @submit.prevent="addToCart">
@@ -114,17 +118,23 @@ watch(
           <BaseSkeleton v-else width="70%" height="18" corner="6" />
         </div>
 
-        <ModalProductIngredients :is-loading="isLoading" :ingredients="productData?.ingredients.slice(0, 4) ?? []"
-          @toggle-active-ingredient="toggleActiveIngredient" />
+        <ModalProductIngredients
+          :is-loading="isLoading" :ingredients="productData?.ingredients.slice(0, 4) ?? []"
+          @toggle-active-ingredient="toggleActiveIngredient"
+        />
 
-        <ModalProductTabs class="modal-product__tabs" :is-loading="isLoading" :selected-tab-size="selectedTabSize"
+        <ModalProductTabs
+          class="modal-product__tabs" :is-loading="isLoading" :selected-tab-size="selectedTabSize"
           :selected-tab-dough="selectedTabDough" :doughs="productData?.dough ?? []" :sizes="productData?.sizes ?? []"
           @update:selected-tab-dough="(value) => (selectedTabDough = value)"
-          @update:selected-tab-size="(value) => (selectedTabSize = value)" />
+          @update:selected-tab-size="(value) => (selectedTabSize = value)"
+        />
 
-        <ModalProductIngredients :is-loading="isLoading"
+        <ModalProductIngredients
+          :is-loading="isLoading"
           :ingredients="productData?.ingredients.slice(4, productData?.ingredients.length) ?? []"
-          @toggle-active-ingredient="toggleActiveIngredient" />
+          @toggle-active-ingredient="toggleActiveIngredient"
+        />
 
         <div class="modal-product-info__footer">
           <template v-if="!isLoading">
@@ -137,7 +147,9 @@ watch(
                 </span>
               </div>
             </div>
-            <BaseButton type="submit" :is-loading="isLoadingAddingToCart"> Добавить </BaseButton>
+            <BaseButton type="submit" :is-loading="isLoadingAddingToCart">
+              Добавить
+            </BaseButton>
           </template>
           <template v-else>
             <BaseSkeleton width="130" height="28" corner="6" />

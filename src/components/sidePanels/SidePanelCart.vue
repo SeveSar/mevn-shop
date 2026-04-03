@@ -23,8 +23,10 @@ function onSubmit() {
 </script>
 
 <template>
-  <BaseSidePanel :is-open="cartStore.isSidePanelCart" class="panel-cart" title="Ваш заказ"
-    @close="cartStore.isSidePanelCart = false">
+  <BaseSidePanel
+    :is-open="cartStore.isSidePanelCart" class="panel-cart" title="Ваш заказ"
+    @close="cartStore.isSidePanelCart = false"
+  >
     <template #default>
       <div class="panel-cart__list">
         <CartItem v-for="item in cartStore.cart" :key="item.id" is-minni :item="item" />

@@ -11,8 +11,6 @@ export const useAuthModalStore = defineStore('authModal', () => {
     isAuthModal.value = false;
   };
 
-
-
   return {
     openAuthModal,
     closeAuthModal,

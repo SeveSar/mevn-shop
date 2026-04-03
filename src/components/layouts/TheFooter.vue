@@ -9,7 +9,7 @@ import { RouteNamesEnum } from '@/router/router.types';
         <div class="footer__col">
           <div class="header__bottom-logo">
             <router-link :to="{ name: RouteNamesEnum.products }" href="#" class="logo">
-              <img src="@/assets/images/logo.svg" alt="" />
+              <img src="@/assets/images/logo.svg" alt="">
             </router-link>
           </div>
           <span class="footer__copy"> © Copyright 2021 — Куда Пицца </span>
@@ -17,25 +17,43 @@ import { RouteNamesEnum } from '@/router/router.types';
         <div class="footer__col">
           <strong class="footer__subtitle"> Куда пицца </strong>
           <ul class="footer__menu">
-            <li class="footer__menu-item">О компании</li>
-            <li class="footer__menu-item">Пользовательское соглашение</li>
-            <li class="footer__menu-item">Условия гарантии</li>
+            <li class="footer__menu-item">
+              О компании
+            </li>
+            <li class="footer__menu-item">
+              Пользовательское соглашение
+            </li>
+            <li class="footer__menu-item">
+              Условия гарантии
+            </li>
           </ul>
         </div>
         <div class="footer__col">
           <strong class="footer__subtitle"> Помощь </strong>
           <ul class="footer__menu">
-            <li class="footer__menu-item">Ресторан</li>
-            <li class="footer__menu-item">Контакты</li>
-            <li class="footer__menu-item">Поддержка</li>
-            <li class="footer__menu-item">Отследить заказ</li>
+            <li class="footer__menu-item">
+              Ресторан
+            </li>
+            <li class="footer__menu-item">
+              Контакты
+            </li>
+            <li class="footer__menu-item">
+              Поддержка
+            </li>
+            <li class="footer__menu-item">
+              Отследить заказ
+            </li>
           </ul>
         </div>
         <div class="footer__col">
           <strong class="footer__subtitle"> Контакты </strong>
           <ul class="footer__menu">
-            <li class="footer__menu-item">+7 (926) 223-10-11</li>
-            <li class="footer__menu-item">Москва, ул. Юных Ленинцев, д.99</li>
+            <li class="footer__menu-item">
+              +7 (926) 223-10-11
+            </li>
+            <li class="footer__menu-item">
+              Москва, ул. Юных Ленинцев, д.99
+            </li>
             <li class="footer__menu-item">
               <div>Facebok</div>
               <div>Instagram</div>

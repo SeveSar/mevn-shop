@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useUserStore } from '@/modules/user';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import SettingsCard from '../../components/settings/SettingsCard.vue';
 import SettingsForm from '../../components/settings/SettingsForm.vue';
 

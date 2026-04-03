@@ -2,9 +2,9 @@
 import MobileMenu from '@/components/layouts/MobileMenu.vue';
 import TheFooter from '@/components/layouts/TheFooter.vue';
 import TheHeader from '@/components/layouts/TheHeader/TheHeader.vue';
-import { ModalProduct } from '@/modules/product';
 import SidePanelCart from '@/components/sidePanels/SidePanelCart.vue';
 import { useCartStore } from '@/modules/cart';
+import { ModalProduct } from '@/modules/product';
 import { defineComponent, onMounted, watch } from 'vue';
 
 import { useRoute, useRouter } from 'vue-router';

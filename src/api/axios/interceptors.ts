@@ -38,7 +38,7 @@ async function onResponseError(error: AxiosError) {
         }
         return axios(config);
       }
-      catch (e) {
+      catch {
         userStore.logOut();
       }
     }

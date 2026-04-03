@@ -23,10 +23,8 @@ fetchData();
 <template>
   <div class="products">
     <ProductBlock @click-filter="isProductFilterPanel = true">
-      <ProductList
-        v-if="productsStore.products.length && !productsStore.isLoading"
-        :products="productsStore.products"
-      />
+      <ProductList v-if="productsStore.products.length && !productsStore.isLoading"
+        :products="productsStore.products" />
       <span v-else-if="!productsStore.products.length && !productsStore.isLoading">not found...</span>
       <ProductSkeleton v-else :count="8" />
     </ProductBlock>

@@ -4,11 +4,11 @@ import { BaseSkeleton, BaseTab } from 'pizza-mevn-ui-kit';
 import { computed } from 'vue';
 
 interface Props {
-  selectedTabDough: IDoughItem | null;
-  doughs: IDoughItem[];
-  selectedTabSize: ISizeItem | null;
-  sizes: ISizeItem[];
-  isLoading: boolean;
+  selectedTabDough: IDoughItem | null
+  doughs: IDoughItem[]
+  selectedTabSize: ISizeItem | null
+  sizes: ISizeItem[]
+  isLoading: boolean
 }
 const props = defineProps<Props>();
 const emit = defineEmits(['update:selectedTabSize', 'update:selectedTabDough']);

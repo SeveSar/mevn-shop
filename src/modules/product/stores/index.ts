@@ -1,2 +1,2 @@
+export * from './modal-product';
 export * from './products';
-export * from './modal-product'

@@ -37,7 +37,9 @@ export default defineComponent({
         <div class="container">
           <div class="header__top-inner">
             <div class="header__top-col">
-              <div class="header__text">Время работы: с 11:00 до 23:00</div>
+              <div class="header__text">
+                Время работы: с 11:00 до 23:00
+              </div>
             </div>
             <div class="header__top-col">
               <UserMenuSettings />
@@ -50,7 +52,7 @@ export default defineComponent({
           <div class="header__bottom-inner">
             <div class="header__bottom-logo">
               <router-link :to="{ name: RouteNamesEnum.products }" href="#" class="logo">
-                <img src="@/assets/images/logo.svg" alt="" />
+                <img src="@/assets/images/logo.svg" alt="">
               </router-link>
             </div>
             <nav v-if="userStore.isLoggedIn" class="nav">
@@ -65,7 +67,9 @@ export default defineComponent({
             <div class="header__bottom-user">
               <button class="user-cart" @click="cartStore.isSidePanelCart = true">
                 <BaseIcon name="IconBasket" />
-                <div class="user-cart__price">{{ cartStore.totalPrice }} ₽</div>
+                <div class="user-cart__price">
+                  {{ cartStore.totalPrice }} ₽
+                </div>
               </button>
               <div class="burger" :class="{ active: isOpenedBurger }" @click="isOpenedBurger = !isOpenedBurger">
                 <span />

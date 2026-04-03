@@ -3,7 +3,7 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   components: {},
-  emits: ['click-filter'],
+  emits: ['clickFilter'],
   setup() {
     return {};
   },
@@ -16,7 +16,7 @@ export default defineComponent({
       <h2 class="product-block__title">
         Пицца
       </h2>
-      <button class="product-block__filter" @click="$emit('click-filter')">
+      <button class="product-block__filter" @click="$emit('clickFilter')">
         Фильтры
       </button>
     </div>

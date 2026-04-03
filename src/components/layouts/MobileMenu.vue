@@ -37,7 +37,9 @@ const userStore = useUserStore();
       </ul>
     </nav>
     <div class="mobile-menu__footer">
-      <BaseButton class="mobile-menu__logout" variant="text" @click="logOut"> Выйти </BaseButton>
+      <BaseButton class="mobile-menu__logout" variant="text" @click="logOut">
+        Выйти
+      </BaseButton>
     </div>
   </div>
 </template>

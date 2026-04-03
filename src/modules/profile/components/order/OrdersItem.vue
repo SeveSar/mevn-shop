@@ -6,7 +6,7 @@ import { computed } from 'vue';
 import OrdersItemProduct from './OrdersItemProduct.vue';
 
 interface Props {
-  item: OrderDTO;
+  item: OrderDTO
 }
 const props = defineProps<Props>();
 
@@ -53,12 +53,16 @@ const pizzaImages = computed(() => {
               <div class="orders-item-header__col">
                 <span class="orders-item-header__caption">Заказ</span>
                 <div class="orders-item-header__flex">
-                  <div class="orders-item-header__text">№{{ item.number }}</div>
+                  <div class="orders-item-header__text">
+                    №{{ item.number }}
+                  </div>
                 </div>
               </div>
               <div class="orders-item-header__col">
                 <span class="orders-item-header__caption">Сумма заказа</span>
-                <div class="orders-item-header__text">{{ getTotalPriceOrder(item.products) }} ₽</div>
+                <div class="orders-item-header__text">
+                  {{ getTotalPriceOrder(item.products) }} ₽
+                </div>
               </div>
               <div class="orders-item-header__col">
                 <span class="orders-item-header__caption">Статус</span>
@@ -84,7 +88,7 @@ const pizzaImages = computed(() => {
                   class="orders-item-header__pizzas-icon"
                   src="@/assets/images/small-pizza.png"
                   alt=""
-                />
+                >
               </div>
             </div>
           </div>

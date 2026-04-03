@@ -32,7 +32,9 @@ const { logOut } = useMenu();
             </router-link>
           </div>
           <div class="user-menu-settings__dropdown-footer">
-            <BaseButton variant="text" @click="logOut"> Выход из аккаунта </BaseButton>
+            <BaseButton variant="text" @click="logOut">
+              Выход из аккаунта
+            </BaseButton>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import type { OrderProductDTO } from '@/models/order.dto';
 interface Props {
   product: OrderProductDTO
 }
-const props = defineProps<Props>();
+defineProps<Props>();
 </script>
 
 <template>
