@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { TOrderPayment, TOrderTypeDelivery, TOrderTypeTiming } from '@/constants';
-import type { ITab } from '@/types/common';
 import type { IOrderCreate } from '@/types/IOrder';
+import type { ITab } from 'pizza-mevn-ui-kit';
 import { api } from '@/api/api';
 import { toaster } from '@/main';
 import router from '@/router';
@@ -191,20 +191,14 @@ provide('v$', v$);
         </h3>
       </div>
       <div class="order-form__row">
-        <BaseInput
-          v-model="orderInfo.name" :required="true" label-text="Имя"
-          :errors="v$.name.$error ? (v$.name.$errors[0].$message as string) : null"
-        />
-        <BaseInput
-          ref="phoneRef" v-model="orderInfo.phone" :required="true"
+        <BaseInput v-model="orderInfo.name" :required="true" label-text="Имя"
+          :errors="v$.name.$error ? (v$.name.$errors[0].$message as string) : null" />
+        <BaseInput ref="phoneRef" v-model="orderInfo.phone" :required="true"
           :errors="v$.phone.$error ? (v$.phone.$errors[0].$message as string) : null" label-text="Номер телефона"
-          mask="phone"
-        />
+          mask="phone" />
 
-        <BaseInput
-          v-model="orderInfo.email" label-text="Почта"
-          :errors="v$.email.$error ? (v$.email.$errors[0].$message as string) : null"
-        />
+        <BaseInput v-model="orderInfo.email" label-text="Почта"
+          :errors="v$.email.$error ? (v$.email.$errors[0].$message as string) : null" />
       </div>
     </div>
 
@@ -218,24 +212,18 @@ provide('v$', v$);
         </div>
       </div>
       <div class="order-form__content">
-        <component
-          :is="TYPE_DELIVERIES_MAP[orderInfo.typeDelivery.id]"
-          v-model="orderInfo.delivery[orderInfo.typeDelivery.id.toLocaleLowerCase() as keyof OrderInfo['delivery']]"
-        />
+        <component :is="TYPE_DELIVERIES_MAP[orderInfo.typeDelivery.id]"
+          v-model="orderInfo.delivery[orderInfo.typeDelivery.id.toLocaleLowerCase() as keyof OrderInfo['delivery']]" />
       </div>
       <div class="order-form__make">
         <span class="order-form__caption">Когда выполнить заказ?</span>
         <div class="order-form__row order-form__make-controls">
-          <BaseRadio
-            v-for="radio in orderTypeTimingTabs" :key="radio.value" v-model="orderInfo.typeTiming"
-            :value="radio.value" :label="radio.label" name="order-time"
-          />
+          <BaseRadio v-for="radio in orderTypeTimingTabs" :key="radio.value" v-model="orderInfo.typeTiming"
+            :value="radio.value" :label="radio.label" name="order-time" />
           <div v-if="orderInfo.typeTiming === 'DATE'" class="order-form__time-date">
-            <BaseDatePicker
-              v-model="orderInfo.timingDate"
+            <BaseDatePicker v-model="orderInfo.timingDate"
               :errors="v$.timingDate.$error ? (v$.timingDate.$errors[0].$message as string) : null" mask="date"
-              mode="dateTime" is24hr
-            />
+              mode="dateTime" is24hr />
           </div>
         </div>
       </div>
@@ -247,10 +235,8 @@ provide('v$', v$);
         </h3>
       </div>
       <div class="order-form__row">
-        <BaseRadio
-          v-for="radio in paymanetVariants" :key="radio.value" v-model="orderInfo.payment" :value="radio.value"
-          :label="radio.label" name="payment"
-        />
+        <BaseRadio v-for="radio in paymanetVariants" :key="radio.value" v-model="orderInfo.payment" :value="radio.value"
+          :label="radio.label" name="payment" />
       </div>
     </div>
     <div class="order-form__block">
