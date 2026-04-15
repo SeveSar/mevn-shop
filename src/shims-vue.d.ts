@@ -10,3 +10,5 @@ declare module '*.vue' {
 //   const component: ReturnType<typeof defineComponent>;
 //   export default component;
 // }
+
+declare module 'pizza-mevn-ui-kit/styles';
